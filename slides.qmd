@@ -102,7 +102,7 @@ Instead, you can use `expect_snapshot()`!
 You will need to use the [third edition](https://testthat.r-lib.org/articles/third-edition.html) of `{testthat}` package.
 :::
 
-The *first time* you run the test, it would generate a Markdown file with expected output, and this will act as the expected output.
+The *first time* you run the test, it would generate a (human-readable) Markdown file with expected output.
 
 ```{r include = FALSE}
 snapper <- local_snapshotter()
@@ -182,15 +182,40 @@ test_that("`print_movies()` prints as expected", {
 
 :::
 
+## Fixing tests {.smaller}
+
+If we look at the failed snapshot test message, it is quite explicit about our options to proceed.
+
+::: incremental
+
+- If the change was deliberate, you can accept the new snapshot as the current *truth*.
+
+```r
+* Run `snapshot_accept('slides.qmd')` to accept the change
+```
+
+- If this was unexpected, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.
+
+```r
+* Run `snapshot_review('slides.qmd')` to interactively review the change
+```
+
+:::
+
 # Self-study 
 
 In this presentation, we deliberately kept the example and the tests simple. 
 
-To study realistic usage of snapshot tests, you should explore some open-source test suits on your own. 
+To see a more realistic usage of snapshot tests, you should study some open-source test suits on your own. 
 
 ---
 
-## Print outputs {.smaller}
+## Suggested repositories {.smaller}
+
+::: columns
+
+::: {.column width="33%"}
+### Print outputs
 
 - [`{cli}`](https://github.com/r-lib/cli/tree/main/tests/testthat) (for testing command line interfaces)
 
@@ -199,9 +224,22 @@ To study realistic usage of snapshot tests, you should explore some open-source 
 - [`{dbplyr}`](https://github.com/tidyverse/dbplyr/tree/main/tests/testthat) (for testing printing of generated SQL queries)
 
 - [`{gt}`](https://github.com/rstudio/gt/tree/master/tests/testthat) (for testing table printing)
+:::
 
-## Visualizations {.smaller}
+::: {.column width="33%"}
+### Visualizations
 
 - [`{ggplot2}`](https://github.com/tidyverse/ggplot2/tree/main/tests/testthat)
 
 - [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat)
+:::
+
+::: {.column width="33%"}
+### Shiny apps 
+
+- [`{shinytest2}`](https://github.com/rstudio/shinytest2/tree/main/tests/testthat)
+
+- [`{designer}`](https://github.com/ashbaldry/designer/tree/dev/tests/testthat)
+
+:::
+:::

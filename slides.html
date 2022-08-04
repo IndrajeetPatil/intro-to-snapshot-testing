@@ -459,7 +459,7 @@
 <span id="cb4-10"><a href="#cb4-10"></a>  )</span>
 <span id="cb4-11"><a href="#cb4-11"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 <p>With a more complex method, it’d be impossible for a human to read expected output.</p>
@@ -493,7 +493,7 @@
 </div>
 </div>
 </div>
-<p>The <em>first time</em> you run the test, it would generate a Markdown file with expected output, and this will act as the expected output.</p>
+<p>The <em>first time</em> you run the test, it would generate a (human-readable) Markdown file with expected output.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
@@ -591,28 +591,52 @@ old[2:6] vs new[2:6]
 </div>
 </div>
 </div>
+</section>
+<section id="fixing-tests" class="slide level2 smaller">
+<h2>Fixing tests</h2>
+<p>If we look at the failed snapshot test message, it is quite explicit about our options to proceed.</p>
+<div>
+<ul>
+<li class="fragment">If the change was deliberate, you can accept the new snapshot as the current <em>truth</em>.</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_accept('slides.qmd')</span><span class="st">`</span> to accept the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li class="fragment">If this was unexpected, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('slides.qmd')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section></section>
 <section>
 <section id="self-study" class="title-slide slide level1 center">
 <h1>Self-study</h1>
 <p>In this presentation, we deliberately kept the example and the tests simple.</p>
-<p>To study realistic usage of snapshot tests, you should explore some open-source test suits on your own.</p>
+<p>To see a more realistic usage of snapshot tests, you should study some open-source test suits on your own.</p>
 </section>
-<section id="print-outputs" class="slide level2 smaller">
-<h2>Print outputs</h2>
+<section id="suggested-repositories" class="slide level2 smaller">
+<h2>Suggested repositories</h2>
+<div class="columns">
+<div class="column" style="width:33%;">
+<h3 id="print-outputs">Print outputs</h3>
 <ul>
 <li><p><a href="https://github.com/r-lib/cli/tree/main/tests/testthat"><code>{cli}</code></a> (for testing command line interfaces)</p></li>
 <li><p><a href="https://github.com/r-lib/pkgdown/tree/main/tests/testthat"><code>{pkgdown}</code></a> (for testing generated HTML documents)</p></li>
 <li><p><a href="https://github.com/tidyverse/dbplyr/tree/main/tests/testthat"><code>{dbplyr}</code></a> (for testing printing of generated SQL queries)</p></li>
 <li><p><a href="https://github.com/rstudio/gt/tree/master/tests/testthat"><code>{gt}</code></a> (for testing table printing)</p></li>
 </ul>
-</section>
-<section id="visualizations" class="slide level2 smaller">
-<h2>Visualizations</h2>
+</div><div class="column" style="width:33%;">
+<h3 id="visualizations">Visualizations</h3>
 <ul>
 <li><p><a href="https://github.com/tidyverse/ggplot2/tree/main/tests/testthat"><code>{ggplot2}</code></a></p></li>
 <li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat"><code>{ggstatsplot}</code></a></p></li>
 </ul>
+</div><div class="column" style="width:33%;">
+<h3 id="shiny-apps">Shiny apps</h3>
+<ul>
+<li><p><a href="https://github.com/rstudio/shinytest2/tree/main/tests/testthat"><code>{shinytest2}</code></a></p></li>
+<li><p><a href="https://github.com/ashbaldry/designer/tree/dev/tests/testthat"><code>{designer}</code></a></p></li>
+</ul>
+</div>
+</div>
 <div class="footer footer-default">
 <p>Source code for the slides can be found <a href="https://github.com/IndrajeetPatil/intro-to-snapshot-testing">here</a>.</p>
 </div>
