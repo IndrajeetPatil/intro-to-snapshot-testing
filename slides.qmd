@@ -37,9 +37,9 @@ We will explore the ease with which snapshot tests can be used to check that pri
 
 Such custom methods are implemented to pretty-print R objects, to create visually pleasing warning/error messages, etc.
 
-## Example function
+## Example function {.smaller}
 
-Let's say we want to write a test for the following printing function in our R package:
+Let's say we want to write a unit test for the following printing function in our R package:
 
 ::: panel-tabset
 
@@ -65,6 +65,8 @@ cat(print_movies(
 
 :::
 
+Note that what we want to test here is whether the printed output *looks* as expected. Therefore, we need to check for all the little bells and whistles in the printed output.
+
 ## Example test {.smaller}
 
 Even testing this simple function is a bit painful because we need to keep track of every escape character, every space, etc. 
@@ -83,7 +85,7 @@ test_that("`print_movies()` prints as expected", {
 })
 ```
 
-With a more complicated output, it'd impossible for a human to read the expected output.
+With a more complex method, it'd be impossible for a human to read expected output.
 
 :::{.callout-important}
 
@@ -92,22 +94,22 @@ This is not maintainable! 😩
 
 :::
 
-## Alternative: Snapshot test! {.smaller}
+## Alternative: Snapshot test {.smaller}
 
 Instead, you can use `expect_snapshot()`!
 
 :::{.callout-note}
-You will need to use `{testthat}` [third edition](https://testthat.r-lib.org/articles/third-edition.html).
+You will need to use the [third edition](https://testthat.r-lib.org/articles/third-edition.html) of `{testthat}` package.
 :::
 
-The first time you run the test, it would generate a Markdown file with expected output, and this will act as the expected output from the function.
+The *first time* you run the test, it would generate a Markdown file with expected output, and this will act as the expected output.
 
 ```{r include = FALSE}
 snapper <- local_snapshotter()
 snapper$start_file("slides.qmd", "test")
 ```
 
-```{r, error=TRUE}
+```{r}
 test_that("`print_movies()` prints as expected", {
   local_edition(3)
   expect_snapshot(cat(print_movies(
@@ -122,6 +124,63 @@ test_that("`print_movies()` prints as expected", {
 snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
+
+## What success looks like {.smaller}
+
+:::{.callout-warning}
+
+Because the expected output is generated the first time you run snapshot test, it is crucial that you carefully check that the output is indeed as expected. 🔎 
+
+:::
+
+If you run the test again, it'll succeed:
+
+```{r}
+test_that("`print_movies()` prints as expected", {
+  local_edition(3)
+  expect_snapshot(cat(print_movies(
+    c("Title", "Director"),
+    c("Salaam Bombay!", "Mira Nair")
+  )))
+})
+```
+
+```{r, include = FALSE}
+# Reset snapshot test
+snapper$end_file()
+snapper$start_file("slides.qmd", "test")
+```
+
+## What failure looks like {.smaller}
+
+But if we change the behavior of underlying function, the actual snapshot output won't match the expected output, and the test will fail:
+
+::: panel-tabset
+
+### New function
+
+```{r}
+print_movies <- function(keys, values) {
+  paste0(
+    "Movie: \n",
+    paste0("  ", keys, "- ", values, collapse = "\n")
+  )
+}
+```
+
+### Test failure
+
+```{r, error=TRUE}
+test_that("`print_movies()` prints as expected", {
+  local_edition(3)
+  expect_snapshot(cat(print_movies(
+    c("Title", "Director"),
+    c("Salaam Bombay!", "Mira Nair")
+  )))
+})
+```
+
+:::
 
 # Self-study 
 

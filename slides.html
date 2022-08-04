@@ -410,9 +410,9 @@
 <p>We will explore the ease with which snapshot tests can be used to check that printing methods work as expected.</p>
 <p>Such custom methods are implemented to pretty-print R objects, to create visually pleasing warning/error messages, etc.</p>
 </section>
-<section id="example-function" class="slide level2">
+<section id="example-function" class="slide level2 smaller">
 <h2>Example function</h2>
-<p>Let’s say we want to write a test for the following printing function in our R package:</p>
+<p>Let’s say we want to write a unit test for the following printing function in our R package:</p>
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Source code</a></li><li><a href="#tabset-1-2">Output</a></li></ul>
 <div class="tab-content">
@@ -441,10 +441,11 @@
 </div>
 </div>
 </div>
+<p>Note that what we want to test here is whether the printed output <em>looks</em> as expected. Therefore, we need to check for all the little bells and whistles in the printed output.</p>
 </section>
 <section id="example-test" class="slide level2 smaller">
 <h2>Example test</h2>
-<p>Even testing this simple function is a bit painful because we need to keep track of every escape character, every space, etc. With a more complicated output, it’d impossible for a human to read the expected output.</p>
+<p>Even testing this simple function is a bit painful because we need to keep track of every escape character, every space, etc.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(testthat)</span>
 <span id="cb4-2"><a href="#cb4-2"></a></span>
@@ -458,9 +459,10 @@
 <span id="cb4-10"><a href="#cb4-10"></a>  )</span>
 <span id="cb4-11"><a href="#cb4-11"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
+<p>With a more complex method, it’d be impossible for a human to read expected output.</p>
 <div class="callout callout-important callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -476,7 +478,7 @@
 </div>
 </section>
 <section id="alternative-snapshot-test" class="slide level2 smaller">
-<h2>Alternative snapshot test</h2>
+<h2>Alternative: Snapshot test</h2>
 <p>Instead, you can use <code>expect_snapshot()</code>!</p>
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
@@ -487,11 +489,11 @@
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>You will need to use <code>{testthat}</code> <a href="https://testthat.r-lib.org/articles/third-edition.html">third edition</a>.</p>
+<p>You will need to use the <a href="https://testthat.r-lib.org/articles/third-edition.html">third edition</a> of <code>{testthat}</code> package.</p>
 </div>
 </div>
 </div>
-<p>The first time you run the test, it would generate a Markdown file with expected output, and this will act as the expected output from the function.</p>
+<p>The <em>first time</em> you run the test, it would generate a Markdown file with expected output, and this will act as the expected output.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
@@ -509,6 +511,84 @@ Output
   Movie: 
     Title: Salaam Bombay!
     Director: Mira Nair</code></pre>
+</div>
+</div>
+</section>
+<section id="what-success-looks-like" class="slide level2 smaller">
+<h2>What success looks like</h2>
+<div class="callout callout-warning callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Because the expected output is generated the first time you run snapshot test, it is crucial that you carefully check that the output is indeed as expected. 🔎</p>
+</div>
+</div>
+</div>
+<p>If you run the test again, it’ll succeed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb8-4"><a href="#cb8-4"></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb8-5"><a href="#cb8-5"></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>  )))</span>
+<span id="cb8-7"><a href="#cb8-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed 🎉</code></pre>
+</div>
+</div>
+</section>
+<section id="what-failure-looks-like" class="slide level2 smaller">
+<h2>What failure looks like</h2>
+<p>But if we change the behavior of underlying function, the actual snapshot output won’t match the expected output, and the test will fail:</p>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">New function</a></li><li><a href="#tabset-2-2">Test failure</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb10-3"><a href="#cb10-3"></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    <span class="fu">paste0</span>(<span class="st">"  "</span>, keys, <span class="st">"- "</span>, values, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  )</span>
+<span id="cb10-6"><a href="#cb10-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb11-5"><a href="#cb11-5"></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6"></a>  )))</span>
+<span id="cb11-7"><a href="#cb11-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Failure (&lt;text&gt;:3:3): `print_movies()` prints as expected ───────────────────
+Snapshot of code has changed:
+old[2:6] vs new[2:6]
+  "  cat(print_movies(c(\"Title\", \"Director\"), c(\"Salaam Bombay!\", \"Mira Nair\")))"
+  "Output"
+  "  Movie: "
+- "    Title: Salaam Bombay!"
++ "    Title- Salaam Bombay!"
+- "    Director: Mira Nair"
++ "    Director- Mira Nair"
+
+* Run `snapshot_accept('slides.qmd')` to accept the change
+* Run `snapshot_review('slides.qmd')` to interactively review the change</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `reporter$stop_if_needed()`:
+! Test failed</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section></section>
