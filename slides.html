@@ -459,7 +459,7 @@
 <span id="cb4-10"><a href="#cb4-10"></a>  )</span>
 <span id="cb4-11"><a href="#cb4-11"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 <p>With a more complex method, it’d be impossible for a human to read expected output.</p>
@@ -539,7 +539,7 @@ Output
 <span id="cb8-6"><a href="#cb8-6"></a>  )))</span>
 <span id="cb8-7"><a href="#cb8-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 </section>
@@ -594,16 +594,56 @@ old[2:6] vs new[2:6]
 </section>
 <section id="fixing-tests" class="slide level2 smaller">
 <h2>Fixing tests</h2>
-<p>If we look at the failed snapshot test message, it is quite explicit about our options to proceed.</p>
-<div>
+<p>Failed test message makes it explicit how we should proceed to fix failing tests.</p>
 <ul>
-<li class="fragment">If the change was deliberate, you can accept the new snapshot as the current <em>truth</em>.</li>
+<li>If the change was <em>deliberate</em>, you can accept the new snapshot as the current <em>truth</em>.</li>
 </ul>
 <div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_accept('slides.qmd')</span><span class="st">`</span> to accept the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li class="fragment">If this was unexpected, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.</li>
+<li>If this was <em>unexpected</em>, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.</li>
 </ul>
 <div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('slides.qmd')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Fixing multiple snapshot tests</strong></p>
+</div>
+<div class="callout-content">
+<p>If this is a utility function used by many other functions, changing its behaviour would lead to failure of many snapshot tests. You can accept snapshots for <em>all</em> files with <code>snapshot_accept()</code>.</p>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="testing-visual-outputs" class="title-slide slide level1 center">
+<h1>Testing visual outputs</h1>
+
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Why are my snapshots for plots failing?! 😔</strong></p>
+</div>
+<div class="callout-content">
+<p>Often, you will experience that your tests are failing even if you didn’t change anything about your plotting function.</p>
+<p>Here are a few common reasons for such failures:</p>
+<ul>
+<li>R’s graphics engine changed</li>
+<li><code>{ggplot2}</code> itself changed</li>
+<li>non-determinism</li>
+<li>reliance on system libraries</li>
+</ul>
+<p>For these reasons, the visual regression tests tend to be fragile and by default not run on CRAN machines. They are only run on CI platforms.</p>
+</div>
+</div>
 </div>
 </section></section>
 <section>
@@ -637,10 +677,29 @@ old[2:6] vs new[2:6]
 </ul>
 </div>
 </div>
+</section>
+<section id="further-reading" class="slide level2">
+<h2>Further reading</h2>
+<ul>
+<li><p><code>{testthat}</code> article on <a href="https://testthat.r-lib.org/articles/snapshotting.html">snapshot testing</a></p></li>
+<li><p><code>{shinytest2}</code> article introducing its <a href="https://rstudio.github.io/shinytest2/articles/shinytest2.html">workflow</a></p></li>
+<li><p><a href="https://ro-che.info/articles/2017-12-04-golden-tests">Introduction to golden testing</a></p></li>
+</ul>
+</section></section>
+<section id="find-me-at" class="title-slide slide level1 center">
+<h1>Find me at…</h1>
+<p><a href="http://twitter.com/patilindrajeets">🐦 Twitter</a></p>
+<p><a href="http://github.com/IndrajeetPatil">💻 GitHub</a></p>
+<p><a href="https://sites.google.com/site/indrajeetspatilmorality/">🔗 Website</a></p>
+<p><a href="mailto:patilindrajeet.science@gmail.com">📧 E-mail</a></p>
+</section>
+
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank You! 😊</h1>
 <div class="footer footer-default">
 <p>Source code for the slides can be found <a href="https://github.com/IndrajeetPatil/intro-to-snapshot-testing">here</a>.</p>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 

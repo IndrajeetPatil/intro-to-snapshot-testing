@@ -184,21 +184,43 @@ test_that("`print_movies()` prints as expected", {
 
 ## Fixing tests {.smaller}
 
-If we look at the failed snapshot test message, it is quite explicit about our options to proceed.
+Failed test message makes it explicit how we should proceed to fix failing tests.
 
-::: incremental
-
-- If the change was deliberate, you can accept the new snapshot as the current *truth*.
+- If the change was *deliberate*, you can accept the new snapshot as the current *truth*.
 
 ```r
 * Run `snapshot_accept('slides.qmd')` to accept the change
 ```
 
-- If this was unexpected, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.
+- If this was *unexpected*, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.
 
 ```r
 * Run `snapshot_review('slides.qmd')` to interactively review the change
 ```
+
+:::{.callout-tip collapse="true"}
+## Fixing multiple snapshot tests
+
+If this is a utility function used by many other functions, changing its behaviour would lead to failure of many snapshot tests. You can accept snapshots for *all* files with `snapshot_accept()`.
+:::
+
+# Testing visual outputs
+
+##
+
+:::{.callout-tip}
+## Why are my snapshots for plots failing?! 😔
+
+Often, you will experience that your tests are failing even if you didn't change anything about your plotting function. 
+
+Here are a few common reasons for such failures:
+
+- R's graphics engine changed
+- `{ggplot2}` itself changed
+- non-determinism 
+- reliance on system libraries
+
+For these reasons, the visual regression tests tend to be fragile and by default not run on CRAN machines. They are only run on CI platforms.
 
 :::
 
@@ -243,3 +265,23 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 
 :::
 :::
+
+## Further reading
+
+- `{testthat}` article on [snapshot testing](https://testthat.r-lib.org/articles/snapshotting.html)
+
+- `{shinytest2}` article introducing its [workflow](https://rstudio.github.io/shinytest2/articles/shinytest2.html)
+
+- [Introduction to golden testing](https://ro-che.info/articles/2017-12-04-golden-tests)
+
+# Find me at...
+
+[🐦 Twitter](http://twitter.com/patilindrajeets)
+
+[💻 GitHub](http://github.com/IndrajeetPatil)
+
+[🔗 Website](https://sites.google.com/site/indrajeetspatilmorality/)
+
+[📧 E-mail](mailto:patilindrajeet.science@gmail.com)
+
+# Thank You! 😊
