@@ -400,12 +400,15 @@
 <li class="fragment">…</li>
 </ul>
 </div>
+<!-- ::: footer -->
+<!-- Photo by Roman Mager on [Unsplash](https://unsplash.com/photos/5mZ_M06Fc9g) -->
+<!-- ::: -->
 </section>
 <section>
 <section id="testing-print-outputs" class="title-slide slide level1 center">
 <h1>Testing print outputs</h1>
 <p>We will explore the ease with which snapshot tests can be used to check that printing methods work as expected.</p>
-<p>Such custom methods are implement to pretty-print R objects, to create visually pleasing warning/error messages, etc.</p>
+<p>Such custom methods are implemented to pretty-print R objects, to create visually pleasing warning/error messages, etc.</p>
 </section>
 <section id="example-function" class="slide level2">
 <h2>Example function</h2>
@@ -439,17 +442,99 @@
 </div>
 </div>
 </section>
-<section id="self-study" class="slide level2 smaller">
-<h2>Self-study</h2>
-<p>In this section, we deliberately kept the example and the tests simple.</p>
-<p>To study realistic usage of snapshot tests to capture (more complex) print outputs, see any of the following test suites:</p>
+<section id="example-test" class="slide level2 smaller">
+<h2>Example test</h2>
+<p>Even testing this simple function is a bit painful because we need to keep track of every escape character, every space, etc. With a more complicated output, it’d impossible for a human to read the expected output.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(testthat)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb4-5"><a href="#cb4-5"></a>    <span class="fu">print_movies</span>(</span>
+<span id="cb4-6"><a href="#cb4-6"></a>      <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb4-7"><a href="#cb4-7"></a>      <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>    ),</span>
+<span id="cb4-9"><a href="#cb4-9"></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>  )</span>
+<span id="cb4-11"><a href="#cb4-11"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed 🥇</code></pre>
+</div>
+</div>
+<div class="callout callout-important callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>If this is a utility function used by many other functions, changing its behaviour would entail <em>manually changing</em> expected outputs for many tests. This is not maintainable! 😩</p>
+</div>
+</div>
+</div>
+</section>
+<section id="alternative-snapshot-test" class="slide level2 smaller">
+<h2>Alternative snapshot test</h2>
+<p>Instead, you can use <code>expect_snapshot()</code>!</p>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>You will need to use <code>{testthat}</code> <a href="https://testthat.r-lib.org/articles/third-edition.html">third edition</a>.</p>
+</div>
+</div>
+</div>
+<p>The first time you run the test, it would generate a Markdown file with expected output, and this will act as the expected output from the function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  )))</span>
+<span id="cb6-7"><a href="#cb6-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Warning (&lt;text&gt;:3:3): `print_movies()` prints as expected ───────────────────
+Adding new snapshot:
+Code
+  cat(print_movies(c("Title", "Director"), c("Salaam Bombay!", "Mira Nair")))
+Output
+  Movie: 
+    Title: Salaam Bombay!
+    Director: Mira Nair</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="self-study" class="title-slide slide level1 center">
+<h1>Self-study</h1>
+<p>In this presentation, we deliberately kept the example and the tests simple.</p>
+<p>To study realistic usage of snapshot tests, you should explore some open-source test suits on your own.</p>
+</section>
+<section id="print-outputs" class="slide level2 smaller">
+<h2>Print outputs</h2>
 <ul>
 <li><p><a href="https://github.com/r-lib/cli/tree/main/tests/testthat"><code>{cli}</code></a> (for testing command line interfaces)</p></li>
-<li><p><a href="https://github.com/r-lib/pkgdown/tree/main/tests/testthat"><code>{pkgdown}</code></a> (for testing complex HTML)</p></li>
+<li><p><a href="https://github.com/r-lib/pkgdown/tree/main/tests/testthat"><code>{pkgdown}</code></a> (for testing generated HTML documents)</p></li>
 <li><p><a href="https://github.com/tidyverse/dbplyr/tree/main/tests/testthat"><code>{dbplyr}</code></a> (for testing printing of generated SQL queries)</p></li>
+<li><p><a href="https://github.com/rstudio/gt/tree/master/tests/testthat"><code>{gt}</code></a> (for testing table printing)</p></li>
+</ul>
+</section>
+<section id="visualizations" class="slide level2 smaller">
+<h2>Visualizations</h2>
+<ul>
+<li><p><a href="https://github.com/tidyverse/ggplot2/tree/main/tests/testthat"><code>{ggplot2}</code></a></p></li>
+<li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat"><code>{ggstatsplot}</code></a></p></li>
 </ul>
 <div class="footer footer-default">
-
+<p>Source code for the slides can be found <a href="https://github.com/IndrajeetPatil/intro-to-snapshot-testing">here</a>.</p>
 </div>
 </section></section>
     </div>
