@@ -1,0 +1,72 @@
+---
+title: "Introduction to snapshot testing in R"
+format:
+  revealjs: 
+    theme: simple
+    slide-number: true
+    preview-links: auto
+author: "Indrajeet Patil"
+execute:
+  echo: true
+---
+
+## Who is this for?
+
+If you develop R packages and have wondered to yourself about how to 
+
+::: incremental
+
+- test that fancy printing prints as expected
+- test that generated plots or images are as expected
+- test that an entire file is as expected
+- write maintainable tests when the output is too complex to include in the source code
+- update such tests *en masse* 
+- ...
+
+::: 
+
+# Testing print outputs
+
+We will explore the ease with which snapshot tests can be used to check that printing methods work as expected.
+
+Such custom methods are implement to pretty-print R objects, to create visually pleasing warning/error messages, etc.
+
+## Example function
+
+Let's say we want to write a test for the following printing function in our R package:
+
+::: panel-tabset
+
+### Source code
+
+```{r}
+print_movies <- function(keys, values) {
+  paste0(
+    "Movie: \n",
+    paste0("  ", keys, ": ", values, collapse = "\n")
+  )
+}
+```
+
+### Output
+
+```{r}
+cat(print_movies(
+  c("Title", "Director"),
+  c("Salaam Bombay!", "Mira Nair")
+))
+```
+
+:::
+
+## Self-study {.smaller}
+
+In this section, we deliberately kept the example and the tests simple. 
+
+To study realistic usage of snapshot tests to capture (more complex) print outputs, see any of the following test suites:
+
+- [`{cli}`](https://github.com/r-lib/cli/tree/main/tests/testthat) (for testing command line interfaces)
+
+- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/tests/testthat) (for testing generated HTML documents)
+
+- [`{dbplyr}`](https://github.com/tidyverse/dbplyr/tree/main/tests/testthat) (for testing printing of generated SQL queries)
