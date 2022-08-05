@@ -6,7 +6,9 @@
 <script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.1.29">
 
   <meta name="author" content="Indrajeet Patil">
@@ -398,8 +400,20 @@
 </ul>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>Ousterhout, J. K. (2018). <em>A Philosophy of Software Design</em>. Palo Alto: Yaknyam Press.</p></li></ol></aside></section>
-<section id="need-for-snapshot-tests" class="slide level2 smaller">
-<h2>Need for snapshot tests</h2>
+<section id="what-is-different-about-snapshot-testing" class="slide level2">
+<h2>What is different about snapshot testing?</h2>
+<p>A <strong>unit test</strong> records the code to describe expected output.</p>
+<p><br></p>
+<!-- Need to install the Quarto extension for fontawesome to work:
+https://github.com/quarto-ext/fontawesome  -->
+<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-file-code fa-2xl" aria-hidden="true"></i> (expected)</p>
+<p><br></p>
+<p>A <strong>snapshot test</strong> records expected output in a separate, human-readable file.</p>
+<p><br></p>
+<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-file-lines fa-2xl" aria-hidden="true"></i> (expected)</p>
+</section>
+<section id="why-do-we-need-snapshot-testing" class="slide level2 smaller">
+<h2>Why do we need snapshot testing?</h2>
 <p>If you develop R packages and have struggled to</p>
 <div>
 <ul>
@@ -502,7 +516,7 @@
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -578,7 +592,7 @@ Output
 <span id="cb10-6"><a href="#cb10-6"></a>  )))</span>
 <span id="cb10-7"><a href="#cb10-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -690,7 +704,7 @@ old[2:6] vs new[2:6]
 <h2>Capturing messages and warnings</h2>
 <p>So far we have tested text output printed to the console, but we can also use snapshots to capture messages, warnings, and errors.</p>
 <div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">message</a></li><li><a href="#tabset-3-2">warnings</a></li></ul>
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">message</a></li><li><a href="#tabset-3-2">warning</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1">
 <div class="cell">
@@ -729,13 +743,24 @@ Warning &lt;simpleWarning&gt;
 </div>
 </div>
 <div class="fragment">
-<p><br></p>
-<p>Note that the snapshot logs both the exact <em>condition</em> and the corresponding <em>message</em>. We can now rest assured that the users are getting informed the way we want them to.</p>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Snapshot records both the <em>condition</em> and the corresponding <em>message</em>. We can now rest assured that the users are getting informed the way we want! 😌</p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="capturing-errors" class="slide level2 smaller">
 <h2>Capturing errors</h2>
-<p>In case of an error, the function <code>expect_snapshot()</code> itself will produce an error. So you have two ways to capture errors:</p>
+<p>In case of an error, the function <code>expect_snapshot()</code> itself will produce an error. You have two ways to snapshot errors:</p>
 <div class="panel-tabset">
 <ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Option-1</a></li><li><a href="#tabset-4-2">Option-2</a></li></ul>
 <div class="tab-content">
@@ -771,7 +796,6 @@ non-numeric argument to mathematical function</code></pre>
 </div>
 </div>
 <div class="fragment">
-<p><br></p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -839,12 +863,12 @@ non-numeric argument to mathematical function</code></pre>
 </div>
 <div class="fragment">
 <p><br></p>
-<p>Note that we want to test that the graphical output <em>looks</em> as expected.</p>
+<p>Note that we want to test that the graphical output <em>looks</em> as expected, and this expectation is difficult to capture with a unit test.</p>
 </div>
 </section>
 <section id="graphical-snapshot-test" class="slide level2 smaller">
 <h2>Graphical snapshot test</h2>
-<p>We can use <code>expect_doppelganger()</code> from <code>{vdiffr}</code> to do this!</p>
+<p>We can use <code>expect_doppelganger()</code> from <code>{vdiffr}</code> to test this!</p>
 <div class="fragment">
 <p>The <em>first time</em> you run the test, it’d generate an <code>.svg</code> file with expected graphical output.</p>
 <div class="cell">
@@ -891,7 +915,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb31-6"><a href="#cb31-6"></a>  )</span>
 <span id="cb31-7"><a href="#cb31-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 </section>

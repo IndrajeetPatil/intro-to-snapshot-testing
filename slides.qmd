@@ -27,7 +27,26 @@ The goal of a unit test is to capture the *expected* output of a function using 
 
 :::
 
-## Need for snapshot tests {.smaller}
+## What is different about snapshot testing?
+
+A **unit test** records the code to describe expected output.
+
+</br>
+
+<!-- Need to install the Quarto extension for fontawesome to work:
+https://github.com/quarto-ext/fontawesome  -->
+
+(actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-code size=2xl >}} (expected)
+
+</br>
+
+A **snapshot test** records expected output in a separate, human-readable file.
+
+</br>
+
+(actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-lines size=2xl >}} (expected)
+
+## Why do we need snapshot testing? {.smaller}
 
 If you develop R packages and have struggled to 
 
@@ -323,7 +342,7 @@ test_that("f() produces expected message", {
 })
 ```
 
-### warnings
+### warning
 
 ```{r}
 g <- function() warning("Managed to recover.")
@@ -337,14 +356,17 @@ test_that("g() warns the user", {
 
 . . . 
 
-</br>
+:::{.callout-tip}
 
-Note that the snapshot logs both the exact *condition* and the corresponding *message*.
-We can now rest assured that the users are getting informed the way we want them to.
+Snapshot records both the *condition* and the corresponding *message*.
+We can now rest assured that the users are getting informed the way we want! 😌
+
+:::
 
 ## Capturing errors {.smaller}
 
-In case of an error, the function `expect_snapshot()` itself will produce an error. So you have two ways to capture errors:
+In case of an error, the function `expect_snapshot()` itself will produce an error. 
+You have two ways to snapshot errors:
 
 :::panel-tabset
 
@@ -369,8 +391,6 @@ test_that("`log()` doesn't work when argument not numeric", {
 :::
 
 . . . 
-
-</br>
 
 :::{.callout-tip}
 
@@ -433,11 +453,11 @@ create_scatter()
 
 </br>
 
-Note that we want to test that the graphical output *looks* as expected.
+Note that we want to test that the graphical output *looks* as expected, and this expectation is difficult to capture with a unit test.
 
 ## Graphical snapshot test {.smaller}
 
-We can use `expect_doppelganger()` from `{vdiffr}` to do this!
+We can use `expect_doppelganger()` from `{vdiffr}` to test this!
 
 . . .
 
