@@ -566,6 +566,14 @@ Instead, `{testthat}` provides a Shiny app to compare changes in the output.
 
 ## Fixing tests {.smaller}
 
+Running `testthat::snapshot_review()` launches a Shiny app we can use to either accept or reject the new output(s).
+
+```{r}
+#| echo: false
+#| out.width: "60%"
+knitr::include_graphics("images/shiny_app_graphics.mov")
+```
+
 # Headaches 
 
 It's not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕
