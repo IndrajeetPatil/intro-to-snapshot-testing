@@ -518,10 +518,9 @@ snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
 
-
 ## What failure looks like {.smaller}
 
-But if we change the behavior of underlying function (use different aesthetic properties for `geom_point()`), the actual snapshot output won't match the expected one, and the test will fail:
+If we change the function, the new graphical plot output won't match the expected one, and the test will fail:
 
 :::panel-tabset
 
@@ -560,8 +559,6 @@ test_that("`create_scatter()` plots as expected", {
 :::
 
 . . . 
-
-</br>
 
 Note that when the test fails, the message **cannot** provide a diff. 
 
@@ -607,11 +604,13 @@ knitr::include_graphics("images/AppVeyor.png")
           upload-snapshots: true
 ```
 
-## How to peer review? {.smaller}
+## Code review with snapshot tests {.smaller}
 
-Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, it can be challenging to review changes to snapshots. 
+Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots. 
 
-How do you review such pull requests? Here two approaches I prefer.
+How do you review pull requests with such changes to snapshots? 
+
+Next slide describes two approaches I prefer.
 
 ## {.smaller}
 
@@ -708,7 +707,7 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 
 - Docs for [Jest](https://jestjs.io/docs/snapshot-testing) library in JavaScript, which inspired snapshot testing implementation in `{testthat}`
 
-- Collection of for [unit testing](https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-) in R
+- Collection of packages for [unit testing](https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-) in R
 
 # Find me at...
 

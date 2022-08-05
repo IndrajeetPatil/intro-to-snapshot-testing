@@ -516,7 +516,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -592,7 +592,7 @@ Output
 <span id="cb10-6"><a href="#cb10-6"></a>  )))</span>
 <span id="cb10-7"><a href="#cb10-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -915,13 +915,13 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb31-6"><a href="#cb31-6"></a>  )</span>
 <span id="cb31-7"><a href="#cb31-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 </section>
 <section id="what-failure-looks-like-1" class="slide level2 smaller">
 <h2>What failure looks like</h2>
-<p>But if we change the behavior of underlying function (use different aesthetic properties for <code>geom_point()</code>), the actual snapshot output won’t match the expected one, and the test will fail:</p>
+<p>If we change the function, the new graphical plot output won’t match the expected one, and the test will fail:</p>
 <div class="panel-tabset">
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Changes to function</a></li><li><a href="#tabset-6-2">Test failure</a></li></ul>
 <div class="tab-content">
@@ -961,7 +961,6 @@ Backtrace:
 </div>
 </div>
 <div class="fragment">
-<p><br></p>
 <p>Note that when the test fails, the message <strong>cannot</strong> provide a diff.</p>
 <p>Instead, <code>{testthat}</code> provides a Shiny app to compare changes in the output.</p>
 </div>
@@ -1006,10 +1005,11 @@ Backtrace:
 <span id="cb37-3"><a href="#cb37-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="how-to-peer-review" class="slide level2 smaller">
-<h2>How to peer review?</h2>
-<p>Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, it can be challenging to review changes to snapshots.</p>
-<p>How do you review such pull requests? Here two approaches I prefer.</p>
+<section id="code-review-with-snapshot-tests" class="slide level2 smaller">
+<h2>Code review with snapshot tests</h2>
+<p>Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots.</p>
+<p>How do you review pull requests with such changes to snapshots?</p>
+<p>Next slide describes two approaches I prefer.</p>
 </section>
 <section id="section-1" class="slide level2 smaller">
 <h2></h2>
