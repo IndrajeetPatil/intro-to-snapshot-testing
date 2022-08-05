@@ -62,7 +62,7 @@ If you develop R packages and have struggled to
 
 . . .
 
-then you should be excited to hear about *snapshot tests* (aka *golden tests*), which can relieve above-mentioned pain-points! 🤩
+then you should be excited to know more about *snapshot tests* (aka *golden tests*)! 🤩
 
 We will see how in these slides.
 
@@ -159,13 +159,14 @@ test_that("`print_movies()` prints as expected", {
 
 . . .
 
-With a more complex method, it'd be impossible for a human to read the expected output.
+With a more complex code, it'd be impossible for a human to reason about what the output is supposed to look like.
 
 . . .
 
 :::{.callout-important}
 
 If this is a utility function used by many other functions, changing its behaviour would entail *manually* changing expected outputs for many tests.
+
 This is not maintainable! 😩
 
 :::
@@ -209,6 +210,43 @@ Thus, it is **crucial** that you carefully check that the output is indeed as ex
 
 :::
 
+## Human-readable Markdown file {.smaller}
+
+Compared to our unit test
+
+```r
+"Movie: \n  Title: Salaam Bombay!\n  Director: Mira Nair"
+```
+
+notice how much more human-friendly the Markdown output is!
+
+```md
+Code
+  cat(print_movies(c("Title", "Director"), c("Salaam Bombay!", "Mira Nair")))
+Output
+  Movie: 
+    Title: Salaam Bombay!
+    Director: Mira Nair
+```
+
+It is easy to *see* what the printed text output is *supposed* to look like.
+
+. . . 
+
+</br>
+
+:::{.callout-note}
+
+## More about snapshots files
+
+- If a test is called `test-foo.R`, the snapshot will be saved to `test/testthat/_snaps/foo.md`.
+
+- If there are multiple snapshot tests in a single file, corresponding snapshots will also share the same `.md` file.
+
+- By default, `expect_snapshot()` will capture the code, the object values, and any side-effects.
+
+:::
+
 ## What success looks like {.smaller}
 
 If you run the test again, it'll succeed:
@@ -231,6 +269,8 @@ snapper$start_file("slides.qmd", "test")
 
 . . .
 
+</br>
+
 :::{.callout-note}
 
 ### Why does my test not pass?
@@ -243,7 +283,7 @@ In such cases, setting a seed (e.g. `set.seed(42)`) should help.
 
 ## What failure looks like {.smaller}
 
-But if we change the behavior of underlying function (use `-` instead of `:` as a separator), the actual snapshot output won't match the expected one, and the test will fail:
+But if we change the function (use `-` instead of `:` as a separator), the actual snapshot output won't match the expected one, and the test will fail:
 
 :::panel-tabset
 
@@ -285,7 +325,7 @@ test_that("`print_movies()` prints as expected", {
 
 . . . 
 
-Note that when the test fails, the message automatically provides a diff about what was expected (`-` rows), and what was observed (`+` rows).
+Note that when the test fails, the message automatically provides a diff about what was expected (`-` rows) versus observed (`+` rows).
 
 ```r
 - "    Title: Salaam Bombay!"
@@ -296,7 +336,7 @@ Note that when the test fails, the message automatically provides a diff about w
 
 ## Fixing tests {.smaller}
 
-Failed test message makes it explicit how we should proceed to fix failing tests.
+Message accompanying failed tests make it explicit how we to fix them.
 
 . . . 
 
@@ -316,7 +356,7 @@ Failed test message makes it explicit how we should proceed to fix failing tests
 
 </br>
 
-:::{.callout-tip collapse="true"}
+:::{.callout-tip}
 
 ## Fixing multiple snapshot tests
 
@@ -359,6 +399,7 @@ test_that("g() warns the user", {
 :::{.callout-tip}
 
 Snapshot records both the *condition* and the corresponding *message*.
+
 We can now rest assured that the users are getting informed the way we want! 😌
 
 :::
@@ -366,13 +407,20 @@ We can now rest assured that the users are getting informed the way we want! �
 ## Capturing errors {.smaller}
 
 In case of an error, the function `expect_snapshot()` itself will produce an error. 
-You have two ways to snapshot errors:
+You have two ways around this:
 
 :::panel-tabset
 
 ### Option-1
 
-```{r}
+```{.r code-line-numbers="3"}
+test_that("`log()` doesn't work when argument not numeric", {
+  local_edition(3)
+  expect_snapshot(log("x"), error = TRUE)
+})
+```
+
+```{r, echo=FALSE}
 test_that("`log()` doesn't work when argument not numeric", {
   local_edition(3)
   expect_snapshot(log("x"), error = TRUE)
@@ -381,7 +429,14 @@ test_that("`log()` doesn't work when argument not numeric", {
 
 ### Option-2
 
-```{r}
+```{.r code-line-numbers="3"}
+test_that("`log()` doesn't work when argument not numeric", {
+  local_edition(3)
+  expect_snapshot_error(log("x"))
+})
+```
+
+```{r, echo=FALSE}
 test_that("`log()` doesn't work when argument not numeric", {
   local_edition(3)
   expect_snapshot_error(log("x"))
