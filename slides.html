@@ -502,7 +502,7 @@
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -578,7 +578,7 @@ Output
 <span id="cb10-6"><a href="#cb10-6"></a>  )))</span>
 <span id="cb10-7"><a href="#cb10-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -602,7 +602,7 @@ Output
 <h2>What failure looks like</h2>
 <p>But if we change the behavior of underlying function (use <code>-</code> instead of <code>:</code> as a separator), the actual snapshot output won’t match the expected one, and the test will fail:</p>
 <div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">New function</a></li><li><a href="#tabset-2-2">Test failure</a></li></ul>
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Changes to function</a></li><li><a href="#tabset-2-2">Test failure</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
 <div class="sourceCode" id="cb12" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
@@ -846,7 +846,7 @@ non-numeric argument to mathematical function</code></pre>
 <h2>Graphical snapshot test</h2>
 <p>We can use <code>expect_doppelganger()</code> from <code>{vdiffr}</code> to do this!</p>
 <div class="fragment">
-<p>The <em>first time</em> you run the test, it would generate an <code>.svg</code> file with expected graphical output.</p>
+<p>The <em>first time</em> you run the test, it’d generate an <code>.svg</code> file with expected graphical output.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
 <span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
@@ -878,11 +878,77 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="what-success-looks-like-1" class="slide level2 smaller">
+<h2>What success looks like</h2>
+<p>If you run the test again, it’ll succeed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb31-4"><a href="#cb31-4"></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb31-5"><a href="#cb31-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb31-6"><a href="#cb31-6"></a>  )</span>
+<span id="cb31-7"><a href="#cb31-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed 🌈</code></pre>
+</div>
+</div>
+</section>
+<section id="what-failure-looks-like-1" class="slide level2 smaller">
+<h2>What failure looks like</h2>
+<p>But if we change the behavior of underlying function (use different aesthetic properties for <code>geom_point()</code>), the actual snapshot output won’t match the expected one, and the test will fail:</p>
+<div class="panel-tabset">
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Changes to function</a></li><li><a href="#tabset-6-2">Test failure</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1">
+<div class="sourceCode" id="cb33" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb33-5"><a href="#cb33-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+
+</div>
+</div>
+<div id="tabset-6-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb34-4"><a href="#cb34-4"></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb34-5"><a href="#cb34-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb34-6"><a href="#cb34-6"></a>  )</span>
+<span id="cb34-7"><a href="#cb34-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Failure (&lt;text&gt;:3:3): `create_scatter()` plots as expected ──────────────────
+Snapshot of `testcase` to 'slides.qmd/create-scatter.svg' has changed
+Run `testthat::snapshot_review('slides.qmd/')` to review changes
+Backtrace:
+ 1. vdiffr::expect_doppelganger(...)
+ 3. testthat::expect_snapshot_file(...)</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `reporter$stop_if_needed()`:
+! Test failed</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<p>Note that when the test fails, the message <strong>cannot</strong> provide a diff.</p>
+<p>Instead, <code>{testthat}</code> provides a Shiny app to compare changes in the output.</p>
+</div>
+</section>
+<section id="fixing-tests-1" class="slide level2 smaller">
+<h2>Fixing tests</h2>
 </section></section>
 <section>
 <section id="headaches" class="title-slide slide level1 center">
 <h1>Headaches</h1>
-<p>It’s not all is kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕</p>
+<p>It’s not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕</p>
 </section>
 <section id="failures-in-non-interactive-environments" class="slide level2 smaller">
 <h2>Failures in non-interactive environments</h2>
@@ -911,9 +977,9 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <ul>
 <li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
 </ul>
-<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb31-1"><a href="#cb31-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="how-to-peer-review" class="slide level2 smaller">
@@ -924,9 +990,9 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <section id="section-1" class="slide level2 smaller">
 <h2></h2>
 <div class="panel-tabset">
-<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Option-1</a></li><li><a href="#tabset-6-2">Option-2</a></li></ul>
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">Option-1</a></li><li><a href="#tabset-7-2">Option-2</a></li></ul>
 <div class="tab-content">
-<div id="tabset-6-1">
+<div id="tabset-7-1">
 <p>Use tools provided for code review by hosting platform (like GitHub) (e.g.&nbsp;to review changes in SVG snapshots)</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -934,7 +1000,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-6-2">
+<div id="tabset-7-2">
 <p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
 </div>
 </div>

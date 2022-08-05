@@ -228,7 +228,7 @@ But if we change the behavior of underlying function (use `-` instead of `:` as 
 
 :::panel-tabset
 
-### New function
+### Changes to function
 
 ```{.r code-line-numbers="4"}
 print_movies <- function(keys, values) {
@@ -441,7 +441,7 @@ We can use `expect_doppelganger()` from `{vdiffr}` to do this!
 
 . . .
 
-The *first time* you run the test, it would generate an `.svg` file with expected graphical output.
+The *first time* you run the test, it'd generate an `.svg` file with expected graphical output.
 
 ```{r include = FALSE}
 library(vdiffr)
@@ -478,9 +478,80 @@ Thus, it is **crucial** that you carefully check that the output is indeed as ex
 
 :::
 
+## What success looks like {.smaller}
+
+If you run the test again, it'll succeed:
+
+```{r}
+test_that("`create_scatter()` plots as expected", {
+  local_edition(3)
+  expect_doppelganger(
+    title = "create scatter",
+    fig = create_scatter(),
+  )
+})
+```
+
+```{r, include = FALSE}
+# Reset snapshot test
+snapper$end_file()
+snapper$start_file("slides.qmd", "test")
+```
+
+
+## What failure looks like {.smaller}
+
+But if we change the behavior of underlying function (use different aesthetic properties for `geom_point()`), the actual snapshot output won't match the expected one, and the test will fail:
+
+:::panel-tabset
+
+### Changes to function
+
+```{.r code-line-numbers="3"}
+create_scatter <- function() {
+  ggplot(mtcars, aes(wt, mpg)) +
+    geom_point(size = 2, alpha = 0.85) +
+    geom_smooth(method = "lm")
+}
+```
+
+```{r}
+#| echo: false
+
+create_scatter <- function() {
+  ggplot(mtcars, aes(wt, mpg)) +
+    geom_point(size = 2, alpha = 0.85) +
+    geom_smooth(method = "lm")
+}
+```
+
+### Test failure
+
+```{r, error=TRUE}
+test_that("`create_scatter()` plots as expected", {
+  local_edition(3)
+  expect_doppelganger(
+    title = "create scatter",
+    fig = create_scatter(),
+  )
+})
+```
+
+:::
+
+. . . 
+
+</br>
+
+Note that when the test fails, the message **cannot** provide a diff. 
+
+Instead, `{testthat}` provides a Shiny app to compare changes in the output.
+
+## Fixing tests {.smaller}
+
 # Headaches 
 
-It's not all is kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕
+It's not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕
 
 ## Failures in non-interactive environments {.smaller}
 
