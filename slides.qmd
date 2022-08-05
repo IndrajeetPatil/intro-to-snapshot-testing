@@ -23,7 +23,7 @@ The goal of a unit test is to capture the *expected* output of a function using 
 
 - Tests also act as the most basic form of developer-focused documentation[^1].
 
-[^1]: Ousterhout, J. K. (2018). *A philosophy of software design*. Palo Alto: Yaknyam Press.
+[^1]: Ousterhout, J. K. (2018). *A Philosophy of Software Design*. Palo Alto: Yaknyam Press.
 
 :::
 
@@ -392,6 +392,36 @@ It's not all is kittens and roses when it comes to snapshot testing. We will now
 
 If your snapshots fail locally, you can just run `snapshot_review()`, but what if they fail in non-interactive environments? For example, on CI/CD platforms or during `R CMD Check`?
 
+The easiest solution in such cases is to copy the new versions snapshots to your local folder and then run `snapshot_review()`.
+
+We can discuss next where you can find the new snapshots.
+
+## Accessing new snapshots {.smaller}
+
+. . .
+
+In local `R CMD Check`, you can find new snapshots in `.Rcheck` folder:
+
+> package_name.Rcheck/tests/testthat/_snaps/
+
+. . .
+
+On CI/CD platforms, you can find snapshots as artifacts.
+
+- [AppVeyor](https://www.appveyor.com/docs/packaging-artifacts/)
+
+```{r, echo=FALSE, fig.height=1.5}
+knitr::include_graphics("images/AppVeyor.png")
+```
+
+- [GitHub actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package)
+
+```yaml
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+```
+
 ##
 
 :::{.callout-tip}
@@ -423,6 +453,7 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 
 ::: columns
 
+<!-- 1st column -->
 ::: {.column width="33%"}
 ### Print outputs
 
@@ -435,6 +466,7 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 - [`{gt}`](https://github.com/rstudio/gt/tree/master/tests/testthat) (for testing table printing)
 :::
 
+<!-- 2nd column -->
 ::: {.column width="33%"}
 ### Visualizations
 
@@ -443,6 +475,7 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 - [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat)
 :::
 
+<!-- 3rd column -->
 ::: {.column width="33%"}
 ### Shiny apps 
 
@@ -451,6 +484,7 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 - [`{designer}`](https://github.com/ashbaldry/designer/tree/dev/tests/testthat)
 
 :::
+
 :::
 
 ## Further reading
@@ -477,4 +511,6 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 
 [E-mail](mailto:patilindrajeet.science@gmail.com)
 
-# Thank You and Happy Snapshotting! 😊
+# Thank You 
+
+And Happy Snapshotting! 😊

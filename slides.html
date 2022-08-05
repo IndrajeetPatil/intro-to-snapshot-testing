@@ -397,7 +397,7 @@
 <li class="fragment"><p>Tests also act as the most basic form of developer-focused documentation<sup>1</sup>.</p></li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>Ousterhout, J. K. (2018). <em>A philosophy of software design</em>. Palo Alto: Yaknyam Press.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>Ousterhout, J. K. (2018). <em>A Philosophy of Software Design</em>. Palo Alto: Yaknyam Press.</p></li></ol></aside></section>
 <section id="need-for-snapshot-tests" class="slide level2 smaller">
 <h2>Need for snapshot tests</h2>
 <p>If you develop R packages and have struggled to</p>
@@ -577,7 +577,7 @@ Output
 <span id="cb10-6"><a href="#cb10-6"></a>  )))</span>
 <span id="cb10-7"><a href="#cb10-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -802,6 +802,34 @@ non-numeric argument to mathematical function</code></pre>
 <section id="failures-in-non-interactive-environments" class="slide level2 smaller">
 <h2>Failures in non-interactive environments</h2>
 <p>If your snapshots fail locally, you can just run <code>snapshot_review()</code>, but what if they fail in non-interactive environments? For example, on CI/CD platforms or during <code>R CMD Check</code>?</p>
+<p>The easiest solution in such cases is to copy the new versions snapshots to your local folder and then run <code>snapshot_review()</code>.</p>
+<p>We can discuss next where you can find the new snapshots.</p>
+</section>
+<section id="accessing-new-snapshots" class="slide level2 smaller">
+<h2>Accessing new snapshots</h2>
+<div class="fragment">
+<p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
+<blockquote>
+<p>package_name.Rcheck/tests/testthat/_snaps/</p>
+</blockquote>
+</div>
+<div class="fragment">
+<p>On CI/CD platforms, you can find snapshots as artifacts.</p>
+<ul>
+<li><a href="https://www.appveyor.com/docs/packaging-artifacts/">AppVeyor</a></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="images/AppVeyor.png" width="484"></p>
+</div>
+</div>
+<ul>
+<li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="section-1" class="slide level2">
 <h2></h2>
@@ -836,7 +864,7 @@ non-numeric argument to mathematical function</code></pre>
 <section id="suggested-repositories" class="slide level2 smaller">
 <h2>Suggested repositories</h2>
 <div class="columns">
-<div class="column" style="width:33%;">
+<!-- 1st column --><div class="column" style="width:33%;">
 <h3 id="print-outputs">Print outputs</h3>
 <ul>
 <li><p><a href="https://github.com/r-lib/cli/tree/main/tests/testthat"><code>{cli}</code></a> (for testing command line interfaces)</p></li>
@@ -844,13 +872,13 @@ non-numeric argument to mathematical function</code></pre>
 <li><p><a href="https://github.com/tidyverse/dbplyr/tree/main/tests/testthat"><code>{dbplyr}</code></a> (for testing printing of generated SQL queries)</p></li>
 <li><p><a href="https://github.com/rstudio/gt/tree/master/tests/testthat"><code>{gt}</code></a> (for testing table printing)</p></li>
 </ul>
-</div><div class="column" style="width:33%;">
+</div><!-- 2nd column --><div class="column" style="width:33%;">
 <h3 id="visualizations">Visualizations</h3>
 <ul>
 <li><p><a href="https://github.com/tidyverse/ggplot2/tree/main/tests/testthat"><code>{ggplot2}</code></a></p></li>
 <li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat"><code>{ggstatsplot}</code></a></p></li>
 </ul>
-</div><div class="column" style="width:33%;">
+</div><!-- 3rd column --><div class="column" style="width:33%;">
 <h3 id="shiny-apps">Shiny apps</h3>
 <ul>
 <li><p><a href="https://github.com/rstudio/shinytest2/tree/main/tests/testthat"><code>{shinytest2}</code></a></p></li>
@@ -878,8 +906,9 @@ non-numeric argument to mathematical function</code></pre>
 <p><a href="mailto:patilindrajeet.science@gmail.com">E-mail</a></p>
 </section>
 
-<section id="thank-you-and-happy-snapshotting" class="title-slide slide level1 center">
-<h1>Thank You and Happy Snapshotting! 😊</h1>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank You</h1>
+<p>And Happy Snapshotting! 😊</p>
 <div class="footer footer-default">
 <p>Source code for the slides can be found <a href="https://github.com/IndrajeetPatil/intro-to-snapshot-testing">here</a>.</p>
 </div>
