@@ -403,9 +403,9 @@
 <p>If you develop R packages and have struggled to</p>
 <div>
 <ul>
-<li class="fragment">test that printing methods work as expected</li>
-<li class="fragment">test that generated plots or images are as expected</li>
+<li class="fragment">test that printed text outputs look as expected</li>
 <li class="fragment">test that an entire file is as expected</li>
+<li class="fragment">test that generated graphical outputs look as expected</li>
 <li class="fragment">write maintainable tests when complex output is included in source code</li>
 <li class="fragment">update such tests <em>en masse</em></li>
 </ul>
@@ -502,7 +502,7 @@
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -528,7 +528,7 @@
 <h2>Alternative: Snapshot test</h2>
 <p>Instead, you can use <code>expect_snapshot()</code>!</p>
 <div class="fragment">
-<p>The <em>first time</em> you run the test, it would generate a (human-readable) Markdown file with expected output.</p>
+<p>The <em>first time</em> you run the test, it would generate a Markdown file with expected output.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
@@ -559,7 +559,8 @@ Output
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>Because the expected output is generated the first time you run snapshot test, it is crucial that you carefully check that the output is indeed as expected. 🔎</p>
+<p>The first time a snapshot is created, it becomes <em>the truth</em> against which future behaviour of function will be compared.</p>
+<p>Thus, it is <strong>crucial</strong> that you carefully check that the output is indeed as expected. 🔎</p>
 </div>
 </div>
 </div>
@@ -577,7 +578,7 @@ Output
 <span id="cb10-6"><a href="#cb10-6"></a>  )))</span>
 <span id="cb10-7"><a href="#cb10-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -789,11 +790,95 @@ non-numeric argument to mathematical function</code></pre>
 </div>
 </div>
 </section></section>
-<section id="testing-visual-outputs" class="title-slide slide level1 center">
-<h1>Testing visual outputs</h1>
-<p>To create expectations, we will use <code>{testthat}</code> extension package: <a href="https://vdiffr.r-lib.org/"><code>{vdiffr}</code></a>.</p>
+<section>
+<section id="testing-graphical-outputs" class="title-slide slide level1 center">
+<h1>Testing graphical outputs</h1>
+<p>To create graphical expectations, we will use <code>{testthat}</code> extension package: <a href="https://vdiffr.r-lib.org/"><code>{vdiffr}</code></a>.</p>
 </section>
-
+<section id="how-does-it-work" class="slide level2 smaller">
+<h2>How does it work?</h2>
+<p><code>{vdiffr}</code> introduces <code>expect_doppelganger()</code> to generate <code>{testthat}</code> expectations for graphics. It does this by generating SVG snapshots of entire graphics files!</p>
+<div class="fragment">
+<p>The figure to test can be:</p>
+<ul>
+<li>a <code>ggplot</code> object (from <code>ggplot2::ggplot()</code>)</li>
+<li>a <code>recordedplot</code> object (from <code>grDevices::recordPlot()</code>)</li>
+<li>or, more generally, any object with a <code>print()</code> method</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Just like other snapshot files, these are stored in <code>tests/testthat/_snaps/</code> folder, with a separate folder for each test file (<code>test-*.R</code>).</p>
+</div>
+</section>
+<section id="example-function-1" class="slide level2 smaller">
+<h2>Example function</h2>
+<p>Let’s say we want to write a unit test for the following function:</p>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Source code</a></li><li><a href="#tabset-5-2">Output</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb27-2"><a href="#cb27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3"></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-5-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">create_scatter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img data-src="slides_files/figure-revealjs/unnamed-chunk-17-1.png" style="width:70.0%"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<p>Note that we want to test that the graphical output <em>looks</em> as expected.</p>
+</div>
+</section>
+<section id="graphical-snapshot-test" class="slide level2 smaller">
+<h2>Graphical snapshot test</h2>
+<p>We can use <code>expect_doppelganger()</code> from <code>{vdiffr}</code> to do this!</p>
+<div class="fragment">
+<p>The <em>first time</em> you run the test, it would generate an <code>.svg</code> file with expected graphical output.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb29-4"><a href="#cb29-4"></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb29-5"><a href="#cb29-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb29-6"><a href="#cb29-6"></a>  )</span>
+<span id="cb29-7"><a href="#cb29-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Warning (&lt;text&gt;:3:3): `create_scatter()` plots as expected ──────────────────
+Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<div class="callout callout-warning callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>The first time a snapshot is created, it becomes <em>the truth</em> against which future behaviour of function will be compared.</p>
+<p>Thus, it is <strong>crucial</strong> that you carefully check that the output is indeed as expected. 🔎</p>
+</div>
+</div>
+</div>
+</div>
+</section></section>
 <section>
 <section id="headaches" class="title-slide slide level1 center">
 <h1>Headaches</h1>
@@ -826,12 +911,36 @@ non-numeric argument to mathematical function</code></pre>
 <ul>
 <li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
 </ul>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb31-1"><a href="#cb31-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="section-1" class="slide level2">
+<section id="how-to-peer-review" class="slide level2 smaller">
+<h2>How to peer review?</h2>
+<p>Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, it can be challenging to review changes to snapshots.</p>
+<p>How do you review such pull requests? Here two approaches I prefer.</p>
+</section>
+<section id="section-1" class="slide level2 smaller">
+<h2></h2>
+<div class="panel-tabset">
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Option-1</a></li><li><a href="#tabset-6-2">Option-2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1">
+<p>Use tools provided for code review by hosting platform (like GitHub) (e.g.&nbsp;to review changes in SVG snapshots)</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="images/github_pr.mov" style="width:70.0%" controls=""><a href="images/github_pr.mov">Video</a></video></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-2">
+<p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
+</div>
+</div>
+</div>
+</section>
+<section id="section-2" class="slide level2">
 <h2></h2>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">

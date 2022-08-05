@@ -33,9 +33,9 @@ If you develop R packages and have struggled to
 
 ::: incremental
 
-- test that printing methods work as expected
-- test that generated plots or images are as expected
+- test that printed text outputs look as expected
 - test that an entire file is as expected
+- test that generated graphical outputs look as expected
 - write maintainable tests when complex output is included in source code
 - update such tests *en masse* 
 
@@ -157,7 +157,7 @@ Instead, you can use `expect_snapshot()`!
 
 . . .
 
-The *first time* you run the test, it would generate a (human-readable) Markdown file with expected output.
+The *first time* you run the test, it would generate a Markdown file with expected output.
 
 ```{r include = FALSE}
 snapper <- local_snapshotter()
@@ -184,7 +184,9 @@ snapper$start_file("slides.qmd", "test")
 
 :::{.callout-warning}
 
-Because the expected output is generated the first time you run snapshot test, it is crucial that you carefully check that the output is indeed as expected. 🔎 
+The first time a snapshot is created, it becomes *the truth* against which future behaviour of function will be compared. 
+
+Thus, it is **crucial** that you carefully check that the output is indeed as expected. 🔎 
 
 :::
 
@@ -380,9 +382,101 @@ test_that("`log()` doesn't work when argument not numeric", {
 
 :::
 
-# Testing visual outputs
+# Testing graphical outputs
 
-To create expectations, we will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/).
+To create graphical expectations, we will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/).
+
+## How does it work? {.smaller}
+
+`{vdiffr}` introduces `expect_doppelganger()` to generate `{testthat}` expectations for graphics. It does this by generating SVG snapshots of entire graphics files!
+
+. . . 
+
+The figure to test can be:
+
+- a `ggplot` object (from `ggplot2::ggplot()`)
+- a `recordedplot` object (from `grDevices::recordPlot()`)
+- or, more generally, any object with a `print()` method
+
+. . . 
+
+Just like other snapshot files, these are stored in `tests/testthat/_snaps/` folder, with a separate folder for each test file (`test-*.R`).
+
+## Example function {.smaller}
+
+Let's say we want to write a unit test for the following function:
+
+:::panel-tabset
+
+### Source code
+
+```{r}
+library(ggplot2)
+
+create_scatter <- function() {
+  ggplot(mtcars, aes(wt, mpg)) +
+    geom_point(size = 3, alpha = 0.75) +
+    geom_smooth(method = "lm")
+}
+```
+
+### Output
+
+```{r}
+#| out.width: "70%"
+create_scatter()
+```
+
+:::
+
+. . .
+
+</br>
+
+Note that we want to test that the graphical output *looks* as expected.
+
+## Graphical snapshot test {.smaller}
+
+We can use `expect_doppelganger()` from `{vdiffr}` to do this!
+
+. . .
+
+The *first time* you run the test, it would generate an `.svg` file with expected graphical output.
+
+```{r include = FALSE}
+library(vdiffr)
+
+snapper <- local_snapshotter()
+snapper$start_file("slides.qmd", "test")
+```
+
+```{r}
+test_that("`create_scatter()` plots as expected", {
+  local_edition(3)
+  expect_doppelganger(
+    title = "create scatter",
+    fig = create_scatter(),
+  )
+})
+```
+
+```{r, include = FALSE}
+# Reset snapshot test
+snapper$end_file()
+snapper$start_file("slides.qmd", "test")
+```
+
+. . .
+
+</br>
+
+:::{.callout-warning}
+
+The first time a snapshot is created, it becomes *the truth* against which future behaviour of function will be compared. 
+
+Thus, it is **crucial** that you carefully check that the output is indeed as expected. 🔎 
+
+:::
 
 # Headaches 
 
@@ -421,6 +515,32 @@ knitr::include_graphics("images/AppVeyor.png")
         with:
           upload-snapshots: true
 ```
+
+## How to peer review? {.smaller}
+
+Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, it can be challenging to review changes to snapshots. 
+
+How do you review such pull requests? Here two approaches I prefer.
+
+## {.smaller}
+
+:::panel-tabset
+
+### Option-1
+
+Use tools provided for code review by hosting platform (like GitHub) (e.g. to review changes in SVG snapshots)
+
+```{r}
+#| echo: false
+#| out.width: "70%"
+knitr::include_graphics("images/github_pr.mov")
+```
+
+### Option-2
+
+Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷 
+
+:::
 
 ##
 
