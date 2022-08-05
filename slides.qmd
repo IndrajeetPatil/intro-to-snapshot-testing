@@ -271,7 +271,7 @@ snapper$start_file("slides.qmd", "test")
 
 :::{.callout-note}
 
-### Why does my test not pass?
+### Why does my test fail on a rerun?
 
 If you just generated a snapshot and ran the test again and it failed, this is most likely because your test is not deterministic. For example, if your function deals with random number generation.
 
@@ -781,7 +781,7 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 
 :::
 
-## Further reading
+## Further reading {.smaller}
 
 - `{testthat}` article on [snapshot testing](https://testthat.r-lib.org/articles/snapshotting.html)
 
@@ -795,15 +795,15 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 
 # Find me at...
 
-[Twitter](http://twitter.com/patilindrajeets)
+{{< fa brands twitter >}} [Twitter](http://twitter.com/patilindrajeets)
 
-[LikedIn](https://www.linkedin.com/in/indrajeet-patil-397865174/)
+{{< fa brands linkedin >}} [LikedIn](https://www.linkedin.com/in/indrajeet-patil-397865174/)
 
-[GitHub](http://github.com/IndrajeetPatil)
+{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil)
 
-[Website](https://sites.google.com/site/indrajeetspatilmorality/)
+{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/)
 
-[E-mail](mailto:patilindrajeet.science@gmail.com)
+{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com)
 
 # Thank You 
 
