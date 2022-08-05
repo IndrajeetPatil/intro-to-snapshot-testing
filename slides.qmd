@@ -204,7 +204,7 @@ snapper$start_file("slides.qmd", "test")
 
 :::{.callout-warning}
 
-The first time a snapshot is created, it becomes *the truth* against which future behaviour of function will be compared. 
+The first time a snapshot is created, it becomes *the truth* against which future function behaviour will be compared. 
 
 Thus, it is **crucial** that you carefully check that the output is indeed as expected. 🔎 
 
@@ -212,7 +212,7 @@ Thus, it is **crucial** that you carefully check that the output is indeed as ex
 
 ## Human-readable Markdown file {.smaller}
 
-Compared to our unit test
+Compared to our unit test code representing the expected output
 
 ```r
 "Movie: \n  Title: Salaam Bombay!\n  Director: Mira Nair"
@@ -229,11 +229,9 @@ Output
     Director: Mira Nair
 ```
 
-It is easy to *see* what the printed text output is *supposed* to look like.
+It is easy to *see* what the printed text output is *supposed* to look like. In other words, snapshot tests are useful when the *intent* of the code can only be verified by a human.
 
 . . . 
-
-</br>
 
 :::{.callout-note}
 
@@ -463,7 +461,7 @@ To create graphical expectations, we will use `{testthat}` extension package: [`
 
 ## How does it work? {.smaller}
 
-`{vdiffr}` introduces `expect_doppelganger()` to generate `{testthat}` expectations for graphics. It does this by generating SVG snapshots of entire graphics files!
+`{vdiffr}` introduces `expect_doppelganger()` to generate `{testthat}` expectations for graphics. It does this by writing SVG snapshot files for outputs!
 
 . . . 
 
@@ -475,7 +473,17 @@ The figure to test can be:
 
 . . . 
 
-Just like other snapshot files, these are stored in `tests/testthat/_snaps/` folder, with a separate folder for each test file (`test-*.R`).
+:::{.callout-note}
+
+## About snapshot files
+
+- If a test is called `test-foo.R`, the snapshot will be saved to `test/testthat/_snaps/foo` folder.
+
+- In this folder, there will be one `.svg` file for every test in `test-foo.R`.
+
+- The name for the `.svg` file will be sanitized version of `title` argument to `expect_doppelganger()`.
+
+:::
 
 ## Example function {.smaller}
 
@@ -547,7 +555,7 @@ snapper$start_file("slides.qmd", "test")
 
 :::{.callout-warning}
 
-The first time a snapshot is created, it becomes *the truth* against which future behaviour of function will be compared. 
+The first time a snapshot is created, it becomes *the truth* against which future function behaviour will be compared. 
 
 Thus, it is **crucial** that you carefully check that the output is indeed as expected. 🔎 
 
@@ -613,15 +621,9 @@ test_that("`create_scatter()` plots as expected", {
 
 :::
 
-. . . 
-
-Note that when the test fails, the message **cannot** provide a diff. 
-
-Instead, `{testthat}` provides a Shiny app to compare changes in the output.
-
 ## Fixing tests {.smaller}
 
-Running `testthat::snapshot_review()` launches a Shiny app we can use to either accept or reject the new output(s).
+Running `snapshot_review()` launches a Shiny app which can be used to either accept or reject the new output(s).
 
 ```{r}
 #| echo: false
@@ -629,9 +631,28 @@ Running `testthat::snapshot_review()` launches a Shiny app we can use to either 
 knitr::include_graphics("images/shiny_app_graphics.mov")
 ```
 
+##
+
+:::{.callout-tip}
+
+## Why are my snapshots for plots failing?! 😔
+
+Often, you will experience that your tests are failing even if you didn't change anything about your plotting function. 
+
+Here are a few common reasons for such failures:
+
+- R's graphics engine changed
+- `{ggplot2}` itself changed
+- non-determinism 
+- reliance on system libraries
+
+For these reasons, the visual regression tests tend to be fragile and by default not run on CRAN machines.
+
+:::
+
 # Testing entire files
 
-Whole file snapshot testing tests that images, data frames, text files, etc. are as expected.
+Whole file snapshot testing makes sure that images, data frames, text files, etc. are as expected.
 
 Since it works just like graphical snapshot tests, we won't discuss it in detail.
 
@@ -645,9 +666,17 @@ It's not all kittens and roses when it comes to snapshot testing. We will now se
 
 If your snapshots fail locally, you can just run `snapshot_review()`, but what if they fail in non-interactive environments? For example, on CI/CD platforms or during `R CMD Check`?
 
-The easiest solution in such cases is to copy the new versions snapshots to your local folder and then run `snapshot_review()`.
+The easiest solution in such cases is to copy the new snapshots to your local folder and then run `snapshot_review()`.
 
-We can discuss next where you can find the new snapshots.
+:::{.callout-tip}
+
+If your expected snapshot is called (e.g.) `foo.svg`, when the test fails, there will be a new snapshot file `foo.new.svg` in the same folder.
+
+`snapshot_review()` compares these files to reveal how the output has changed.
+
+:::
+
+But where can you find the new snapshots?
 
 ## Accessing new snapshots {.smaller}
 
@@ -655,11 +684,15 @@ We can discuss next where you can find the new snapshots.
 
 In local `R CMD Check`, you can find new snapshots in `.Rcheck` folder:
 
-> package_name.Rcheck/tests/testthat/_snaps/
+```r
+package_name.Rcheck/tests/testthat/_snaps/
+```
 
 . . .
 
-On CI/CD platforms, you can find snapshots as artifacts.
+</br>
+
+On CI/CD platforms, you can find snapshots in artifacts folder:
 
 - [AppVeyor](https://www.appveyor.com/docs/packaging-artifacts/)
 
@@ -679,9 +712,7 @@ knitr::include_graphics("images/AppVeyor.png")
 
 Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots. 
 
-How do you review pull requests with such changes to snapshots? 
-
-Next slide describes two approaches I prefer.
+How do you review pull requests with complex changes in snapshots? 
 
 ## {.smaller}
 
@@ -689,7 +720,8 @@ Next slide describes two approaches I prefer.
 
 ### Option-1
 
-Use tools provided for code review by hosting platform (like GitHub) (e.g. to review changes in SVG snapshots)
+Use tools provided for code review by hosting platform (like GitHub).
+For example, to review changes in SVG snapshots:
 
 ```{r}
 #| echo: false
@@ -700,25 +732,6 @@ knitr::include_graphics("images/github_pr.mov")
 ### Option-2
 
 Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷 
-
-:::
-
-##
-
-:::{.callout-tip}
-
-## Why are my snapshots for plots failing?! 😔
-
-Often, you will experience that your tests are failing even if you didn't change anything about your plotting function. 
-
-Here are a few common reasons for such failures:
-
-- R's graphics engine changed
-- `{ggplot2}` itself changed
-- non-determinism 
-- reliance on system libraries
-
-For these reasons, the visual regression tests tend to be fragile and by default not run on CRAN machines. They are only run on CI platforms.
 
 :::
 
