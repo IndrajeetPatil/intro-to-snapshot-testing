@@ -30,12 +30,39 @@ If you develop R packages and have wondered to yourself about how to
 <!-- Photo by Roman Mager on [Unsplash](https://unsplash.com/photos/5mZ_M06Fc9g) -->
 <!-- ::: -->
 
+## Prerequisites
+
+You are familiar with unit tests and how to write them using [`{testthat}`](https://testthat.r-lib.org/index.html).
+
+If not, have a look at [this](https://r-pkgs.org/testing-basics.html) chapter from *R Packages* book.
+
+## 
+
+:::{.callout-important}
+
+In the following slides, in all snapshot tests, I include the following line of code:
+
+```r
+local_edition(3)
+```
+
+**You don't need to do this in your package tests!**
+
+Instead, you can use snapshot tests by activating the 3rd edition of `{testthat}`:
+
+```r
+Config/testthat/edition: 3
+```
+
+For more, see [this](https://testthat.r-lib.org/articles/third-edition.html) article.
+
+:::
 
 # Testing print outputs
 
-We will explore the ease with which snapshot tests can be used to check that printing methods work as expected.
+Snapshot tests can be used to check that printing methods work as expected.
 
-Such custom methods are implemented to pretty-print R objects, to create visually pleasing warning/error messages, etc.
+Such custom methods are implemented to pretty-print R objects to the console, to create visually pleasing warning/error messages, etc.
 
 ## Example function {.smaller}
 
@@ -204,6 +231,73 @@ Failed test message makes it explicit how we should proceed to fix failing tests
 If this is a utility function used by many other functions, changing its behaviour would lead to failure of many snapshot tests. You can accept snapshots for *all* files with `snapshot_accept()`.
 :::
 
+## Capturing messages and warnings {.smaller}
+
+So far we have tested text output printed to the console, but we can also use snapshots to capture messages, warnings, and errors.
+
+:::panel-tabset
+
+### message
+
+```{r}
+f <- function() message("Some info for you.")
+test_that("f() produces expected message", {
+  local_edition(3)
+  expect_snapshot(f())
+})
+```
+
+### warnings
+
+```{r}
+g <- function() warning("Managed to recover.")
+test_that("g() warns the user", {
+  local_edition(3)
+  expect_snapshot(g())
+})
+```
+
+:::
+
+Note that the snapshot logs both the exact *condition* and the corresponding *message*.
+We can now rest assured that the users are getting informed the way we want them to.
+
+## Capturing errors {.smaller}
+
+In case of an error, the function `expect_snapshot()` itself will produce an error. So you have two ways to capture errors:
+
+:::panel-tabset
+
+### Option-1
+
+```{r}
+test_that("`log()` doesn't work when argument not numeric", {
+  local_edition(3)
+  expect_snapshot(log("x"), error = TRUE)
+})
+```
+
+### Option-2
+
+```{r}
+test_that("`log()` doesn't work when argument not numeric", {
+  local_edition(3)
+  expect_snapshot_error(log("x"))
+})
+```
+
+:::
+
+:::{.callout-tip}
+
+### Which option should I use?
+
+- If you want to capture both the code and the error message, use `expect_snapshot(..., error = TRUE)`.
+
+- If you want to capture only the error message, use `expect_snapshot_error()`.
+
+:::
+
 # Testing visual outputs
 
 ##
@@ -273,6 +367,8 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 - `{shinytest2}` article introducing its [workflow](https://rstudio.github.io/shinytest2/articles/shinytest2.html)
 
 - [Introduction to golden testing](https://ro-che.info/articles/2017-12-04-golden-tests)
+
+- Collection of for [unit testing](https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-) in R
 
 # Find me at...
 
