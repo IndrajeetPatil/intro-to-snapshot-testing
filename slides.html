@@ -389,25 +389,30 @@
 
 <section id="unit-testing" class="slide level2 smaller">
 <h2>Unit testing</h2>
-<p>The goal of a unit test is to capture the <em>expected</em> output of a function using <em>code</em> and making sure that <em>actual</em> output produced after any changes to the function matches this expected output.</p>
-<div class="fragment">
-<p>This insures against unintentionally changing function behaviour, or re-introducing already fixed bugs.</p>
+<p>The goal of a unit test is to capture the <em>expected</em> output of a function using <em>code</em> and making sure that <em>actual</em> output after any changes to the function matches the expected one.</p>
+<div>
+<ul>
+<li class="fragment"><p>This insures against unintentionally changing function behaviour, or re-introducing already fixed bugs.</p></li>
+<li class="fragment"><p>It also makes sure that you will stay informed of any upstream dependency changes that might change the behaviour of your function.</p></li>
+<li class="fragment"><p>Tests also act as the most basic form of developer-focused documentation<sup>1</sup>.</p></li>
+</ul>
 </div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>Ousterhout, J. K. (2018). <em>A philosophy of software design</em>. Palo Alto: Yaknyam Press.</p></li></ol></aside></section>
 <section id="need-for-snapshot-tests" class="slide level2 smaller">
 <h2>Need for snapshot tests</h2>
-<p>If you develop R packages and have wondered to yourself about how to</p>
+<p>If you develop R packages and have struggled to</p>
 <div>
 <ul>
 <li class="fragment">test that printing methods work as expected</li>
 <li class="fragment">test that generated plots or images are as expected</li>
 <li class="fragment">test that an entire file is as expected</li>
-<li class="fragment">write maintainable tests when the output is too complex to include in the source code</li>
+<li class="fragment">write maintainable tests when complex output is included in source code</li>
 <li class="fragment">update such tests <em>en masse</em></li>
 </ul>
 </div>
 <div class="fragment">
-<p><em>Snapshots tests</em> (aka <em>golden tests</em>) can make writing such tests easier and more maintainable.</p>
+<p>then you should be excited to hear about <em>snapshot tests</em> (aka <em>golden tests</em>), which can relieve above-mentioned pain-points! 🤩</p>
+<p>We will see how in these slides.</p>
 </div>
 </section>
 <section>
@@ -438,14 +443,14 @@
 </div>
 </section></section>
 <section>
-<section id="testing-print-outputs" class="title-slide slide level1 center">
-<h1>Testing print outputs</h1>
-<p>Snapshot tests can be used to check that printing methods work as expected.</p>
-<p>Such custom methods are implemented to pretty-print R objects to the console, to create visually pleasing warning/error messages, etc.</p>
+<section id="testing-text-outputs" class="title-slide slide level1 center">
+<h1>Testing text outputs</h1>
+<p>Snapshot tests can be used to check that printing functions work as expected.</p>
+<p>These functions are implemented to pretty-print R objects to the console, to create visually pleasing warning/error messages, etc.</p>
 </section>
 <section id="example-function" class="slide level2 smaller">
 <h2>Example function</h2>
-<p>Let’s say we want to write a unit test for the following function in our R package:</p>
+<p>Let’s say we want to write a unit test for the following function:</p>
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Source code</a></li><li><a href="#tabset-1-2">Output</a></li></ul>
 <div class="tab-content">
@@ -475,6 +480,7 @@
 </div>
 </div>
 <div class="fragment">
+<p><br></p>
 <p>Note that we want to test that the printed output <em>looks</em> as expected.</p>
 <p>Therefore, we need to check for all the little bells and whistles in the printed output.</p>
 </div>
@@ -483,22 +489,25 @@
 <h2>Example test</h2>
 <p>Even testing this simple function is a bit painful because we need to keep track of every escape character, every space, etc.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(testthat)</span>
-<span id="cb6-2"><a href="#cb6-2"></a></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
-<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">expect_equal</span>(</span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="fu">print_movies</span>(</span>
-<span id="cb6-6"><a href="#cb6-6"></a>      <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
-<span id="cb6-7"><a href="#cb6-7"></a>      <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
-<span id="cb6-8"><a href="#cb6-8"></a>    ),</span>
-<span id="cb6-9"><a href="#cb6-9"></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a>  )</span>
-<span id="cb6-11"><a href="#cb6-11"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="fu">print_movies</span>(</span>
+<span id="cb6-4"><a href="#cb6-4"></a>      <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5"></a>      <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    ),</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  )</span>
+<span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
+<div class="fragment">
 <p>With a more complex method, it’d be impossible for a human to read the expected output.</p>
+</div>
 <div class="fragment">
 <div class="callout callout-important callout-captioned callout-style-default">
 <div class="callout-body">
@@ -568,7 +577,7 @@ Output
 <span id="cb10-6"><a href="#cb10-6"></a>  )))</span>
 <span id="cb10-7"><a href="#cb10-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -648,6 +657,7 @@ old[2:6] vs new[2:6]
 <section id="fixing-tests" class="slide level2 smaller">
 <h2>Fixing tests</h2>
 <p>Failed test message makes it explicit how we should proceed to fix failing tests.</p>
+<div class="fragment">
 <ul>
 <li>If the change was <em>deliberate</em>, you can accept the new snapshot as the current <em>truth</em>.</li>
 </ul>
@@ -656,6 +666,9 @@ old[2:6] vs new[2:6]
 <li>If this was <em>unexpected</em>, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.</li>
 </ul>
 <div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('slides.qmd')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><br></p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -665,7 +678,9 @@ old[2:6] vs new[2:6]
 <p><strong>Fixing multiple snapshot tests</strong></p>
 </div>
 <div class="callout-content">
-<p>If this is a utility function used by many other functions, changing its behaviour would lead to failure of many snapshot tests. You can accept snapshots for <em>all</em> files with <code>snapshot_accept()</code>.</p>
+<p>If this is a utility function used by many other functions, changing its behaviour would lead to failure of many snapshot tests.</p>
+<p>You can accept snapshots for <em>all</em> files with <code>snapshot_accept()</code>. And, of course, check the diffs to make sure that the changes are expected.</p>
+</div>
 </div>
 </div>
 </div>
@@ -712,7 +727,10 @@ Warning &lt;simpleWarning&gt;
 </div>
 </div>
 </div>
+<div class="fragment">
+<p><br></p>
 <p>Note that the snapshot logs both the exact <em>condition</em> and the corresponding <em>message</em>. We can now rest assured that the users are getting informed the way we want them to.</p>
+</div>
 </section>
 <section id="capturing-errors" class="slide level2 smaller">
 <h2>Capturing errors</h2>
@@ -751,6 +769,8 @@ non-numeric argument to mathematical function</code></pre>
 </div>
 </div>
 </div>
+<div class="fragment">
+<p><br></p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -767,11 +787,21 @@ non-numeric argument to mathematical function</code></pre>
 </div>
 </div>
 </div>
+</div>
 </section></section>
-<section>
 <section id="testing-visual-outputs" class="title-slide slide level1 center">
 <h1>Testing visual outputs</h1>
 <p>To create expectations, we will use <code>{testthat}</code> extension package: <a href="https://vdiffr.r-lib.org/"><code>{vdiffr}</code></a>.</p>
+</section>
+
+<section>
+<section id="headaches" class="title-slide slide level1 center">
+<h1>Headaches</h1>
+<p>It’s not all is kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕</p>
+</section>
+<section id="failures-in-non-interactive-environments" class="slide level2 smaller">
+<h2>Failures in non-interactive environments</h2>
+<p>If your snapshots fail locally, you can just run <code>snapshot_review()</code>, but what if they fail in non-interactive environments? For example, on CI/CD platforms or during <code>R CMD Check</code>?</p>
 </section>
 <section id="section-1" class="slide level2">
 <h2></h2>
@@ -801,7 +831,7 @@ non-numeric argument to mathematical function</code></pre>
 <section id="self-study" class="title-slide slide level1 center">
 <h1>Self-study</h1>
 <p>In this presentation, we deliberately kept the example and the tests simple.</p>
-<p>To see a more realistic usage of snapshot tests, you should study some open-source test suits on your own.</p>
+<p>To see a more realistic usage of snapshot tests, you should study some open-source test suites on your own.</p>
 </section>
 <section id="suggested-repositories" class="slide level2 smaller">
 <h2>Suggested repositories</h2>
@@ -834,24 +864,28 @@ non-numeric argument to mathematical function</code></pre>
 <ul>
 <li><p><code>{testthat}</code> article on <a href="https://testthat.r-lib.org/articles/snapshotting.html">snapshot testing</a></p></li>
 <li><p><code>{shinytest2}</code> article introducing its <a href="https://rstudio.github.io/shinytest2/articles/shinytest2.html">workflow</a></p></li>
-<li><p><a href="https://ro-che.info/articles/2017-12-04-golden-tests">Introduction to golden testing</a></p></li>
+<li><p>Introduction to <a href="https://ro-che.info/articles/2017-12-04-golden-tests">golden testing</a></p></li>
+<li><p>Docs for <a href="https://jestjs.io/docs/snapshot-testing">Jest</a> library in JavaScript, which inspired snapshot testing implementation in <code>{testthat}</code></p></li>
 <li><p>Collection of for <a href="https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-">unit testing</a> in R</p></li>
 </ul>
 </section></section>
 <section id="find-me-at" class="title-slide slide level1 center">
 <h1>Find me at…</h1>
-<p><a href="http://twitter.com/patilindrajeets">🐦 Twitter</a></p>
-<p><a href="http://github.com/IndrajeetPatil">💻 GitHub</a></p>
-<p><a href="https://sites.google.com/site/indrajeetspatilmorality/">🔗 Website</a></p>
-<p><a href="mailto:patilindrajeet.science@gmail.com">📧 E-mail</a></p>
+<p><a href="http://twitter.com/patilindrajeets">Twitter</a></p>
+<p><a href="https://www.linkedin.com/in/indrajeet-patil-397865174/">LikedIn</a></p>
+<p><a href="http://github.com/IndrajeetPatil">GitHub</a></p>
+<p><a href="https://sites.google.com/site/indrajeetspatilmorality/">Website</a></p>
+<p><a href="mailto:patilindrajeet.science@gmail.com">E-mail</a></p>
 </section>
 
-<section id="thank-you" class="title-slide slide level1 center">
-<h1>Thank You! 😊</h1>
+<section id="thank-you-and-happy-snapshotting" class="title-slide slide level1 center">
+<h1>Thank You and Happy Snapshotting! 😊</h1>
 <div class="footer footer-default">
 <p>Source code for the slides can be found <a href="https://github.com/IndrajeetPatil/intro-to-snapshot-testing">here</a>.</p>
 </div>
 </section>
+
+
     </div>
   </div>
 

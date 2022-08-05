@@ -13,29 +13,39 @@ execute:
 
 ## Unit testing {.smaller}
 
-The goal of a unit test is to capture the *expected* output of a function using *code* and making sure that *actual* output produced after any changes to the function matches this expected output.
+The goal of a unit test is to capture the *expected* output of a function using *code* and making sure that *actual* output after any changes to the function matches the expected one.
 
-. . .
+::: incremental
 
-This insures against unintentionally changing function behaviour, or re-introducing already fixed bugs.
+- This insures against unintentionally changing function behaviour, or re-introducing already fixed bugs.
+
+- It also makes sure that you will stay informed of any upstream dependency changes that might change the behaviour of your function.
+
+- Tests also act as the most basic form of developer-focused documentation[^1].
+
+[^1]: Ousterhout, J. K. (2018). *A philosophy of software design*. Palo Alto: Yaknyam Press.
+
+:::
 
 ## Need for snapshot tests {.smaller}
 
-If you develop R packages and have wondered to yourself about how to 
+If you develop R packages and have struggled to 
 
 ::: incremental
 
 - test that printing methods work as expected
 - test that generated plots or images are as expected
 - test that an entire file is as expected
-- write maintainable tests when the output is too complex to include in the source code
+- write maintainable tests when complex output is included in source code
 - update such tests *en masse* 
 
 ::: 
 
 . . .
 
-*Snapshots tests* (aka *golden tests*) can make writing such tests easier and more maintainable.
+then you should be excited to hear about *snapshot tests* (aka *golden tests*), which can relieve above-mentioned pain-points! 🤩
+
+We will see how in these slides.
 
 # Prerequisites
 
@@ -65,17 +75,17 @@ For more, see [this](https://testthat.r-lib.org/articles/third-edition.html) art
 
 :::
 
-# Testing print outputs
+# Testing text outputs
 
-Snapshot tests can be used to check that printing methods work as expected.
+Snapshot tests can be used to check that printing functions work as expected.
 
-Such custom methods are implemented to pretty-print R objects to the console, to create visually pleasing warning/error messages, etc.
+These functions are implemented to pretty-print R objects to the console, to create visually pleasing warning/error messages, etc.
 
 ## Example function {.smaller}
 
-Let's say we want to write a unit test for the following function in our R package:
+Let's say we want to write a unit test for the following function:
 
-::: panel-tabset
+:::panel-tabset
 
 ### Source code
 
@@ -101,6 +111,8 @@ cat(print_movies(
 
 . . .
 
+</br>
+
 Note that we want to test that the printed output *looks* as expected. 
 
 Therefore, we need to check for all the little bells and whistles in the printed output.
@@ -109,9 +121,12 @@ Therefore, we need to check for all the little bells and whistles in the printed
 
 Even testing this simple function is a bit painful because we need to keep track of every escape character, every space, etc. 
 
-```{r}
+```{r, echo=FALSE}
 library(testthat)
+```
 
+
+```{r}
 test_that("`print_movies()` prints as expected", {
   expect_equal(
     print_movies(
@@ -122,6 +137,8 @@ test_that("`print_movies()` prints as expected", {
   )
 })
 ```
+
+. . .
 
 With a more complex method, it'd be impossible for a human to read the expected output.
 
@@ -207,7 +224,7 @@ In such cases, setting a seed (e.g. `set.seed(42)`) should help.
 
 But if we change the behavior of underlying function (use `-` instead of `:` as a separator), the actual snapshot output won't match the expected one, and the test will fail:
 
-::: panel-tabset
+:::panel-tabset
 
 ### New function
 
@@ -260,6 +277,8 @@ Note that when the test fails, the message automatically provides a diff about w
 
 Failed test message makes it explicit how we should proceed to fix failing tests.
 
+. . . 
+
 - If the change was *deliberate*, you can accept the new snapshot as the current *truth*.
 
 ```r
@@ -272,10 +291,18 @@ Failed test message makes it explicit how we should proceed to fix failing tests
 * Run `snapshot_review('slides.qmd')` to interactively review the change
 ```
 
+. . . 
+
+</br>
+
 :::{.callout-tip collapse="true"}
+
 ## Fixing multiple snapshot tests
 
-If this is a utility function used by many other functions, changing its behaviour would lead to failure of many snapshot tests. You can accept snapshots for *all* files with `snapshot_accept()`.
+If this is a utility function used by many other functions, changing its behaviour would lead to failure of many snapshot tests. 
+
+You can accept snapshots for *all* files with `snapshot_accept()`. And, of course, check the diffs to make sure that the changes are expected.
+
 :::
 
 ## Capturing messages and warnings {.smaller}
@@ -306,6 +333,10 @@ test_that("g() warns the user", {
 
 :::
 
+. . . 
+
+</br>
+
 Note that the snapshot logs both the exact *condition* and the corresponding *message*.
 We can now rest assured that the users are getting informed the way we want them to.
 
@@ -335,6 +366,10 @@ test_that("`log()` doesn't work when argument not numeric", {
 
 :::
 
+. . . 
+
+</br>
+
 :::{.callout-tip}
 
 ### Which option should I use?
@@ -349,9 +384,18 @@ test_that("`log()` doesn't work when argument not numeric", {
 
 To create expectations, we will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/).
 
+# Headaches 
+
+It's not all is kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕
+
+## Failures in non-interactive environments {.smaller}
+
+If your snapshots fail locally, you can just run `snapshot_review()`, but what if they fail in non-interactive environments? For example, on CI/CD platforms or during `R CMD Check`?
+
 ##
 
 :::{.callout-tip}
+
 ## Why are my snapshots for plots failing?! 😔
 
 Often, you will experience that your tests are failing even if you didn't change anything about your plotting function. 
@@ -371,7 +415,7 @@ For these reasons, the visual regression tests tend to be fragile and by default
 
 In this presentation, we deliberately kept the example and the tests simple. 
 
-To see a more realistic usage of snapshot tests, you should study some open-source test suits on your own. 
+To see a more realistic usage of snapshot tests, you should study some open-source test suites on your own. 
 
 ---
 
@@ -415,18 +459,22 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 
 - `{shinytest2}` article introducing its [workflow](https://rstudio.github.io/shinytest2/articles/shinytest2.html)
 
-- [Introduction to golden testing](https://ro-che.info/articles/2017-12-04-golden-tests)
+- Introduction to [golden testing](https://ro-che.info/articles/2017-12-04-golden-tests)
+
+- Docs for [Jest](https://jestjs.io/docs/snapshot-testing) library in JavaScript, which inspired snapshot testing implementation in `{testthat}`
 
 - Collection of for [unit testing](https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-) in R
 
 # Find me at...
 
-[🐦 Twitter](http://twitter.com/patilindrajeets)
+[Twitter](http://twitter.com/patilindrajeets)
 
-[💻 GitHub](http://github.com/IndrajeetPatil)
+[LikedIn](https://www.linkedin.com/in/indrajeet-patil-397865174/)
 
-[🔗 Website](https://sites.google.com/site/indrajeetspatilmorality/)
+[GitHub](http://github.com/IndrajeetPatil)
 
-[📧 E-mail](mailto:patilindrajeet.science@gmail.com)
+[Website](https://sites.google.com/site/indrajeetspatilmorality/)
 
-# Thank You! 😊
+[E-mail](mailto:patilindrajeet.science@gmail.com)
+
+# Thank You and Happy Snapshotting! 😊
