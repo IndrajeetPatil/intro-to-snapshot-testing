@@ -11,26 +11,33 @@ execute:
   echo: true
 ---
 
-## Who is this for?
+## Unit testing {.smaller}
+
+The goal of a unit test is to capture the *expected* output of a function using *code* and making sure that *actual* output produced after any changes to the function matches this expected output.
+
+. . .
+
+This insures against unintentionally changing function behaviour, or re-introducing already fixed bugs.
+
+## Need for snapshot tests {.smaller}
 
 If you develop R packages and have wondered to yourself about how to 
 
 ::: incremental
 
-- test that fancy printing prints as expected
+- test that printing methods work as expected
 - test that generated plots or images are as expected
 - test that an entire file is as expected
 - write maintainable tests when the output is too complex to include in the source code
 - update such tests *en masse* 
-- ...
 
 ::: 
 
-<!-- ::: footer -->
-<!-- Photo by Roman Mager on [Unsplash](https://unsplash.com/photos/5mZ_M06Fc9g) -->
-<!-- ::: -->
+. . .
 
-## Prerequisites
+*Snapshots tests* (aka *golden tests*) can make writing such tests easier and more maintainable.
+
+# Prerequisites
 
 You are familiar with unit tests and how to write them using [`{testthat}`](https://testthat.r-lib.org/index.html).
 
@@ -66,7 +73,7 @@ Such custom methods are implemented to pretty-print R objects to the console, to
 
 ## Example function {.smaller}
 
-Let's say we want to write a unit test for the following printing function in our R package:
+Let's say we want to write a unit test for the following function in our R package:
 
 ::: panel-tabset
 
@@ -92,7 +99,11 @@ cat(print_movies(
 
 :::
 
-Note that what we want to test here is whether the printed output *looks* as expected. Therefore, we need to check for all the little bells and whistles in the printed output.
+. . .
+
+Note that we want to test that the printed output *looks* as expected. 
+
+Therefore, we need to check for all the little bells and whistles in the printed output.
 
 ## Example test {.smaller}
 
@@ -112,11 +123,13 @@ test_that("`print_movies()` prints as expected", {
 })
 ```
 
-With a more complex method, it'd be impossible for a human to read expected output.
+With a more complex method, it'd be impossible for a human to read the expected output.
+
+. . .
 
 :::{.callout-important}
 
-If this is a utility function used by many other functions, changing its behaviour would entail *manually changing* expected outputs for many tests.
+If this is a utility function used by many other functions, changing its behaviour would entail *manually* changing expected outputs for many tests.
 This is not maintainable! 😩
 
 :::
@@ -125,9 +138,7 @@ This is not maintainable! 😩
 
 Instead, you can use `expect_snapshot()`!
 
-:::{.callout-note}
-You will need to use the [third edition](https://testthat.r-lib.org/articles/third-edition.html) of `{testthat}` package.
-:::
+. . .
 
 The *first time* you run the test, it would generate a (human-readable) Markdown file with expected output.
 
@@ -152,13 +163,15 @@ snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
 
-## What success looks like {.smaller}
+. . .
 
 :::{.callout-warning}
 
 Because the expected output is generated the first time you run snapshot test, it is crucial that you carefully check that the output is indeed as expected. 🔎 
 
 :::
+
+## What success looks like {.smaller}
 
 If you run the test again, it'll succeed:
 
@@ -178,15 +191,38 @@ snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
 
+. . .
+
+:::{.callout-note}
+
+### Why does my test not pass?
+
+If you just generated a snapshot and ran the test again and it failed, this is most likely because your test is not deterministic. For example, if your function deals with random number generation.
+
+In such cases, setting a seed (e.g. `set.seed(42)`) should help.
+
+:::
+
 ## What failure looks like {.smaller}
 
-But if we change the behavior of underlying function, the actual snapshot output won't match the expected output, and the test will fail:
+But if we change the behavior of underlying function (use `-` instead of `:` as a separator), the actual snapshot output won't match the expected one, and the test will fail:
 
 ::: panel-tabset
 
 ### New function
 
+```{.r code-line-numbers="4"}
+print_movies <- function(keys, values) {
+  paste0(
+    "Movie: \n",
+    paste0("  ", keys, "- ", values, collapse = "\n")
+  )
+}
+```
+
 ```{r}
+#| echo: false
+
 print_movies <- function(keys, values) {
   paste0(
     "Movie: \n",
@@ -208,6 +244,17 @@ test_that("`print_movies()` prints as expected", {
 ```
 
 :::
+
+. . . 
+
+Note that when the test fails, the message automatically provides a diff about what was expected (`-` rows), and what was observed (`+` rows).
+
+```r
+- "    Title: Salaam Bombay!"
++ "    Title- Salaam Bombay!"
+- "    Director: Mira Nair"
++ "    Director- Mira Nair"
+```
 
 ## Fixing tests {.smaller}
 
@@ -299,6 +346,8 @@ test_that("`log()` doesn't work when argument not numeric", {
 :::
 
 # Testing visual outputs
+
+To create expectations, we will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/).
 
 ##
 
