@@ -574,6 +574,14 @@ Running `testthat::snapshot_review()` launches a Shiny app we can use to either 
 knitr::include_graphics("images/shiny_app_graphics.mov")
 ```
 
+# Testing entire files
+
+Whole file snapshot testing tests that images, data frames, text files, etc. are as expected.
+
+Since it works just like graphical snapshot tests, we won't discuss it in detail.
+
+For more, see: [`expect_snapshot_file()`](https://testthat.r-lib.org/reference/expect_snapshot_file.html)
+
 # Headaches 
 
 It's not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕

@@ -592,7 +592,7 @@ Output
 <span id="cb10-6"><a href="#cb10-6"></a>  )))</span>
 <span id="cb10-7"><a href="#cb10-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -915,7 +915,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb31-6"><a href="#cb31-6"></a>  )</span>
 <span id="cb31-7"><a href="#cb31-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 </section>
@@ -967,13 +967,20 @@ Backtrace:
 </section>
 <section id="fixing-tests-1" class="slide level2 smaller">
 <h2>Fixing tests</h2>
-<p>Running <code>testthat::snapshot_review()</code> lanuches a Shiny app we can use to either accept or reject the new output.</p>
+<p>Running <code>testthat::snapshot_review()</code> launches a Shiny app we can use to either accept or reject the new output(s).</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><video data-src="images/shiny_app_graphics.mov" style="width:60.0%" controls=""><a href="images/shiny_app_graphics.mov">Video</a></video></p>
 </div>
 </div>
 </section></section>
+<section id="testing-entire-files" class="title-slide slide level1 center">
+<h1>Testing entire files</h1>
+<p>Whole file snapshot testing tests that images, data frames, text files, etc. are as expected.</p>
+<p>Since it works just like graphical snapshot tests, we won’t discuss it in detail.</p>
+<p>For more, see: <a href="https://testthat.r-lib.org/reference/expect_snapshot_file.html"><code>expect_snapshot_file()</code></a></p>
+</section>
+
 <section>
 <section id="headaches" class="title-slide slide level1 center">
 <h1>Headaches</h1>
