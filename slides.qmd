@@ -664,7 +664,7 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 
 ## How does `{shinytest2}` work? {.smaller}
 
-`{shinytest2}` uses a Shiny app[^1] to record your interactions with the app and generates snapshots of the application's state. Future behaviour of the app will be compared against these snapshots to check for any changes.
+`{shinytest2}` uses a Shiny app[^2] to record your interactions with the app and generates snapshots of the application's state. Future behaviour of the app will be compared against these snapshots to check for any changes.
 
 . . . 
 
@@ -680,7 +680,7 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 
 :::
 
-[^1]: How meta! 😅
+[^2]: How meta! 😅
 
 ## Example Shiny app {.smaller}
 
