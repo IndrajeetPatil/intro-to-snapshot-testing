@@ -516,7 +516,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -625,7 +625,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -966,7 +966,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 </section>
@@ -1284,9 +1284,29 @@ Backtrace:
 <p>Given their fragile nature, snapshot tests are skipped on CRAN by default.</p>
 <p>Although this makes total sense, it means that you will miss out on anything but a breaking change from upstream dependency.</p>
 <p>For example, if <code>{ggplot2}</code> (hypothetically) changes how the points look, you will completely miss out on this change until you <em>happen to</em> run your snapshot tests again locally or on CI/CD after <code>{ggplot2}</code> update.</p>
-<p>Unit tests would alert to such changes because they are run on CRAN, and so you will be informed your package as soon as these tests start failing.</p>
+<p>Unit tests would alert to such changes because they are run on CRAN, and so you’ll be informed to update the package when tests start failing.</p>
 <p>The only solution I can think of to insure against this is to run such tests <strong>daily</strong> on CI/CD platforms (e.g.&nbsp;AppVeyor nightly builds).</p>
 </section></section>
+<section id="parting-wisdom" class="title-slide slide level1 center">
+<h1>Parting wisdom</h1>
+<div class="callout callout-important callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What <em>not</em> to do</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>Don’t use snapshot tests <strong>for everything</strong>: It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g.&nbsp;when testing requires external benchmarking).</p></li>
+<li><p>Don’t <strong>blindly accept</strong> snapshot changes: Resist formation of such a habit. <code>{testthat}</code> provides tools to make it extremely easy to review changes, so you have no excuses!</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
 <section>
 <section id="self-study" class="title-slide slide level1 center">
 <h1>Self-study</h1>

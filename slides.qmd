@@ -901,9 +901,21 @@ Although this makes total sense, it means that you will miss out on anything but
 
 For example, if `{ggplot2}` (hypothetically) changes how the points look, you will completely miss out on this change until you *happen to* run your snapshot tests again locally or on CI/CD after `{ggplot2}` update.
 
-Unit tests would alert to such changes because they are run on CRAN, and so you will be informed your package as soon as these tests start failing.
+Unit tests would alert to such changes because they are run on CRAN, and so you'll be informed to update the package when tests start failing.
 
 The only solution I can think of to insure against this is to run such tests **daily** on CI/CD platforms (e.g. AppVeyor nightly builds).
+
+# Parting wisdom
+
+:::{.callout-important}
+
+## What *not* to do
+
+- Don't use snapshot tests **for everything**: It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g. when testing requires external benchmarking).
+
+- Don't **blindly accept** snapshot changes: Resist formation of such a habit. `{testthat}` provides tools to make it extremely easy to review changes, so you have no excuses! 
+
+:::
 
 # Self-study 
 
