@@ -516,7 +516,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -625,7 +625,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -966,7 +966,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 </section>
@@ -1053,6 +1053,46 @@ Backtrace:
 </section>
 
 <section>
+<section id="testing-shiny-applications" class="title-slide slide level1 center">
+<h1>Testing Shiny applications</h1>
+
+</section>
+<section id="example-shiny-app" class="slide level2">
+<h2>Example Shiny app</h2>
+<!-- 
+  TODO: How to embed a Shiny app? 
+  If I just include the code in R chunk, I see:
+  "Shiny applications not supported in static R Markdown documents"
+-->
+<div class="panel-tabset">
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">App</a></li><li><a href="#tabset-7-2">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1">
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="images/shiny_app.mov" style="width:70.0%" controls=""><a href="images/shiny_app.mov">Video</a></video></p>
+</div>
+</div>
+</div>
+<div id="tabset-7-2">
+<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb39-2"><a href="#cb39-2"></a></span>
+<span id="cb39-3"><a href="#cb39-3"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb39-4"><a href="#cb39-4"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb39-5"><a href="#cb39-5"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb39-6"><a href="#cb39-6"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb39-7"><a href="#cb39-7"></a>)</span>
+<span id="cb39-8"><a href="#cb39-8"></a></span>
+<span id="cb39-9"><a href="#cb39-9"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb39-10"><a href="#cb39-10"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>))</span>
+<span id="cb39-11"><a href="#cb39-11"></a>}</span>
+<span id="cb39-12"><a href="#cb39-12"></a></span>
+<span id="cb39-13"><a href="#cb39-13"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
 <section id="headaches" class="title-slide slide level1 center">
 <h1>Headaches</h1>
 <p>It’s not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕</p>
@@ -1081,7 +1121,7 @@ Backtrace:
 <h2>Accessing new snapshots</h2>
 <div class="fragment">
 <p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
@@ -1097,9 +1137,9 @@ Backtrace:
 <ul>
 <li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
 </ul>
-<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb40-1"><a href="#cb40-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb41-1"><a href="#cb41-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="code-review-with-snapshot-tests" class="slide level2 smaller">
@@ -1110,9 +1150,9 @@ Backtrace:
 <section id="section-2" class="slide level2 smaller">
 <h2></h2>
 <div class="panel-tabset">
-<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">Option-1</a></li><li><a href="#tabset-7-2">Option-2</a></li></ul>
+<ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">Option-1</a></li><li><a href="#tabset-8-2">Option-2</a></li></ul>
 <div class="tab-content">
-<div id="tabset-7-1">
+<div id="tabset-8-1">
 <p>Use tools provided for code review by hosting platform (like GitHub). For example, to review changes in SVG snapshots:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1120,7 +1160,7 @@ Backtrace:
 </div>
 </div>
 </div>
-<div id="tabset-7-2">
+<div id="tabset-8-2">
 <p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
 </div>
 </div>

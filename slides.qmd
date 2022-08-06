@@ -658,6 +658,54 @@ Since it works just like graphical snapshot tests, we won't discuss it in detail
 
 For more, see: [`expect_snapshot_file()`](https://testthat.r-lib.org/reference/expect_snapshot_file.html)
 
+# Testing Shiny applications
+
+To write formal tests for Shiny applications, we will use `{testthat}` extension package: [`{shinytest2}`](https://rstudio.github.io/shinytest2/).
+
+## Example Shiny app
+
+<!-- 
+  TODO: How to embed a Shiny app? 
+  If I just include the code in R chunk, I see:
+  "Shiny applications not supported in static R Markdown documents"
+-->
+
+:::panel-tabset
+
+### App
+
+```{r}
+#| echo: false
+#| out.width: "70%"
+knitr::include_graphics("images/shiny_app.mov")
+```
+
+### Code
+
+```{.r}
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Convert kilograms to grams"),
+  numericInput("kg", "Weight (in kg)", value = 0),
+  textOutput("g")
+)
+
+server <- function(input, output, session) {
+  output$g <- renderText(paste0("Weight (in g): ", input$kg * 1000))
+}
+
+shinyApp(ui, server)
+```
+
+:::
+
+
+
+
+
+
+
 # Headaches 
 
 It's not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕
