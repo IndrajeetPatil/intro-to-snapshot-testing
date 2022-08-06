@@ -893,6 +893,18 @@ Locally open the PR branch and play around with the changes to see if the new be
 
 :::
 
+## Danger of silent failures {.smaller}
+
+Given their fragile nature, snapshot tests are skipped on CRAN by default. 
+
+Although this makes total sense, it means that you will miss out on anything but a breaking change from upstream dependency.
+
+For example, if `{ggplot2}` (hypothetically) changes how the points look, you will completely miss out on this change until you *happen to* run your snapshot tests again locally or on CI/CD after `{ggplot2}` update.
+
+Unit tests would alert to such changes because they are run on CRAN, and so you will be informed your package as soon as these tests start failing.
+
+The only solution I can think of to insure against this is to run such tests **daily** on CI/CD platforms (e.g. AppVeyor nightly builds).
+
 # Self-study 
 
 In this presentation, we deliberately kept the example and the tests simple. 
