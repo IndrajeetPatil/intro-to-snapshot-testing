@@ -399,7 +399,7 @@
 <li class="fragment"><p>Tests also act as the most basic form of developer-focused documentation<sup>1</sup>.</p></li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>Ousterhout, J. K. (2018). <em>A Philosophy of Software Design</em>. Palo Alto: Yaknyam Press.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>How meta! 😅</p></li></ol></aside></section>
 <section id="what-is-different-about-snapshot-testing" class="slide level2">
 <h2>What is different about snapshot testing?</h2>
 <p>A <strong>unit test</strong> records the code to describe expected output.</p>
@@ -425,7 +425,7 @@ https://github.com/quarto-ext/fontawesome  -->
 </ul>
 </div>
 <div class="fragment">
-<p>then you should be excited to hear about <em>snapshot tests</em> (aka <em>golden tests</em>), which can relieve above-mentioned pain-points! 🤩</p>
+<p>then you should be excited to know more about <em>snapshot tests</em> (aka <em>golden tests</em>)! 🤩</p>
 <p>We will see how in these slides.</p>
 </div>
 </section>
@@ -516,11 +516,11 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 <div class="fragment">
-<p>With a more complex method, it’d be impossible for a human to read the expected output.</p>
+<p>With a more complex code, it’d be impossible for a human to reason about what the output is supposed to look like.</p>
 </div>
 <div class="fragment">
 <div class="callout callout-important callout-captioned callout-style-default">
@@ -532,7 +532,8 @@ https://github.com/quarto-ext/fontawesome  -->
 <p><strong>Important</strong></p>
 </div>
 <div class="callout-content">
-<p>If this is a utility function used by many other functions, changing its behaviour would entail <em>manually</em> changing expected outputs for many tests. This is not maintainable! 😩</p>
+<p>If this is a utility function used by many other functions, changing its behaviour would entail <em>manually</em> changing expected outputs for many tests.</p>
+<p>This is not maintainable! 😩</p>
 </div>
 </div>
 </div>
@@ -573,8 +574,40 @@ Output
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>The first time a snapshot is created, it becomes <em>the truth</em> against which future behaviour of function will be compared.</p>
+<p>The first time a snapshot is created, it becomes <em>the truth</em> against which future function behaviour will be compared.</p>
 <p>Thus, it is <strong>crucial</strong> that you carefully check that the output is indeed as expected. 🔎</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="human-readable-markdown-file" class="slide level2 smaller">
+<h2>Human-readable Markdown file</h2>
+<p>Compared to our unit test code representing the expected output</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>notice how much more human-friendly the Markdown output is!</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1"></a>Code</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  cat(print_movies(c("Title", "Director"), c("Salaam Bombay!", "Mira Nair")))</span>
+<span id="cb11-3"><a href="#cb11-3"></a>Output</span>
+<span id="cb11-4"><a href="#cb11-4"></a>  Movie: </span>
+<span id="cb11-5"><a href="#cb11-5"></a>    Title: Salaam Bombay!</span>
+<span id="cb11-6"><a href="#cb11-6"></a>    Director: Mira Nair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It is easy to <em>see</em> what the printed text output is <em>supposed</em> to look like. In other words, snapshot tests are useful when the <em>intent</em> of the code can only be verified by a human.</p>
+<div class="fragment">
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>More about snapshots files</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>If a test is called <code>test-foo.R</code>, the snapshot will be saved to <code>test/testthat/_snaps/foo.md</code>.</p></li>
+<li><p>If there are multiple snapshot tests in a single file, corresponding snapshots will also share the same <code>.md</code> file.</p></li>
+<li><p>By default, <code>expect_snapshot()</code> will capture the code, the object values, and any side-effects.</p></li>
+</ul>
 </div>
 </div>
 </div>
@@ -584,25 +617,26 @@ Output
 <h2>What success looks like</h2>
 <p>If you run the test again, it’ll succeed:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
-<span id="cb10-4"><a href="#cb10-4"></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
-<span id="cb10-5"><a href="#cb10-5"></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
-<span id="cb10-6"><a href="#cb10-6"></a>  )))</span>
-<span id="cb10-7"><a href="#cb10-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb12-4"><a href="#cb12-4"></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
+<span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 <div class="fragment">
+<p><br></p>
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Why does my test not pass?</strong></p>
+<p><strong>Why does my test fail on a rerun?</strong></p>
 </div>
 <div class="callout-content">
 <p>If you just generated a snapshot and ran the test again and it failed, this is most likely because your test is not deterministic. For example, if your function deals with random number generation.</p>
@@ -614,30 +648,30 @@ Output
 </section>
 <section id="what-failure-looks-like" class="slide level2 smaller">
 <h2>What failure looks like</h2>
-<p>But if we change the behavior of underlying function (use <code>-</code> instead of <code>:</code> as a separator), the actual snapshot output won’t match the expected one, and the test will fail:</p>
+<p>But if we change the function (use <code>-</code> instead of <code>:</code> as a separator), the actual snapshot output won’t match the expected one, and the test will fail:</p>
 <div class="panel-tabset">
 <ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Changes to function</a></li><li><a href="#tabset-2-2">Test failure</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
-<div class="sourceCode" id="cb12" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb12-3"><a href="#cb12-3"></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4"></a>    <span class="fu">paste0</span>(<span class="st">"  "</span>, keys, <span class="st">"- "</span>, values, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb12-5"><a href="#cb12-5"></a>  )</span>
-<span id="cb12-6"><a href="#cb12-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb14-3"><a href="#cb14-3"></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4"></a>    <span class="fu">paste0</span>(<span class="st">"  "</span>, keys, <span class="st">"- "</span>, values, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  )</span>
+<span id="cb14-6"><a href="#cb14-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 
 </div>
 </div>
 <div id="tabset-2-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
-<span id="cb13-4"><a href="#cb13-4"></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
-<span id="cb13-5"><a href="#cb13-5"></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
-<span id="cb13-6"><a href="#cb13-6"></a>  )))</span>
-<span id="cb13-7"><a href="#cb13-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb15-4"><a href="#cb15-4"></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb15-5"><a href="#cb15-5"></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6"></a>  )))</span>
+<span id="cb15-7"><a href="#cb15-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Failure (&lt;text&gt;:3:3): `print_movies()` prints as expected ───────────────────
 Snapshot of code has changed:
@@ -662,25 +696,25 @@ old[2:6] vs new[2:6]
 </div>
 </div>
 <div class="fragment">
-<p>Note that when the test fails, the message automatically provides a diff about what was expected (<code>-</code> rows), and what was observed (<code>+</code> rows).</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="sc">-</span> <span class="st">"    Title: Salaam Bombay!"</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="sc">+</span> <span class="st">"    Title- Salaam Bombay!"</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="sc">-</span> <span class="st">"    Director: Mira Nair"</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="sc">+</span> <span class="st">"    Director- Mira Nair"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that when the test fails, the message automatically provides a diff about what was expected (<code>-</code> rows) versus observed (<code>+</code> rows).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="sc">-</span> <span class="st">"    Title: Salaam Bombay!"</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="sc">+</span> <span class="st">"    Title- Salaam Bombay!"</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="sc">-</span> <span class="st">"    Director: Mira Nair"</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="sc">+</span> <span class="st">"    Director- Mira Nair"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fixing-tests" class="slide level2 smaller">
 <h2>Fixing tests</h2>
-<p>Failed test message makes it explicit how we should proceed to fix failing tests.</p>
+<p>Message accompanying failed tests make it explicit how we to fix them.</p>
 <div class="fragment">
 <ul>
 <li>If the change was <em>deliberate</em>, you can accept the new snapshot as the current <em>truth</em>.</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_accept('slides.qmd')</span><span class="st">`</span> to accept the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_accept('slides.qmd')</span><span class="st">`</span> to accept the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>If this was <em>unexpected</em>, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.</li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('slides.qmd')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('slides.qmd')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
@@ -708,11 +742,11 @@ old[2:6] vs new[2:6]
 <div class="tab-content">
 <div id="tabset-3-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">message</span>(<span class="st">"Some info for you."</span>)</span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">test_that</span>(<span class="st">"f() produces expected message"</span>, {</span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">f</span>())</span>
-<span id="cb19-5"><a href="#cb19-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">message</span>(<span class="st">"Some info for you."</span>)</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">test_that</span>(<span class="st">"f() produces expected message"</span>, {</span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">f</span>())</span>
+<span id="cb21-5"><a href="#cb21-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning (&lt;text&gt;:4:3): f() produces expected message ─────────────────────────
 Adding new snapshot:
@@ -725,11 +759,11 @@ Message &lt;simpleMessage&gt;
 </div>
 <div id="tabset-3-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">warning</span>(<span class="st">"Managed to recover."</span>)</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">test_that</span>(<span class="st">"g() warns the user"</span>, {</span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">g</span>())</span>
-<span id="cb21-5"><a href="#cb21-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">warning</span>(<span class="st">"Managed to recover."</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">test_that</span>(<span class="st">"g() warns the user"</span>, {</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">g</span>())</span>
+<span id="cb23-5"><a href="#cb23-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning (&lt;text&gt;:4:3): g() warns the user ────────────────────────────────────
 Adding new snapshot:
@@ -752,7 +786,8 @@ Warning &lt;simpleWarning&gt;
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>Snapshot records both the <em>condition</em> and the corresponding <em>message</em>. We can now rest assured that the users are getting informed the way we want! 😌</p>
+<p>Snapshot records both the <em>condition</em> and the corresponding <em>message</em>.</p>
+<p>We can now rest assured that the users are getting informed the way we want! 😌</p>
 </div>
 </div>
 </div>
@@ -760,16 +795,16 @@ Warning &lt;simpleWarning&gt;
 </section>
 <section id="capturing-errors" class="slide level2 smaller">
 <h2>Capturing errors</h2>
-<p>In case of an error, the function <code>expect_snapshot()</code> itself will produce an error. You have two ways to snapshot errors:</p>
+<p>In case of an error, the function <code>expect_snapshot()</code> itself will produce an error. You have two ways around this:</p>
 <div class="panel-tabset">
 <ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Option-1</a></li><li><a href="#tabset-4-2">Option-2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1">
+<div class="sourceCode" id="cb25" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` doesn't work when argument not numeric"</span>, {</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">log</span>(<span class="st">"x"</span>), <span class="at">error =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-4"><a href="#cb25-4"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` doesn't work when argument not numeric"</span>, {</span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">log</span>(<span class="st">"x"</span>), <span class="at">error =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb23-4"><a href="#cb23-4"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning (&lt;text&gt;:3:3): `log()` doesn't work when argument not numeric ────────
 Adding new snapshot:
@@ -781,11 +816,11 @@ Error &lt;simpleError&gt;
 </div>
 </div>
 <div id="tabset-4-2">
+<div class="sourceCode" id="cb27" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` doesn't work when argument not numeric"</span>, {</span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">expect_snapshot_error</span>(<span class="fu">log</span>(<span class="st">"x"</span>))</span>
+<span id="cb27-4"><a href="#cb27-4"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` doesn't work when argument not numeric"</span>, {</span>
-<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">expect_snapshot_error</span>(<span class="fu">log</span>(<span class="st">"x"</span>))</span>
-<span id="cb25-4"><a href="#cb25-4"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning (&lt;text&gt;:3:3): `log()` doesn't work when argument not numeric ────────
 Adding new snapshot:
@@ -819,9 +854,9 @@ non-numeric argument to mathematical function</code></pre>
 <h1>Testing graphical outputs</h1>
 <p>To create graphical expectations, we will use <code>{testthat}</code> extension package: <a href="https://vdiffr.r-lib.org/"><code>{vdiffr}</code></a>.</p>
 </section>
-<section id="how-does-it-work" class="slide level2 smaller">
-<h2>How does it work?</h2>
-<p><code>{vdiffr}</code> introduces <code>expect_doppelganger()</code> to generate <code>{testthat}</code> expectations for graphics. It does this by generating SVG snapshots of entire graphics files!</p>
+<section id="how-does-vdiffr-work" class="slide level2 smaller">
+<h2>How does <code>{vdiffr}</code> work?</h2>
+<p><code>{vdiffr}</code> introduces <code>expect_doppelganger()</code> to generate <code>{testthat}</code> expectations for graphics. It does this by writing SVG snapshot files for outputs!</p>
 <div class="fragment">
 <p>The figure to test can be:</p>
 <ul>
@@ -831,7 +866,23 @@ non-numeric argument to mathematical function</code></pre>
 </ul>
 </div>
 <div class="fragment">
-<p>Just like other snapshot files, these are stored in <code>tests/testthat/_snaps/</code> folder, with a separate folder for each test file (<code>test-*.R</code>).</p>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>If a test is called <code>test-foo.R</code>, the snapshot will be saved to <code>test/testthat/_snaps/foo</code> folder.</p></li>
+<li><p>In this folder, there will be one <code>.svg</code> file for every test in <code>test-foo.R</code>.</p></li>
+<li><p>The name for the <code>.svg</code> file will be sanitized version of <code>title</code> argument to <code>expect_doppelganger()</code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="example-function-1" class="slide level2 smaller">
@@ -842,18 +893,18 @@ non-numeric argument to mathematical function</code></pre>
 <div class="tab-content">
 <div id="tabset-5-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb27-2"><a href="#cb27-2"></a></span>
-<span id="cb27-3"><a href="#cb27-3"></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
-<span id="cb27-7"><a href="#cb27-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb29-7"><a href="#cb29-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-5-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">create_scatter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">create_scatter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="slides_files/figure-revealjs/unnamed-chunk-17-1.png" style="width:70.0%"></p>
 </div>
@@ -872,13 +923,13 @@ non-numeric argument to mathematical function</code></pre>
 <div class="fragment">
 <p>The <em>first time</em> you run the test, it’d generate an <code>.svg</code> file with expected graphical output.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
-<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">expect_doppelganger</span>(</span>
-<span id="cb29-4"><a href="#cb29-4"></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
-<span id="cb29-5"><a href="#cb29-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
-<span id="cb29-6"><a href="#cb29-6"></a>  )</span>
-<span id="cb29-7"><a href="#cb29-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb31-4"><a href="#cb31-4"></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb31-5"><a href="#cb31-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb31-6"><a href="#cb31-6"></a>  )</span>
+<span id="cb31-7"><a href="#cb31-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning (&lt;text&gt;:3:3): `create_scatter()` plots as expected ──────────────────
 Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
@@ -896,7 +947,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>The first time a snapshot is created, it becomes <em>the truth</em> against which future behaviour of function will be compared.</p>
+<p>The first time a snapshot is created, it becomes <em>the truth</em> against which future function behaviour will be compared.</p>
 <p>Thus, it is <strong>crucial</strong> that you carefully check that the output is indeed as expected. 🔎</p>
 </div>
 </div>
@@ -907,15 +958,15 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <h2>What success looks like</h2>
 <p>If you run the test again, it’ll succeed:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
-<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">expect_doppelganger</span>(</span>
-<span id="cb31-4"><a href="#cb31-4"></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
-<span id="cb31-5"><a href="#cb31-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
-<span id="cb31-6"><a href="#cb31-6"></a>  )</span>
-<span id="cb31-7"><a href="#cb31-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb33-4"><a href="#cb33-4"></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb33-5"><a href="#cb33-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb33-6"><a href="#cb33-6"></a>  )</span>
+<span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 </section>
@@ -926,24 +977,24 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Changes to function</a></li><li><a href="#tabset-6-2">Test failure</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1">
-<div class="sourceCode" id="cb33" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
-<span id="cb33-3"><a href="#cb33-3"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
-<span id="cb33-4"><a href="#cb33-4"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
-<span id="cb33-5"><a href="#cb33-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb35-5"><a href="#cb35-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 
 </div>
 </div>
 <div id="tabset-6-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
-<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">expect_doppelganger</span>(</span>
-<span id="cb34-4"><a href="#cb34-4"></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
-<span id="cb34-5"><a href="#cb34-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
-<span id="cb34-6"><a href="#cb34-6"></a>  )</span>
-<span id="cb34-7"><a href="#cb34-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb36-4"><a href="#cb36-4"></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb36-6"><a href="#cb36-6"></a>  )</span>
+<span id="cb36-7"><a href="#cb36-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Failure (&lt;text&gt;:3:3): `create_scatter()` plots as expected ──────────────────
 Snapshot of `testcase` to 'slides.qmd/create-scatter.svg' has changed
@@ -960,90 +1011,17 @@ Backtrace:
 </div>
 </div>
 </div>
-<div class="fragment">
-<p>Note that when the test fails, the message <strong>cannot</strong> provide a diff.</p>
-<p>Instead, <code>{testthat}</code> provides a Shiny app to compare changes in the output.</p>
-</div>
 </section>
 <section id="fixing-tests-1" class="slide level2 smaller">
 <h2>Fixing tests</h2>
-<p>Running <code>testthat::snapshot_review()</code> launches a Shiny app we can use to either accept or reject the new output(s).</p>
+<p>Running <code>snapshot_review()</code> launches a Shiny app which can be used to either accept or reject the new output(s).</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><video data-src="images/shiny_app_graphics.mov" style="width:60.0%" controls=""><a href="images/shiny_app_graphics.mov">Video</a></video></p>
-</div>
-</div>
-</section></section>
-<section id="testing-entire-files" class="title-slide slide level1 center">
-<h1>Testing entire files</h1>
-<p>Whole file snapshot testing tests that images, data frames, text files, etc. are as expected.</p>
-<p>Since it works just like graphical snapshot tests, we won’t discuss it in detail.</p>
-<p>For more, see: <a href="https://testthat.r-lib.org/reference/expect_snapshot_file.html"><code>expect_snapshot_file()</code></a></p>
-</section>
-
-<section>
-<section id="headaches" class="title-slide slide level1 center">
-<h1>Headaches</h1>
-<p>It’s not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕</p>
-</section>
-<section id="failures-in-non-interactive-environments" class="slide level2 smaller">
-<h2>Failures in non-interactive environments</h2>
-<p>If your snapshots fail locally, you can just run <code>snapshot_review()</code>, but what if they fail in non-interactive environments? For example, on CI/CD platforms or during <code>R CMD Check</code>?</p>
-<p>The easiest solution in such cases is to copy the new versions snapshots to your local folder and then run <code>snapshot_review()</code>.</p>
-<p>We can discuss next where you can find the new snapshots.</p>
-</section>
-<section id="accessing-new-snapshots" class="slide level2 smaller">
-<h2>Accessing new snapshots</h2>
-<div class="fragment">
-<p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
-<blockquote>
-<p>package_name.Rcheck/tests/testthat/_snaps/</p>
-</blockquote>
-</div>
-<div class="fragment">
-<p>On CI/CD platforms, you can find snapshots as artifacts.</p>
-<ul>
-<li><a href="https://www.appveyor.com/docs/packaging-artifacts/">AppVeyor</a></li>
-</ul>
-<div class="cell">
-<div class="cell-output-display">
-<p><img data-src="images/AppVeyor.png" width="484"></p>
-</div>
-</div>
-<ul>
-<li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
-</ul>
-<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb37-3"><a href="#cb37-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="code-review-with-snapshot-tests" class="slide level2 smaller">
-<h2>Code review with snapshot tests</h2>
-<p>Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots.</p>
-<p>How do you review pull requests with such changes to snapshots?</p>
-<p>Next slide describes two approaches I prefer.</p>
-</section>
-<section id="section-1" class="slide level2 smaller">
-<h2></h2>
-<div class="panel-tabset">
-<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">Option-1</a></li><li><a href="#tabset-7-2">Option-2</a></li></ul>
-<div class="tab-content">
-<div id="tabset-7-1">
-<p>Use tools provided for code review by hosting platform (like GitHub) (e.g.&nbsp;to review changes in SVG snapshots)</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><video data-src="images/github_pr.mov" style="width:70.0%" controls=""><a href="images/github_pr.mov">Video</a></video></p>
-</div>
-</div>
-</div>
-<div id="tabset-7-2">
-<p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
-</div>
+<p><video data-src="media/shiny_app_graphics.mov" style="width:60.0%" controls=""><a href="media/shiny_app_graphics.mov">Video</a></video></p>
 </div>
 </div>
 </section>
-<section id="section-2" class="slide level2">
+<section id="section-1" class="slide level2">
 <h2></h2>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
@@ -1062,7 +1040,241 @@ Backtrace:
 <li>non-determinism</li>
 <li>reliance on system libraries</li>
 </ul>
-<p>For these reasons, the visual regression tests tend to be fragile and by default not run on CRAN machines. They are only run on CI platforms.</p>
+<p>For these reasons, the visual regression tests tend to be fragile and by default not run on CRAN machines.</p>
+</div>
+</div>
+</div>
+</section></section>
+<section id="testing-entire-files" class="title-slide slide level1 center">
+<h1>Testing entire files</h1>
+<p>Whole file snapshot testing makes sure that media, data frames, text files, etc. are as expected.</p>
+<p>Since it works just like graphical snapshot tests, we won’t discuss it in detail.</p>
+<p>For more, see: <a href="https://testthat.r-lib.org/reference/expect_snapshot_file.html"><code>expect_snapshot_file()</code></a></p>
+</section>
+
+<section>
+<section id="testing-shiny-applications" class="title-slide slide level1 center">
+<h1>Testing Shiny applications</h1>
+<p>To write formal tests for Shiny applications, we will use <code>{testthat}</code> extension package: <a href="https://rstudio.github.io/shinytest2/"><code>{shinytest2}</code></a>.</p>
+</section>
+<section id="how-does-shinytest2-work" class="slide level2 smaller">
+<h2>How does <code>{shinytest2}</code> work?</h2>
+<p><code>{shinytest2}</code> uses a Shiny app<sup>1</sup> to record your interactions with the app and generates snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
+<div class="fragment">
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>You don’t need to create a test file; <code>{shinytest2}</code> will do that for you! You will just need to run <code>record_test()</code>.</p></li>
+<li><p>The test script will be saved in a <em>subdirectory</em> of the application.If your app is located in (e.g.) <code>inst/</code> folder, the test will be in <code>inst/my-app/tests/testthat/test-shinytest2.R</code>.</p></li>
+<li><p>There will be one <code>tests</code> folder inside every application folder.</p></li>
+<li><p>The snapshots are saved as <code>.png</code> file in <code>tests/testthat/_test-shinytest2/_snaps/{.variant}/shinytest2</code>. The <code>{.variant}</code> here corresponds to operating system and R version used to record tests. For example, <code>_snaps/windows-4.1/shinytest2</code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn2" role="doc-endnote"><p>How meta! 😅</p></li></ol></aside></section>
+<section id="example-shiny-app" class="slide level2 smaller">
+<h2>Example Shiny app</h2>
+<p>Let’s say this app resides in the <code>inst/unitConverter</code> package directory.</p>
+<!-- 
+  TODO: How to embed a Shiny app? 
+  If I just include the code in R chunk, I see:
+  "Shiny applications not supported in static R Markdown documents"
+-->
+<div class="panel-tabset">
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">App</a></li><li><a href="#tabset-7-2">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1">
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="media/shiny_app.mov" style="width:50.0%" controls=""><a href="media/shiny_app.mov">Video</a></video></p>
+</div>
+</div>
+</div>
+<div id="tabset-7-2">
+<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb39-2"><a href="#cb39-2"></a></span>
+<span id="cb39-3"><a href="#cb39-3"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb39-4"><a href="#cb39-4"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb39-5"><a href="#cb39-5"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb39-6"><a href="#cb39-6"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb39-7"><a href="#cb39-7"></a>)</span>
+<span id="cb39-8"><a href="#cb39-8"></a></span>
+<span id="cb39-9"><a href="#cb39-9"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb39-10"><a href="#cb39-10"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>))</span>
+<span id="cb39-11"><a href="#cb39-11"></a>}</span>
+<span id="cb39-12"><a href="#cb39-12"></a></span>
+<span id="cb39-13"><a href="#cb39-13"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="callout callout-warning callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Make sure that the application is stored in a single <code>app.R</code> file.</p>
+<p>Separating the app into <code>ui.R</code> and <code>server.R</code> files won’t work with <code>{shinytest2}</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="generating-a-test" class="slide level2 smaller">
+<h2>Generating a test</h2>
+<p>To create a snapshot test, go to the app directory and run <code>record_test()</code>.</p>
+<div class="panel-tabset">
+<ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">Procedure</a></li><li><a href="#tabset-8-2">Generated test</a></li><li><a href="#tabset-8-3">Generated snapshot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1">
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="media/shinytest_record.mov" style="width:60.0%" controls=""><a href="media/shinytest_record.mov">Video</a></video></p>
+</div>
+</div>
+</div>
+<div id="tabset-8-2">
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">library</span>(shinytest2)</span>
+<span id="cb40-2"><a href="#cb40-2"></a></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="fu">test_that</span>(<span class="st">"{shinytest2} recording: unitConverter"</span>, {</span>
+<span id="cb40-4"><a href="#cb40-4"></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(<span class="at">name =</span> <span class="st">"unitConverter"</span>, <span class="at">height =</span> <span class="dv">543</span>, <span class="at">width =</span> <span class="dv">426</span>)</span>
+<span id="cb40-5"><a href="#cb40-5"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">1</span>)</span>
+<span id="cb40-6"><a href="#cb40-6"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">10</span>)</span>
+<span id="cb40-7"><a href="#cb40-7"></a>  app<span class="sc">$</span><span class="fu">expect_values</span>()</span>
+<span id="cb40-8"><a href="#cb40-8"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-8-3">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="media/unitConverter-001_.png" style="width:50.0%"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="updating-snapshots" class="slide level2 smaller">
+<h2>Updating snapshots</h2>
+<p>Let’s say, while updating the app, we make a mistake. This’d lead to a test failure. Fixing this test will be similar to fixing any other snapshot test we’ve seen thus far.</p>
+<div class="panel-tabset">
+<ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">Code</a></li><li><a href="#tabset-9-2">Test failure JSON diff</a></li><li><a href="#tabset-9-3">Snapshot differences</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1">
+<div class="sourceCode" id="cb41" data-code-line-numbers="10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb41-2"><a href="#cb41-2"></a></span>
+<span id="cb41-3"><a href="#cb41-3"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb41-5"><a href="#cb41-5"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb41-6"><a href="#cb41-6"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb41-7"><a href="#cb41-7"></a>)</span>
+<span id="cb41-8"><a href="#cb41-8"></a></span>
+<span id="cb41-9"><a href="#cb41-9"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb41-10"><a href="#cb41-10"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>))</span>
+<span id="cb41-11"><a href="#cb41-11"></a>}</span>
+<span id="cb41-12"><a href="#cb41-12"></a></span>
+<span id="cb41-13"><a href="#cb41-13"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-9-2">
+<div class="sourceCode" id="cb42" data-code-line-number="6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb42-1"><a href="#cb42-1"></a><span class="er">Diff</span> <span class="er">in</span> <span class="er">snapshot</span> <span class="er">file</span> <span class="er">`shinytest2unitConverter-001.json`</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="er">&lt;</span> <span class="er">before</span>                            <span class="er">&gt;</span> <span class="er">after</span>                           </span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                           <span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                         </span>
+<span id="cb42-4"><a href="#cb42-4"></a>    <span class="er">},</span>                                  <span class="er">},</span>                            </span>
+<span id="cb42-5"><a href="#cb42-5"></a>    <span class="er">"output":</span> <span class="fu">{</span>                         <span class="dt">"output"</span><span class="fu">:</span> <span class="fu">{</span>                   </span>
+<span id="cb42-6"><a href="#cb42-6"></a><span class="er">&lt;</span>     <span class="dt">"g"</span><span class="fu">:</span> <span class="st">"Weight (in g): 10000"</span>   <span class="er">&gt;</span>     <span class="st">"g"</span><span class="er">:</span> <span class="st">"Weight (in kg): 10000"</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a>    <span class="fu">},</span>                                  <span class="fu">}</span><span class="er">,</span>                            </span>
+<span id="cb42-8"><a href="#cb42-8"></a>    <span class="er">"export":</span> <span class="fu">{</span>                         <span class="dt">"export"</span><span class="fu">:</span> <span class="fu">{</span>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-9-3">
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="media/shinytest_failure.mov" style="width:60.0%" controls=""><a href="media/shinytest_failure.mov">Video</a></video></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="headaches" class="title-slide slide level1 center">
+<h1>Headaches</h1>
+<p>It’s not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕</p>
+</section>
+<section id="failures-in-non-interactive-environments" class="slide level2 smaller">
+<h2>Failures in non-interactive environments</h2>
+<p>If your snapshots fail locally, you can just run <code>snapshot_review()</code>, but what if they fail in non-interactive environments? For example, on CI/CD platforms or during <code>R CMD Check</code>?</p>
+<p>The easiest solution in such cases is to copy the new snapshots to your local folder and then run <code>snapshot_review()</code>.</p>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>If your expected snapshot is called (e.g.) <code>foo.svg</code>, when the test fails, there will be a new snapshot file <code>foo.new.svg</code> in the same folder.</p>
+<p><code>snapshot_review()</code> compares these files to reveal how the output has changed.</p>
+</div>
+</div>
+</div>
+<p>But where can you find the new snapshots?</p>
+</section>
+<section id="accessing-new-snapshots" class="slide level2 smaller">
+<h2>Accessing new snapshots</h2>
+<div class="fragment">
+<p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><br></p>
+<p>On CI/CD platforms, you can find snapshots in artifacts folder:</p>
+<ul>
+<li><a href="https://www.appveyor.com/docs/packaging-artifacts/">AppVeyor</a></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="media/AppVeyor.png" width="484"></p>
+</div>
+</div>
+<ul>
+<li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
+</ul>
+<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="code-review-with-snapshot-tests" class="slide level2 smaller">
+<h2>Code review with snapshot tests</h2>
+<p>Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots.</p>
+<p>How do you review pull requests with complex changes in snapshots?</p>
+</section>
+<section id="section-2" class="slide level2 smaller">
+<h2></h2>
+<div class="panel-tabset">
+<ul id="tabset-10" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-10-1">Option-1</a></li><li><a href="#tabset-10-2">Option-2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1">
+<p>Use tools provided for code review by hosting platform (like GitHub). For example, to review changes in SVG snapshots:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="media/github_pr.mov" style="width:70.0%" controls=""><a href="media/github_pr.mov">Video</a></video></p>
+</div>
+</div>
+</div>
+<div id="tabset-10-2">
+<p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
 </div>
 </div>
 </div>
@@ -1099,7 +1311,7 @@ Backtrace:
 </div>
 </div>
 </section>
-<section id="further-reading" class="slide level2">
+<section id="further-reading" class="slide level2 smaller">
 <h2>Further reading</h2>
 <ul>
 <li><p><code>{testthat}</code> article on <a href="https://testthat.r-lib.org/articles/snapshotting.html">snapshot testing</a></p></li>
@@ -1111,11 +1323,11 @@ Backtrace:
 </section></section>
 <section id="find-me-at" class="title-slide slide level1 center">
 <h1>Find me at…</h1>
-<p><a href="http://twitter.com/patilindrajeets">Twitter</a></p>
-<p><a href="https://www.linkedin.com/in/indrajeet-patil-397865174/">LikedIn</a></p>
-<p><a href="http://github.com/IndrajeetPatil">GitHub</a></p>
-<p><a href="https://sites.google.com/site/indrajeetspatilmorality/">Website</a></p>
-<p><a href="mailto:patilindrajeet.science@gmail.com">E-mail</a></p>
+<p><i class="fa-brands fa-twitter" aria-hidden="true"></i> <a href="http://twitter.com/patilindrajeets">Twitter</a></p>
+<p><i class="fa-brands fa-linkedin" aria-hidden="true"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-397865174/">LikedIn</a></p>
+<p><i class="fa-brands fa-github" aria-hidden="true"></i> <a href="http://github.com/IndrajeetPatil">GitHub</a></p>
+<p><i class="fa-solid fa-link" aria-hidden="true"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/">Website</a></p>
+<p><i class="fa-solid fa-envelope" aria-hidden="true"></i> <a href="mailto:patilindrajeet.science@gmail.com">E-mail</a></p>
 </section>
 
 <section id="thank-you" class="title-slide slide level1 center">

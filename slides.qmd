@@ -682,7 +682,9 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 
 [^1]: How meta! 😅
 
-## Example Shiny app
+## Example Shiny app {.smaller}
+
+Let's say this app resides in the `inst/unitConverter` package directory.
 
 <!-- 
   TODO: How to embed a Shiny app? 
@@ -696,7 +698,7 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 
 ```{r}
 #| echo: false
-#| out.width: "70%"
+#| out.width: "50%"
 knitr::include_graphics("media/shiny_app.mov")
 ```
 
@@ -720,9 +722,17 @@ shinyApp(ui, server)
 
 :::
 
-## Creating a test {.smaller}
+:::{.callout-warning}
 
-To a snapshot test, go to the app directory and run `record_test()`.
+Make sure that the application is stored in a single `app.R` file.
+
+Separating the app into `ui.R` and `server.R` files won't work with `{shinytest2}`.
+
+:::
+
+## Generating a test {.smaller}
+
+To create a snapshot test, go to the app directory and run `record_test()`.
 
 :::panel-tabset
 
@@ -758,6 +768,53 @@ knitr::include_graphics("media/unitConverter-001_.png")
 
 :::
 
+## Updating snapshots {.smaller}
+
+Let's say, while updating the app, we make a mistake. This'd lead to a test failure.
+Fixing this test will be similar to fixing any other snapshot test we've seen thus far.
+
+:::panel-tabset
+
+### Code
+
+```{.r code-line-numbers="10"}
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Convert kilograms to grams"),
+  numericInput("kg", "Weight (in kg)", value = 0),
+  textOutput("g")
+)
+
+server <- function(input, output, session) {
+  output$g <- renderText(paste0("Weight (in kg): ", input$kg * 1000))
+}
+
+shinyApp(ui, server)
+```
+
+### Test failure JSON diff
+
+```{.json code-line-number="6"}
+Diff in snapshot file `shinytest2unitConverter-001.json`
+< before                            > after                           
+@@ 4,5 @@                           @@ 4,5 @@                         
+    },                                  },                            
+    "output": {                         "output": {                   
+<     "g": "Weight (in g): 10000"   >     "g": "Weight (in kg): 10000"
+    },                                  },                            
+    "export": {                         "export": {    
+```
+
+### Snapshot differences
+
+```{r}
+#| echo: false
+#| out.width: "60%"
+knitr::include_graphics("media/shinytest_failure.mov")
+```
+
+:::
 
 # Headaches 
 
