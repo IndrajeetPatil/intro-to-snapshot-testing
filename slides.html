@@ -516,7 +516,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -625,7 +625,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -966,7 +966,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 </section>
@@ -1017,7 +1017,7 @@ Backtrace:
 <p>Running <code>snapshot_review()</code> launches a Shiny app which can be used to either accept or reject the new output(s).</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><video data-src="images/shiny_app_graphics.mov" style="width:60.0%" controls=""><a href="images/shiny_app_graphics.mov">Video</a></video></p>
+<p><video data-src="media/shiny_app_graphics.mov" style="width:60.0%" controls=""><a href="media/shiny_app_graphics.mov">Video</a></video></p>
 </div>
 </div>
 </section>
@@ -1047,7 +1047,7 @@ Backtrace:
 </section></section>
 <section id="testing-entire-files" class="title-slide slide level1 center">
 <h1>Testing entire files</h1>
-<p>Whole file snapshot testing makes sure that images, data frames, text files, etc. are as expected.</p>
+<p>Whole file snapshot testing makes sure that media, data frames, text files, etc. are as expected.</p>
 <p>Since it works just like graphical snapshot tests, we won’t discuss it in detail.</p>
 <p>For more, see: <a href="https://testthat.r-lib.org/reference/expect_snapshot_file.html"><code>expect_snapshot_file()</code></a></p>
 </section>
@@ -1072,8 +1072,8 @@ Backtrace:
 <div class="callout-content">
 <ul>
 <li><p>You don’t need to create a test file; <code>{shinytest2}</code> will do that for you! You will just need to run <code>record_test()</code>.</p></li>
-<li><p>The test script will be saved in a <em>subdirectory</em> of the application.If your app is located in (e.g.) <code>inst/</code> folder, the test will be in <code>tests/testthat/test-shinytest2.R</code>.</p></li>
-<li><p>There will be one <code>tests</code> folder for every application.</p></li>
+<li><p>The test script will be saved in a <em>subdirectory</em> of the application.If your app is located in (e.g.) <code>inst/</code> folder, the test will be in <code>inst/my-app/tests/testthat/test-shinytest2.R</code>.</p></li>
+<li><p>There will be one <code>tests</code> folder inside every application folder.</p></li>
 <li><p>The snapshots are saved as <code>.png</code> file in <code>tests/testthat/_test-shinytest2/_snaps/{.variant}/shinytest2</code>. The <code>{.variant}</code> here corresponds to operating system and R version used to record tests. For example, <code>_snaps/windows-4.1/shinytest2</code>.</p></li>
 </ul>
 </div>
@@ -1094,7 +1094,7 @@ Backtrace:
 <div id="tabset-7-1">
 <div class="cell">
 <div class="cell-output-display">
-<p><video data-src="images/shiny_app.mov" style="width:70.0%" controls=""><a href="images/shiny_app.mov">Video</a></video></p>
+<p><video data-src="media/shiny_app.mov" style="width:70.0%" controls=""><a href="media/shiny_app.mov">Video</a></video></p>
 </div>
 </div>
 </div>
@@ -1112,6 +1112,39 @@ Backtrace:
 <span id="cb39-11"><a href="#cb39-11"></a>}</span>
 <span id="cb39-12"><a href="#cb39-12"></a></span>
 <span id="cb39-13"><a href="#cb39-13"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-a-test" class="slide level2 smaller">
+<h2>Creating a test</h2>
+<p>To a snapshot test, go to the app directory and run <code>record_test()</code>.</p>
+<div class="panel-tabset">
+<ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">Procedure</a></li><li><a href="#tabset-8-2">Generated test</a></li><li><a href="#tabset-8-3">Generated snapshot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1">
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="media/shinytest_record.mov" style="width:60.0%" controls=""><a href="media/shinytest_record.mov">Video</a></video></p>
+</div>
+</div>
+</div>
+<div id="tabset-8-2">
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">library</span>(shinytest2)</span>
+<span id="cb40-2"><a href="#cb40-2"></a></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="fu">test_that</span>(<span class="st">"{shinytest2} recording: unitConverter"</span>, {</span>
+<span id="cb40-4"><a href="#cb40-4"></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(<span class="at">name =</span> <span class="st">"unitConverter"</span>, <span class="at">height =</span> <span class="dv">543</span>, <span class="at">width =</span> <span class="dv">426</span>)</span>
+<span id="cb40-5"><a href="#cb40-5"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">1</span>)</span>
+<span id="cb40-6"><a href="#cb40-6"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">10</span>)</span>
+<span id="cb40-7"><a href="#cb40-7"></a>  app<span class="sc">$</span><span class="fu">expect_values</span>()</span>
+<span id="cb40-8"><a href="#cb40-8"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-8-3">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="media/unitConverter-001_.png" style="width:50.0%"></p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1145,7 +1178,7 @@ Backtrace:
 <h2>Accessing new snapshots</h2>
 <div class="fragment">
 <p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
@@ -1155,15 +1188,15 @@ Backtrace:
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="images/AppVeyor.png" width="484"></p>
+<p><img data-src="media/AppVeyor.png" width="484"></p>
 </div>
 </div>
 <ul>
 <li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
 </ul>
-<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb41-1"><a href="#cb41-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb41-3"><a href="#cb41-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="code-review-with-snapshot-tests" class="slide level2 smaller">
@@ -1174,17 +1207,17 @@ Backtrace:
 <section id="section-2" class="slide level2 smaller">
 <h2></h2>
 <div class="panel-tabset">
-<ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">Option-1</a></li><li><a href="#tabset-8-2">Option-2</a></li></ul>
+<ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">Option-1</a></li><li><a href="#tabset-9-2">Option-2</a></li></ul>
 <div class="tab-content">
-<div id="tabset-8-1">
+<div id="tabset-9-1">
 <p>Use tools provided for code review by hosting platform (like GitHub). For example, to review changes in SVG snapshots:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><video data-src="images/github_pr.mov" style="width:70.0%" controls=""><a href="images/github_pr.mov">Video</a></video></p>
+<p><video data-src="media/github_pr.mov" style="width:70.0%" controls=""><a href="media/github_pr.mov">Video</a></video></p>
 </div>
 </div>
 </div>
-<div id="tabset-8-2">
+<div id="tabset-9-2">
 <p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
 </div>
 </div>

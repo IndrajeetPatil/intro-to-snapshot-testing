@@ -628,7 +628,7 @@ Running `snapshot_review()` launches a Shiny app which can be used to either acc
 ```{r}
 #| echo: false
 #| out.width: "60%"
-knitr::include_graphics("images/shiny_app_graphics.mov")
+knitr::include_graphics("media/shiny_app_graphics.mov")
 ```
 
 ##
@@ -652,7 +652,7 @@ For these reasons, the visual regression tests tend to be fragile and by default
 
 # Testing entire files
 
-Whole file snapshot testing makes sure that images, data frames, text files, etc. are as expected.
+Whole file snapshot testing makes sure that media, data frames, text files, etc. are as expected.
 
 Since it works just like graphical snapshot tests, we won't discuss it in detail.
 
@@ -697,7 +697,7 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 ```{r}
 #| echo: false
 #| out.width: "70%"
-knitr::include_graphics("images/shiny_app.mov")
+knitr::include_graphics("media/shiny_app.mov")
 ```
 
 ### Code
@@ -720,6 +720,43 @@ shinyApp(ui, server)
 
 :::
 
+## Creating a test {.smaller}
+
+To a snapshot test, go to the app directory and run `record_test()`.
+
+:::panel-tabset
+
+### Procedure
+
+```{r}
+#| echo: false
+#| out.width: "60%"
+knitr::include_graphics("media/shinytest_record.mov")
+```
+
+### Generated test
+
+```{.r}
+library(shinytest2)
+
+test_that("{shinytest2} recording: unitConverter", {
+  app <- AppDriver$new(name = "unitConverter", height = 543, width = 426)
+  app$set_inputs(kg = 1)
+  app$set_inputs(kg = 10)
+  app$expect_values()
+})
+
+```
+
+### Generated snapshot
+
+```{r}
+#| echo: false
+#| out.width: "50%"
+knitr::include_graphics("media/unitConverter-001_.png")
+```
+
+:::
 
 
 # Headaches 
@@ -761,7 +798,7 @@ On CI/CD platforms, you can find snapshots in artifacts folder:
 - [AppVeyor](https://www.appveyor.com/docs/packaging-artifacts/)
 
 ```{r, echo=FALSE, fig.height=1.5}
-knitr::include_graphics("images/AppVeyor.png")
+knitr::include_graphics("media/AppVeyor.png")
 ```
 
 - [GitHub actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package)
@@ -790,7 +827,7 @@ For example, to review changes in SVG snapshots:
 ```{r}
 #| echo: false
 #| out.width: "70%"
-knitr::include_graphics("images/github_pr.mov")
+knitr::include_graphics("media/github_pr.mov")
 ```
 
 ### Option-2
