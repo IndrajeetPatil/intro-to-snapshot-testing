@@ -399,7 +399,7 @@
 <li class="fragment"><p>Tests also act as the most basic form of developer-focused documentation<sup>1</sup>.</p></li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>Ousterhout, J. K. (2018). <em>A Philosophy of Software Design</em>. Palo Alto: Yaknyam Press.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>How meta! 😅</p></li></ol></aside></section>
 <section id="what-is-different-about-snapshot-testing" class="slide level2">
 <h2>What is different about snapshot testing?</h2>
 <p>A <strong>unit test</strong> records the code to describe expected output.</p>
@@ -516,7 +516,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -625,7 +625,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -854,8 +854,8 @@ non-numeric argument to mathematical function</code></pre>
 <h1>Testing graphical outputs</h1>
 <p>To create graphical expectations, we will use <code>{testthat}</code> extension package: <a href="https://vdiffr.r-lib.org/"><code>{vdiffr}</code></a>.</p>
 </section>
-<section id="how-does-it-work" class="slide level2 smaller">
-<h2>How does it work?</h2>
+<section id="how-does-vdiffr-work" class="slide level2 smaller">
+<h2>How does <code>{vdiffr}</code> work?</h2>
 <p><code>{vdiffr}</code> introduces <code>expect_doppelganger()</code> to generate <code>{testthat}</code> expectations for graphics. It does this by writing SVG snapshot files for outputs!</p>
 <div class="fragment">
 <p>The figure to test can be:</p>
@@ -872,7 +872,7 @@ non-numeric argument to mathematical function</code></pre>
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>About snapshot files</strong></p>
+<p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
 <ul>
@@ -1055,8 +1055,32 @@ Backtrace:
 <section>
 <section id="testing-shiny-applications" class="title-slide slide level1 center">
 <h1>Testing Shiny applications</h1>
-
+<p>To write formal tests for Shiny applications, we will use <code>{testthat}</code> extension package: <a href="https://rstudio.github.io/shinytest2/"><code>{shinytest2}</code></a>.</p>
 </section>
+<section id="how-does-shinytest2-work" class="slide level2 smaller">
+<h2>How does <code>{shinytest2}</code> work?</h2>
+<p><code>{shinytest2}</code> uses a Shiny app<sup>1</sup> to record your interactions with the app and generates snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
+<div class="fragment">
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>You don’t need to create a test file; <code>{shinytest2}</code> will do that for you! You will just need to run <code>record_test()</code>.</p></li>
+<li><p>The test script will be saved in a <em>subdirectory</em> of the application.If your app is located in (e.g.) <code>inst/</code> folder, the test will be in <code>tests/testthat/test-shinytest2.R</code>.</p></li>
+<li><p>There will be one <code>tests</code> folder for every application.</p></li>
+<li><p>The snapshots are saved as <code>.png</code> file in <code>tests/testthat/_test-shinytest2/_snaps/{.variant}/shinytest2</code>. The <code>{.variant}</code> here corresponds to operating system and R version used to record tests. For example, <code>_snaps/windows-4.1/shinytest2</code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn2" role="doc-endnote"><p>How meta! 😅</p></li></ol></aside></section>
 <section id="example-shiny-app" class="slide level2">
 <h2>Example Shiny app</h2>
 <!-- 

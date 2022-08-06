@@ -459,7 +459,7 @@ test_that("`log()` doesn't work when argument not numeric", {
 
 To create graphical expectations, we will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/).
 
-## How does it work? {.smaller}
+## How does `{vdiffr}` work? {.smaller}
 
 `{vdiffr}` introduces `expect_doppelganger()` to generate `{testthat}` expectations for graphics. It does this by writing SVG snapshot files for outputs!
 
@@ -475,7 +475,7 @@ The figure to test can be:
 
 :::{.callout-note}
 
-## About snapshot files
+
 
 - If a test is called `test-foo.R`, the snapshot will be saved to `test/testthat/_snaps/foo` folder.
 
@@ -662,6 +662,26 @@ For more, see: [`expect_snapshot_file()`](https://testthat.r-lib.org/reference/e
 
 To write formal tests for Shiny applications, we will use `{testthat}` extension package: [`{shinytest2}`](https://rstudio.github.io/shinytest2/).
 
+## How does `{shinytest2}` work? {.smaller}
+
+`{shinytest2}` uses a Shiny app[^1] to record your interactions with the app and generates snapshots of the application's state. Future behaviour of the app will be compared against these snapshots to check for any changes.
+
+. . . 
+
+:::{.callout-note}
+
+- You don't need to create a test file; `{shinytest2}` will do that for you! You will just need to run `record_test()`.
+
+- The test script will be saved in a *subdirectory* of the application.If your app is located in (e.g.) `inst/` folder, the test will be in `inst/my-app/tests/testthat/test-shinytest2.R`.
+
+- There will be one `tests` folder inside every application folder.
+
+- The snapshots are saved as `.png` file in `tests/testthat/_test-shinytest2/_snaps/{.variant}/shinytest2`. The `{.variant}` here corresponds to operating system and R version used to record tests. For example, `_snaps/windows-4.1/shinytest2`.
+
+:::
+
+[^1]: How meta! 😅
+
 ## Example Shiny app
 
 <!-- 
@@ -699,10 +719,6 @@ shinyApp(ui, server)
 ```
 
 :::
-
-
-
-
 
 
 
