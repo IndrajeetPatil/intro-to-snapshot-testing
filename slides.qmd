@@ -722,14 +722,6 @@ shinyApp(ui, server)
 
 :::
 
-:::{.callout-warning}
-
-Make sure that the application is stored in a single `app.R` file.
-
-Separating the app into `ui.R` and `server.R` files won't work with `{shinytest2}`.
-
-:::
-
 ## Generating a test {.smaller}
 
 To create a snapshot test, go to the app directory and run `record_test()`.
