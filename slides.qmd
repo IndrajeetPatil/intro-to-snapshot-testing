@@ -21,9 +21,9 @@ The goal of a unit test is to capture the *expected* output of a function using 
 
 - It also makes sure that you will stay informed of any upstream dependency changes that might change the behaviour of your function.
 
-- Tests also act as the most basic form of developer-focused documentation[^1].
+- Tests also act as the most basic form of developer-focused documentation.
 
-[^1]: Ousterhout, J. K. (2018). *A Philosophy of Software Design*. Palo Alto: Yaknyam Press.
+<!-- [^1]: Ousterhout, J. K. (2018). *A Philosophy of Software Design*. Palo Alto: Yaknyam Press. -->
 
 :::
 
@@ -664,7 +664,7 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 
 ## How does `{shinytest2}` work? {.smaller}
 
-`{shinytest2}` uses a Shiny app[^2] to record your interactions with the app and generates snapshots of the application's state. Future behaviour of the app will be compared against these snapshots to check for any changes.
+`{shinytest2}` uses a Shiny app (how meta! 😅) to record your interactions with the app and generates snapshots of the application's state. Future behaviour of the app will be compared against these snapshots to check for any changes.
 
 . . . 
 
@@ -679,8 +679,6 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 - The snapshots are saved as `.png` file in `tests/testthat/_test-shinytest2/_snaps/{.variant}/shinytest2`. The `{.variant}` here corresponds to operating system and R version used to record tests. For example, `_snaps/windows-4.1/shinytest2`.
 
 :::
-
-[^2]: How meta! 😅
 
 ## Example Shiny app {.smaller}
 
@@ -915,8 +913,6 @@ In this presentation, we deliberately kept the example and the tests simple.
 
 To see a more realistic usage of snapshot tests, you should study some open-source test suites on your own. 
 
----
-
 ## Suggested repositories {.smaller}
 
 ::: columns
@@ -952,6 +948,28 @@ To see a more realistic usage of snapshot tests, you should study some open-sour
 - [`{designer}`](https://github.com/ashbaldry/designer/tree/dev/tests/testthat)
 
 :::
+
+:::
+
+# Activities
+
+If you are now feeling confident about your snapshot testing skills, if you want, you can contribute to open-source projects to practice these skills!
+
+## Practice makes it perfect {.smaller}
+
+These are only suggestions. Feel free to contribute to any project that you like! 🤝
+
+:::{.callout-tip}
+
+## Suggestions 
+
+- See if any of the `{ggplot2}` [extensions](https://exts.ggplot2.tidyverse.org/gallery/) you like use snapshot tests for graphics. If not, you can add tests for key functions.
+
+- Check out hard reverse dependencies of [`{shiny}`](https://cran.r-project.org/web/packages/shiny/index.html), and add snapshot tests using `{shinytest2}` to an app of your liking.
+
+- Add more `{vdiffr}` snapshot tests to plotting functions in [`{see}`](https://github.com/easystats/see), a library for statistical visualizations (I can chaperone your PRs here).
+
+- `{shinytest2}` is the successor to `{shinytest}` package. Check out which packages currently use it for [testing Shiny apps](https://cran.r-project.org/web/packages/shinytest/index.html), and see if you can use `{shinytest2}` instead (see how-to [here](https://rstudio.github.io/shinytest2/articles/z-migration.html)).
 
 :::
 

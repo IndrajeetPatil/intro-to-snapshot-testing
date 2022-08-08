@@ -396,10 +396,11 @@
 <ul>
 <li class="fragment"><p>This insures against unintentionally changing function behaviour, or re-introducing already fixed bugs.</p></li>
 <li class="fragment"><p>It also makes sure that you will stay informed of any upstream dependency changes that might change the behaviour of your function.</p></li>
-<li class="fragment"><p>Tests also act as the most basic form of developer-focused documentation<sup>1</sup>.</p></li>
+<li class="fragment"><p>Tests also act as the most basic form of developer-focused documentation.</p></li>
 </ul>
+<!-- [^1]: Ousterhout, J. K. (2018). *A Philosophy of Software Design*. Palo Alto: Yaknyam Press. -->
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>Ousterhout, J. K. (2018). <em>A Philosophy of Software Design</em>. Palo Alto: Yaknyam Press.</p></li></ol></aside></section>
+</section>
 <section id="what-is-different-about-snapshot-testing" class="slide level2">
 <h2>What is different about snapshot testing?</h2>
 <p>A <strong>unit test</strong> records the code to describe expected output.</p>
@@ -625,7 +626,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -966,7 +967,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 </section>
@@ -1059,7 +1060,7 @@ Backtrace:
 </section>
 <section id="how-does-shinytest2-work" class="slide level2 smaller">
 <h2>How does <code>{shinytest2}</code> work?</h2>
-<p><code>{shinytest2}</code> uses a Shiny app<sup>1</sup> to record your interactions with the app and generates snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
+<p><code>{shinytest2}</code> uses a Shiny app (how meta! 😅) to record your interactions with the app and generates snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
 <div class="fragment">
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
@@ -1080,7 +1081,7 @@ Backtrace:
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn2" role="doc-endnote"><p>How meta! 😅</p></li></ol></aside></section>
+</section>
 <section id="example-shiny-app" class="slide level2 smaller">
 <h2>Example Shiny app</h2>
 <p>Let’s say this app resides in the <code>inst/unitConverter</code> package directory.</p>
@@ -1324,6 +1325,33 @@ Backtrace:
 </ul>
 </div>
 </div>
+</section></section>
+<section>
+<section id="activities" class="title-slide slide level1 center">
+<h1>Activities</h1>
+<p>If you are now feeling confident about your snapshot testing skills, if you want, you can contribute to open-source projects to practice these skills!</p>
+</section>
+<section id="practice-makes-it-perfect" class="slide level2 smaller">
+<h2>Practice makes it perfect</h2>
+<p>These are only suggestions. Feel free to contribute to any project that you like! 🤝</p>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Suggestions</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>See if any of the <code>{ggplot2}</code> <a href="https://exts.ggplot2.tidyverse.org/gallery/">extensions</a> you like use snapshot tests for graphics. If not, you can add tests for key functions.</p></li>
+<li><p>Check out hard reverse dependencies of <a href="https://cran.r-project.org/web/packages/shiny/index.html"><code>{shiny}</code></a>, and add snapshot tests using <code>{shinytest2}</code> to an app of your liking.</p></li>
+<li><p>Add more <code>{vdiffr}</code> snapshot tests to plotting functions in <a href="https://github.com/easystats/see"><code>{see}</code></a>, a library for statistical visualizations (I can chaperone your PRs here).</p></li>
+<li><p><code>{shinytest2}</code> is the successor to <code>{shinytest}</code> package. Check out which packages currently use it for <a href="https://cran.r-project.org/web/packages/shinytest/index.html">testing Shiny apps</a>, and see if you can use <code>{shinytest2}</code> instead (see how-to <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html">here</a>).</p></li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section id="further-reading" class="slide level2 smaller">
 <h2>Further reading</h2>
@@ -1351,8 +1379,6 @@ Backtrace:
 <p>Source code for the slides can be found <a href="https://github.com/IndrajeetPatil/intro-to-snapshot-testing">here</a>.</p>
 </div>
 </section>
-
-
     </div>
   </div>
 
