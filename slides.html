@@ -519,7 +519,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -628,7 +628,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -712,11 +712,11 @@ old[2:6] vs new[2:6]
 <ul>
 <li>If the change was <em>deliberate</em>, you can accept the new snapshot as the current <em>truth</em>.</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_accept('slides.qmd')</span><span class="st">`</span> to accept the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_accept('foo.md')</span><span class="st">`</span> to accept the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>If this was <em>unexpected</em>, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('slides.qmd')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('foo.md')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
@@ -729,8 +729,8 @@ old[2:6] vs new[2:6]
 <p><strong>Fixing multiple snapshot tests</strong></p>
 </div>
 <div class="callout-content">
-<p>If this is a utility function used by many other functions, changing its behaviour would lead to failure of many snapshot tests.</p>
-<p>You can accept snapshots for <em>all</em> files with <code>snapshot_accept()</code>. And, of course, check the diffs to make sure that the changes are expected.</p>
+<p>If this is a utility function used by many other functions, changing its behaviour would lead to failure of many tests.</p>
+<p>You can update <em>all</em> new snapshots with <code>snapshot_accept()</code>. And, of course, check the diffs to make sure that the changes are expected.</p>
 </div>
 </div>
 </div>
@@ -745,12 +745,13 @@ old[2:6] vs new[2:6]
 <div id="tabset-3-1">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">message</span>(<span class="st">"Some info for you."</span>)</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">test_that</span>(<span class="st">"f() produces expected message"</span>, {</span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">f</span>())</span>
-<span id="cb21-5"><a href="#cb21-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="fu">test_that</span>(<span class="st">"f() produces expected message"</span>, {</span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">f</span>())</span>
+<span id="cb21-6"><a href="#cb21-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>── Warning (&lt;text&gt;:4:3): f() produces expected message ─────────────────────────
+<pre><code>── Warning (&lt;text&gt;:5:3): f() produces expected message ─────────────────────────
 Adding new snapshot:
 Code
   f()
@@ -762,12 +763,13 @@ Message &lt;simpleMessage&gt;
 <div id="tabset-3-2">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">warning</span>(<span class="st">"Managed to recover."</span>)</span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">test_that</span>(<span class="st">"g() warns the user"</span>, {</span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">g</span>())</span>
-<span id="cb23-5"><a href="#cb23-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-2"><a href="#cb23-2"></a></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="fu">test_that</span>(<span class="st">"g() warns the user"</span>, {</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">g</span>())</span>
+<span id="cb23-6"><a href="#cb23-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>── Warning (&lt;text&gt;:4:3): g() warns the user ────────────────────────────────────
+<pre><code>── Warning (&lt;text&gt;:5:3): g() warns the user ────────────────────────────────────
 Adding new snapshot:
 Code
   g()
@@ -778,7 +780,6 @@ Warning &lt;simpleWarning&gt;
 </div>
 </div>
 </div>
-<div class="fragment">
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -790,7 +791,6 @@ Warning &lt;simpleWarning&gt;
 <div class="callout-content">
 <p>Snapshot records both the <em>condition</em> and the corresponding <em>message</em>.</p>
 <p>We can now rest assured that the users are getting informed the way we want! 😌</p>
-</div>
 </div>
 </div>
 </div>
@@ -832,7 +832,6 @@ non-numeric argument to mathematical function</code></pre>
 </div>
 </div>
 </div>
-<div class="fragment">
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -846,7 +845,6 @@ non-numeric argument to mathematical function</code></pre>
 <li><p>If you want to capture both the code and the error message, use <code>expect_snapshot(..., error = TRUE)</code>.</p></li>
 <li><p>If you want to capture only the error message, use <code>expect_snapshot_error()</code>.</p></li>
 </ul>
-</div>
 </div>
 </div>
 </div>
@@ -968,7 +966,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 </section>
@@ -1034,15 +1032,14 @@ Backtrace:
 <p><strong>Why are my snapshots for plots failing?! 😔</strong></p>
 </div>
 <div class="callout-content">
-<p>Often, you will experience that your tests are failing even if you didn’t change anything about your plotting function.</p>
-<p>Here are a few common reasons for such failures:</p>
+<p>If tests fail even if you didn’t change anything about your plotting function, it can be due to any of the following reasons:</p>
 <ul>
 <li>R’s graphics engine changed</li>
 <li><code>{ggplot2}</code> itself changed</li>
 <li>non-determinism</li>
 <li>reliance on system libraries</li>
 </ul>
-<p>For these reasons, the visual regression tests tend to be fragile and by default not run on CRAN machines.</p>
+<p>For these reasons, snapshot tests for plots tend to be fragile and not run on CRAN machines by default.</p>
 </div>
 </div>
 </div>
@@ -1061,7 +1058,7 @@ Backtrace:
 </section>
 <section id="how-does-shinytest2-work" class="slide level2 smaller">
 <h2>How does <code>{shinytest2}</code> work?</h2>
-<p><code>{shinytest2}</code> uses a Shiny app (how meta! 😅) to record your interactions with the app and generates snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
+<p><code>{shinytest2}</code> uses a Shiny app (how meta! 😅) to record your interactions with the app and generate snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
 <div class="fragment">
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
@@ -1073,10 +1070,10 @@ Backtrace:
 </div>
 <div class="callout-content">
 <ul>
-<li><p>You don’t need to create a test file; <code>{shinytest2}</code> will do that for you! You will just need to run <code>record_test()</code>.</p></li>
-<li><p>The test script will be saved in a <em>subdirectory</em> of the application.If your app is located in (e.g.) <code>inst/</code> folder, the test will be in <code>inst/my-app/tests/testthat/test-shinytest2.R</code>.</p></li>
-<li><p>There will be one <code>tests</code> folder inside every application folder.</p></li>
-<li><p>The snapshots are saved as <code>.png</code> file in <code>tests/testthat/_test-shinytest2/_snaps/{.variant}/shinytest2</code>. The <code>{.variant}</code> here corresponds to operating system and R version used to record tests. For example, <code>_snaps/windows-4.1/shinytest2</code>.</p></li>
+<li><p><code>{shinytest2}</code> itself will create a test file when you run <code>record_test()</code> in the app directory.</p></li>
+<li><p>The test script will be saved in a <em>subdirectory</em> of the app If your app is located in (e.g.) <code>inst/</code> folder, the test will be in <code>inst/my-app/tests/testthat/test-shinytest2.R</code>.</p></li>
+<li><p>There will be one <code>/tests</code> folder inside <em>every</em> app folder.</p></li>
+<li><p>The snapshots are saved as <code>.png</code> file in <code>tests/testthat/test-shinytest2/_snaps/{.variant}/shinytest2</code>. The <code>{.variant}</code> here corresponds to operating system and R version used to record tests. For example, <code>_snaps/windows-4.1/shinytest2</code>.</p></li>
 </ul>
 </div>
 </div>

@@ -344,13 +344,13 @@ Message accompanying failed tests make it explicit how we to fix them.
 - If the change was *deliberate*, you can accept the new snapshot as the current *truth*.
 
 ```r
-* Run `snapshot_accept('slides.qmd')` to accept the change
+* Run `snapshot_accept('foo.md')` to accept the change
 ```
 
 - If this was *unexpected*, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.
 
 ```r
-* Run `snapshot_review('slides.qmd')` to interactively review the change
+* Run `snapshot_review('foo.md')` to interactively review the change
 ```
 
 . . . 
@@ -361,9 +361,9 @@ Message accompanying failed tests make it explicit how we to fix them.
 
 ## Fixing multiple snapshot tests
 
-If this is a utility function used by many other functions, changing its behaviour would lead to failure of many snapshot tests. 
+If this is a utility function used by many other functions, changing its behaviour would lead to failure of many tests. 
 
-You can accept snapshots for *all* files with `snapshot_accept()`. And, of course, check the diffs to make sure that the changes are expected.
+You can update *all* new snapshots with `snapshot_accept()`. And, of course, check the diffs to make sure that the changes are expected.
 
 :::
 
@@ -377,6 +377,7 @@ So far we have tested text output printed to the console, but we can also use sn
 
 ```{r}
 f <- function() message("Some info for you.")
+
 test_that("f() produces expected message", {
   local_edition(3)
   expect_snapshot(f())
@@ -387,6 +388,7 @@ test_that("f() produces expected message", {
 
 ```{r}
 g <- function() warning("Managed to recover.")
+
 test_that("g() warns the user", {
   local_edition(3)
   expect_snapshot(g())
@@ -394,8 +396,6 @@ test_that("g() warns the user", {
 ```
 
 :::
-
-. . . 
 
 :::{.callout-tip}
 
@@ -445,8 +445,6 @@ test_that("`log()` doesn't work when argument not numeric", {
 ```
 
 :::
-
-. . . 
 
 :::{.callout-tip}
 
@@ -640,16 +638,14 @@ knitr::include_graphics("media/shiny_app_graphics.mov")
 
 ## Why are my snapshots for plots failing?! 😔
 
-Often, you will experience that your tests are failing even if you didn't change anything about your plotting function. 
-
-Here are a few common reasons for such failures:
+If tests fail even if you didn't change anything about your plotting function, it can be due to any of the following reasons:
 
 - R's graphics engine changed
 - `{ggplot2}` itself changed
 - non-determinism 
 - reliance on system libraries
 
-For these reasons, the visual regression tests tend to be fragile and by default not run on CRAN machines.
+For these reasons, snapshot tests for plots tend to be fragile and not run on CRAN machines by default.
 
 :::
 
@@ -667,19 +663,19 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 
 ## How does `{shinytest2}` work? {.smaller}
 
-`{shinytest2}` uses a Shiny app (how meta! 😅) to record your interactions with the app and generates snapshots of the application's state. Future behaviour of the app will be compared against these snapshots to check for any changes.
+`{shinytest2}` uses a Shiny app (how meta! 😅) to record your interactions with the app and generate snapshots of the application's state. Future behaviour of the app will be compared against these snapshots to check for any changes.
 
 . . . 
 
 :::{.callout-note}
 
-- You don't need to create a test file; `{shinytest2}` will do that for you! You will just need to run `record_test()`.
+- `{shinytest2}` itself will create a test file when you run `record_test()` in the app directory.
 
-- The test script will be saved in a *subdirectory* of the application.If your app is located in (e.g.) `inst/` folder, the test will be in `inst/my-app/tests/testthat/test-shinytest2.R`.
+- The test script will be saved in a *subdirectory* of the app If your app is located in (e.g.) `inst/` folder, the test will be in `inst/my-app/tests/testthat/test-shinytest2.R`.
 
-- There will be one `tests` folder inside every application folder.
+- There will be one `/tests` folder inside *every* app folder.
 
-- The snapshots are saved as `.png` file in `tests/testthat/_test-shinytest2/_snaps/{.variant}/shinytest2`. The `{.variant}` here corresponds to operating system and R version used to record tests. For example, `_snaps/windows-4.1/shinytest2`.
+- The snapshots are saved as `.png` file in `tests/testthat/test-shinytest2/_snaps/{.variant}/shinytest2`. The `{.variant}` here corresponds to operating system and R version used to record tests. For example, `_snaps/windows-4.1/shinytest2`.
 
 :::
 
