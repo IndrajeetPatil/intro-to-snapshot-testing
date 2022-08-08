@@ -33,12 +33,16 @@ A **unit test** records the code to describe expected output.
 
 </br>
 
+. . .
+
 <!-- Need to install the Quarto extension for fontawesome to work:
 https://github.com/quarto-ext/fontawesome  -->
 
 (actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-code size=2xl >}} (expected)
 
 </br>
+
+. . .
 
 A **snapshot test** records expected output in a separate, human-readable file.
 
@@ -52,10 +56,9 @@ If you develop R packages and have struggled to
 
 ::: incremental
 
-- test that printed text outputs look as expected
-- test that an entire file is as expected
-- test that generated graphical outputs look as expected
-- write maintainable tests when complex output is included in source code
+- test that text output *prints* as expected
+- test that an entire file *is* as expected
+- test that generated graphical output *looks* as expected
 - update such tests *en masse* 
 
 ::: 
@@ -64,17 +67,17 @@ If you develop R packages and have struggled to
 
 then you should be excited to know more about *snapshot tests* (aka *golden tests*)! 🤩
 
-We will see how in these slides.
-
 # Prerequisites
 
-You are familiar with unit tests and how to write them using [`{testthat}`](https://testthat.r-lib.org/index.html).
+Familiarity with writing unit tests using [`{testthat}`](https://testthat.r-lib.org/index.html).
 
 If not, have a look at [this](https://r-pkgs.org/testing-basics.html) chapter from *R Packages* book.
 
 ## 
 
 :::{.callout-important}
+
+## *Nota bene*
 
 In the following slides, in all snapshot tests, I include the following line of code:
 

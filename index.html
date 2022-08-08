@@ -405,35 +405,37 @@
 <h2>What is different about snapshot testing?</h2>
 <p>A <strong>unit test</strong> records the code to describe expected output.</p>
 <p><br></p>
+<div class="fragment">
 <!-- Need to install the Quarto extension for fontawesome to work:
 https://github.com/quarto-ext/fontawesome  -->
 <p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-file-code fa-2xl" aria-hidden="true"></i> (expected)</p>
 <p><br></p>
+</div>
+<div class="fragment">
 <p>A <strong>snapshot test</strong> records expected output in a separate, human-readable file.</p>
 <p><br></p>
 <p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-file-lines fa-2xl" aria-hidden="true"></i> (expected)</p>
+</div>
 </section>
 <section id="why-do-we-need-snapshot-testing" class="slide level2 smaller">
 <h2>Why do we need snapshot testing?</h2>
 <p>If you develop R packages and have struggled to</p>
 <div>
 <ul>
-<li class="fragment">test that printed text outputs look as expected</li>
-<li class="fragment">test that an entire file is as expected</li>
-<li class="fragment">test that generated graphical outputs look as expected</li>
-<li class="fragment">write maintainable tests when complex output is included in source code</li>
+<li class="fragment">test that text output <em>prints</em> as expected</li>
+<li class="fragment">test that an entire file <em>is</em> as expected</li>
+<li class="fragment">test that generated graphical output <em>looks</em> as expected</li>
 <li class="fragment">update such tests <em>en masse</em></li>
 </ul>
 </div>
 <div class="fragment">
 <p>then you should be excited to know more about <em>snapshot tests</em> (aka <em>golden tests</em>)! 🤩</p>
-<p>We will see how in these slides.</p>
 </div>
 </section>
 <section>
 <section id="prerequisites" class="title-slide slide level1 center">
 <h1>Prerequisites</h1>
-<p>You are familiar with unit tests and how to write them using <a href="https://testthat.r-lib.org/index.html"><code>{testthat}</code></a>.</p>
+<p>Familiarity with writing unit tests using <a href="https://testthat.r-lib.org/index.html"><code>{testthat}</code></a>.</p>
 <p>If not, have a look at <a href="https://r-pkgs.org/testing-basics.html">this</a> chapter from <em>R Packages</em> book.</p>
 </section>
 <section id="section" class="slide level2">
@@ -444,7 +446,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Important</strong></p>
+<p><strong><em>Nota bene</em></strong></p>
 </div>
 <div class="callout-content">
 <p>In the following slides, in all snapshot tests, I include the following line of code:</p>
@@ -517,7 +519,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -967,7 +969,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 </section>
