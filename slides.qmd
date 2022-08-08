@@ -50,7 +50,7 @@ A **snapshot test** records expected output in a separate, human-readable file.
 
 (actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-lines size=2xl >}} (expected)
 
-## Why do we need snapshot testing? {.smaller}
+## Why do we need snapshot testing?
 
 If you develop R packages and have struggled to 
 
@@ -324,7 +324,7 @@ test_that("`print_movies()` prints as expected", {
 
 :::
 
-. . . 
+<!-- Don't add . . .  here since it breaks the flow -->
 
 Note that when the test fails, the message automatically provides a diff about what was expected (`-` rows) versus observed (`+` rows).
 
