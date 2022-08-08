@@ -519,7 +519,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -628,7 +628,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -966,7 +966,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 </section>
@@ -1082,7 +1082,7 @@ Backtrace:
 </section>
 <section id="example-shiny-app" class="slide level2 smaller">
 <h2>Example Shiny app</h2>
-<p>Let’s say this app resides in the <code>inst/unitConverter</code> package directory.</p>
+<p>Let’s say this app resides in the <code>inst/unitConverter/app.R</code> file.</p>
 <!-- 
   TODO: How to embed a Shiny app? 
   If I just include the code in R chunk, I see:
@@ -1151,7 +1151,7 @@ Backtrace:
 </section>
 <section id="updating-snapshots" class="slide level2 smaller">
 <h2>Updating snapshots</h2>
-<p>Let’s say, while updating the app, we make a mistake. This’d lead to a test failure. Fixing this test will be similar to fixing any other snapshot test we’ve seen thus far.</p>
+<p>Let’s say, while updating the app, we make a mistake, which leads to a failed test. Fixing this test will be similar to fixing any other snapshot test we’ve seen thus far.</p>
 <div class="panel-tabset">
 <ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">Code</a></li><li><a href="#tabset-9-2">Test failure JSON diff</a></li><li><a href="#tabset-9-3">Snapshot differences</a></li></ul>
 <div class="tab-content">
@@ -1193,7 +1193,8 @@ Backtrace:
 <section>
 <section id="headaches" class="title-slide slide level1 center">
 <h1>Headaches</h1>
-<p>It’s not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕</p>
+<p>It’s not all kittens and roses when it comes to snapshot testing.</p>
+<p>We will now see some issues you might run into while using them. 🤕</p>
 </section>
 <section id="failures-in-non-interactive-environments" class="slide level2 smaller">
 <h2>Failures in non-interactive environments</h2>
@@ -1295,8 +1296,8 @@ Backtrace:
 <section>
 <section id="self-study" class="title-slide slide level1 center">
 <h1>Self-study</h1>
-<p>In this presentation, we deliberately kept the example and the tests simple.</p>
-<p>To see a more realistic usage of snapshot tests, you should study some open-source test suites on your own.</p>
+<p>In this presentation, we deliberately kept the examples and the tests simple.</p>
+<p>To see a more realistic usage of snapshot tests, you can study open-source test suites on your own.</p>
 </section>
 <section id="suggested-repositories" class="slide level2 smaller">
 <h2>Suggested repositories</h2>
@@ -1345,7 +1346,7 @@ Backtrace:
 <li><p>See if any of the <code>{ggplot2}</code> <a href="https://exts.ggplot2.tidyverse.org/gallery/">extensions</a> you like use snapshot tests for graphics. If not, you can add tests for key functions.</p></li>
 <li><p>Check out hard reverse dependencies of <a href="https://cran.r-project.org/web/packages/shiny/index.html"><code>{shiny}</code></a>, and add snapshot tests using <code>{shinytest2}</code> to an app of your liking.</p></li>
 <li><p>Add more <code>{vdiffr}</code> snapshot tests to plotting functions in <a href="https://github.com/easystats/see"><code>{see}</code></a>, a library for statistical visualizations (I can chaperone your PRs here).</p></li>
-<li><p><code>{shinytest2}</code> is the successor to <code>{shinytest}</code> package. Check out which packages currently use it for <a href="https://cran.r-project.org/web/packages/shinytest/index.html">testing Shiny apps</a>, and see if you can use <code>{shinytest2}</code> instead (see how-to <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html">here</a>).</p></li>
+<li><p><code>{shinytest2}</code> is the successor to <code>{shinytest}</code> package. Check out which packages currently use it for <a href="https://cran.r-project.org/web/packages/shinytest/index.html">testing</a> Shiny apps, and see if you can use <code>{shinytest2}</code> instead (see how-to <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html">here</a>).</p></li>
 </ul>
 </div>
 </div>

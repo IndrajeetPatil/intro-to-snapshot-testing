@@ -681,7 +681,7 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 
 ## Example Shiny app {.smaller}
 
-Let's say this app resides in the `inst/unitConverter` package directory.
+Let's say this app resides in the `inst/unitConverter/app.R` file.
 
 <!-- 
   TODO: How to embed a Shiny app? 
@@ -759,7 +759,7 @@ knitr::include_graphics("media/unitConverter-001_.png")
 
 ## Updating snapshots {.smaller}
 
-Let's say, while updating the app, we make a mistake. This'd lead to a test failure.
+Let's say, while updating the app, we make a mistake, which leads to a failed test.
 Fixing this test will be similar to fixing any other snapshot test we've seen thus far.
 
 :::panel-tabset
@@ -807,7 +807,9 @@ knitr::include_graphics("media/shinytest_failure.mov")
 
 # Headaches 
 
-It's not all kittens and roses when it comes to snapshot testing. We will now see some issues you might run into while using them. 🤕
+It's not all kittens and roses when it comes to snapshot testing. 
+
+We will now see some issues you might run into while using them. 🤕
 
 ## Failures in non-interactive environments {.smaller}
 
@@ -908,9 +910,9 @@ The only solution I can think of to insure against this is to run such tests **d
 
 # Self-study 
 
-In this presentation, we deliberately kept the example and the tests simple. 
+In this presentation, we deliberately kept the examples and the tests simple. 
 
-To see a more realistic usage of snapshot tests, you should study some open-source test suites on your own. 
+To see a more realistic usage of snapshot tests, you can study open-source test suites on your own. 
 
 ## Suggested repositories {.smaller}
 
@@ -968,7 +970,7 @@ These are only suggestions. Feel free to contribute to any project that you like
 
 - Add more `{vdiffr}` snapshot tests to plotting functions in [`{see}`](https://github.com/easystats/see), a library for statistical visualizations (I can chaperone your PRs here).
 
-- `{shinytest2}` is the successor to `{shinytest}` package. Check out which packages currently use it for [testing Shiny apps](https://cran.r-project.org/web/packages/shinytest/index.html), and see if you can use `{shinytest2}` instead (see how-to [here](https://rstudio.github.io/shinytest2/articles/z-migration.html)).
+- `{shinytest2}` is the successor to `{shinytest}` package. Check out which packages currently use it for [testing](https://cran.r-project.org/web/packages/shinytest/index.html) Shiny apps, and see if you can use `{shinytest2}` instead (see how-to [here](https://rstudio.github.io/shinytest2/articles/z-migration.html)).
 
 :::
 
