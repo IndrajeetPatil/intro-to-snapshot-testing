@@ -403,9 +403,9 @@
 </section>
 <section id="what-is-different-about-snapshot-testing" class="slide level2">
 <h2>What is different about snapshot testing?</h2>
+<div class="fragment">
 <p>A <strong>unit test</strong> records the code to describe expected output.</p>
 <p><br></p>
-<div class="fragment">
 <!-- Need to install the Quarto extension for fontawesome to work:
 https://github.com/quarto-ext/fontawesome  -->
 <p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-file-code fa-2xl" aria-hidden="true"></i> (expected)</p>
@@ -462,8 +462,8 @@ https://github.com/quarto-ext/fontawesome  -->
 <section>
 <section id="testing-text-outputs" class="title-slide slide level1 center">
 <h1>Testing text outputs</h1>
-<p>Snapshot tests can be used to check that printing functions work as expected.</p>
-<p>These functions are implemented to pretty-print R objects to the console, to create visually pleasing warning/error messages, etc.</p>
+<p>Snapshot tests can be used to test that text output <em>prints</em> as expected.</p>
+<p>To test functions that pretty-print R objects to the console, create elegant and informative warning/error messages, etc.</p>
 </section>
 <section id="example-function" class="slide level2 smaller">
 <h2>Example function</h2>
@@ -519,7 +519,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -628,7 +628,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -969,7 +969,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 </section>

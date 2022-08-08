@@ -29,11 +29,11 @@ The goal of a unit test is to capture the *expected* output of a function using 
 
 ## What is different about snapshot testing?
 
+. . .
+
 A **unit test** records the code to describe expected output.
 
 </br>
-
-. . .
 
 <!-- Need to install the Quarto extension for fontawesome to work:
 https://github.com/quarto-ext/fontawesome  -->
@@ -99,9 +99,9 @@ For more, see [this](https://testthat.r-lib.org/articles/third-edition.html) art
 
 # Testing text outputs
 
-Snapshot tests can be used to check that printing functions work as expected.
+Snapshot tests can be used to test that text output *prints* as expected.
 
-These functions are implemented to pretty-print R objects to the console, to create visually pleasing warning/error messages, etc.
+To test functions that pretty-print R objects to the console, create elegant and informative warning/error messages, etc.
 
 ## Example function {.smaller}
 
