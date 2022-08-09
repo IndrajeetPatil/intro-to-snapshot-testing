@@ -176,11 +176,7 @@ This is not maintainable! 😩
 
 ## Alternative: Snapshot test {.smaller}
 
-Instead, you can use `expect_snapshot()`!
-
-. . .
-
-The *first time* you run the test, it would generate a Markdown file with expected/reference output.
+Instead, you can use `expect_snapshot()`, which, when run for the first time, generates a Markdown file with expected/reference output.
 
 ```{r include = FALSE}
 snapper <- local_snapshotter()
