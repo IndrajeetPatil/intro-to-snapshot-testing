@@ -59,7 +59,7 @@ If you develop R packages and have struggled to
 - test that text output *prints* as expected
 - test that an entire file *is* as expected
 - test that generated graphical output *looks* as expected
-- update such tests *en masse* 
+- update such tests *en masse*
 
 ::: 
 
@@ -180,7 +180,7 @@ Instead, you can use `expect_snapshot()`!
 
 . . .
 
-The *first time* you run the test, it would generate a Markdown file with expected output.
+The *first time* you run the test, it would generate a Markdown file with expected/reference output.
 
 ```{r include = FALSE}
 snapper <- local_snapshotter()
@@ -276,7 +276,7 @@ snapper$start_file("slides.qmd", "test")
 
 ### Why does my test fail on a rerun?
 
-If you just generated a snapshot and ran the test again and it failed, this is most likely because your test is not deterministic. For example, if your function deals with random number generation.
+If testing a snapshot you just generated fails on re-running the test, this is most likely because your test is not deterministic. For example, if your function deals with random number generation.
 
 In such cases, setting a seed (e.g. `set.seed(42)`) should help.
 
@@ -977,6 +977,8 @@ These are only suggestions. Feel free to contribute to any project that you like
 ## Further reading {.smaller}
 
 - `{testthat}` article on [snapshot testing](https://testthat.r-lib.org/articles/snapshotting.html)
+
+- [Testing](https://mastering-shiny.org/scaling-testing.html) chapter from *Mastering Shiny*
 
 - `{shinytest2}` article introducing its [workflow](https://rstudio.github.io/shinytest2/articles/shinytest2.html)
 
