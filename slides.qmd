@@ -23,8 +23,6 @@ The goal of a unit test is to capture the *expected* output of a function using 
 
 - Tests also act as the most basic form of developer-focused documentation.
 
-<!-- [^1]: Ousterhout, J. K. (2018). *A Philosophy of Software Design*. Palo Alto: Yaknyam Press. -->
-
 :::
 
 ## What is different about snapshot testing?
@@ -452,6 +450,15 @@ test_that("`log()` doesn't work when argument not numeric", {
 
 :::
 
+## Further reading {.smaller}
+
+- `{testthat}` article on [snapshot testing](https://testthat.r-lib.org/articles/snapshotting.html)
+
+- Introduction to [golden testing](https://ro-che.info/articles/2017-12-04-golden-tests)
+
+- Docs for [Jest](https://jestjs.io/docs/snapshot-testing) library in JavaScript, which inspired snapshot testing implementation in `{testthat}`
+
+
 # Testing graphical outputs
 
 To create graphical expectations, we will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/).
@@ -663,19 +670,62 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 
 . . . 
 
-:::{.callout-note}
+Exactly how you test Shiny apps in R package will depend on how the app is stored.
+There are two possibilities, and we will discuss them both separately.
 
-- `{shinytest2}` itself will create a test file when you run `record_test()` in the app directory.
+. . . 
 
-- The test script will be saved in a *subdirectory* of the app If your app is located in (e.g.) `inst/` folder, the test will be in `inst/my-app/tests/testthat/test-shinytest2.R`.
+:::: {.columns}
 
-- There will be one `/tests` folder inside *every* app folder.
+::: {.column width='50%'}
 
-- The snapshots are saved as `.png` file in `tests/testthat/test-shinytest2/_snaps/{.variant}/shinytest2`. The `{.variant}` here corresponds to operating system and R version used to record tests. For example, `_snaps/windows-4.1/shinytest2`.
+**Stored in `/inst` folder**
+
+```
+├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+└── tests
+    ├── testthat
+    │   └── test-inst-apps.R
+    └── testthat.R
+```
 
 :::
 
-## Example Shiny app {.smaller}
+::: {.column width='50%'}
+
+**Returned by a function**
+
+```
+├── DESCRIPTION
+├── R
+│   └── app-function.R
+└── tests
+    ├── testthat
+    │   ├── _snaps
+    │   │   └── app-function
+    │   │       └── 001.json
+    │   └── test-app-function.R
+    └── testthat.R
+```
+
+:::
+
+::::
+
+# Shiny app as `inst/` subdirectory 
+
+## Example app {.smaller}
 
 Let's say this app resides in the `inst/unitConverter/app.R` file.
 
@@ -685,17 +735,22 @@ Let's say this app resides in the `inst/unitConverter/app.R` file.
   "Shiny applications not supported in static R Markdown documents"
 -->
 
-:::panel-tabset
+:::: {.columns}
 
-### App
+::: {.column width='40%'}
+
+**App**
 
 ```{r}
 #| echo: false
-#| out.width: "50%"
 knitr::include_graphics("media/shiny_app.mov")
 ```
 
-### Code
+:::
+
+::: {.column width='60%'}
+
+**Code**
 
 ```{.r}
 library(shiny)
@@ -707,7 +762,9 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  output$g <- renderText(paste0("Weight (in g): ", input$kg * 1000))
+  output$g <- renderText(
+    paste0("Weight (in g): ", input$kg * 1000)
+  )
 }
 
 shinyApp(ui, server)
@@ -715,13 +772,11 @@ shinyApp(ui, server)
 
 :::
 
+::::
+
 ## Generating a test {.smaller}
 
 To create a snapshot test, go to the app directory and run `record_test()`.
-
-:::panel-tabset
-
-### Procedure
 
 ```{r}
 #| echo: false
@@ -729,13 +784,20 @@ To create a snapshot test, go to the app directory and run `record_test()`.
 knitr::include_graphics("media/shinytest_record.mov")
 ```
 
-### Generated test
+## Auto-generated artifacts {.smaller}
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+**Test**
 
 ```{.r}
 library(shinytest2)
 
 test_that("{shinytest2} recording: unitConverter", {
-  app <- AppDriver$new(name = "unitConverter", height = 543, width = 426)
+  app <- AppDriver$new(
+  name = "unitConverter", height = 543, width = 426)
   app$set_inputs(kg = 1)
   app$set_inputs(kg = 10)
   app$expect_values()
@@ -743,28 +805,61 @@ test_that("{shinytest2} recording: unitConverter", {
 
 ```
 
-### Generated snapshot
+:::
+
+::: {.column width='40%'}
+
+**Snapshot**
 
 ```{r}
 #| echo: false
-#| out.width: "50%"
+#| out-width: "100%"
 knitr::include_graphics("media/unitConverter-001_.png")
 ```
 
 :::
 
-## Updating snapshots {.smaller}
+::::
+
+:::{.callout-note}
+
+- `{shinytest2}` itself will create a test file when you run `record_test()` in the app directory. The test script will be saved in a *subdirectory* of the app (`inst/my-app/tests/testthat/test-shinytest2.R`).
+
+- There will be one `/tests` folder inside *every* app folder.
+
+- The snapshots are saved as `.png` file in `tests/testthat/test-shinytest2/_snaps/{.variant}/shinytest2`. The `{.variant}` here corresponds to operating system and R version used to record tests. For example, `_snaps/windows-4.1/shinytest2`.
+
+:::
+
+## Creating a driver script {.smaller}
+
+Note that currently your test scripts and results are in the `/inst` folder, but you would also want these tests to be run using `{testthat}`.
+
+For this, we will need to write a driver script (`tests/testthat/test-inst-apps.R`).
+
+```{.r}
+library(shinytest2)
+
+test_that("`unitConverter` app works", {
+  # Don't run these tests on the CRAN machinws
+  skip_on_cran()
+
+  appdir <- system.file(package = "package_name", "unitConverter")
+  test_app(appdir)
+})
+```
+
+Done!
+
+Now the Shiny apps will be tested with the rest of the source code in the package! 🎊	
+
+## What test failure looks like {.smaller}
 
 Let's say, while updating the app, we make a mistake, which leads to a failed test.
-Fixing this test will be similar to fixing any other snapshot test we've seen thus far.
 
-:::panel-tabset
+**Changed code with mistake **
 
-### Code
-
-```{.r code-line-numbers="10"}
-library(shiny)
-
+```{.r code-line-numbers="8"}
 ui <- fluidPage(
   titlePanel("Convert kilograms to grams"),
   numericInput("kg", "Weight (in kg)", value = 0),
@@ -778,7 +873,7 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
-### Test failure JSON diff
+**Test failure JSON diff**
 
 ```{.json code-line-number="6"}
 Diff in snapshot file `shinytest2unitConverter-001.json`
@@ -791,7 +886,12 @@ Diff in snapshot file `shinytest2unitConverter-001.json`
     "export": {                         "export": {    
 ```
 
-### Snapshot differences
+
+## Updating snapshots {.smaller}
+
+Fixing this test will be similar to fixing any other snapshot test we've seen thus far.
+
+You can use Shiny app provided by `{testthat2}` for comparing snapshots.
 
 ```{r}
 #| echo: false
@@ -799,7 +899,11 @@ Diff in snapshot file `shinytest2unitConverter-001.json`
 knitr::include_graphics("media/shinytest_failure.mov")
 ```
 
-:::
+## Further reading {.smaller}
+
+- [Testing](https://mastering-shiny.org/scaling-testing.html) chapter from *Mastering Shiny*
+
+- `{shinytest2}` article introducing its [workflow](https://rstudio.github.io/shinytest2/articles/shinytest2.html)
 
 # Headaches 
 
@@ -884,13 +988,15 @@ Locally open the PR branch and play around with the changes to see if the new be
 
 Given their fragile nature, snapshot tests are skipped on CRAN by default. 
 
-Although this makes total sense, it means that you will miss out on anything but a breaking change from upstream dependency.
+Although this makes sense, it means that you will miss out on anything but a breaking change from upstream dependency. E.g., if `{ggplot2}` (hypothetically) changes how the points look, you will miss out on this change until you *happen to* run your snapshot tests again locally or on CI/CD.
 
-For example, if `{ggplot2}` (hypothetically) changes how the points look, you will completely miss out on this change until you *happen to* run your snapshot tests again locally or on CI/CD after `{ggplot2}` update.
+Unit tests run on CRAN, on the other hand, will fail and you will be immediately informed about it.
 
-Unit tests would alert to such changes because they are run on CRAN, and so you'll be informed to update the package when tests start failing.
+:::{.callout-tip collapse=false appearance='default' icon=true}
 
-The only solution I can think of to insure against this is to run such tests **daily** on CI/CD platforms (e.g. AppVeyor nightly builds).
+A way to insure against such silent failures is to run tests **daily** on CI/CD platforms (e.g. AppVeyor nightly builds).
+
+:::
 
 # Parting wisdom
 
@@ -970,19 +1076,25 @@ These are only suggestions. Feel free to contribute to any project that you like
 
 :::
 
-## Further reading {.smaller}
+## General reading {.smaller}
 
-- `{testthat}` article on [snapshot testing](https://testthat.r-lib.org/articles/snapshotting.html)
+Although current presentation is focused only on snapshot testing, here is reading material on automated testing in general.
 
-- [Testing](https://mastering-shiny.org/scaling-testing.html) chapter from *Mastering Shiny*
+- McConnell, S. (2004). *Code Complete*. Microsoft Press. (**pp. 499-533**)
 
-- `{shinytest2}` article introducing its [workflow](https://rstudio.github.io/shinytest2/articles/shinytest2.html)
+- Boswell, D., & Foucher, T. (2011). *The Art of Readable Code*. O'Reilly Media, Inc. (**pp. 149-162**)
 
-- Introduction to [golden testing](https://ro-che.info/articles/2017-12-04-golden-tests)
+- Riccomini, C., & Ryaboy D. (2021). *The Missing Readme*. No Starch Press. (**pp. 89-108**)
 
-- Docs for [Jest](https://jestjs.io/docs/snapshot-testing) library in JavaScript, which inspired snapshot testing implementation in `{testthat}`
+- Martin, R. C. (2009). *Clean Code*. Pearson Education. (**pp. 121-133**)
 
-- Collection of packages for [unit testing](https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-) in R
+- Fowler, M. (2018). *Refactoring.* Addison-Wesley Professional. (**pp. 85-100**)
+
+- Beck, K. (2003). *Test-Driven Development*. Addison-Wesley Professional.
+
+## Additional resources 
+
+For a comprehensive collection of packages for unit testing in R, see [this](https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-) page.
 
 # Find me at...
 

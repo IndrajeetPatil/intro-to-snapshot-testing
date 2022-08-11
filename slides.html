@@ -403,7 +403,6 @@
 <li class="fragment"><p>It also makes sure that you will stay informed of any upstream dependency changes that might change the behaviour of your function.</p></li>
 <li class="fragment"><p>Tests also act as the most basic form of developer-focused documentation.</p></li>
 </ul>
-<!-- [^1]: Ousterhout, J. K. (2018). *A Philosophy of Software Design*. Palo Alto: Yaknyam Press. -->
 </div>
 </section>
 <section id="what-is-different-about-snapshot-testing" class="slide level2">
@@ -524,7 +523,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -630,7 +629,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -850,6 +849,14 @@ non-numeric argument to mathematical function</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="further-reading" class="slide level2 smaller">
+<h2>Further reading</h2>
+<ul>
+<li><p><code>{testthat}</code> article on <a href="https://testthat.r-lib.org/articles/snapshotting.html">snapshot testing</a></p></li>
+<li><p>Introduction to <a href="https://ro-che.info/articles/2017-12-04-golden-tests">golden testing</a></p></li>
+<li><p>Docs for <a href="https://jestjs.io/docs/snapshot-testing">Jest</a> library in JavaScript, which inspired snapshot testing implementation in <code>{testthat}</code></p></li>
+</ul>
 </section></section>
 <section>
 <section id="testing-graphical-outputs" class="title-slide slide level1 center">
@@ -968,7 +975,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 </section>
@@ -1062,6 +1069,117 @@ Backtrace:
 <h2>How does <code>{shinytest2}</code> work?</h2>
 <p><code>{shinytest2}</code> uses a Shiny app (how meta! 😅) to record your interactions with the app and generate snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
 <div class="fragment">
+<p>Exactly how you test Shiny apps in R package will depend on how the app is stored. There are two possibilities, and we will discuss them both separately.</p>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Stored in <code>/inst</code> folder</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+└── tests
+    ├── testthat
+    │   └── test-inst-apps.R
+    └── testthat.R</code></pre>
+</div><div class="column" style="width:50%;">
+<p><strong>Returned by a function</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+│   └── app-function.R
+└── tests
+    ├── testthat
+    │   ├── _snaps
+    │   │   └── app-function
+    │   │       └── 001.json
+    │   └── test-app-function.R
+    └── testthat.R</code></pre>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="shiny-app-as-inst-subdirectory" class="title-slide slide level1 center">
+<h1>Shiny app as <code>inst/</code> subdirectory</h1>
+
+</section>
+<section id="example-app" class="slide level2 smaller">
+<h2>Example app</h2>
+<p>Let’s say this app resides in the <code>inst/unitConverter/app.R</code> file.</p>
+<!-- 
+  TODO: How to embed a Shiny app? 
+  If I just include the code in R chunk, I see:
+  "Shiny applications not supported in static R Markdown documents"
+-->
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><strong>App</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="media/shiny_app.mov" controls=""><a href="media/shiny_app.mov">Video</a></video></p>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<p><strong>Code</strong></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb41-2"><a href="#cb41-2"></a></span>
+<span id="cb41-3"><a href="#cb41-3"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb41-5"><a href="#cb41-5"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb41-6"><a href="#cb41-6"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb41-7"><a href="#cb41-7"></a>)</span>
+<span id="cb41-8"><a href="#cb41-8"></a></span>
+<span id="cb41-9"><a href="#cb41-9"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb41-10"><a href="#cb41-10"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb41-11"><a href="#cb41-11"></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb41-12"><a href="#cb41-12"></a>  )</span>
+<span id="cb41-13"><a href="#cb41-13"></a>}</span>
+<span id="cb41-14"><a href="#cb41-14"></a></span>
+<span id="cb41-15"><a href="#cb41-15"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="generating-a-test" class="slide level2 smaller">
+<h2>Generating a test</h2>
+<p>To create a snapshot test, go to the app directory and run <code>record_test()</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="media/shinytest_record.mov" style="width:60.0%" controls=""><a href="media/shinytest_record.mov">Video</a></video></p>
+</div>
+</div>
+</section>
+<section id="auto-generated-artifacts" class="slide level2 smaller">
+<h2>Auto-generated artifacts</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Test</strong></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">library</span>(shinytest2)</span>
+<span id="cb42-2"><a href="#cb42-2"></a></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="fu">test_that</span>(<span class="st">"{shinytest2} recording: unitConverter"</span>, {</span>
+<span id="cb42-4"><a href="#cb42-4"></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb42-5"><a href="#cb42-5"></a>  <span class="at">name =</span> <span class="st">"unitConverter"</span>, <span class="at">height =</span> <span class="dv">543</span>, <span class="at">width =</span> <span class="dv">426</span>)</span>
+<span id="cb42-6"><a href="#cb42-6"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">1</span>)</span>
+<span id="cb42-7"><a href="#cb42-7"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">10</span>)</span>
+<span id="cb42-8"><a href="#cb42-8"></a>  app<span class="sc">$</span><span class="fu">expect_values</span>()</span>
+<span id="cb42-9"><a href="#cb42-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:40%;">
+<p><strong>Snapshot</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="media/unitConverter-001_.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
+</div>
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -1072,125 +1190,71 @@ Backtrace:
 </div>
 <div class="callout-content">
 <ul>
-<li><p><code>{shinytest2}</code> itself will create a test file when you run <code>record_test()</code> in the app directory.</p></li>
-<li><p>The test script will be saved in a <em>subdirectory</em> of the app If your app is located in (e.g.) <code>inst/</code> folder, the test will be in <code>inst/my-app/tests/testthat/test-shinytest2.R</code>.</p></li>
+<li><p><code>{shinytest2}</code> itself will create a test file when you run <code>record_test()</code> in the app directory. The test script will be saved in a <em>subdirectory</em> of the app (<code>inst/my-app/tests/testthat/test-shinytest2.R</code>).</p></li>
 <li><p>There will be one <code>/tests</code> folder inside <em>every</em> app folder.</p></li>
 <li><p>The snapshots are saved as <code>.png</code> file in <code>tests/testthat/test-shinytest2/_snaps/{.variant}/shinytest2</code>. The <code>{.variant}</code> here corresponds to operating system and R version used to record tests. For example, <code>_snaps/windows-4.1/shinytest2</code>.</p></li>
 </ul>
 </div>
 </div>
 </div>
-</div>
 </section>
-<section id="example-shiny-app" class="slide level2 smaller">
-<h2>Example Shiny app</h2>
-<p>Let’s say this app resides in the <code>inst/unitConverter/app.R</code> file.</p>
-<!-- 
-  TODO: How to embed a Shiny app? 
-  If I just include the code in R chunk, I see:
-  "Shiny applications not supported in static R Markdown documents"
--->
-<div class="panel-tabset">
-<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">App</a></li><li><a href="#tabset-7-2">Code</a></li></ul>
-<div class="tab-content">
-<div id="tabset-7-1">
-<div class="cell">
-<div class="cell-output-display">
-<p><video data-src="media/shiny_app.mov" style="width:50.0%" controls=""><a href="media/shiny_app.mov">Video</a></video></p>
-</div>
-</div>
-</div>
-<div id="tabset-7-2">
-<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb39-2"><a href="#cb39-2"></a></span>
-<span id="cb39-3"><a href="#cb39-3"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb39-4"><a href="#cb39-4"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
-<span id="cb39-5"><a href="#cb39-5"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
-<span id="cb39-6"><a href="#cb39-6"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
-<span id="cb39-7"><a href="#cb39-7"></a>)</span>
-<span id="cb39-8"><a href="#cb39-8"></a></span>
-<span id="cb39-9"><a href="#cb39-9"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb39-10"><a href="#cb39-10"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>))</span>
-<span id="cb39-11"><a href="#cb39-11"></a>}</span>
-<span id="cb39-12"><a href="#cb39-12"></a></span>
-<span id="cb39-13"><a href="#cb39-13"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
+<section id="creating-a-driver-script" class="slide level2 smaller">
+<h2>Creating a driver script</h2>
+<p>Note that currently your test scripts and results are in the <code>/inst</code> folder, but you would also want these tests to be run using <code>{testthat}</code>.</p>
+<p>For this, we will need to write a driver script (<code>tests/testthat/test-inst-apps.R</code>).</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">library</span>(shinytest2)</span>
+<span id="cb43-2"><a href="#cb43-2"></a></span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="fu">test_that</span>(<span class="st">"`unitConverter` app works"</span>, {</span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="co"># Don't run these tests on the CRAN machinws</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">skip_on_cran</span>()</span>
+<span id="cb43-6"><a href="#cb43-6"></a></span>
+<span id="cb43-7"><a href="#cb43-7"></a>  appdir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"package_name"</span>, <span class="st">"unitConverter"</span>)</span>
+<span id="cb43-8"><a href="#cb43-8"></a>  <span class="fu">test_app</span>(appdir)</span>
+<span id="cb43-9"><a href="#cb43-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Done!</p>
+<p>Now the Shiny apps will be tested with the rest of the source code in the package! 🎊</p>
 </section>
-<section id="generating-a-test" class="slide level2 smaller">
-<h2>Generating a test</h2>
-<p>To create a snapshot test, go to the app directory and run <code>record_test()</code>.</p>
-<div class="panel-tabset">
-<ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">Procedure</a></li><li><a href="#tabset-8-2">Generated test</a></li><li><a href="#tabset-8-3">Generated snapshot</a></li></ul>
-<div class="tab-content">
-<div id="tabset-8-1">
-<div class="cell">
-<div class="cell-output-display">
-<p><video data-src="media/shinytest_record.mov" style="width:60.0%" controls=""><a href="media/shinytest_record.mov">Video</a></video></p>
-</div>
-</div>
-</div>
-<div id="tabset-8-2">
-<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">library</span>(shinytest2)</span>
-<span id="cb40-2"><a href="#cb40-2"></a></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="fu">test_that</span>(<span class="st">"{shinytest2} recording: unitConverter"</span>, {</span>
-<span id="cb40-4"><a href="#cb40-4"></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(<span class="at">name =</span> <span class="st">"unitConverter"</span>, <span class="at">height =</span> <span class="dv">543</span>, <span class="at">width =</span> <span class="dv">426</span>)</span>
-<span id="cb40-5"><a href="#cb40-5"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">1</span>)</span>
-<span id="cb40-6"><a href="#cb40-6"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">10</span>)</span>
-<span id="cb40-7"><a href="#cb40-7"></a>  app<span class="sc">$</span><span class="fu">expect_values</span>()</span>
-<span id="cb40-8"><a href="#cb40-8"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="tabset-8-3">
-<div class="cell">
-<div class="cell-output-display">
-<p><img data-src="media/unitConverter-001_.png" style="width:50.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</div>
+<section id="what-test-failure-looks-like" class="slide level2 smaller">
+<h2>What test failure looks like</h2>
+<p>Let’s say, while updating the app, we make a mistake, which leads to a failed test.</p>
+<p><strong>Changed code with mistake </strong></p>
+<div class="sourceCode" id="cb44" data-code-line-numbers="8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb44-4"><a href="#cb44-4"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb44-5"><a href="#cb44-5"></a>)</span>
+<span id="cb44-6"><a href="#cb44-6"></a></span>
+<span id="cb44-7"><a href="#cb44-7"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb44-8"><a href="#cb44-8"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>))</span>
+<span id="cb44-9"><a href="#cb44-9"></a>}</span>
+<span id="cb44-10"><a href="#cb44-10"></a></span>
+<span id="cb44-11"><a href="#cb44-11"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Test failure JSON diff</strong></p>
+<div class="sourceCode" id="cb45" data-code-line-number="6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb45-1"><a href="#cb45-1"></a><span class="er">Diff</span> <span class="er">in</span> <span class="er">snapshot</span> <span class="er">file</span> <span class="er">`shinytest2unitConverter-001.json`</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="er">&lt;</span> <span class="er">before</span>                            <span class="er">&gt;</span> <span class="er">after</span>                           </span>
+<span id="cb45-3"><a href="#cb45-3"></a><span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                           <span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                         </span>
+<span id="cb45-4"><a href="#cb45-4"></a>    <span class="er">},</span>                                  <span class="er">},</span>                            </span>
+<span id="cb45-5"><a href="#cb45-5"></a>    <span class="er">"output":</span> <span class="fu">{</span>                         <span class="dt">"output"</span><span class="fu">:</span> <span class="fu">{</span>                   </span>
+<span id="cb45-6"><a href="#cb45-6"></a><span class="er">&lt;</span>     <span class="dt">"g"</span><span class="fu">:</span> <span class="st">"Weight (in g): 10000"</span>   <span class="er">&gt;</span>     <span class="st">"g"</span><span class="er">:</span> <span class="st">"Weight (in kg): 10000"</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a>    <span class="fu">},</span>                                  <span class="fu">}</span><span class="er">,</span>                            </span>
+<span id="cb45-8"><a href="#cb45-8"></a>    <span class="er">"export":</span> <span class="fu">{</span>                         <span class="dt">"export"</span><span class="fu">:</span> <span class="fu">{</span>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="updating-snapshots" class="slide level2 smaller">
 <h2>Updating snapshots</h2>
-<p>Let’s say, while updating the app, we make a mistake, which leads to a failed test. Fixing this test will be similar to fixing any other snapshot test we’ve seen thus far.</p>
-<div class="panel-tabset">
-<ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">Code</a></li><li><a href="#tabset-9-2">Test failure JSON diff</a></li><li><a href="#tabset-9-3">Snapshot differences</a></li></ul>
-<div class="tab-content">
-<div id="tabset-9-1">
-<div class="sourceCode" id="cb41" data-code-line-numbers="10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb41-2"><a href="#cb41-2"></a></span>
-<span id="cb41-3"><a href="#cb41-3"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
-<span id="cb41-5"><a href="#cb41-5"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
-<span id="cb41-6"><a href="#cb41-6"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
-<span id="cb41-7"><a href="#cb41-7"></a>)</span>
-<span id="cb41-8"><a href="#cb41-8"></a></span>
-<span id="cb41-9"><a href="#cb41-9"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb41-10"><a href="#cb41-10"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(<span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>))</span>
-<span id="cb41-11"><a href="#cb41-11"></a>}</span>
-<span id="cb41-12"><a href="#cb41-12"></a></span>
-<span id="cb41-13"><a href="#cb41-13"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="tabset-9-2">
-<div class="sourceCode" id="cb42" data-code-line-number="6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb42-1"><a href="#cb42-1"></a><span class="er">Diff</span> <span class="er">in</span> <span class="er">snapshot</span> <span class="er">file</span> <span class="er">`shinytest2unitConverter-001.json`</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="er">&lt;</span> <span class="er">before</span>                            <span class="er">&gt;</span> <span class="er">after</span>                           </span>
-<span id="cb42-3"><a href="#cb42-3"></a><span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                           <span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                         </span>
-<span id="cb42-4"><a href="#cb42-4"></a>    <span class="er">},</span>                                  <span class="er">},</span>                            </span>
-<span id="cb42-5"><a href="#cb42-5"></a>    <span class="er">"output":</span> <span class="fu">{</span>                         <span class="dt">"output"</span><span class="fu">:</span> <span class="fu">{</span>                   </span>
-<span id="cb42-6"><a href="#cb42-6"></a><span class="er">&lt;</span>     <span class="dt">"g"</span><span class="fu">:</span> <span class="st">"Weight (in g): 10000"</span>   <span class="er">&gt;</span>     <span class="st">"g"</span><span class="er">:</span> <span class="st">"Weight (in kg): 10000"</span></span>
-<span id="cb42-7"><a href="#cb42-7"></a>    <span class="fu">},</span>                                  <span class="fu">}</span><span class="er">,</span>                            </span>
-<span id="cb42-8"><a href="#cb42-8"></a>    <span class="er">"export":</span> <span class="fu">{</span>                         <span class="dt">"export"</span><span class="fu">:</span> <span class="fu">{</span>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="tabset-9-3">
+<p>Fixing this test will be similar to fixing any other snapshot test we’ve seen thus far.</p>
+<p>You can use Shiny app provided by <code>{testthat2}</code> for comparing snapshots.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><video data-src="media/shinytest_failure.mov" style="width:60.0%" controls=""><a href="media/shinytest_failure.mov">Video</a></video></p>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+<section id="further-reading-1" class="slide level2 smaller">
+<h2>Further reading</h2>
+<ul>
+<li><p><a href="https://mastering-shiny.org/scaling-testing.html">Testing</a> chapter from <em>Mastering Shiny</em></p></li>
+<li><p><code>{shinytest2}</code> article introducing its <a href="https://rstudio.github.io/shinytest2/articles/shinytest2.html">workflow</a></p></li>
+</ul>
 </section></section>
 <section>
 <section id="headaches" class="title-slide slide level1 center">
@@ -1222,7 +1286,7 @@ Backtrace:
 <h2>Accessing new snapshots</h2>
 <div class="fragment">
 <p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
@@ -1238,9 +1302,9 @@ Backtrace:
 <ul>
 <li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
 </ul>
-<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb47-1"><a href="#cb47-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="code-review-with-snapshot-tests" class="slide level2 smaller">
@@ -1251,9 +1315,9 @@ Backtrace:
 <section id="section-2" class="slide level2 smaller">
 <h2></h2>
 <div class="panel-tabset">
-<ul id="tabset-10" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-10-1">Option-1</a></li><li><a href="#tabset-10-2">Option-2</a></li></ul>
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">Option-1</a></li><li><a href="#tabset-7-2">Option-2</a></li></ul>
 <div class="tab-content">
-<div id="tabset-10-1">
+<div id="tabset-7-1">
 <p>Use tools provided for code review by hosting platform (like GitHub). For example, to review changes in SVG snapshots:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1261,7 +1325,7 @@ Backtrace:
 </div>
 </div>
 </div>
-<div id="tabset-10-2">
+<div id="tabset-7-2">
 <p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
 </div>
 </div>
@@ -1270,10 +1334,21 @@ Backtrace:
 <section id="danger-of-silent-failures" class="slide level2 smaller">
 <h2>Danger of silent failures</h2>
 <p>Given their fragile nature, snapshot tests are skipped on CRAN by default.</p>
-<p>Although this makes total sense, it means that you will miss out on anything but a breaking change from upstream dependency.</p>
-<p>For example, if <code>{ggplot2}</code> (hypothetically) changes how the points look, you will completely miss out on this change until you <em>happen to</em> run your snapshot tests again locally or on CI/CD after <code>{ggplot2}</code> update.</p>
-<p>Unit tests would alert to such changes because they are run on CRAN, and so you’ll be informed to update the package when tests start failing.</p>
-<p>The only solution I can think of to insure against this is to run such tests <strong>daily</strong> on CI/CD platforms (e.g.&nbsp;AppVeyor nightly builds).</p>
+<p>Although this makes sense, it means that you will miss out on anything but a breaking change from upstream dependency. E.g., if <code>{ggplot2}</code> (hypothetically) changes how the points look, you will miss out on this change until you <em>happen to</em> run your snapshot tests again locally or on CI/CD.</p>
+<p>Unit tests run on CRAN, on the other hand, will fail and you will be immediately informed about it.</p>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>A way to insure against such silent failures is to run tests <strong>daily</strong> on CI/CD platforms (e.g.&nbsp;AppVeyor nightly builds).</p>
+</div>
+</div>
+</div>
 </section></section>
 <section id="parting-wisdom" class="title-slide slide level1 center">
 <h1>Parting wisdom</h1>
@@ -1354,16 +1429,21 @@ Backtrace:
 </div>
 </div>
 </section>
-<section id="further-reading" class="slide level2 smaller">
-<h2>Further reading</h2>
+<section id="general-reading" class="slide level2 smaller">
+<h2>General reading</h2>
+<p>Although current presentation is focused only on snapshot testing, here is reading material on automated testing in general.</p>
 <ul>
-<li><p><code>{testthat}</code> article on <a href="https://testthat.r-lib.org/articles/snapshotting.html">snapshot testing</a></p></li>
-<li><p><a href="https://mastering-shiny.org/scaling-testing.html">Testing</a> chapter from <em>Mastering Shiny</em></p></li>
-<li><p><code>{shinytest2}</code> article introducing its <a href="https://rstudio.github.io/shinytest2/articles/shinytest2.html">workflow</a></p></li>
-<li><p>Introduction to <a href="https://ro-che.info/articles/2017-12-04-golden-tests">golden testing</a></p></li>
-<li><p>Docs for <a href="https://jestjs.io/docs/snapshot-testing">Jest</a> library in JavaScript, which inspired snapshot testing implementation in <code>{testthat}</code></p></li>
-<li><p>Collection of packages for <a href="https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-">unit testing</a> in R</p></li>
+<li><p>McConnell, S. (2004). <em>Code Complete</em>. Microsoft Press. (<strong>pp.&nbsp;499-533</strong>)</p></li>
+<li><p>Boswell, D., &amp; Foucher, T. (2011). <em>The Art of Readable Code</em>. O’Reilly Media, Inc.&nbsp;(<strong>pp.&nbsp;149-162</strong>)</p></li>
+<li><p>Riccomini, C., &amp; Ryaboy D. (2021). <em>The Missing Readme</em>. No Starch Press. (<strong>pp.&nbsp;89-108</strong>)</p></li>
+<li><p>Martin, R. C. (2009). <em>Clean Code</em>. Pearson Education. (<strong>pp.&nbsp;121-133</strong>)</p></li>
+<li><p>Fowler, M. (2018). <em>Refactoring.</em> Addison-Wesley Professional. (<strong>pp.&nbsp;85-100</strong>)</p></li>
+<li><p>Beck, K. (2003). <em>Test-Driven Development</em>. Addison-Wesley Professional.</p></li>
 </ul>
+</section>
+<section id="additional-resources" class="slide level2">
+<h2>Additional resources</h2>
+<p>For a comprehensive collection of packages for unit testing in R, see <a href="https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-">this</a> page.</p>
 </section></section>
 <section id="find-me-at" class="title-slide slide level1 center">
 <h1>Find me at…</h1>
