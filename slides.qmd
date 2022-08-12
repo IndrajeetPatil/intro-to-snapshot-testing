@@ -19,7 +19,7 @@ The goal of a unit test is to capture the *expected* output of a function using 
 
 - This insures against unintentionally changing function behaviour, or re-introducing already fixed bugs.
 
-- It also makes sure that you will stay informed of any upstream dependency changes that might change the behaviour of your function.
+- It also makes sure that we will stay informed of any upstream dependency changes that might change the behaviour of our function.
 
 - Tests also act as the most basic form of developer-focused documentation.
 
@@ -174,7 +174,7 @@ This is not maintainable! 😩
 
 ## Alternative: Snapshot test {.smaller}
 
-Instead, you can use `expect_snapshot()`, which, when run for the first time, generates a Markdown file with expected/reference output.
+Instead, we can use `expect_snapshot()`, which, when run for the first time, generates a Markdown file with expected/reference output.
 
 ```{r include = FALSE}
 snapper <- local_snapshotter()
@@ -203,7 +203,7 @@ snapper$start_file("slides.qmd", "test")
 
 The first time a snapshot is created, it becomes *the truth* against which future function behaviour will be compared. 
 
-Thus, it is **crucial** that you carefully check that the output is indeed as expected. 🔎 
+Thus, it is **crucial** that we carefully check that the output is indeed as expected. 🔎 
 
 :::
 
@@ -566,15 +566,15 @@ snapper$start_file("slides.qmd", "test")
 
 The first time a snapshot is created, it becomes *the truth* against which future function behaviour will be compared. 
 
-Thus, it is **crucial** that you carefully check that the output is indeed as expected. 🔎 
+Thus, it is **crucial** that we carefully check that the output is indeed as expected. 🔎 
 
-You can open `.svg` snapshot files in a web browser for closer inspection.
+We can open `.svg` snapshot files in a web browser for closer inspection.
 
 :::
 
 ## What test success looks like {.smaller}
 
-If you run the test again, it'll succeed:
+If we run the test again, it'll succeed:
 
 ```{r}
 test_that("`create_scatter()` plots as expected", {
@@ -655,14 +655,14 @@ knitr::include_graphics("media/shiny_app_graphics.mov")
 
 ## Why are my snapshots for plots failing?! 😔
 
-If tests fail even if you didn't change anything about your plotting function, it can be due to any of the following reasons:
+If tests fail even if the function didn't change, it can be due to any of the following reasons:
 
 - R's graphics engine changed
 - `{ggplot2}` itself changed
 - non-determinism 
 - reliance on system libraries
 
-For these reasons, snapshot tests for plots tend to be fragile and not run on CRAN machines by default.
+For these reasons, snapshot tests for plots tend to be fragile and are not run on CRAN machines by default.
 
 :::
 
@@ -684,11 +684,11 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 
 ## How does `{shinytest2}` work? {.smaller}
 
-`{shinytest2}` uses a Shiny app (how meta! 😅) to record your interactions with the app and generate snapshots of the application's state. Future behaviour of the app will be compared against these snapshots to check for any changes.
+`{shinytest2}` uses a Shiny app (how meta! 😅) to record user interactions with the app and generate snapshots of the application's state. Future behaviour of the app will be compared against these snapshots to check for any changes.
 
 . . . 
 
-Exactly how you test Shiny apps in R package will depend on how the app is stored.
+Exactly how tests for Shiny apps in R package are written depends on how the app is stored.
 There are two possibilities, and we will discuss them both separately.
 
 . . . 
@@ -837,7 +837,7 @@ knitr::include_graphics("media/unitConverter-001_.png")
 
 :::{.callout-note}
 
-- `{shinytest2}` itself will create a test file when you run `record_test()` in the app directory. The test script will be saved in a *subdirectory* of the app (`inst/my-app/tests/testthat/test-shinytest2.R`).
+- `record_test()` will auto-generate a test file in the app directory. The test script will be saved in a *subdirectory* of the app (`inst/my-app/tests/testthat/test-shinytest2.R`).
 
 - There will be one `/tests` folder inside *every* app folder.
 
@@ -912,7 +912,7 @@ Diff in snapshot file `shinytest2unitConverter-001.json`
 
 Fixing this test will be similar to fixing any other snapshot test we've seen thus far.
 
-You can use Shiny app provided by `{testthat2}` for comparing snapshots.
+`{testthat2}` provides a Shiny app for comparing the old and new snapshots.
 
 ```{r}
 #| echo: false
@@ -929,7 +929,6 @@ knitr::include_graphics("media/shinytest_failure.mov")
 ├── R
 │   └── app-function.R
 ```
-
 
 ## Final directory structure {.smaller}
 
@@ -997,39 +996,33 @@ The final location of the tests and snapshots should look like the following for
 
 It's not all kittens and roses when it comes to snapshot testing. 
 
-We will now see some issues you might run into while using them. 🤕
+Let's now see some issues we might run into while using them. 🤕
 
 ## Failures in non-interactive environments {.smaller}
 
 If snapshots fail locally, we can just run `snapshot_review()`, but what if they fail in non-interactive environments (on CI/CD platforms, during `R CMD Check`, etc.)?
 
-The easiest solution is to copy the new snapshots to your local folder and then run `snapshot_review()`.
+The easiest solution is to copy the new snapshots to the local folder and run `snapshot_review()`.
 
 :::{.callout-tip}
 
-If your expected snapshot is called (e.g.) `foo.svg`, when the test fails, there will be a new snapshot file `foo.new.svg` in the same folder.
+If expected snapshot is called (e.g.) `foo.svg`, there will be a new snapshot file `foo.new.svg` in the same folder when the test fails.
 
-`snapshot_review()` compares these files to reveal how the output has changed.
+`snapshot_review()` compares these files to reveal how the outputs have changed.
 
 :::
 
-But where can you find the new snapshots?
+But where can we find the new snapshots?
 
 ## Accessing new snapshots {.smaller}
 
-. . .
-
-In local `R CMD Check`, you can find new snapshots in `.Rcheck` folder:
+In local `R CMD Check`, we can find new snapshots in `.Rcheck` folder:
 
 ```r
 package_name.Rcheck/tests/testthat/_snaps/
 ```
 
-. . .
-
-</br>
-
-On CI/CD platforms, you can find snapshots in artifacts folder:
+On CI/CD platforms, we can find snapshots in artifacts folder:
 
 - [AppVeyor](https://www.appveyor.com/docs/packaging-artifacts/)
 
@@ -1049,7 +1042,7 @@ knitr::include_graphics("media/AppVeyor.png")
 
 Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots. 
 
-How do you review pull requests with complex changes in snapshots? 
+How do we review pull requests with complex snapshots changes? 
 
 ## {.smaller}
 
@@ -1057,7 +1050,7 @@ How do you review pull requests with complex changes in snapshots?
 
 ### Option-1
 
-Use tools provided for code review by hosting platform (like GitHub).
+Use tools provided for code review by hosting platforms (like GitHub).
 For example, to review changes in SVG snapshots:
 
 ```{r}
@@ -1076,9 +1069,9 @@ Locally open the PR branch and play around with the changes to see if the new be
 
 Given their fragile nature, snapshot tests are skipped on CRAN by default. 
 
-Although this makes sense, it means that you will miss out on anything but a breaking change from upstream dependency. E.g., if `{ggplot2}` (hypothetically) changes how the points look, you will miss out on this change until you *happen to* run your snapshot tests again locally or on CI/CD.
+Although this makes sense, it means that we miss out on anything but a breaking change from upstream dependency. E.g., if `{ggplot2}` (hypothetically) changes how the points look, we won't know about this change until we *happen to* run our snapshot tests again locally or on CI/CD.
 
-Unit tests run on CRAN, on the other hand, will fail and you will be immediately informed about it.
+Unit tests run on CRAN, on the other hand, will fail and we will be immediately informed about it.
 
 :::{.callout-tip collapse=false appearance='default' icon=true}
 
@@ -1094,7 +1087,7 @@ A way to insure against such silent failures is to run tests **daily** on CI/CD 
 
 - Don't use snapshot tests **for everything**: It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g. when testing requires external benchmarking).
 
-- Don't **blindly accept** snapshot changes: Resist formation of such a habit. `{testthat}` provides tools to make it extremely easy to review changes, so you have no excuses! 
+- Don't **blindly accept** snapshot changes: Resist formation of such a habit. `{testthat}` provides tools to make it extremely easy to review changes, so that is no excuse! 
 
 :::
 
@@ -1102,7 +1095,7 @@ A way to insure against such silent failures is to run tests **daily** on CI/CD 
 
 In this presentation, we deliberately kept the examples and the tests simple. 
 
-To see a more realistic usage of snapshot tests, you can study open-source test suites on your own. 
+To see a more realistic usage of snapshot tests, you can study open-source test suites.
 
 ## Suggested repositories {.smaller}
 
@@ -1144,17 +1137,17 @@ To see a more realistic usage of snapshot tests, you can study open-source test 
 
 # Activities
 
-If you are now feeling confident about your snapshot testing skills, if you want, you can contribute to open-source projects to practice these skills!
+If you are now feeling confident about your snapshot testing skills and want to contribute to open-source projects to practice these skills, here are some options.
 
 ## Practice makes it perfect {.smaller}
 
-These are only suggestions. Feel free to contribute to any project that you like! 🤝
+These are only suggestions. Feel free to contribute to any project you like! 🤝
 
 :::{.callout-tip}
 
 ## Suggestions 
 
-- See if any of the `{ggplot2}` [extensions](https://exts.ggplot2.tidyverse.org/gallery/) you like use snapshot tests for graphics. If not, you can add tests for key functions.
+- See if `{ggplot2}` [extensions](https://exts.ggplot2.tidyverse.org/gallery/) you like use snapshot tests for graphics. If not, you can add them for key functions.
 
 - Check out hard reverse dependencies of [`{shiny}`](https://cran.r-project.org/web/packages/shiny/index.html), and add snapshot tests using `{shinytest2}` to an app of your liking.
 

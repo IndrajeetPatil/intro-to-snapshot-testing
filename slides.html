@@ -400,7 +400,7 @@
 <div>
 <ul>
 <li class="fragment"><p>This insures against unintentionally changing function behaviour, or re-introducing already fixed bugs.</p></li>
-<li class="fragment"><p>It also makes sure that you will stay informed of any upstream dependency changes that might change the behaviour of your function.</p></li>
+<li class="fragment"><p>It also makes sure that we will stay informed of any upstream dependency changes that might change the behaviour of our function.</p></li>
 <li class="fragment"><p>Tests also act as the most basic form of developer-focused documentation.</p></li>
 </ul>
 </div>
@@ -523,7 +523,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -548,7 +548,7 @@ https://github.com/quarto-ext/fontawesome  -->
 </section>
 <section id="alternative-snapshot-test" class="slide level2 smaller">
 <h2>Alternative: Snapshot test</h2>
-<p>Instead, you can use <code>expect_snapshot()</code>, which, when run for the first time, generates a Markdown file with expected/reference output.</p>
+<p>Instead, we can use <code>expect_snapshot()</code>, which, when run for the first time, generates a Markdown file with expected/reference output.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
@@ -579,7 +579,7 @@ Output
 </div>
 <div class="callout-content">
 <p>The first time a snapshot is created, it becomes <em>the truth</em> against which future function behaviour will be compared.</p>
-<p>Thus, it is <strong>crucial</strong> that you carefully check that the output is indeed as expected. 🔎</p>
+<p>Thus, it is <strong>crucial</strong> that we carefully check that the output is indeed as expected. 🔎</p>
 </div>
 </div>
 </div>
@@ -629,7 +629,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -954,8 +954,8 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 </div>
 <div class="callout-content">
 <p>The first time a snapshot is created, it becomes <em>the truth</em> against which future function behaviour will be compared.</p>
-<p>Thus, it is <strong>crucial</strong> that you carefully check that the output is indeed as expected. 🔎</p>
-<p>You can open <code>.svg</code> snapshot files in a web browser for closer inspection.</p>
+<p>Thus, it is <strong>crucial</strong> that we carefully check that the output is indeed as expected. 🔎</p>
+<p>We can open <code>.svg</code> snapshot files in a web browser for closer inspection.</p>
 </div>
 </div>
 </div>
@@ -963,7 +963,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 </section>
 <section id="what-test-success-looks-like-1" class="slide level2 smaller">
 <h2>What test success looks like</h2>
-<p>If you run the test again, it’ll succeed:</p>
+<p>If we run the test again, it’ll succeed:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
 <span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
@@ -973,7 +973,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 </section>
@@ -1037,14 +1037,14 @@ Backtrace:
 <p><strong>Why are my snapshots for plots failing?! 😔</strong></p>
 </div>
 <div class="callout-content">
-<p>If tests fail even if you didn’t change anything about your plotting function, it can be due to any of the following reasons:</p>
+<p>If tests fail even if the function didn’t change, it can be due to any of the following reasons:</p>
 <ul>
 <li>R’s graphics engine changed</li>
 <li><code>{ggplot2}</code> itself changed</li>
 <li>non-determinism</li>
 <li>reliance on system libraries</li>
 </ul>
-<p>For these reasons, snapshot tests for plots tend to be fragile and not run on CRAN machines by default.</p>
+<p>For these reasons, snapshot tests for plots tend to be fragile and are not run on CRAN machines by default.</p>
 </div>
 </div>
 </div>
@@ -1069,9 +1069,9 @@ Backtrace:
 </section>
 <section id="how-does-shinytest2-work" class="slide level2 smaller">
 <h2>How does <code>{shinytest2}</code> work?</h2>
-<p><code>{shinytest2}</code> uses a Shiny app (how meta! 😅) to record your interactions with the app and generate snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
+<p><code>{shinytest2}</code> uses a Shiny app (how meta! 😅) to record user interactions with the app and generate snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
 <div class="fragment">
-<p>Exactly how you test Shiny apps in R package will depend on how the app is stored. There are two possibilities, and we will discuss them both separately.</p>
+<p>Exactly how tests for Shiny apps in R package are written depends on how the app is stored. There are two possibilities, and we will discuss them both separately.</p>
 </div>
 <div class="fragment">
 <p><br></p>
@@ -1181,7 +1181,7 @@ Backtrace:
 </div>
 <div class="callout-content">
 <ul>
-<li><p><code>{shinytest2}</code> itself will create a test file when you run <code>record_test()</code> in the app directory. The test script will be saved in a <em>subdirectory</em> of the app (<code>inst/my-app/tests/testthat/test-shinytest2.R</code>).</p></li>
+<li><p><code>record_test()</code> will auto-generate a test file in the app directory. The test script will be saved in a <em>subdirectory</em> of the app (<code>inst/my-app/tests/testthat/test-shinytest2.R</code>).</p></li>
 <li><p>There will be one <code>/tests</code> folder inside <em>every</em> app folder.</p></li>
 <li><p>The snapshots are saved as <code>.png</code> file in <code>tests/testthat/test-shinytest2/_snaps/{.variant}/shinytest2</code>. The <code>{.variant}</code> here corresponds to operating system and R version used to record tests. For example, <code>_snaps/windows-4.1/shinytest2</code>.</p></li>
 </ul>
@@ -1248,7 +1248,7 @@ Backtrace:
 <section id="updating-snapshots" class="slide level2 smaller">
 <h2>Updating snapshots</h2>
 <p>Fixing this test will be similar to fixing any other snapshot test we’ve seen thus far.</p>
-<p>You can use Shiny app provided by <code>{testthat2}</code> for comparing snapshots.</p>
+<p><code>{testthat2}</code> provides a Shiny app for comparing the old and new snapshots.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><video data-src="media/shinytest_failure.mov" style="width:60.0%" controls=""><a href="media/shinytest_failure.mov">Video</a></video></p>
@@ -1313,12 +1313,12 @@ Backtrace:
 <section id="headaches" class="title-slide slide level1 center">
 <h1>Headaches</h1>
 <p>It’s not all kittens and roses when it comes to snapshot testing.</p>
-<p>We will now see some issues you might run into while using them. 🤕</p>
+<p>Let’s now see some issues we might run into while using them. 🤕</p>
 </section>
 <section id="failures-in-non-interactive-environments" class="slide level2 smaller">
 <h2>Failures in non-interactive environments</h2>
 <p>If snapshots fail locally, we can just run <code>snapshot_review()</code>, but what if they fail in non-interactive environments (on CI/CD platforms, during <code>R CMD Check</code>, etc.)?</p>
-<p>The easiest solution is to copy the new snapshots to your local folder and then run <code>snapshot_review()</code>.</p>
+<p>The easiest solution is to copy the new snapshots to the local folder and run <code>snapshot_review()</code>.</p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -1328,42 +1328,33 @@ Backtrace:
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>If your expected snapshot is called (e.g.) <code>foo.svg</code>, when the test fails, there will be a new snapshot file <code>foo.new.svg</code> in the same folder.</p>
-<p><code>snapshot_review()</code> compares these files to reveal how the output has changed.</p>
+<p>If expected snapshot is called (e.g.) <code>foo.svg</code>, there will be a new snapshot file <code>foo.new.svg</code> in the same folder when the test fails.</p>
+<p><code>snapshot_review()</code> compares these files to reveal how the outputs have changed.</p>
 </div>
 </div>
 </div>
-<p>But where can you find the new snapshots?</p>
+<p>But where can we find the new snapshots?</p>
 </section>
 <section id="accessing-new-snapshots" class="slide level2 smaller">
 <h2>Accessing new snapshots</h2>
-<div class="fragment">
-<p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
+<p>In local <code>R CMD Check</code>, we can find new snapshots in <code>.Rcheck</code> folder:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p><br></p>
-<p>On CI/CD platforms, you can find snapshots in artifacts folder:</p>
+<p>On CI/CD platforms, we can find snapshots in artifacts folder:</p>
 <ul>
 <li><a href="https://www.appveyor.com/docs/packaging-artifacts/">AppVeyor</a></li>
 </ul>
-<div class="cell">
-<div class="cell-output-display">
-<p><img data-src="media/AppVeyor.png" width="484"></p>
-</div>
-</div>
-<ul>
+
+<img data-src="media/AppVeyor.png" width="484" class="r-stretch"><ul>
 <li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
 </ul>
 <div class="sourceCode" id="cb51"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
 <span id="cb51-2"><a href="#cb51-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
 <span id="cb51-3"><a href="#cb51-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="code-review-with-snapshot-tests" class="slide level2 smaller">
 <h2>Code review with snapshot tests</h2>
 <p>Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots.</p>
-<p>How do you review pull requests with complex changes in snapshots?</p>
+<p>How do we review pull requests with complex snapshots changes?</p>
 </section>
 <section id="section-2" class="slide level2 smaller">
 <h2></h2>
@@ -1371,7 +1362,7 @@ Backtrace:
 <ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Option-1</a></li><li><a href="#tabset-5-2">Option-2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1">
-<p>Use tools provided for code review by hosting platform (like GitHub). For example, to review changes in SVG snapshots:</p>
+<p>Use tools provided for code review by hosting platforms (like GitHub). For example, to review changes in SVG snapshots:</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><video data-src="media/github_pr.mov" style="width:70.0%" controls=""><a href="media/github_pr.mov">Video</a></video></p>
@@ -1387,8 +1378,8 @@ Backtrace:
 <section id="danger-of-silent-failures" class="slide level2 smaller">
 <h2>Danger of silent failures</h2>
 <p>Given their fragile nature, snapshot tests are skipped on CRAN by default.</p>
-<p>Although this makes sense, it means that you will miss out on anything but a breaking change from upstream dependency. E.g., if <code>{ggplot2}</code> (hypothetically) changes how the points look, you will miss out on this change until you <em>happen to</em> run your snapshot tests again locally or on CI/CD.</p>
-<p>Unit tests run on CRAN, on the other hand, will fail and you will be immediately informed about it.</p>
+<p>Although this makes sense, it means that we miss out on anything but a breaking change from upstream dependency. E.g., if <code>{ggplot2}</code> (hypothetically) changes how the points look, we won’t know about this change until we <em>happen to</em> run our snapshot tests again locally or on CI/CD.</p>
+<p>Unit tests run on CRAN, on the other hand, will fail and we will be immediately informed about it.</p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -1416,7 +1407,7 @@ Backtrace:
 <div class="callout-content">
 <ul>
 <li><p>Don’t use snapshot tests <strong>for everything</strong>: It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g.&nbsp;when testing requires external benchmarking).</p></li>
-<li><p>Don’t <strong>blindly accept</strong> snapshot changes: Resist formation of such a habit. <code>{testthat}</code> provides tools to make it extremely easy to review changes, so you have no excuses!</p></li>
+<li><p>Don’t <strong>blindly accept</strong> snapshot changes: Resist formation of such a habit. <code>{testthat}</code> provides tools to make it extremely easy to review changes, so that is no excuse!</p></li>
 </ul>
 </div>
 </div>
@@ -1427,7 +1418,7 @@ Backtrace:
 <section id="self-study" class="title-slide slide level1 center">
 <h1>Self-study</h1>
 <p>In this presentation, we deliberately kept the examples and the tests simple.</p>
-<p>To see a more realistic usage of snapshot tests, you can study open-source test suites on your own.</p>
+<p>To see a more realistic usage of snapshot tests, you can study open-source test suites.</p>
 </section>
 <section id="suggested-repositories" class="slide level2 smaller">
 <h2>Suggested repositories</h2>
@@ -1458,11 +1449,11 @@ Backtrace:
 <section>
 <section id="activities" class="title-slide slide level1 center">
 <h1>Activities</h1>
-<p>If you are now feeling confident about your snapshot testing skills, if you want, you can contribute to open-source projects to practice these skills!</p>
+<p>If you are now feeling confident about your snapshot testing skills and want to contribute to open-source projects to practice these skills, here are some options.</p>
 </section>
 <section id="practice-makes-it-perfect" class="slide level2 smaller">
 <h2>Practice makes it perfect</h2>
-<p>These are only suggestions. Feel free to contribute to any project that you like! 🤝</p>
+<p>These are only suggestions. Feel free to contribute to any project you like! 🤝</p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -1473,7 +1464,7 @@ Backtrace:
 </div>
 <div class="callout-content">
 <ul>
-<li><p>See if any of the <code>{ggplot2}</code> <a href="https://exts.ggplot2.tidyverse.org/gallery/">extensions</a> you like use snapshot tests for graphics. If not, you can add tests for key functions.</p></li>
+<li><p>See if <code>{ggplot2}</code> <a href="https://exts.ggplot2.tidyverse.org/gallery/">extensions</a> you like use snapshot tests for graphics. If not, you can add them for key functions.</p></li>
 <li><p>Check out hard reverse dependencies of <a href="https://cran.r-project.org/web/packages/shiny/index.html"><code>{shiny}</code></a>, and add snapshot tests using <code>{shinytest2}</code> to an app of your liking.</p></li>
 <li><p>Add more <code>{vdiffr}</code> snapshot tests to plotting functions in <a href="https://github.com/easystats/see"><code>{see}</code></a>, a library for statistical visualizations (I can chaperone your PRs here).</p></li>
 <li><p><code>{shinytest2}</code> is the successor to <code>{shinytest}</code> package. Check out which packages currently use it for <a href="https://cran.r-project.org/web/packages/shinytest/index.html">testing</a> Shiny apps, and see if you can use <code>{shinytest2}</code> instead (see how-to <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html">here</a>).</p></li>
