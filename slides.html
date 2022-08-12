@@ -523,7 +523,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -629,7 +629,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -973,7 +973,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 </section>
@@ -1301,6 +1301,56 @@ Backtrace:
 </div>
 </div>
 </section>
+<section id="testing-multiple-apps" class="slide level2 smaller">
+<h2>Testing multiple apps</h2>
+<p>For the sake of completeness, here is what the test directory structure would like when there are multiple apps in a single package.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Stored in <code>/inst</code> folder</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app1
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+│   └── sample_app2
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+└── tests
+    ├── testthat
+    │   └── test-inst-apps.R
+    └── testthat.R</code></pre>
+</div><div class="column" style="width:50%;">
+<p><strong>Returned by a function</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+│   └── app-function1.R
+│   └── app-function2.R
+└── tests
+    ├── testthat
+    │   ├── _snaps
+    │   │   └── app-function1
+    │   │       └── 001.json
+    │   │   └── app-function2
+    │   │       └── 001.json
+    │   └── test-app-function1.R
+    │   └── test-app-function2.R
+    └── testthat.R</code></pre>
+</div>
+</div>
+</section>
 <section id="further-reading-2" class="slide level2 smaller">
 <h2>Further reading</h2>
 <ul>
@@ -1338,7 +1388,7 @@ Backtrace:
 <section id="accessing-new-snapshots" class="slide level2 smaller">
 <h2>Accessing new snapshots</h2>
 <p>In local <code>R CMD Check</code>, we can find new snapshots in <code>.Rcheck</code> folder:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>On CI/CD platforms, we can find snapshots in artifacts folder:</p>
 <ul>
 <li><a href="https://www.appveyor.com/docs/packaging-artifacts/">AppVeyor</a></li>
@@ -1347,9 +1397,9 @@ Backtrace:
 <img data-src="media/AppVeyor.png" width="484" class="r-stretch"><ul>
 <li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
 </ul>
-<div class="sourceCode" id="cb51"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb51-2"><a href="#cb51-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb51-3"><a href="#cb51-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb53-1"><a href="#cb53-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb53-3"><a href="#cb53-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="code-review-with-snapshot-tests" class="slide level2 smaller">
 <h2>Code review with snapshot tests</h2>

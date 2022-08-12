@@ -984,6 +984,72 @@ The final location of the tests and snapshots should look like the following for
 
 ::::
 
+## Testing multiple apps {.smaller}
+
+For the sake of completeness, here is what the test directory structure would like when there are multiple apps in a single package.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+**Stored in `/inst` folder**
+
+```
+├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app1
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+│   └── sample_app2
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+└── tests
+    ├── testthat
+    │   └── test-inst-apps.R
+    └── testthat.R
+```
+
+:::
+
+::: {.column width='50%'}
+
+**Returned by a function**
+
+```
+├── DESCRIPTION
+├── R
+│   └── app-function1.R
+│   └── app-function2.R
+└── tests
+    ├── testthat
+    │   ├── _snaps
+    │   │   └── app-function1
+    │   │       └── 001.json
+    │   │   └── app-function2
+    │   │       └── 001.json
+    │   └── test-app-function1.R
+    │   └── test-app-function2.R
+    └── testthat.R
+```
+
+:::
+
+::::
+
+
 ## Further reading {.smaller}
 
 - [Testing](https://mastering-shiny.org/scaling-testing.html) chapter from *Mastering Shiny* book
