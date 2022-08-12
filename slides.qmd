@@ -1299,7 +1299,7 @@ Although current presentation is focused only on snapshot testing, here is readi
 
 ## Additional resources 
 
-For a comprehensive collection of packages for unit testing in R, see [this](https://github.com/IndrajeetPatil/awesome-r-pkgtools/blob/main/README.md#unit-testing-) page.
+For a comprehensive collection of packages for unit testing in R, see [this](https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing) page.
 
 # Find me at...
 
