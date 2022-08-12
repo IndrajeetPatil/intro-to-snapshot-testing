@@ -1092,6 +1092,21 @@ For the sake of completeness, here is what the test directory structure would li
 
 ::::
 
+## Advanced topics {.smaller}
+
+The following are some advanced topics that are beyond the scope of the current presentation, but you may wish to know more about.
+
+:::{.callout-tip}
+
+## Extra
+
+- If you want to test Shiny apps with continuous integration using `{shinytest2}`, read [this](https://rstudio.github.io/shinytest2/articles/use-ci.html) article.
+
+- `{shinytest2}` is a successor to `{shinytest}` package. If you want to migrate from the latter to the former, have a look at [this](https://rstudio.github.io/shinytest2/articles/z-migration.html).
+
+:::
+
+
 
 ## Further reading {.smaller}
 
