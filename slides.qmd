@@ -440,41 +440,49 @@ We can now rest assured that the users are getting informed the way we want! ðŸ˜
 In case of an error, the function `expect_snapshot()` itself will produce an error. 
 You have two ways around this:
 
-:::panel-tabset
+:::: {.columns}
 
-### Option-1
+::: {.column width='40%'}
+
+**Option-1**
 
 ```{.r code-line-numbers="3"}
-test_that("`log()` doesn't work when argument not numeric", {
+test_that("`log()` errors", {
   local_edition(3)
   expect_snapshot(log("x"), error = TRUE)
 })
 ```
 
 ```{r, echo=FALSE}
-test_that("`log()` doesn't work when argument not numeric", {
+test_that("`log()` errors", {
   local_edition(3)
   expect_snapshot(log("x"), error = TRUE)
 })
 ```
 
-### Option-2
+:::
+
+::: {.column width='60%'}
+
+**Option-2**
 
 ```{.r code-line-numbers="3"}
-test_that("`log()` doesn't work when argument not numeric", {
+test_that("`log()` errors", {
   local_edition(3)
   expect_snapshot_error(log("x"))
 })
 ```
 
 ```{r, echo=FALSE}
-test_that("`log()` doesn't work when argument not numeric", {
+test_that("`log()` errors", {
   local_edition(3)
   expect_snapshot_error(log("x"))
 })
 ```
 
 :::
+
+::::
 
 :::{.callout-tip}
 

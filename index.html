@@ -521,7 +521,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -627,7 +627,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -795,17 +795,16 @@ Warning &lt;simpleWarning&gt;
 <section id="capturing-errors" class="slide level2 smaller">
 <h2>Capturing errors</h2>
 <p>In case of an error, the function <code>expect_snapshot()</code> itself will produce an error. You have two ways around this:</p>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Option-1</a></li><li><a href="#tabset-1-2">Option-2</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1">
-<div class="sourceCode" id="cb25" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` doesn't work when argument not numeric"</span>, {</span>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><strong>Option-1</strong></p>
+<div class="sourceCode" id="cb25" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` errors"</span>, {</span>
 <span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
 <span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">log</span>(<span class="st">"x"</span>), <span class="at">error =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb25-4"><a href="#cb25-4"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>── Warning (&lt;text&gt;:3:3): `log()` doesn't work when argument not numeric ────────
+<pre><code>── Warning (&lt;text&gt;:3:3): `log()` errors ────────────────────────────────────────
 Adding new snapshot:
 Code
   log("x")
@@ -813,18 +812,17 @@ Error &lt;simpleError&gt;
   non-numeric argument to mathematical function</code></pre>
 </div>
 </div>
-</div>
-<div id="tabset-1-2">
-<div class="sourceCode" id="cb27" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` doesn't work when argument not numeric"</span>, {</span>
+</div><div class="column" style="width:60%;">
+<p><strong>Option-2</strong></p>
+<div class="sourceCode" id="cb27" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` errors"</span>, {</span>
 <span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
 <span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">expect_snapshot_error</span>(<span class="fu">log</span>(<span class="st">"x"</span>))</span>
 <span id="cb27-4"><a href="#cb27-4"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>── Warning (&lt;text&gt;:3:3): `log()` doesn't work when argument not numeric ────────
+<pre><code>── Warning (&lt;text&gt;:3:3): `log()` errors ────────────────────────────────────────
 Adding new snapshot:
 non-numeric argument to mathematical function</code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -1405,9 +1403,9 @@ Backtrace:
 <section id="section-2" class="slide level2 smaller">
 <h2></h2>
 <div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Option-1</a></li><li><a href="#tabset-2-2">Option-2</a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Option-1</a></li><li><a href="#tabset-1-2">Option-2</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1">
+<div id="tabset-1-1">
 <p>Use tools provided for code review by hosting platforms (like GitHub). For example, to review changes in SVG snapshots:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1415,7 +1413,7 @@ Backtrace:
 </div>
 </div>
 </div>
-<div id="tabset-2-2">
+<div id="tabset-1-2">
 <p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
 </div>
 </div>
