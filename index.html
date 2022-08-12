@@ -627,7 +627,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -744,12 +744,12 @@ old[2:6] vs new[2:6]
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">message</span>(<span class="st">"Some info for you."</span>)</span>
 <span id="cb21-2"><a href="#cb21-2"></a></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="fu">test_that</span>(<span class="st">"f() produces expected message"</span>, {</span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="fu">test_that</span>(<span class="st">"f() messages"</span>, {</span>
 <span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
 <span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">f</span>())</span>
 <span id="cb21-6"><a href="#cb21-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>── Warning (&lt;text&gt;:5:3): f() produces expected message ─────────────────────────
+<pre><code>── Warning (&lt;text&gt;:5:3): f() messages ──────────────────────────────────────────
 Adding new snapshot:
 Code
   f()
@@ -762,12 +762,12 @@ Message &lt;simpleMessage&gt;
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">warning</span>(<span class="st">"Managed to recover."</span>)</span>
 <span id="cb23-2"><a href="#cb23-2"></a></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="fu">test_that</span>(<span class="st">"g() warns the user"</span>, {</span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="fu">test_that</span>(<span class="st">"g() warns"</span>, {</span>
 <span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
 <span id="cb23-5"><a href="#cb23-5"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">g</span>())</span>
 <span id="cb23-6"><a href="#cb23-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>── Warning (&lt;text&gt;:5:3): g() warns the user ────────────────────────────────────
+<pre><code>── Warning (&lt;text&gt;:5:3): g() warns ─────────────────────────────────────────────
 Adding new snapshot:
 Code
   g()
@@ -865,7 +865,7 @@ non-numeric argument to mathematical function</code></pre>
 <ul>
 <li>a <code>ggplot</code> object (from <code>ggplot2::ggplot()</code>)</li>
 <li>a <code>recordedplot</code> object (from <code>grDevices::recordPlot()</code>)</li>
-<li>or, more generally, any object with a <code>print()</code> method</li>
+<li>any object with a <code>print()</code> method</li>
 </ul>
 </div>
 <div class="fragment">
@@ -967,13 +967,13 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 </section>
 <section id="what-test-failure-looks-like-1" class="slide level2 smaller">
 <h2>What test failure looks like</h2>
-<p>If we change the function, the new graphical plot output won’t match the expected one, and the test will fail:</p>
+<p>If the function changes, the new output won’t match the expected one, and the test will fail:</p>
 <div class="columns">
 <div class="column" style="width:40%;">
 <p><strong>Changes to function</strong></p>
@@ -1035,8 +1035,8 @@ Backtrace:
 <ul>
 <li>R’s graphics engine changed</li>
 <li><code>{ggplot2}</code> itself changed</li>
-<li>non-determinism</li>
-<li>reliance on system libraries</li>
+<li>non-deterministic behaviour</li>
+<li>changes in system libraries</li>
 </ul>
 <p>For these reasons, snapshot tests for plots tend to be fragile and are not run on CRAN machines by default.</p>
 </div>
@@ -1215,7 +1215,7 @@ Backtrace:
 <h2>What test failure looks like</h2>
 <p>Let’s say, while updating the app, we make a mistake, which leads to a failed test.</p>
 <p><strong>Changed code with mistake</strong></p>
-<div class="sourceCode" id="cb45" data-code-line-numbers="9-10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<div class="sourceCode" id="cb45" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
 <span id="cb45-2"><a href="#cb45-2"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
 <span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
 <span id="cb45-4"><a href="#cb45-4"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
@@ -1223,12 +1223,11 @@ Backtrace:
 <span id="cb45-6"><a href="#cb45-6"></a></span>
 <span id="cb45-7"><a href="#cb45-7"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
 <span id="cb45-8"><a href="#cb45-8"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
-<span id="cb45-9"><a href="#cb45-9"></a>    <span class="co"># should be `"Weight (in g): "` instead</span></span>
-<span id="cb45-10"><a href="#cb45-10"></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
-<span id="cb45-11"><a href="#cb45-11"></a>  )</span>
-<span id="cb45-12"><a href="#cb45-12"></a>}</span>
-<span id="cb45-13"><a href="#cb45-13"></a></span>
-<span id="cb45-14"><a href="#cb45-14"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-9"><a href="#cb45-9"></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>) <span class="co"># should be `"Weight (in g): "`</span></span>
+<span id="cb45-10"><a href="#cb45-10"></a>  )</span>
+<span id="cb45-11"><a href="#cb45-11"></a>}</span>
+<span id="cb45-12"><a href="#cb45-12"></a></span>
+<span id="cb45-13"><a href="#cb45-13"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Test failure JSON diff</strong></p>
 <div class="sourceCode" id="cb46" data-code-line-number="6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb46-1"><a href="#cb46-1"></a><span class="er">Diff</span> <span class="er">in</span> <span class="er">snapshot</span> <span class="er">file</span> <span class="er">`shinytest2unitConverter-001.json`</span></span>
 <span id="cb46-2"><a href="#cb46-2"></a><span class="er">&lt;</span> <span class="er">before</span>                            <span class="er">&gt;</span> <span class="er">after</span>                           </span>
@@ -1493,7 +1492,7 @@ Backtrace:
 <section>
 <section id="activities" class="title-slide slide level1 center">
 <h1>Activities</h1>
-<p>If you are now feeling confident about your snapshot testing skills and want to contribute to open-source projects to practice these skills, here are some options.</p>
+<p>If you feel confident enough to contribute to open-source projects to practice these skills, here are some options.</p>
 </section>
 <section id="practice-makes-it-perfect" class="slide level2 smaller">
 <h2>Practice makes it perfect</h2>

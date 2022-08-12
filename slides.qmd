@@ -402,7 +402,7 @@ So far we have tested text output printed to the console, but we can also use sn
 ```{r}
 f <- function() message("Some info for you.")
 
-test_that("f() produces expected message", {
+test_that("f() messages", {
   local_edition(3)
   expect_snapshot(f())
 })
@@ -417,7 +417,7 @@ test_that("f() produces expected message", {
 ```{r}
 g <- function() warning("Managed to recover.")
 
-test_that("g() warns the user", {
+test_that("g() warns", {
   local_edition(3)
   expect_snapshot(g())
 })
@@ -517,7 +517,7 @@ The figure to test can be:
 
 - a `ggplot` object (from `ggplot2::ggplot()`)
 - a `recordedplot` object (from `grDevices::recordPlot()`)
-- or, more generally, any object with a `print()` method
+- any object with a `print()` method
 
 . . . 
 
@@ -638,7 +638,7 @@ snapper$start_file("slides.qmd", "test")
 
 ## What test failure looks like {.smaller}
 
-If we change the function, the new graphical plot output won't match the expected one, and the test will fail:
+If the function changes, the new output won't match the expected one, and the test will fail:
 
 :::: {.columns}
 
@@ -703,8 +703,8 @@ If tests fail even if the function didn't change, it can be due to any of the fo
 
 - R's graphics engine changed
 - `{ggplot2}` itself changed
-- non-determinism 
-- reliance on system libraries
+- non-deterministic behaviour
+- changes in system libraries
 
 For these reasons, snapshot tests for plots tend to be fragile and are not run on CRAN machines by default.
 
@@ -921,7 +921,7 @@ Let's say, while updating the app, we make a mistake, which leads to a failed te
 
 **Changed code with mistake**
 
-```{.r code-line-numbers="9-10"}
+```{.r code-line-numbers="9"}
 ui <- fluidPage(
   titlePanel("Convert kilograms to grams"),
   numericInput("kg", "Weight (in kg)", value = 0),
@@ -930,8 +930,7 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   output$g <- renderText(
-    # should be `"Weight (in g): "` instead
-    paste0("Weight (in kg): ", input$kg * 1000)
+    paste0("Weight (in kg): ", input$kg * 1000) # should be `"Weight (in g): "`
   )
 }
 
@@ -1247,7 +1246,7 @@ To see a more realistic usage of snapshot tests, you can study open-source test 
 
 # Activities
 
-If you are now feeling confident about your snapshot testing skills and want to contribute to open-source projects to practice these skills, here are some options.
+If you feel confident enough to contribute to open-source projects to practice these skills, here are some options.
 
 ## Practice makes it perfect {.smaller}
 
