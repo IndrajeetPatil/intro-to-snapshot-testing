@@ -472,10 +472,9 @@ https://github.com/quarto-ext/fontawesome  -->
 <section id="example-function" class="slide level2 smaller">
 <h2>Example function</h2>
 <p>Let’s say we want to write a unit test for the following function:</p>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Source code</a></li><li><a href="#tabset-1-2">Output</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1">
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Source code</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">paste0</span>(</span>
@@ -484,8 +483,8 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb3-5"><a href="#cb3-5"></a>  )</span>
 <span id="cb3-6"><a href="#cb3-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div id="tabset-1-2">
+</div><div class="column" style="width:40%;">
+<p><strong>Output</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
 <span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
@@ -495,7 +494,6 @@ https://github.com/quarto-ext/fontawesome  -->
 <pre><code>Movie: 
   Title: Salaam Bombay!
   Director: Mira Nair</code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -604,7 +602,7 @@ Output
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>More about snapshots files</strong></p>
+<p><strong>More about snapshot Markdown files</strong></p>
 </div>
 <div class="callout-content">
 <ul>
@@ -629,7 +627,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -640,7 +638,7 @@ Output
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Why does my test fail on a rerun?</strong></p>
+<p><strong>Why does my test fail on a re-run?</strong></p>
 </div>
 <div class="callout-content">
 <p>If testing a snapshot you just generated fails on re-running the test, this is most likely because your test is not deterministic. For example, if your function deals with random number generation.</p>
@@ -652,30 +650,37 @@ Output
 </section>
 <section id="what-test-failure-looks-like" class="slide level2 smaller">
 <h2>What test failure looks like</h2>
-<p>But if we change the function (use <code>-</code> instead of <code>:</code> as a separator), the actual snapshot output won’t match the expected one, and the test will fail:</p>
-<div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Changes to function</a></li><li><a href="#tabset-2-2">Test failure</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1">
-<div class="sourceCode" id="cb14" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
+<p>If the function changes, the snapshots won’t match the expected ones, and test will fail:</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><strong>Changes to function</strong></p>
+<div class="sourceCode" id="cb14" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
 <span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">paste0</span>(</span>
 <span id="cb14-3"><a href="#cb14-3"></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb14-4"><a href="#cb14-4"></a>    <span class="fu">paste0</span>(<span class="st">"  "</span>, keys, <span class="st">"- "</span>, values, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb14-5"><a href="#cb14-5"></a>  )</span>
-<span id="cb14-6"><a href="#cb14-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href="#cb14-4"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb14-5"><a href="#cb14-5"></a>      <span class="st">"  "</span>, keys, <span class="st">"- "</span>, values,</span>
+<span id="cb14-6"><a href="#cb14-6"></a>      <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>    )</span>
+<span id="cb14-8"><a href="#cb14-8"></a>  )</span>
+<span id="cb14-9"><a href="#cb14-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 
 </div>
-</div>
-<div id="tabset-2-2">
+<p><br></p>
+<p>The test failure message provides a diff between what was expected (<code>-</code> rows) vs observed (<code>+</code> rows).</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="sc">-</span> <span class="st">"    Title: Salaam Bombay!"</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="sc">+</span> <span class="st">"    Title- Salaam Bombay!"</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="sc">-</span> <span class="st">"    Director: Mira Nair"</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="sc">+</span> <span class="st">"    Director- Mira Nair"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:70%;">
+<p><strong>Test failure</strong></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb16-3"><a href="#cb16-3"></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb16-4"><a href="#cb16-4"></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>  )))</span>
+<span id="cb16-6"><a href="#cb16-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
-<span id="cb15-4"><a href="#cb15-4"></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
-<span id="cb15-5"><a href="#cb15-5"></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6"></a>  )))</span>
-<span id="cb15-7"><a href="#cb15-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Failure (&lt;text&gt;:3:3): `print_movies()` prints as expected ───────────────────
 Snapshot of code has changed:
@@ -698,17 +703,10 @@ old[2:6] vs new[2:6]
 </div>
 </div>
 </div>
-</div>
-<!-- Don't add . . .  here since it breaks the flow -->
-<p>Note that when the test fails, the message automatically provides a diff about what was expected (<code>-</code> rows) versus observed (<code>+</code> rows).</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="sc">-</span> <span class="st">"    Title: Salaam Bombay!"</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="sc">+</span> <span class="st">"    Title- Salaam Bombay!"</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a><span class="sc">-</span> <span class="st">"    Director: Mira Nair"</span></span>
-<span id="cb18-4"><a href="#cb18-4"></a><span class="sc">+</span> <span class="st">"    Director- Mira Nair"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="fixing-tests" class="slide level2 smaller">
 <h2>Fixing tests</h2>
-<p>Message accompanying failed tests make it explicit how we to fix them.</p>
+<p>Message accompanying failed tests make it explicit how to fix them.</p>
 <div class="fragment">
 <ul>
 <li>If the change was <em>deliberate</em>, you can accept the new snapshot as the current <em>truth</em>.</li>
@@ -740,10 +738,9 @@ old[2:6] vs new[2:6]
 <section id="capturing-messages-and-warnings" class="slide level2 smaller">
 <h2>Capturing messages and warnings</h2>
 <p>So far we have tested text output printed to the console, but we can also use snapshots to capture messages, warnings, and errors.</p>
-<div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">message</a></li><li><a href="#tabset-3-2">warning</a></li></ul>
-<div class="tab-content">
-<div id="tabset-3-1">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>message</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">message</span>(<span class="st">"Some info for you."</span>)</span>
 <span id="cb21-2"><a href="#cb21-2"></a></span>
@@ -760,8 +757,8 @@ Message &lt;simpleMessage&gt;
   Some info for you.</code></pre>
 </div>
 </div>
-</div>
-<div id="tabset-3-2">
+</div><div class="column" style="width:50%;">
+<p><strong>warning</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">warning</span>(<span class="st">"Managed to recover."</span>)</span>
 <span id="cb23-2"><a href="#cb23-2"></a></span>
@@ -776,7 +773,6 @@ Code
   g()
 Warning &lt;simpleWarning&gt;
   Managed to recover.</code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -800,9 +796,9 @@ Warning &lt;simpleWarning&gt;
 <h2>Capturing errors</h2>
 <p>In case of an error, the function <code>expect_snapshot()</code> itself will produce an error. You have two ways around this:</p>
 <div class="panel-tabset">
-<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Option-1</a></li><li><a href="#tabset-4-2">Option-2</a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Option-1</a></li><li><a href="#tabset-1-2">Option-2</a></li></ul>
 <div class="tab-content">
-<div id="tabset-4-1">
+<div id="tabset-1-1">
 <div class="sourceCode" id="cb25" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` doesn't work when argument not numeric"</span>, {</span>
 <span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
 <span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">log</span>(<span class="st">"x"</span>), <span class="at">error =</span> <span class="cn">TRUE</span>)</span>
@@ -818,7 +814,7 @@ Error &lt;simpleError&gt;
 </div>
 </div>
 </div>
-<div id="tabset-4-2">
+<div id="tabset-1-2">
 <div class="sourceCode" id="cb27" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">test_that</span>(<span class="st">"`log()` doesn't work when argument not numeric"</span>, {</span>
 <span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
 <span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">expect_snapshot_error</span>(<span class="fu">log</span>(<span class="st">"x"</span>))</span>
@@ -1409,9 +1405,9 @@ Backtrace:
 <section id="section-2" class="slide level2 smaller">
 <h2></h2>
 <div class="panel-tabset">
-<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Option-1</a></li><li><a href="#tabset-5-2">Option-2</a></li></ul>
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Option-1</a></li><li><a href="#tabset-2-2">Option-2</a></li></ul>
 <div class="tab-content">
-<div id="tabset-5-1">
+<div id="tabset-2-1">
 <p>Use tools provided for code review by hosting platforms (like GitHub). For example, to review changes in SVG snapshots:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1419,7 +1415,7 @@ Backtrace:
 </div>
 </div>
 </div>
-<div id="tabset-5-2">
+<div id="tabset-2-2">
 <p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
 </div>
 </div>

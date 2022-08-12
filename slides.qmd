@@ -105,9 +105,11 @@ To test functions that pretty-print R objects to the console, create elegant and
 
 Let's say we want to write a unit test for the following function:
 
-:::panel-tabset
+:::: {.columns}
 
-### Source code
+::: {.column width='60%'}
+
+**Source code**
 
 ```{r}
 print_movies <- function(keys, values) {
@@ -118,7 +120,11 @@ print_movies <- function(keys, values) {
 }
 ```
 
-### Output
+:::
+
+::: {.column width='40%'}
+
+**Output**
 
 ```{r}
 cat(print_movies(
@@ -128,6 +134,8 @@ cat(print_movies(
 ```
 
 :::
+
+::::
 
 . . .
 
@@ -232,7 +240,7 @@ It is easy to *see* what the printed text output is *supposed* to look like. In 
 
 :::{.callout-note}
 
-## More about snapshots files
+## More about snapshot Markdown files
 
 - If a test is called `test-foo.R`, the snapshot will be saved to `test/testthat/_snaps/foo.md`.
 
@@ -268,7 +276,7 @@ snapper$start_file("slides.qmd", "test")
 
 :::{.callout-note}
 
-### Why does my test fail on a rerun?
+### Why does my test fail on a re-run?
 
 If testing a snapshot you just generated fails on re-running the test, this is most likely because your test is not deterministic. For example, if your function deals with random number generation.
 
@@ -278,24 +286,28 @@ In such cases, setting a seed (e.g. `set.seed(42)`) should help.
 
 ## What test failure looks like {.smaller}
 
-But if we change the function (use `-` instead of `:` as a separator), the actual snapshot output won't match the expected one, and the test will fail:
+If the function changes, the snapshots won't match the expected ones, and test will fail:
 
-:::panel-tabset
+:::: {.columns}
 
-### Changes to function
+::: {.column width='30%'}
 
-```{.r code-line-numbers="4"}
+**Changes to function**
+
+```{.r code-line-numbers="5"}
 print_movies <- function(keys, values) {
   paste0(
     "Movie: \n",
-    paste0("  ", keys, "- ", values, collapse = "\n")
+    paste0(
+      "  ", keys, "- ", values,
+      collapse = "\n"
+    )
   )
 }
 ```
 
 ```{r}
 #| echo: false
-
 print_movies <- function(keys, values) {
   paste0(
     "Movie: \n",
@@ -304,9 +316,33 @@ print_movies <- function(keys, values) {
 }
 ```
 
-### Test failure
+</br>
 
-```{r, error=TRUE}
+The test failure message provides a diff between what was expected (`-` rows) vs observed (`+` rows).
+
+```r
+- "    Title: Salaam Bombay!"
++ "    Title- Salaam Bombay!"
+- "    Director: Mira Nair"
++ "    Director- Mira Nair"
+```
+
+:::
+
+::: {.column width='70%'}
+
+**Test failure**
+
+```{.r}
+test_that("`print_movies()` prints as expected", {
+  expect_snapshot(cat(print_movies(
+    c("Title", "Director"),
+    c("Salaam Bombay!", "Mira Nair")
+  )))
+})
+```
+
+```{r, echo=FALSE, error=TRUE}
 test_that("`print_movies()` prints as expected", {
   local_edition(3)
   expect_snapshot(cat(print_movies(
@@ -318,20 +354,12 @@ test_that("`print_movies()` prints as expected", {
 
 :::
 
-<!-- Don't add . . .  here since it breaks the flow -->
+::::
 
-Note that when the test fails, the message automatically provides a diff about what was expected (`-` rows) versus observed (`+` rows).
-
-```r
-- "    Title: Salaam Bombay!"
-+ "    Title- Salaam Bombay!"
-- "    Director: Mira Nair"
-+ "    Director- Mira Nair"
-```
 
 ## Fixing tests {.smaller}
 
-Message accompanying failed tests make it explicit how we to fix them.
+Message accompanying failed tests make it explicit how to fix them.
 
 . . . 
 
@@ -365,9 +393,11 @@ You can update *all* new snapshots with `snapshot_accept()`. And, of course, che
 
 So far we have tested text output printed to the console, but we can also use snapshots to capture messages, warnings, and errors.
 
-:::panel-tabset
+:::: {.columns}
 
-### message
+::: {.column width='50%'}
+
+**message**
 
 ```{r}
 f <- function() message("Some info for you.")
@@ -378,7 +408,11 @@ test_that("f() produces expected message", {
 })
 ```
 
-### warning
+:::
+
+::: {.column width='50%'}
+
+**warning**
 
 ```{r}
 g <- function() warning("Managed to recover.")
@@ -390,6 +424,8 @@ test_that("g() warns the user", {
 ```
 
 :::
+
+::::
 
 :::{.callout-tip}
 
