@@ -242,7 +242,7 @@ It is easy to *see* what the printed text output is *supposed* to look like. In 
 
 :::
 
-## What success looks like {.smaller}
+## What test success looks like {.smaller}
 
 If you run the test again, it'll succeed:
 
@@ -276,7 +276,7 @@ In such cases, setting a seed (e.g. `set.seed(42)`) should help.
 
 :::
 
-## What failure looks like {.smaller}
+## What test failure looks like {.smaller}
 
 But if we change the function (use `-` instead of `:` as a separator), the actual snapshot output won't match the expected one, and the test will fail:
 
@@ -493,9 +493,11 @@ The figure to test can be:
 
 Let's say we want to write a unit test for the following function:
 
-:::panel-tabset
+:::: {.columns}
 
-### Source code
+::: {.column width='50%'}
+
+**Source code**
 
 ```{r}
 library(ggplot2)
@@ -506,19 +508,22 @@ create_scatter <- function() {
     geom_smooth(method = "lm")
 }
 ```
+:::
 
-### Output
+::: {.column width='50%'}
+
+**Output**
 
 ```{r}
-#| out.width: "70%"
+#| out.width: "100%"
 create_scatter()
 ```
 
 :::
 
-. . .
+::::
 
-</br>
+. . .
 
 Note that we want to test that the graphical output *looks* as expected, and this expectation is difficult to capture with a unit test.
 
@@ -526,9 +531,11 @@ Note that we want to test that the graphical output *looks* as expected, and thi
 
 We can use `expect_doppelganger()` from `{vdiffr}` to test this!
 
+</br>
+
 . . .
 
-The *first time* you run the test, it'd generate an `.svg` file with expected graphical output.
+The *first time* you run the test, it'd generate an `.svg` file with expected output.
 
 ```{r include = FALSE}
 library(vdiffr)
@@ -555,17 +562,17 @@ snapper$start_file("slides.qmd", "test")
 
 . . .
 
-</br>
-
 :::{.callout-warning}
 
 The first time a snapshot is created, it becomes *the truth* against which future function behaviour will be compared. 
 
 Thus, it is **crucial** that you carefully check that the output is indeed as expected. 🔎 
 
+You can open `.svg` snapshot files in a web browser for closer inspection.
+
 :::
 
-## What success looks like {.smaller}
+## What test success looks like {.smaller}
 
 If you run the test again, it'll succeed:
 
@@ -585,13 +592,15 @@ snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
 
-## What failure looks like {.smaller}
+## What test failure looks like {.smaller}
 
 If we change the function, the new graphical plot output won't match the expected one, and the test will fail:
 
-:::panel-tabset
+:::: {.columns}
 
-### Changes to function
+::: {.column width='40%'}
+
+**Changes to function**
 
 ```{.r code-line-numbers="3"}
 create_scatter <- function() {
@@ -603,7 +612,6 @@ create_scatter <- function() {
 
 ```{r}
 #| echo: false
-
 create_scatter <- function() {
   ggplot(mtcars, aes(wt, mpg)) +
     geom_point(size = 2, alpha = 0.85) +
@@ -611,7 +619,11 @@ create_scatter <- function() {
 }
 ```
 
-### Test failure
+:::
+
+::: {.column width='60%'}
+
+**Test failure**
 
 ```{r, error=TRUE}
 test_that("`create_scatter()` plots as expected", {
@@ -624,6 +636,8 @@ test_that("`create_scatter()` plots as expected", {
 ```
 
 :::
+
+::::
 
 ## Fixing tests {.smaller}
 
@@ -652,6 +666,10 @@ For these reasons, snapshot tests for plots tend to be fragile and not run on CR
 
 :::
 
+## Further reading
+
+- `{vdiffr}` package [website](https://vdiffr.r-lib.org/)
+
 # Testing entire files
 
 Whole file snapshot testing makes sure that media, data frames, text files, etc. are as expected.
@@ -675,6 +693,8 @@ There are two possibilities, and we will discuss them both separately.
 
 . . . 
 
+</br>
+
 :::: {.columns}
 
 ::: {.column width='50%'}
@@ -686,18 +706,7 @@ There are two possibilities, and we will discuss them both separately.
 ├── R
 ├── inst
 │   └── sample_app
-│       ├── app.R
-│       └── tests
-│           ├── testthat
-│           │   ├── _snaps
-│           │   │   └── shinytest2
-│           │   │       └── 001.json
-│           │   └── test-shinytest2.R
-│           └── testthat.R
-└── tests
-    ├── testthat
-    │   └── test-inst-apps.R
-    └── testthat.R
+│       └── app.R
 ```
 
 :::
@@ -710,20 +719,25 @@ There are two possibilities, and we will discuss them both separately.
 ├── DESCRIPTION
 ├── R
 │   └── app-function.R
-└── tests
-    ├── testthat
-    │   ├── _snaps
-    │   │   └── app-function
-    │   │       └── 001.json
-    │   └── test-app-function.R
-    └── testthat.R
 ```
 
 :::
 
 ::::
 
-# Shiny app as `inst/` subdirectory 
+<!-- Don't add an indefinite article; it breaks the phrase into two lines -->
+
+# Shiny app in subdirectory 
+
+</br>
+
+```
+├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app
+│       └── app.R
+```
 
 ## Example app {.smaller}
 
@@ -833,15 +847,15 @@ knitr::include_graphics("media/unitConverter-001_.png")
 
 ## Creating a driver script {.smaller}
 
-Note that currently your test scripts and results are in the `/inst` folder, but you would also want these tests to be run using `{testthat}`.
+Note that currently our test scripts and results are in the `/inst` folder, but we'd also want to run these tests automatically using `{testthat}`.
 
-For this, we will need to write a driver script (`tests/testthat/test-inst-apps.R`).
+For this, we will need to write a driver script like the following:
 
 ```{.r}
 library(shinytest2)
 
 test_that("`unitConverter` app works", {
-  # Don't run these tests on the CRAN machinws
+  # Don't run these tests on the CRAN machines
   skip_on_cran()
 
   appdir <- system.file(package = "package_name", "unitConverter")
@@ -849,17 +863,21 @@ test_that("`unitConverter` app works", {
 })
 ```
 
-Done!
-
 Now the Shiny apps will be tested with the rest of the source code in the package! 🎊	
+
+:::{.callout-tip}
+
+We save the driver test in the `/tests` folder (`tests/testthat/test-inst-apps.R`), alongside other tests.
+
+:::
 
 ## What test failure looks like {.smaller}
 
 Let's say, while updating the app, we make a mistake, which leads to a failed test.
 
-**Changed code with mistake **
+**Changed code with mistake**
 
-```{.r code-line-numbers="8"}
+```{.r code-line-numbers="9-10"}
 ui <- fluidPage(
   titlePanel("Convert kilograms to grams"),
   numericInput("kg", "Weight (in kg)", value = 0),
@@ -867,7 +885,10 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  output$g <- renderText(paste0("Weight (in kg): ", input$kg * 1000))
+  output$g <- renderText(
+    # should be `"Weight (in g): "` instead
+    paste0("Weight (in kg): ", input$kg * 1000)
+  )
 }
 
 shinyApp(ui, server)
@@ -899,11 +920,78 @@ You can use Shiny app provided by `{testthat2}` for comparing snapshots.
 knitr::include_graphics("media/shinytest_failure.mov")
 ```
 
+# Shiny app as function return
+
+</br>
+
+```
+├── DESCRIPTION
+├── R
+│   └── app-function.R
+```
+
+
+## Final directory structure {.smaller}
+
+The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps are included in a package.
+
+</br>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+**Stored in `/inst` folder**
+
+```
+├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+└── tests
+    ├── testthat
+    │   └── test-inst-apps.R
+    └── testthat.R
+```
+
+:::
+
+::: {.column width='50%'}
+
+**Returned by a function**
+
+```
+├── DESCRIPTION
+├── R
+│   └── app-function.R
+└── tests
+    ├── testthat
+    │   ├── _snaps
+    │   │   └── app-function
+    │   │       └── 001.json
+    │   └── test-app-function.R
+    └── testthat.R
+```
+
+:::
+
+::::
+
 ## Further reading {.smaller}
 
-- [Testing](https://mastering-shiny.org/scaling-testing.html) chapter from *Mastering Shiny*
+- [Testing](https://mastering-shiny.org/scaling-testing.html) chapter from *Mastering Shiny* book
 
 - `{shinytest2}` article introducing its [workflow](https://rstudio.github.io/shinytest2/articles/shinytest2.html)
+
+- `{shinytest2}` article on how to test apps in [R packages](https://rstudio.github.io/shinytest2/articles/use-package.html)
 
 # Headaches 
 
@@ -913,9 +1001,9 @@ We will now see some issues you might run into while using them. 🤕
 
 ## Failures in non-interactive environments {.smaller}
 
-If your snapshots fail locally, you can just run `snapshot_review()`, but what if they fail in non-interactive environments? For example, on CI/CD platforms or during `R CMD Check`?
+If snapshots fail locally, we can just run `snapshot_review()`, but what if they fail in non-interactive environments (on CI/CD platforms, during `R CMD Check`, etc.)?
 
-The easiest solution in such cases is to copy the new snapshots to your local folder and then run `snapshot_review()`.
+The easiest solution is to copy the new snapshots to your local folder and then run `snapshot_review()`.
 
 :::{.callout-tip}
 
