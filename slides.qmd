@@ -286,7 +286,7 @@ In such cases, setting a seed (e.g. `set.seed(42)`) should help.
 
 ## What test failure looks like {.smaller}
 
-If the function changes, the snapshots doesn't match the expected ones, and test will fail:
+When function changes, snapshot doesn't match the reference, and the test fails:
 
 :::: {.columns}
 
@@ -636,7 +636,7 @@ snapper$start_file("slides.qmd", "test")
 
 ## What test failure looks like {.smaller}
 
-If the function changes, the new output doesn't match the expected one, and the test will fail:
+When function changes, snapshot doesn't match the reference, and the test fails:
 
 :::: {.columns}
 
