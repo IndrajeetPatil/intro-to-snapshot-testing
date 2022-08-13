@@ -1519,15 +1519,105 @@ A way to insure against such silent failures is to run tests **daily** on CI/CD 
 
 # Parting wisdom
 
-:::{.callout-important}
+What *not* to do
 
-## What *not* to do
+## Don't use snapshot tests for *everything* {.smaller}
 
-- Don't use snapshot tests **for everything**: It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g. when testing requires external benchmarking).
+It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g. when testing requires external benchmarking).
 
-- Don't **blindly accept** snapshot changes: Resist formation of such a habit. `{testthat}` provides tools to make it extremely easy to review changes, so that is no excuse! 
+Let's say we write a function to extract estimates from a regression model.
+
+```{.r}
+extract_est <- function(m) m$coefficients
+```
+
+Its test should compare results against an external benchmark, and not a snapshot.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+**Good**
+
+```{.r}
+test_that("`extract_est()` works", {
+  m <- lm(wt ~ mpg, mtcars)
+  expect_equal(
+    extract_est(m)[[1]],
+    m$coefficients[[1]]
+  )
+})
+```
+
 
 :::
+
+::: {.column width='50%'}
+
+**Bad**
+
+```{.r}
+test_that("`extract_est()` works", {
+  m <- lm(wt ~ mpg, mtcars)
+  expect_snapshot(extract_est(m))
+})
+```
+
+:::
+
+::::
+
+## Snapshot for humans, not machines {.smaller}
+
+Snapshot testing is appropriate when the human needs to be in the loop to make sure that things are working as expected. Therefore, the snapshots should be human readable.
+
+E.g. if we write a function that plots something:
+
+```{.r}
+point_plotter <- function() ggplot(mtcars, aes(wt, mpg)) + geom_point()
+```
+
+To test it, we should snapshot the *plot*, and not the underlying *data*, which is hard to make sense of for a human.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+**Good**
+
+```{.r}
+test_that("`point_plotter()` works", {
+  expect_doppelganger(
+    "point-plotter-mtcars",
+    point_plotter()
+  )
+})
+```
+
+:::
+
+::: {.column width='50%'}
+
+**Bad**
+
+```{.r}
+test_that("`point_plotter()` works", {
+  p <- point_plotter()
+  pb <- ggplot_build(p)
+  expect_snapshot(pb$data)
+})
+```
+
+:::
+
+::::
+
+## Don't **blindly accept** snapshot changes {.smaller}
+
+Resist formation of such a habit.
+
+`{testthat}` provides tools to make it very easy to review changes, so no excuses! 
+
 
 # Self-study 
 

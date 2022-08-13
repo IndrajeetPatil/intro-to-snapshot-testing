@@ -580,7 +580,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb7-8"><a href="#cb7-8"></a>  )</span>
 <span id="cb7-9"><a href="#cb7-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1699,26 +1699,66 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </div>
 </div>
 </section></section>
+<section>
 <section id="parting-wisdom" class="title-slide slide level1 center">
 <h1>Parting wisdom</h1>
-<div class="callout callout-important callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>What <em>not</em> to do</strong></p>
-</div>
-<div class="callout-content">
-<ul>
-<li><p>Don’t use snapshot tests <strong>for everything</strong>: It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g.&nbsp;when testing requires external benchmarking).</p></li>
-<li><p>Don’t <strong>blindly accept</strong> snapshot changes: Resist formation of such a habit. <code>{testthat}</code> provides tools to make it extremely easy to review changes, so that is no excuse!</p></li>
-</ul>
-</div>
+<p>What <em>not</em> to do</p>
+</section>
+<section id="dont-use-snapshot-tests-for-everything" class="slide level2 smaller">
+<h2>Don’t use snapshot tests for <em>everything</em></h2>
+<p>It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g.&nbsp;when testing requires external benchmarking).</p>
+<p>Let’s say we write a function to extract estimates from a regression model.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>extract_est <span class="ot">&lt;-</span> <span class="cf">function</span>(m) m<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Its test should compare results against an external benchmark, and not a snapshot.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Good</strong></p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">test_that</span>(<span class="st">"`extract_est()` works"</span>, {</span>
+<span id="cb68-2"><a href="#cb68-2"></a>  m <span class="ot">&lt;-</span> <span class="fu">lm</span>(wt <span class="sc">~</span> mpg, mtcars)</span>
+<span id="cb68-3"><a href="#cb68-3"></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb68-4"><a href="#cb68-4"></a>    <span class="fu">extract_est</span>(m)[[<span class="dv">1</span>]],</span>
+<span id="cb68-5"><a href="#cb68-5"></a>    m<span class="sc">$</span>coefficients[[<span class="dv">1</span>]]</span>
+<span id="cb68-6"><a href="#cb68-6"></a>  )</span>
+<span id="cb68-7"><a href="#cb68-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<p><strong>Bad</strong></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="fu">test_that</span>(<span class="st">"`extract_est()` works"</span>, {</span>
+<span id="cb69-2"><a href="#cb69-2"></a>  m <span class="ot">&lt;-</span> <span class="fu">lm</span>(wt <span class="sc">~</span> mpg, mtcars)</span>
+<span id="cb69-3"><a href="#cb69-3"></a>  <span class="fu">expect_snapshot</span>(<span class="fu">extract_est</span>(m))</span>
+<span id="cb69-4"><a href="#cb69-4"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
-
+<section id="snapshot-for-humans-not-machines" class="slide level2 smaller">
+<h2>Snapshot for humans, not machines</h2>
+<p>Snapshot testing is appropriate when the human needs to be in the loop to make sure that things are working as expected. Therefore, the snapshots should be human readable.</p>
+<p>E.g. if we write a function that plots something:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>point_plotter <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To test it, we should snapshot the <em>plot</em>, and not the underlying <em>data</em>, which is hard to make sense of for a human.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Good</strong></p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">test_that</span>(<span class="st">"`point_plotter()` works"</span>, {</span>
+<span id="cb71-2"><a href="#cb71-2"></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb71-3"><a href="#cb71-3"></a>    <span class="st">"point-plotter-mtcars"</span>,</span>
+<span id="cb71-4"><a href="#cb71-4"></a>    <span class="fu">point_plotter</span>()</span>
+<span id="cb71-5"><a href="#cb71-5"></a>  )</span>
+<span id="cb71-6"><a href="#cb71-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<p><strong>Bad</strong></p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">test_that</span>(<span class="st">"`point_plotter()` works"</span>, {</span>
+<span id="cb72-2"><a href="#cb72-2"></a>  p <span class="ot">&lt;-</span> <span class="fu">point_plotter</span>()</span>
+<span id="cb72-3"><a href="#cb72-3"></a>  pb <span class="ot">&lt;-</span> <span class="fu">ggplot_build</span>(p)</span>
+<span id="cb72-4"><a href="#cb72-4"></a>  <span class="fu">expect_snapshot</span>(pb<span class="sc">$</span>data)</span>
+<span id="cb72-5"><a href="#cb72-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="dont-blindly-accept-snapshot-changes" class="slide level2 smaller">
+<h2>Don’t <strong>blindly accept</strong> snapshot changes</h2>
+<p>Resist formation of such a habit.</p>
+<p><code>{testthat}</code> provides tools to make it very easy to review changes, so no excuses!</p>
+</section></section>
 <section>
 <section id="self-study" class="title-slide slide level1 center">
 <h1>Self-study</h1>
