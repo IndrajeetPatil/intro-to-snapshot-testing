@@ -1224,7 +1224,7 @@ returns app.
 
 ## Final directory structure {.smaller}
 
-The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps in R packages.
+The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps are included in R packages.
 
 </br>
 
