@@ -521,7 +521,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -627,7 +627,7 @@ Output
 <span id="cb12-6"><a href="#cb12-6"></a>  )))</span>
 <span id="cb12-7"><a href="#cb12-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -967,7 +967,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 </section>
@@ -1287,10 +1287,49 @@ Backtrace:
 </section>
 <section id="generating-test-and-snapshots" class="slide level2 smaller">
 <h2>Generating test and snapshots</h2>
-<p>To create tests, we call <code>record_test()</code> directly on a shiny app object, and then copy-paste the commands to test script, and then run <code>devtools::test_active_file()</code> to generate snapshots.</p>
+<p>We call <code>record_test()</code> directly on a Shiny app object, copy-paste commands to the test script, and run <code>devtools::test_active_file()</code> to generate snapshots.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><video data-src="media/shiny_app_function_return.mov" style="width:60.0%" controls=""><a href="media/shiny_app_function_return.mov">Video</a></video></p>
+</div>
+</div>
+</section>
+<section id="testing-apps-from-frameworks" class="slide level2 smaller">
+<h2>Testing apps from frameworks</h2>
+<p>This testing workflow is also relevant for frameworks (e.g.&nbsp;<a href="https://thinkr-open.github.io/golem/index.html"><code>{golem}</code></a>, <a href="https://appsilon.github.io/rhino/"><code>{rhino}</code></a>, etc.) that produce production-ready Shiny apps.</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><strong><code>{golem}</code></strong></p>
+<p>Function in <code>run_app.R</code> returns Shiny app.</p>
+<pre><code>├── DESCRIPTION 
+├── NAMESPACE 
+├── R 
+│   ├── app_config.R 
+│   ├── app_server.R 
+│   ├── app_ui.R 
+│   └── run_app.R </code></pre>
+</div><div class="column" style="width:60%;">
+<p><strong>rhino</strong></p>
+<p>Function in <code>app.R</code> returns Shiny app.</p>
+<pre><code>├── app
+│   ├── js
+│   │   └── index.js
+│   ├── logic
+│   │   └── __init__.R
+│   ├── static
+│   │   └── favicon.ico
+│   ├── styles
+│   │   └── main.scss
+│   ├── view
+│   │   └── __init__.R
+│   └── main.R
+├── tests
+│   ├── ...
+├── app.R
+├── RhinoApplication.Rproj
+├── dependencies.R
+├── renv.lock
+└── rhino.yml</code></pre>
 </div>
 </div>
 </section>
@@ -1439,7 +1478,7 @@ Backtrace:
 <section id="accessing-new-snapshots" class="slide level2 smaller">
 <h2>Accessing new snapshots</h2>
 <p>In local <code>R CMD Check</code>, we can find new snapshots in <code>.Rcheck</code> folder:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>On CI/CD platforms, we can find snapshots in artifacts folder:</p>
 <ul>
 <li><a href="https://www.appveyor.com/docs/packaging-artifacts/">AppVeyor</a></li>
@@ -1448,9 +1487,9 @@ Backtrace:
 <img data-src="media/AppVeyor.png" width="484" class="r-stretch"><ul>
 <li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
 </ul>
-<div class="sourceCode" id="cb55"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb55-1"><a href="#cb55-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb55-2"><a href="#cb55-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb55-3"><a href="#cb55-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb57-1"><a href="#cb57-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb57-2"><a href="#cb57-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb57-3"><a href="#cb57-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="code-review-with-snapshot-tests" class="slide level2 smaller">
 <h2>Code review with snapshot tests</h2>

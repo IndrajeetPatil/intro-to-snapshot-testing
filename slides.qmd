@@ -1021,13 +1021,74 @@ test_that("unitConverter app works", {
 
 ## Generating test and snapshots {.smaller}
 
-To create tests, we call `record_test()` directly on a shiny app object, and then copy-paste the commands to test script, and then run `devtools::test_active_file()` to generate snapshots.
+We call `record_test()` directly on a Shiny app object, copy-paste commands to the test script, and run `devtools::test_active_file()` to generate snapshots.
 
 ```{r}
 #| echo: false
 #| out.width: "60%"
 knitr::include_graphics("media/shiny_app_function_return.mov")
 ```
+
+## Testing apps from frameworks {.smaller}
+
+This testing workflow is also relevant for frameworks (e.g. [`{golem}`](https://thinkr-open.github.io/golem/index.html), [`{rhino}`](https://appsilon.github.io/rhino/), etc.) that produce production-ready Shiny apps. 
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+**`{golem}`**
+
+Function in `run_app.R`
+returns Shiny app.
+
+```
+├── DESCRIPTION 
+├── NAMESPACE 
+├── R 
+│   ├── app_config.R 
+│   ├── app_server.R 
+│   ├── app_ui.R 
+│   └── run_app.R 
+```
+
+:::
+
+::: {.column width='60%'}
+
+**rhino**
+
+Function in `app.R`
+returns Shiny app.
+
+```
+├── app
+│   ├── js
+│   │   └── index.js
+│   ├── logic
+│   │   └── __init__.R
+│   ├── static
+│   │   └── favicon.ico
+│   ├── styles
+│   │   └── main.scss
+│   ├── view
+│   │   └── __init__.R
+│   └── main.R
+├── tests
+│   ├── ...
+├── app.R
+├── RhinoApplication.Rproj
+├── dependencies.R
+├── renv.lock
+└── rhino.yml
+```
+
+:::
+
+::::
+
+
+
 
 ## Final directory structure {.smaller}
 
