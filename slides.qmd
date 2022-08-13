@@ -1035,12 +1035,12 @@ This testing workflow is also relevant for frameworks (e.g. [`{golem}`](https://
 
 :::: {.columns}
 
-::: {.column width='40%'}
+::: {.column width='50%'}
 
 **`{golem}`**
 
 Function in `run_app.R`
-returns Shiny app.
+returns app.
 
 ```
 ├── DESCRIPTION 
@@ -1054,12 +1054,12 @@ returns Shiny app.
 
 :::
 
-::: {.column width='60%'}
+::: {.column width='50%'}
 
 **`{rhino}`**
 
 Function in `app.R`
-returns Shiny app.
+returns app.
 
 ```
 ├── app
