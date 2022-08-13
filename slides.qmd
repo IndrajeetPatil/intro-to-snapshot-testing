@@ -1056,7 +1056,7 @@ returns Shiny app.
 
 ::: {.column width='60%'}
 
-**rhino**
+**`{rhino}`**
 
 Function in `app.R`
 returns Shiny app.
@@ -1086,8 +1086,6 @@ returns Shiny app.
 :::
 
 ::::
-
-
 
 
 ## Final directory structure {.smaller}
