@@ -25,6 +25,71 @@ The goal of a unit test is to capture the *expected* output of a function using 
 
 :::
 
+## Unit testing with `{testthat}`: A recap {.smaller}
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+::: {.callout-important}
+
+## Test organization
+
+Testing infrastructure for R package has the following hierarchy:
+
+</br>
+
+{{< fa regular file-code size=2xl >}} **Test file** : Tests for code situated in `R/foo.R` will typically be in the file `tests/testthat/test-foo.R`.
+
+</br>
+
+{{< fa solid flask size=2xl >}} **Tests** : A single file can contain multiple tests.
+
+</br>
+
+{{< fa solid equals size=2xl >}} **Expectations** : A single test can have multiple expectations that formalize what you expect code to do.
+
+:::
+
+:::
+
+::: {.column width='50%'}
+
+:::{.callout-tip}
+
+## Example test file
+
+- Every test is a call to `testthat::test_that()` function.
+
+- Every expectation is represented by `testthat::expect_*()` function.
+
+- You can generate a test file using `usethis::use_test()` function.
+
+```{.r}
+# File: tests/testthat/test-op.R
+
+# test-1
+test_that("multiplication works", {
+  expect_equal(2 * 2, 4) # expectation-1
+  expect_equal(-2 * 2, -4) # expectation-2
+})
+
+# test-2
+test_that("addition works", {
+  expect_equal(2 + 2, 4) # expectation-1
+  expect_equal(-2 + 2, 0) # expectation-2
+})
+
+...
+```
+
+:::
+
+:::
+
+::::
+
+
 ## What is different about snapshot testing?
 
 . . .
