@@ -521,7 +521,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb6-8"><a href="#cb6-8"></a>  )</span>
 <span id="cb6-9"><a href="#cb6-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1190,12 +1190,9 @@ Backtrace:
 <div class="sourceCode" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">library</span>(shinytest2)</span>
 <span id="cb44-2"><a href="#cb44-2"></a></span>
 <span id="cb44-3"><a href="#cb44-3"></a><span class="fu">test_that</span>(<span class="st">"`unitConverter` app works"</span>, {</span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="co"># Don't run these tests on the CRAN machines</span></span>
-<span id="cb44-5"><a href="#cb44-5"></a>  <span class="fu">skip_on_cran</span>()</span>
-<span id="cb44-6"><a href="#cb44-6"></a></span>
-<span id="cb44-7"><a href="#cb44-7"></a>  appdir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"package_name"</span>, <span class="st">"unitConverter"</span>)</span>
-<span id="cb44-8"><a href="#cb44-8"></a>  <span class="fu">test_app</span>(appdir)</span>
-<span id="cb44-9"><a href="#cb44-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-4"><a href="#cb44-4"></a>  appdir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"package_name"</span>, <span class="st">"unitConverter"</span>)</span>
+<span id="cb44-5"><a href="#cb44-5"></a>  <span class="fu">test_app</span>(appdir)</span>
+<span id="cb44-6"><a href="#cb44-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now the Shiny apps will be tested with the rest of the source code in the package! 🎊</p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
@@ -1249,16 +1246,57 @@ Backtrace:
 </div>
 </section></section>
 <section>
-<section id="shiny-app-as-function-return" class="title-slide slide level1 center">
-<h1>Shiny app as function return</h1>
+<section id="function-returns-shiny-app" class="title-slide slide level1 center">
+<h1>Function returns Shiny app</h1>
 <p><br></p>
 <pre><code>├── DESCRIPTION
 ├── R
 │   └── app-function.R</code></pre>
 </section>
+<section id="example-app-and-test" class="slide level2 smaller">
+<h2>Example app and test</h2>
+<p>The only difference in testing workflow when Shiny app objects are created by functions is that we will write the test ourselves, instead of <code>{shinytest2}</code> auto-generating it.</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>Source code</strong></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co"># File: R/unit-converter.R</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>unitConverter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb48-3"><a href="#cb48-3"></a>  ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb48-4"><a href="#cb48-4"></a>    <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb48-5"><a href="#cb48-5"></a>    <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb48-6"><a href="#cb48-6"></a>    <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb48-7"><a href="#cb48-7"></a>  )</span>
+<span id="cb48-8"><a href="#cb48-8"></a></span>
+<span id="cb48-9"><a href="#cb48-9"></a>  server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb48-10"><a href="#cb48-10"></a>    output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb48-11"><a href="#cb48-11"></a>      <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb48-12"><a href="#cb48-12"></a>    )</span>
+<span id="cb48-13"><a href="#cb48-13"></a>  }</span>
+<span id="cb48-14"><a href="#cb48-14"></a></span>
+<span id="cb48-15"><a href="#cb48-15"></a>  <span class="fu">shinyApp</span>(ui, server)</span>
+<span id="cb48-16"><a href="#cb48-16"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:45%;">
+<p><strong>Test file to modify</strong></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># File: tests/testthat/test-unit-converter.R</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="fu">test_that</span>(<span class="st">"unitConverter app works"</span>, {</span>
+<span id="cb49-3"><a href="#cb49-3"></a>  shiny_app <span class="ot">&lt;-</span> <span class="fu">unitConverter</span>()</span>
+<span id="cb49-4"><a href="#cb49-4"></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(shiny_app)</span>
+<span id="cb49-5"><a href="#cb49-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="generating-test-and-snapshots" class="slide level2 smaller">
+<h2>Generating test and snapshots</h2>
+<p>To create tests, we call <code>record_test()</code> directly on a shiny app object, and then copy-paste the commands to test script, and then run <code>devtools::test_active_file()</code> to generate snapshots.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><video data-src="media/shiny_app_function_return.mov" style="width:60.0%" controls=""><a href="media/shiny_app_function_return.mov">Video</a></video></p>
+</div>
+</div>
+</section>
 <section id="final-directory-structure" class="slide level2 smaller">
 <h2>Final directory structure</h2>
-<p>The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps are included in a package.</p>
+<p>The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps in R packages.</p>
 <p><br></p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1401,7 +1439,7 @@ Backtrace:
 <section id="accessing-new-snapshots" class="slide level2 smaller">
 <h2>Accessing new snapshots</h2>
 <p>In local <code>R CMD Check</code>, we can find new snapshots in <code>.Rcheck</code> folder:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>On CI/CD platforms, we can find snapshots in artifacts folder:</p>
 <ul>
 <li><a href="https://www.appveyor.com/docs/packaging-artifacts/">AppVeyor</a></li>
@@ -1410,9 +1448,9 @@ Backtrace:
 <img data-src="media/AppVeyor.png" width="484" class="r-stretch"><ul>
 <li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
 </ul>
-<div class="sourceCode" id="cb53"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb53-1"><a href="#cb53-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb53-2"><a href="#cb53-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb53-3"><a href="#cb53-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb55-1"><a href="#cb55-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb55-3"><a href="#cb55-3"></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="code-review-with-snapshot-tests" class="slide level2 smaller">
 <h2>Code review with snapshot tests</h2>

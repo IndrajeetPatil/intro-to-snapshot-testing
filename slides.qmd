@@ -899,9 +899,6 @@ For this, we will need to write a driver script like the following:
 library(shinytest2)
 
 test_that("`unitConverter` app works", {
-  # Don't run these tests on the CRAN machines
-  skip_on_cran()
-
   appdir <- system.file(package = "package_name", "unitConverter")
   test_app(appdir)
 })
@@ -963,7 +960,7 @@ Fixing this test will be similar to fixing any other snapshot test we've seen th
 knitr::include_graphics("media/shinytest_failure.mov")
 ```
 
-# Shiny app as function return
+# Function returns Shiny app
 
 </br>
 
@@ -973,9 +970,68 @@ knitr::include_graphics("media/shinytest_failure.mov")
 │   └── app-function.R
 ```
 
+## Example app and test {.smaller}
+
+The only difference in testing workflow when Shiny app objects are created by functions is that we will write the test ourselves, instead of `{shinytest2}` auto-generating it.
+
+:::: {.columns}
+
+::: {.column width='55%'}
+
+**Source code**
+
+```{.r}
+# File: R/unit-converter.R
+unitConverter <- function() {
+  ui <- fluidPage(
+    titlePanel("Convert kilograms to grams"),
+    numericInput("kg", "Weight (in kg)", value = 0),
+    textOutput("g")
+  )
+
+  server <- function(input, output, session) {
+    output$g <- renderText(
+      paste0("Weight (in g): ", input$kg * 1000)
+    )
+  }
+
+  shinyApp(ui, server)
+}
+```
+
+
+:::
+
+::: {.column width='45%'}
+
+**Test file to modify**
+
+```{.r}
+# File: tests/testthat/test-unit-converter.R
+test_that("unitConverter app works", {
+  shiny_app <- unitConverter()
+  app <- AppDriver$new(shiny_app)
+})
+```
+
+
+:::
+
+::::
+
+## Generating test and snapshots {.smaller}
+
+To create tests, we call `record_test()` directly on a shiny app object, and then copy-paste the commands to test script, and then run `devtools::test_active_file()` to generate snapshots.
+
+```{r}
+#| echo: false
+#| out.width: "60%"
+knitr::include_graphics("media/shiny_app_function_return.mov")
+```
+
 ## Final directory structure {.smaller}
 
-The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps are included in a package.
+The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps in R packages.
 
 </br>
 
