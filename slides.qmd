@@ -1165,7 +1165,7 @@ knitr::include_graphics("media/shiny_app_function_return.mov")
 
 ## Testing apps from frameworks {.smaller}
 
-This testing workflow is also relevant for frameworks (e.g. [`{golem}`](https://thinkr-open.github.io/golem/index.html), [`{rhino}`](https://appsilon.github.io/rhino/), etc.) that produce production-ready Shiny apps. 
+This testing workflow is also relevant for app frameworks (e.g. [`{golem}`](https://thinkr-open.github.io/golem/index.html), [`{rhino}`](https://appsilon.github.io/rhino/), etc.).
 
 :::: {.columns}
 
