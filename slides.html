@@ -9,7 +9,7 @@
 <link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.1.65">
+  <meta name="generator" content="quarto-1.1.113">
 
   <meta name="author" content="Indrajeet Patil">
   <title>Introduction to snapshot testing in R</title>
@@ -515,7 +515,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <p>In the following slides, in all snapshot tests, I include the following line of code:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">local_edition</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>You don’t need to do this in your package tests!</strong></p>
-<p>Instead, you can use snapshot tests by activating the 3rd edition of <code>{testthat}</code>:</p>
+<p>Just include this in the <code>DESCRIPTION</code> file to use <code>{testthat}</code> 3rd edition:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Config<span class="sc">/</span>testthat<span class="sc">/</span>edition<span class="sc">:</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>For more, see <a href="https://testthat.r-lib.org/articles/third-edition.html">this</a> article.</p>
 </div>
@@ -580,7 +580,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb7-8"><a href="#cb7-8"></a>  )</span>
 <span id="cb7-9"><a href="#cb7-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -686,7 +686,7 @@ Output
 <span id="cb13-6"><a href="#cb13-6"></a>  )))</span>
 <span id="cb13-7"><a href="#cb13-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1026,7 +1026,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
 <span id="cb34-6"><a href="#cb34-6"></a>  )</span>
 <span id="cb34-7"><a href="#cb34-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 </section>
@@ -1180,7 +1180,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/demo.json'</code></pre>
 <span id="cb43-12"><a href="#cb43-12"></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb43-13"><a href="#cb43-13"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 </section>
@@ -2172,7 +2172,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
         const ref = noterefs[i];
         tippyHover(ref, function() {
           // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href');
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
