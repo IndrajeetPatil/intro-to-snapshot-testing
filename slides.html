@@ -9,7 +9,7 @@
 <link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.1.113">
+  <meta name="generator" content="quarto-1.2.150">
 
   <meta name="author" content="Indrajeet Patil">
   <title>Introduction to snapshot testing in R</title>
@@ -22,7 +22,7 @@
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: 1;}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -389,11 +389,18 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="center">
+<section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Introduction to snapshot testing in R</h1>
-  <p class="author">Indrajeet Patil</p>
-</section>
 
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Indrajeet Patil 
+</div>
+</div>
+</div>
+
+</section>
 <section id="unit-testing" class="slide level2 smaller">
 <h2>Unit testing</h2>
 <p>The goal of a unit test is to capture the <em>expected</em> output of a function using <em>code</em> and making sure that <em>actual</em> output after any changes to the function matches the expected one.</p>
@@ -580,7 +587,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb7-8"><a href="#cb7-8"></a>  )</span>
 <span id="cb7-9"><a href="#cb7-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -686,7 +693,7 @@ Output
 <span id="cb13-6"><a href="#cb13-6"></a>  )))</span>
 <span id="cb13-7"><a href="#cb13-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -992,7 +999,7 @@ non-numeric argument to mathematical function</code></pre>
 <span id="cb32-7"><a href="#cb32-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning (&lt;text&gt;:3:3): `create_scatter()` plots as expected ──────────────────
-Adding new file snapshot: 'tests/testhat/_snaps/create-scatter.svg'</code></pre>
+Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre>
 </div>
 </div>
 </div>
@@ -1135,7 +1142,7 @@ Backtrace:
 <span id="cb40-13"><a href="#cb40-13"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning (&lt;text&gt;:12:3): json writer works ────────────────────────────────────
-Adding new file snapshot: 'tests/testhat/_snaps/demo.json'</code></pre>
+Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 </div>
 </div>
 <p><strong>Snapshot</strong></p>
@@ -1180,7 +1187,7 @@ Adding new file snapshot: 'tests/testhat/_snaps/demo.json'</code></pre>
 <span id="cb43-12"><a href="#cb43-12"></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb43-13"><a href="#cb43-13"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 </section>
@@ -2141,7 +2148,24 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
         button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
         setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
           button.setAttribute("title", currentTitle);
           button.classList.remove('code-copy-button-checked');
         }, 1000);
@@ -2179,24 +2203,42 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
           return note.innerHTML;
         });
       }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
       var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
       for (var i=0; i<bibliorefs.length; i++) {
         const ref = bibliorefs[i];
-        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-        tippyHover(ref, function() {
-          var popup = window.document.createElement('div');
-          cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
           });
-          return popup.innerHTML;
-        });
+        }
       }
     });
     </script>
