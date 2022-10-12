@@ -356,7 +356,7 @@ When function changes, snapshot doesn't match the reference, and the test fails:
 
 :::: {.columns}
 
-::: {.column width='30%'}
+::: {.column width='35%'}
 
 **Changes to function**
 
@@ -384,18 +384,11 @@ print_movies <- function(keys, values) {
 
 </br>
 
-The test failure message provides a diff between what was expected (`-` rows) vs observed (`+` rows).
-
-```r
-- "    Title: Salaam Bombay!"
-+ "    Title- Salaam Bombay!"
-- "    Director: Mira Nair"
-+ "    Director- Mira Nair"
-```
+Failure message provides expected (`-`) vs observed (`+`) diff.
 
 :::
 
-::: {.column width='70%'}
+::: {.column width='65%'}
 
 **Test failure**
 
@@ -508,9 +501,9 @@ You have two ways around this:
 
 :::: {.columns}
 
-::: {.column width='40%'}
+::: {.column width='50%'}
 
-**Option-1**
+**Option-1** (recommended)
 
 ```{.r code-line-numbers="3"}
 test_that("`log()` errors", {
@@ -528,7 +521,7 @@ test_that("`log()` errors", {
 
 :::
 
-::: {.column width='60%'}
+::: {.column width='50%'}
 
 **Option-2**
 
@@ -1437,6 +1430,24 @@ It's not all kittens and roses when it comes to snapshot testing.
 
 Let's now see some issues we might run into while using them. 🤕
 
+## Testing behavior that you don't own {.smaller}
+
+Let's say you write a graphical snapshot test for a function that produces a `ggplot` object. If `{ggplot2}` authors make some modifications to this object, your tests will fail, even though your function works as expected!
+
+In other words, *your* tests are now at the mercy of *other package authors* because snapshots are capturing things beyond your package's purview.
+
+:::{.callout-caution}
+
+Tests that fail for reasons other than what they are testing for are problematic. Thus, be careful about *what* you snapshot and maintenance burden that comes with dependencies with volatile APIs.
+
+:::
+
+:::{.callout-note}
+
+*A* way to reduce the burden of keeping snapshots up-to-date is to [automate this process](https://github.com/krlmlr/actions-sync/tree/base/update-snapshots). But there is no free lunch in this universe, and now you need to maintain this automation!
+
+:::
+
 ## Failures in non-interactive environments {.smaller}
 
 If snapshots fail locally, we can just run `snapshot_review()`, but what if they fail in non-interactive environments (on CI/CD platforms, during `R CMD Check`, etc.)?
@@ -1721,3 +1732,10 @@ For a comprehensive collection of packages for unit testing in R, see [this](htt
 # Thank You 
 
 And Happy Snapshotting! 😊
+
+## Session information {.smaller}
+
+```{r}
+sessioninfo::session_info(include_base = TRUE)
+```
+
