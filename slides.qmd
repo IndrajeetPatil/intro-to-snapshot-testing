@@ -1,16 +1,36 @@
 ---
-title: "Introduction to snapshot testing in R"
+#title: "Introduction to Snapshot Testing in R"
 format:
   revealjs: 
     theme: simple
     slide-number: true
     preview-links: auto
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/intro-to-snapshot-testing)."
-author: "Indrajeet Patil"
-affiliation: "cynkra"
+#author: "Indrajeet Patil"
+#affiliation: "cynkra"
 execute:
   echo: true
 ---
+
+## Introduction to Snapshot Testing in R {style="margin-top: 3em;"}
+
+::: {style="margin-top: 2em; margin-bottom: 1em; font-size: 0.75em"}
+
+Indrajeet Patil
+
+Software Engineer, [cynkra](https://www.cynkra.com/)
+
+:::
+
+
+::: {style="margin-top: 2em; font-size:0.5em"}
+
+- [Link to slides](https://indrajeetpatil.github.io/intro-to-snapshot-testing/)
+- [Github repo](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/)
+
+:::
+
+![](media/logos_combined.jpeg){.absolute width="500" height="200" right="100" top="100"}
 
 ## Unit testing {.smaller}
 
