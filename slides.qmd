@@ -7,7 +7,7 @@ format:
     preview-links: auto
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/intro-to-snapshot-testing)."
 #author: "Indrajeet Patil"
-#affiliation: "cynkra"
+#affiliation: 
 execute:
   echo: true
 ---
@@ -18,7 +18,7 @@ execute:
 
 Indrajeet Patil
 
-Software Engineer, [cynkra](https://www.cynkra.com/)
+Software Engineer
 
 :::
 
