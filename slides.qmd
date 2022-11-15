@@ -14,11 +14,11 @@ execute:
 
 ## Introduction to Snapshot Testing in R {style="margin-top: 3em;"}
 
-::: {style="margin-top: 2em; margin-bottom: 1em; font-size: 0.75em"}
+::: {style="margin-top: 1em; margin-bottom: 1em; font-size: 1em"}
 
 Indrajeet Patil
 
-Software Engineer
+<!-- Software Engineer -->
 
 :::
 
