@@ -1454,17 +1454,17 @@ Let's now see some issues we might run into while using them. 🤕
 
 Let's say you write a graphical snapshot test for a function that produces a `ggplot` object. If `{ggplot2}` authors make some modifications to this object, your tests will fail, even though your function works as expected!
 
-In other words, *your* tests are now at the mercy of *other package authors* because snapshots are capturing things beyond your package's purview.
+In other words, *your* tests are now at the mercy of *other package authors* because snapshots are capturing things beyond your package's control.
 
 :::{.callout-caution}
 
-Tests that fail for reasons other than what they are testing for are problematic. Thus, be careful about *what* you snapshot and maintenance burden that comes with dependencies with volatile APIs.
+Tests that fail for reasons other than what they are testing for are problematic. Thus, be careful about *what* you snapshot and keep in mind the maintenance burden that comes with dependencies with volatile APIs.
 
 :::
 
 :::{.callout-note}
 
-*A* way to reduce the burden of keeping snapshots up-to-date is to [automate this process](https://github.com/krlmlr/actions-sync/tree/base/update-snapshots). But there is no free lunch in this universe, and now you need to maintain this automation!
+*A* way to reduce the burden of keeping snapshots up-to-date is to [automate this process](https://github.com/krlmlr/actions-sync/tree/base/update-snapshots). But there is no free lunch in this universe, and now you need to maintain this automation! 🤷
 
 :::
 

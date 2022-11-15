@@ -589,7 +589,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb7-8"><a href="#cb7-8"></a>  )</span>
 <span id="cb7-9"><a href="#cb7-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -695,7 +695,7 @@ Output
 <span id="cb13-6"><a href="#cb13-6"></a>  )))</span>
 <span id="cb13-7"><a href="#cb13-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1185,7 +1185,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb42-12"><a href="#cb42-12"></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb42-13"><a href="#cb42-13"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 </section>
@@ -1628,7 +1628,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <section id="testing-behavior-that-you-dont-own" class="slide level2 smaller">
 <h2>Testing behavior that you don’t own</h2>
 <p>Let’s say you write a graphical snapshot test for a function that produces a <code>ggplot</code> object. If <code>{ggplot2}</code> authors make some modifications to this object, your tests will fail, even though your function works as expected!</p>
-<p>In other words, <em>your</em> tests are now at the mercy of <em>other package authors</em> because snapshots are capturing things beyond your package’s purview.</p>
+<p>In other words, <em>your</em> tests are now at the mercy of <em>other package authors</em> because snapshots are capturing things beyond your package’s control.</p>
 <div class="callout callout-caution callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -1638,7 +1638,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <p><strong>Danger</strong></p>
 </div>
 <div class="callout-content">
-<p>Tests that fail for reasons other than what they are testing for are problematic. Thus, be careful about <em>what</em> you snapshot and maintenance burden that comes with dependencies with volatile APIs.</p>
+<p>Tests that fail for reasons other than what they are testing for are problematic. Thus, be careful about <em>what</em> you snapshot and keep in mind the maintenance burden that comes with dependencies with volatile APIs.</p>
 </div>
 </div>
 </div>
@@ -1651,7 +1651,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p><em>A</em> way to reduce the burden of keeping snapshots up-to-date is to <a href="https://github.com/krlmlr/actions-sync/tree/base/update-snapshots">automate this process</a>. But there is no free lunch in this universe, and now you need to maintain this automation!</p>
+<p><em>A</em> way to reduce the burden of keeping snapshots up-to-date is to <a href="https://github.com/krlmlr/actions-sync/tree/base/update-snapshots">automate this process</a>. But there is no free lunch in this universe, and now you need to maintain this automation! 🤷</p>
 </div>
 </div>
 </div>
