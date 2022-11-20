@@ -9,7 +9,7 @@
 <link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.269">
+  <meta name="generator" content="quarto-1.3.11">
 
   <title>slides</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -397,8 +397,8 @@
 </div>
 <div style="margin-top: 2em; font-size:0.5em">
 <ul>
-<li><a href="https://indrajeetpatil.github.io/intro-to-snapshot-testing/">Link to slides</a></li>
-<li><a href="https://github.com/IndrajeetPatil/intro-to-snapshot-testing/">Github repo</a></li>
+<li><a href="https://indrajeetpatil.github.io/intro-to-snapshot-testing/" target="_blank">Link to slides</a></li>
+<li><a href="https://github.com/IndrajeetPatil/intro-to-snapshot-testing/" target="_blank">Github repo</a></li>
 </ul>
 </div>
 <p><img data-src="media/logos_combined.jpeg" class="absolute" style="top: 100px; right: 100px; width: 500px; height: 200px; "></p>
@@ -507,11 +507,12 @@ https://github.com/quarto-ext/fontawesome  -->
 <section>
 <section id="prerequisites" class="title-slide slide level1 center">
 <h1>Prerequisites</h1>
-<p>Familiarity with writing unit tests using <a href="https://testthat.r-lib.org/index.html"><code>{testthat}</code></a>.</p>
-<p>If not, have a look at <a href="https://r-pkgs.org/testing-basics.html">this</a> chapter from <em>R Packages</em> book.</p>
+<p>Familiarity with writing unit tests using <a href="https://testthat.r-lib.org/index.html" target="_blank"><code>{testthat}</code></a>.</p>
+<p>If not, have a look at <a href="https://r-pkgs.org/testing-basics.html" target="_blank">this</a> chapter from <em>R Packages</em> book.</p>
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
+<p><br></p>
 <div class="callout callout-important callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -526,7 +527,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <p><strong>You don’t need to do this in your package tests!</strong></p>
 <p>Just include this in the <code>DESCRIPTION</code> file to use <code>{testthat}</code> 3rd edition:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Config<span class="sc">/</span>testthat<span class="sc">/</span>edition<span class="sc">:</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>For more, see <a href="https://testthat.r-lib.org/articles/third-edition.html">this</a> article.</p>
+<p>For more, see <a href="https://testthat.r-lib.org/articles/third-edition.html" target="_blank">this</a> article.</p>
 </div>
 </div>
 </div>
@@ -589,7 +590,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb7-8"><a href="#cb7-8"></a>  )</span>
 <span id="cb7-9"><a href="#cb7-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -911,15 +912,15 @@ non-numeric argument to mathematical function</code></pre>
 <section id="further-reading" class="slide level2 smaller">
 <h2>Further reading</h2>
 <ul>
-<li><p><code>{testthat}</code> article on <a href="https://testthat.r-lib.org/articles/snapshotting.html">snapshot testing</a></p></li>
-<li><p>Introduction to <a href="https://ro-che.info/articles/2017-12-04-golden-tests">golden testing</a></p></li>
-<li><p>Docs for <a href="https://jestjs.io/docs/snapshot-testing">Jest</a> library in JavaScript, which inspired snapshot testing implementation in <code>{testthat}</code></p></li>
+<li><p><code>{testthat}</code> article on <a href="https://testthat.r-lib.org/articles/snapshotting.html" target="_blank">snapshot testing</a></p></li>
+<li><p>Introduction to <a href="https://ro-che.info/articles/2017-12-04-golden-tests" target="_blank">golden testing</a></p></li>
+<li><p>Docs for <a href="https://jestjs.io/docs/snapshot-testing" target="_blank">Jest</a> library in JavaScript, which inspired snapshot testing implementation in <code>{testthat}</code></p></li>
 </ul>
 </section></section>
 <section>
 <section id="testing-graphical-outputs" class="title-slide slide level1 center">
 <h1>Testing graphical outputs</h1>
-<p>To create graphical expectations, we will use <code>{testthat}</code> extension package: <a href="https://vdiffr.r-lib.org/"><code>{vdiffr}</code></a>.</p>
+<p>To create graphical expectations, we will use <code>{testthat}</code> extension package: <a href="https://vdiffr.r-lib.org/" target="_blank"><code>{vdiffr}</code></a>.</p>
 </section>
 <section id="how-does-vdiffr-work" class="slide level2 smaller">
 <h2>How does <code>{vdiffr}</code> work?</h2>
@@ -1110,7 +1111,7 @@ Backtrace:
 <section id="further-reading-1" class="slide level2">
 <h2>Further reading</h2>
 <ul>
-<li><code>{vdiffr}</code> package <a href="https://vdiffr.r-lib.org/">website</a></li>
+<li><code>{vdiffr}</code> package <a href="https://vdiffr.r-lib.org/" target="_blank">website</a></li>
 </ul>
 </section></section>
 <section>
@@ -1185,7 +1186,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb42-12"><a href="#cb42-12"></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb42-13"><a href="#cb42-13"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 </section>
@@ -1224,12 +1225,12 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <img data-src="media/json_snapshot.png" width="622" class="r-stretch"></section>
 <section id="further-reading-2" class="slide level2 smaller">
 <h2>Further reading</h2>
-<p>Documentation for <a href="https://testthat.r-lib.org/reference/expect_snapshot_file.html"><code>expect_snapshot_file()</code></a></p>
+<p>Documentation for <a href="https://testthat.r-lib.org/reference/expect_snapshot_file.html" target="_blank"><code>expect_snapshot_file()</code></a></p>
 </section></section>
 <section>
 <section id="testing-shiny-applications" class="title-slide slide level1 center">
 <h1>Testing Shiny applications</h1>
-<p>To write formal tests for Shiny applications, we will use <code>{testthat}</code> extension package: <a href="https://rstudio.github.io/shinytest2/"><code>{shinytest2}</code></a>.</p>
+<p>To write formal tests for Shiny applications, we will use <code>{testthat}</code> extension package: <a href="https://rstudio.github.io/shinytest2/" target="_blank"><code>{shinytest2}</code></a>.</p>
 </section>
 <section id="how-does-shinytest2-work" class="slide level2 smaller">
 <h2>How does <code>{shinytest2}</code> work?</h2>
@@ -1466,7 +1467,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </section>
 <section id="testing-apps-from-frameworks" class="slide level2 smaller">
 <h2>Testing apps from frameworks</h2>
-<p>This testing workflow is also relevant for app frameworks (e.g.&nbsp;<a href="https://thinkr-open.github.io/golem/index.html"><code>{golem}</code></a>, <a href="https://appsilon.github.io/rhino/"><code>{rhino}</code></a>, etc.).</p>
+<p>This testing workflow is also relevant for app frameworks (e.g.&nbsp;<a href="https://thinkr-open.github.io/golem/index.html" target="_blank"><code>{golem}</code></a>, <a href="https://appsilon.github.io/rhino/" target="_blank"><code>{rhino}</code></a>, etc.).</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong><code>{golem}</code></strong></p>
@@ -1604,8 +1605,8 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </div>
 <div class="callout-content">
 <ul>
-<li><p>If you want to test Shiny apps with continuous integration using <code>{shinytest2}</code>, read <a href="https://rstudio.github.io/shinytest2/articles/use-ci.html">this</a> article.</p></li>
-<li><p><code>{shinytest2}</code> is a successor to <code>{shinytest}</code> package. If you want to migrate from the latter to the former, have a look at <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html">this</a>.</p></li>
+<li><p>If you want to test Shiny apps with continuous integration using <code>{shinytest2}</code>, read <a href="https://rstudio.github.io/shinytest2/articles/use-ci.html" target="_blank">this</a> article.</p></li>
+<li><p><code>{shinytest2}</code> is a successor to <code>{shinytest}</code> package. If you want to migrate from the latter to the former, have a look at <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html" target="_blank">this</a>.</p></li>
 </ul>
 </div>
 </div>
@@ -1614,9 +1615,9 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <section id="further-reading-3" class="slide level2 smaller">
 <h2>Further reading</h2>
 <ul>
-<li><p><a href="https://mastering-shiny.org/scaling-testing.html">Testing</a> chapter from <em>Mastering Shiny</em> book</p></li>
-<li><p><code>{shinytest2}</code> article introducing its <a href="https://rstudio.github.io/shinytest2/articles/shinytest2.html">workflow</a></p></li>
-<li><p><code>{shinytest2}</code> article on how to test apps in <a href="https://rstudio.github.io/shinytest2/articles/use-package.html">R packages</a></p></li>
+<li><p><a href="https://mastering-shiny.org/scaling-testing.html" target="_blank">Testing</a> chapter from <em>Mastering Shiny</em> book</p></li>
+<li><p><code>{shinytest2}</code> article introducing its <a href="https://rstudio.github.io/shinytest2/articles/shinytest2.html" target="_blank">workflow</a></p></li>
+<li><p><code>{shinytest2}</code> article on how to test apps in <a href="https://rstudio.github.io/shinytest2/articles/use-package.html" target="_blank">R packages</a></p></li>
 </ul>
 </section></section>
 <section>
@@ -1651,7 +1652,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p><em>A</em> way to reduce the burden of keeping snapshots up-to-date is to <a href="https://github.com/krlmlr/actions-sync/tree/base/update-snapshots">automate this process</a>. But there is no free lunch in this universe, and now you need to maintain this automation! 🤷</p>
+<p><em>A</em> way to reduce the burden of keeping snapshots up-to-date is to <a href="https://github.com/krlmlr/actions-sync/tree/base/update-snapshots" target="_blank">automate this process</a>. But there is no free lunch in this universe, and now you need to maintain this automation! 🤷</p>
 </div>
 </div>
 </div>
@@ -1682,11 +1683,11 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <div class="sourceCode" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>On CI/CD platforms, we can find snapshots in artifacts folder:</p>
 <ul>
-<li><a href="https://www.appveyor.com/docs/packaging-artifacts/">AppVeyor</a></li>
+<li><a href="https://www.appveyor.com/docs/packaging-artifacts/" target="_blank">AppVeyor</a></li>
 </ul>
 
 <img data-src="media/AppVeyor.png" width="484" class="r-stretch"><ul>
-<li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a></li>
+<li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package" target="_blank">GitHub actions</a></li>
 </ul>
 <div class="sourceCode" id="cb65"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb65-1"><a href="#cb65-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
 <span id="cb65-2"><a href="#cb65-2"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
@@ -1807,22 +1808,22 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <!-- 1st column --><div class="column" style="width:33%;">
 <h3 id="print-outputs">Print outputs</h3>
 <ul>
-<li><p><a href="https://github.com/r-lib/cli/tree/main/tests/testthat"><code>{cli}</code></a> (for testing command line interfaces)</p></li>
-<li><p><a href="https://github.com/r-lib/pkgdown/tree/main/tests/testthat"><code>{pkgdown}</code></a> (for testing generated HTML documents)</p></li>
-<li><p><a href="https://github.com/tidyverse/dbplyr/tree/main/tests/testthat"><code>{dbplyr}</code></a> (for testing printing of generated SQL queries)</p></li>
-<li><p><a href="https://github.com/rstudio/gt/tree/master/tests/testthat"><code>{gt}</code></a> (for testing table printing)</p></li>
+<li><p><a href="https://github.com/r-lib/cli/tree/main/tests/testthat" target="_blank"><code>{cli}</code></a> (for testing command line interfaces)</p></li>
+<li><p><a href="https://github.com/r-lib/pkgdown/tree/main/tests/testthat" target="_blank"><code>{pkgdown}</code></a> (for testing generated HTML documents)</p></li>
+<li><p><a href="https://github.com/tidyverse/dbplyr/tree/main/tests/testthat" target="_blank"><code>{dbplyr}</code></a> (for testing printing of generated SQL queries)</p></li>
+<li><p><a href="https://github.com/rstudio/gt/tree/master/tests/testthat" target="_blank"><code>{gt}</code></a> (for testing table printing)</p></li>
 </ul>
 </div><!-- 2nd column --><div class="column" style="width:33%;">
 <h3 id="visualizations">Visualizations</h3>
 <ul>
-<li><p><a href="https://github.com/tidyverse/ggplot2/tree/main/tests/testthat"><code>{ggplot2}</code></a></p></li>
-<li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat"><code>{ggstatsplot}</code></a></p></li>
+<li><p><a href="https://github.com/tidyverse/ggplot2/tree/main/tests/testthat" target="_blank"><code>{ggplot2}</code></a></p></li>
+<li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat" target="_blank"><code>{ggstatsplot}</code></a></p></li>
 </ul>
 </div><!-- 3rd column --><div class="column" style="width:33%;">
 <h3 id="shiny-apps">Shiny apps</h3>
 <ul>
-<li><p><a href="https://github.com/rstudio/shinytest2/tree/main/tests/testthat"><code>{shinytest2}</code></a></p></li>
-<li><p><a href="https://github.com/ashbaldry/designer/tree/dev/tests/testthat"><code>{designer}</code></a></p></li>
+<li><p><a href="https://github.com/rstudio/shinytest2/tree/main/tests/testthat" target="_blank"><code>{shinytest2}</code></a></p></li>
+<li><p><a href="https://github.com/ashbaldry/designer/tree/dev/tests/testthat" target="_blank"><code>{designer}</code></a></p></li>
 </ul>
 </div>
 </div>
@@ -1845,10 +1846,10 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </div>
 <div class="callout-content">
 <ul>
-<li><p>See if <code>{ggplot2}</code> <a href="https://exts.ggplot2.tidyverse.org/gallery/">extensions</a> you like use snapshot tests for graphics. If not, you can add them for key functions.</p></li>
-<li><p>Check out hard reverse dependencies of <a href="https://cran.r-project.org/web/packages/shiny/index.html"><code>{shiny}</code></a>, and add snapshot tests using <code>{shinytest2}</code> to an app of your liking.</p></li>
+<li><p>See if <code>{ggplot2}</code> <a href="https://exts.ggplot2.tidyverse.org/gallery/" target="_blank">extensions</a> you like use snapshot tests for graphics. If not, you can add them for key functions.</p></li>
+<li><p>Check out hard reverse dependencies of <a href="https://cran.r-project.org/web/packages/shiny/index.html" target="_blank"><code>{shiny}</code></a>, and add snapshot tests using <code>{shinytest2}</code> to an app of your liking.</p></li>
 <li><p>Add more <code>{vdiffr}</code> snapshot tests to plotting functions in <a href="https://github.com/easystats/see"><code>{see}</code></a>, a library for statistical visualizations (I can chaperone your PRs here).</p></li>
-<li><p><code>{shinytest2}</code> is the successor to <code>{shinytest}</code> package. Check out which packages currently use it for <a href="https://cran.r-project.org/web/packages/shinytest/index.html">testing</a> Shiny apps, and see if you can use <code>{shinytest2}</code> instead (see how-to <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html">here</a>).</p></li>
+<li><p><code>{shinytest2}</code> is the successor to <code>{shinytest}</code> package. Check out which packages currently use it for <a href="https://cran.r-project.org/web/packages/shinytest/index.html" target="_blank">testing</a> Shiny apps, and see if you can use <code>{shinytest2}</code> instead (see how-to <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html" target="_blank">here</a>).</p></li>
 </ul>
 </div>
 </div>
@@ -1868,15 +1869,15 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </section>
 <section id="additional-resources" class="slide level2">
 <h2>Additional resources</h2>
-<p>For a comprehensive collection of packages for unit testing in R, see <a href="https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing">this</a> page.</p>
+<p>For a comprehensive collection of packages for unit testing in R, see <a href="https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing" target="_blank">this</a> page.</p>
 </section></section>
 <section id="find-me-at" class="title-slide slide level1 center">
 <h1>Find me at…</h1>
-<p><i class="fa-brands fa-twitter" aria-hidden="true"></i> <a href="http://twitter.com/patilindrajeets">Twitter</a></p>
-<p><i class="fa-brands fa-linkedin" aria-hidden="true"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-397865174/">LikedIn</a></p>
-<p><i class="fa-brands fa-github" aria-hidden="true"></i> <a href="http://github.com/IndrajeetPatil">GitHub</a></p>
-<p><i class="fa-solid fa-link" aria-hidden="true"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/">Website</a></p>
-<p><i class="fa-solid fa-envelope" aria-hidden="true"></i> <a href="mailto:patilindrajeet.science@gmail.com">E-mail</a></p>
+<p><i class="fa-brands fa-twitter" aria-hidden="true"></i> <a href="http://twitter.com/patilindrajeets" target="_blank">Twitter</a></p>
+<p><i class="fa-brands fa-linkedin" aria-hidden="true"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-397865174/" target="_blank">LikedIn</a></p>
+<p><i class="fa-brands fa-github" aria-hidden="true"></i> <a href="http://github.com/IndrajeetPatil" target="_blank">GitHub</a></p>
+<p><i class="fa-solid fa-link" aria-hidden="true"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/" target="_blank">Website</a></p>
+<p><i class="fa-solid fa-envelope" aria-hidden="true"></i> <a href="mailto:patilindrajeet.science@gmail.com" target="_blank">E-mail</a></p>
 </section>
 
 <section>
@@ -1899,7 +1900,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Berlin
- date     2022-11-15
+ date     2022-11-20
  pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
@@ -1930,7 +1931,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
    gtable        0.3.1      2022-09-01 [1] CRAN (R 4.2.1)
    htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.2.1)
    jsonlite      1.8.3      2022-10-21 [1] CRAN (R 4.2.1)
-   knitr         1.40       2022-08-24 [1] CRAN (R 4.2.1)
+   knitr         1.41       2022-11-18 [1] CRAN (R 4.2.2)
    labeling      0.4.2      2020-10-20 [1] CRAN (R 4.2.0)
    lattice       0.20-45    2021-09-22 [1] CRAN (R 4.2.2)
    lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.2.1)
@@ -1942,7 +1943,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
    nlme          3.1-160    2022-10-10 [1] CRAN (R 4.2.2)
    pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)
    pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.2.0)
-   pkgload       1.3.1      2022-10-28 [1] CRAN (R 4.2.1)
+   pkgload       1.3.2      2022-11-16 [1] CRAN (R 4.2.2)
    png           0.1-7      2013-12-03 [1] CRAN (R 4.2.0)
    R6            2.5.1.9000 2022-10-27 [1] local
    rematch2      2.1.2      2020-05-01 [1] CRAN (R 4.2.0)
@@ -1962,11 +1963,11 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  P tools         4.2.2      2022-10-31 [1] local
    utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)
  P utils       * 4.2.2      2022-10-31 [1] local
-   vctrs         0.5.0      2022-10-22 [1] CRAN (R 4.2.1)
+   vctrs         0.5.1      2022-11-16 [1] CRAN (R 4.2.2)
    vdiffr      * 1.0.4      2022-03-15 [1] CRAN (R 4.2.0)
    waldo         0.4.0      2022-03-16 [1] CRAN (R 4.2.0)
    withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
-   xfun          0.34       2022-10-18 [1] CRAN (R 4.2.1)
+   xfun          0.35       2022-11-16 [1] CRAN (R 4.2.2)
    yaml          2.3.6      2022-10-18 [1] CRAN (R 4.2.1)
 
  [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
