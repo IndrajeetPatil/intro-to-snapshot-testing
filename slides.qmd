@@ -1742,6 +1742,10 @@ Although current presentation is focused only on snapshot testing, here is readi
 
 For a comprehensive collection of packages for unit testing in R, see [this](https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing){target="_blank"} page.
 
+# For more
+
+If you are interested in reading more of my slide decks on related topics, visit [this](https://sites.google.com/site/indrajeetspatilmorality/presentations){target="_blank"} page.
+
 # Find me at...
 
 {{< fa brands twitter >}} [Twitter](http://twitter.com/patilindrajeets){target="_blank"}
