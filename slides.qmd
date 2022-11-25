@@ -12,25 +12,22 @@ execute:
   echo: true
 ---
 
-## Introduction to Snapshot Testing in R {style="margin-top: 3em;"}
+## Introduction to Snapshot Testing in R
 
-::: {style="margin-top: 1em; margin-bottom: 1em; font-size: 1em"}
+::: {style="margin-top: 0.5em; margin-bottom: 0.5em; font-size: 1em"}
 
 Indrajeet Patil
 
-<!-- Software Engineer -->
+:::
+
+
+::: {style="margin-top: 1em; font-size:0.75em"}
+
+![](media/logos_combined.jpeg){.absolute width="800" height="350"}
 
 :::
 
 
-::: {style="margin-top: 2em; font-size:0.5em"}
-
-- [Link to slides](https://indrajeetpatil.github.io/intro-to-snapshot-testing/){target="_blank"}
-- [Github repo](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/){target="_blank"}
-
-:::
-
-![](media/logos_combined.jpeg){.absolute width="500" height="200" right="100" top="100"}
 
 ## Unit testing {.smaller}
 
