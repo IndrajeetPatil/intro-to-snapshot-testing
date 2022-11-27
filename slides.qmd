@@ -12,9 +12,9 @@ execute:
   echo: true
 ---
 
-<!-- Don't render this file manually. Run `renderer.R` script instead. -->
-
 ## Introduction to Snapshot Testing in R
+
+<!-- Don't render this file manually. Run `renderer.R` script instead. -->
 
 ::: {style="margin-top: 0.5em; margin-bottom: 0.5em; font-size: 1em"}
 
