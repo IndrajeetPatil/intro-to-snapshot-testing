@@ -12,6 +12,8 @@ execute:
   echo: true
 ---
 
+<!-- Don't render this file manually. Run `renderer.R` script instead. -->
+
 ## Introduction to Snapshot Testing in R
 
 ::: {style="margin-top: 0.5em; margin-bottom: 0.5em; font-size: 1em"}
@@ -26,8 +28,6 @@ Indrajeet Patil
 ![](media/logos_combined.jpeg){.absolute width="800" height="350"}
 
 :::
-
-
 
 ## Unit testing {.smaller}
 

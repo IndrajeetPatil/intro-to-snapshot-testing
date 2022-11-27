@@ -1,0 +1,28 @@
+Package: intro-to-snapshot-testing
+Title: Introduction to Snapshot Testing in R
+Version: 1.0
+Authors@R: 
+    person(given = "Indrajeet",
+           family = "Patil",
+           role = c("cre", "aut", "cph"),
+           email = "patilindrajeet.science@gmail.com",
+           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets"))
+Description: This presentation contains introduction to snapshot (aka golden) testing 
+    (in R). This is not a package, and the DESCRIPTION file is included to make it 
+    easier to install required packages in GitHub action workflows.
+License: CC0 1.0 Universal
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.2
+URL: https://github.com/IndrajeetPatil/intro-to-snapshot-testing/,
+    https://indrajeetpatil.github.io/intro-to-snapshot-testing/
+BugReports: https://github.com/IndrajeetPatil/intro-to-snapshot-testing/issues
+Depends:
+    ggplot2,
+    knitr,
+    fs,
+    quarto,
+    reticulate,
+    shinytest2,
+    testthat,
+    vdiffr
