@@ -746,9 +746,9 @@ create_scatter <- function() {
 
 <!-- Currently, doesn't work properly with on GHA workflow -->
 <!-- The exact error is the following: -->
-<!-- Error in `testthat::test_path("..", "vdiffr.Rout.fail")`: Can't find `tests/testthat/` in current directory -->
+<!-- Error: Can't find `tests/testthat/` in current directory -->
 
-```{.r, error=TRUE}
+```{.r}
 test_that("`create_scatter()` plots as expected", {
   local_edition(3)
   expect_doppelganger(
