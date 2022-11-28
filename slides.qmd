@@ -5,6 +5,7 @@ format:
     theme: simple
     slide-number: true
     preview-links: auto
+    code-link: true
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/intro-to-snapshot-testing)."
 #author: "Indrajeet Patil"
 #affiliation: 
