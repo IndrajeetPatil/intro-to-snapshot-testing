@@ -651,8 +651,6 @@ Note that we want to test that the graphical output *looks* as expected, and thi
 
 We can use `expect_doppelganger()` from `{vdiffr}` to test this!
 
-</br>
-
 . . .
 
 The *first time* you run the test, it'd generate an `.svg` file with expected output.
@@ -664,7 +662,9 @@ snapper <- local_snapshotter()
 snapper$start_file("slides.qmd", "test")
 ```
 
-```{r}
+<!-- Works as expected locally, but not in GitHub actions workflow -->
+
+```{.r}
 test_that("`create_scatter()` plots as expected", {
   local_edition(3)
   expect_doppelganger(
@@ -672,6 +672,13 @@ test_that("`create_scatter()` plots as expected", {
     fig = create_scatter(),
   )
 })
+
+── Failure ('<text>:3'): `create_scatter()` plots as expected ──────────────────
+Snapshot of `testcase` to 'slides.qmd/create-scatter.svg' has changed
+Run `testthat::snapshot_review('slides.qmd/')` to review changes
+Backtrace:
+ 1. vdiffr::expect_doppelganger(...)
+ 3. testthat::expect_snapshot_file(...)
 ```
 
 ```{r, include = FALSE}
