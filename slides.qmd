@@ -5,6 +5,7 @@ format:
     theme: simple
     slide-number: true
     preview-links: auto
+    code-link: true
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/intro-to-snapshot-testing)."
 #author: "Indrajeet Patil"
 #affiliation: 
@@ -13,6 +14,8 @@ execute:
 ---
 
 ## Introduction to Snapshot Testing in R
+
+<!-- Don't render this file manually. Run `renderer.R` script instead. -->
 
 ::: {style="margin-top: 0.5em; margin-bottom: 0.5em; font-size: 1em"}
 
@@ -26,8 +29,6 @@ Indrajeet Patil
 ![](media/logos_combined.jpeg){.absolute width="800" height="350"}
 
 :::
-
-
 
 ## Unit testing {.smaller}
 
@@ -651,8 +652,6 @@ Note that we want to test that the graphical output *looks* as expected, and thi
 
 We can use `expect_doppelganger()` from `{vdiffr}` to test this!
 
-</br>
-
 . . .
 
 The *first time* you run the test, it'd generate an `.svg` file with expected output.
@@ -745,7 +744,11 @@ create_scatter <- function() {
 
 **Test failure**
 
-```{r, error=TRUE}
+<!-- Currently, doesn't work properly with on GHA workflow -->
+<!-- The exact error is the following: -->
+<!-- Error: Can't find `tests/testthat/` in current directory -->
+
+```{.r}
 test_that("`create_scatter()` plots as expected", {
   local_edition(3)
   expect_doppelganger(
@@ -753,6 +756,15 @@ test_that("`create_scatter()` plots as expected", {
     fig = create_scatter(),
   )
 })
+
+── Failure ('<text>:3'): `create_scatter()` plots as expected ──────────────────
+Snapshot of `testcase` to 'slides.qmd/create-scatter.svg' has changed
+Run `testthat::snapshot_review('slides.qmd/')` to review changes
+Backtrace:
+ 1. vdiffr::expect_doppelganger(...)
+ 3. testthat::expect_snapshot_file(...)
+Error in `reporter$stop_if_needed()`:
+! Test failed
 ```
 
 :::
