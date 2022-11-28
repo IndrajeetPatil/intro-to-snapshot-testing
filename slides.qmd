@@ -704,12 +704,6 @@ test_that("`create_scatter()` plots as expected", {
 })
 ```
 
-```{r, include = FALSE}
-# Reset snapshot test
-snapper$end_file()
-snapper$start_file("slides.qmd", "test")
-```
-
 ## What test failure looks like {.smaller}
 
 When function changes, snapshot doesn't match the reference, and the test fails:
@@ -756,6 +750,12 @@ test_that("`create_scatter()` plots as expected", {
 :::
 
 ::::
+
+```{r, include = FALSE}
+# Reset snapshot test
+snapper$end_file()
+snapper$start_file("slides.qmd", "test")
+```
 
 ## Fixing tests {.smaller}
 
