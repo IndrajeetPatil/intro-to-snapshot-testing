@@ -744,7 +744,11 @@ create_scatter <- function() {
 
 **Test failure**
 
-```{r, error=TRUE}
+<!-- Currently, doesn't work properly with on GHA workflow -->
+<!-- The exact error is the following: -->
+<!-- Error in `testthat::test_path("..", "vdiffr.Rout.fail")`: Can't find `tests/testthat/` in current directory -->
+
+```{.r, error=TRUE}
 test_that("`create_scatter()` plots as expected", {
   local_edition(3)
   expect_doppelganger(
@@ -752,6 +756,15 @@ test_that("`create_scatter()` plots as expected", {
     fig = create_scatter(),
   )
 })
+
+── Failure ('<text>:3'): `create_scatter()` plots as expected ──────────────────
+Snapshot of `testcase` to 'slides.qmd/create-scatter.svg' has changed
+Run `testthat::snapshot_review('slides.qmd/')` to review changes
+Backtrace:
+ 1. vdiffr::expect_doppelganger(...)
+ 3. testthat::expect_snapshot_file(...)
+Error in `reporter$stop_if_needed()`:
+! Test failed
 ```
 
 :::
