@@ -56,17 +56,11 @@ The goal of a unit test is to capture the *expected* output of a function using 
 
 Testing infrastructure for R package has the following hierarchy:
 
-</br>
-
-{{< fa regular file-code size=2xl >}} **Test file** : Tests for code situated in `R/foo.R` will typically be in the file `tests/testthat/test-foo.R`.
-
-</br>
-
-{{< fa solid flask size=2xl >}} **Tests** : A single file can contain multiple tests.
-
-</br>
-
-{{< fa solid equals size=2xl >}} **Expectations** : A single test can have multiple expectations that formalize what you expect code to do.
+| Component                                                | Role                                                                                            |
+| :------------------------------------------------------- | :---------------------------------------------------------------------------------------------- |
+| <br> {{< fa regular file-code size=2xl >}} **Test file** | Tests for code situated in `R/foo.R` will typically be in the file `tests/testthat/test-foo.R`. |
+| {{< fa solid flask size=2xl >}} **Tests**           | A single file can contain multiple tests. <br>                                                  |
+| <br> {{< fa solid equals size=2xl >}} **Expectations**   | A single test can have multiple expectations that formalize what you expect code to do.         |
 
 :::
 
@@ -115,20 +109,20 @@ test_that("addition works", {
 
 A **unit test** records the code to describe expected output.
 
-</br>
+<br>
 
 <!-- Need to install the Quarto extension for fontawesome to work:
 https://github.com/quarto-ext/fontawesome  -->
 
 (actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-code size=2xl >}} (expected)
 
-</br>
+<br>
 
 . . .
 
 A **snapshot test** records expected output in a separate, human-readable file.
 
-</br>
+<br>
 
 (actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-lines size=2xl >}} (expected)
 
@@ -157,7 +151,7 @@ If not, have a look at [this](https://r-pkgs.org/testing-basics.html){target="_b
 
 ## 
 
-</br>
+<br>
 
 :::{.callout-important}
 
@@ -225,7 +219,7 @@ cat(print_movies(
 
 . . .
 
-</br>
+<br>
 
 Note that we want to test that the printed output *looks* as expected. 
 
@@ -358,7 +352,7 @@ snapper$start_file("slides.qmd", "test")
 
 . . .
 
-</br>
+<br>
 
 :::{.callout-note}
 
@@ -402,7 +396,7 @@ print_movies <- function(keys, values) {
 }
 ```
 
-</br>
+<br>
 
 Failure message provides expected (`-`) vs observed (`+`) diff.
 
@@ -456,7 +450,7 @@ Message accompanying failed tests make it explicit how to fix them.
 
 . . . 
 
-</br>
+<br>
 
 :::{.callout-tip}
 
@@ -961,7 +955,7 @@ There are two possibilities, and we will discuss them both separately.
 
 . . . 
 
-</br>
+<br>
 
 :::: {.columns}
 
@@ -997,7 +991,7 @@ There are two possibilities, and we will discuss them both separately.
 
 # Shiny app in subdirectory 
 
-</br>
+<br>
 
 ```
 ├── DESCRIPTION
@@ -1186,7 +1180,7 @@ knitr::include_graphics("media/shinytest_failure.mov")
 
 # Function returns Shiny app
 
-</br>
+<br>
 
 ```
 ├── DESCRIPTION
@@ -1316,7 +1310,7 @@ returns app.
 
 The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps are included in R packages.
 
-</br>
+<br>
 
 :::: {.columns}
 

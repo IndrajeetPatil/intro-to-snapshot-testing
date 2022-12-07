@@ -419,12 +419,37 @@
 </div>
 <div class="callout-content">
 <p>Testing infrastructure for R package has the following hierarchy:</p>
-<p></p>
-<p><i class="fa-regular fa-file-code fa-2xl" aria-hidden="true"></i> <strong>Test file</strong> : Tests for code situated in <code>R/foo.R</code> will typically be in the file <code>tests/testthat/test-foo.R</code>.</p>
-<p></p>
-<p><i class="fa-solid fa-flask fa-2xl" aria-hidden="true"></i> <strong>Tests</strong> : A single file can contain multiple tests.</p>
-<p></p>
-<p><i class="fa-solid fa-equals fa-2xl" aria-hidden="true"></i> <strong>Expectations</strong> : A single test can have multiple expectations that formalize what you expect code to do.</p>
+<table>
+<colgroup>
+<col style="width: 37%">
+<col style="width: 62%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Role</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">
+<br><i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <strong>Test file</strong>
+</td>
+<td style="text-align: left;">Tests for code situated in <code>R/foo.R</code> will typically be in the file <code>tests/testthat/test-foo.R</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<i class="fa-solid fa-flask fa-2xl" aria-label="flask"></i> <strong>Tests</strong>
+</td>
+<td style="text-align: left;">A single file can contain multiple tests. <br>
+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<br><i class="fa-solid fa-equals fa-2xl" aria-label="equals"></i> <strong>Expectations</strong>
+</td>
+<td style="text-align: left;">A single test can have multiple expectations that formalize what you expect code to do.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -441,7 +466,7 @@
 <ul>
 <li><p>Every test is a call to <code><a href="https://testthat.r-lib.org/reference/test_that.html">testthat::test_that()</a></code> function.</p></li>
 <li><p>Every expectation is represented by <code>testthat::expect_*()</code> function.</p></li>
-<li><p>You can generate a test file using <code>usethis::use_test()</code> function.</p></li>
+<li><p>You can generate a test file using <code><a href="https://usethis.r-lib.org/reference/use_r.html">usethis::use_test()</a></code> function.</p></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># File: tests/testthat/test-op.R</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
@@ -466,16 +491,16 @@
 </section><section id="what-is-different-about-snapshot-testing" class="slide level2"><h2>What is different about snapshot testing?</h2>
 <div class="fragment">
 <p>A <strong>unit test</strong> records the code to describe expected output.</p>
-<p></p>
+<p><br></p>
 <!-- Need to install the Quarto extension for fontawesome to work:
 https://github.com/quarto-ext/fontawesome  -->
-<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-file-code fa-2xl" aria-hidden="true"></i> (expected)</p>
-<p></p>
+<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-label="arrows-left-right"></i> <i class="fa-solid fa-file-code fa-2xl" aria-label="file-code"></i> (expected)</p>
+<p><br></p>
 </div>
 <div class="fragment">
 <p>A <strong>snapshot test</strong> records expected output in a separate, human-readable file.</p>
-<p></p>
-<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-hidden="true"></i> <i class="fa-solid fa-file-lines fa-2xl" aria-hidden="true"></i> (expected)</p>
+<p><br></p>
+<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-label="arrows-left-right"></i> <i class="fa-solid fa-file-lines fa-2xl" aria-label="file-lines"></i> (expected)</p>
 </div>
 </section><section id="why-do-we-need-snapshot-testing" class="slide level2"><h2>Why do we need snapshot testing?</h2>
 <p>If you develop R packages and have struggled to</p>
@@ -495,7 +520,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <p>Familiarity with writing unit tests using <a href="https://testthat.r-lib.org/index.html" target="_blank"><code>{testthat}</code></a>.</p>
 <p>If not, have a look at <a href="https://r-pkgs.org/testing-basics.html" target="_blank">this</a> chapter from <em>R Packages</em> book.</p>
 </section><section id="section" class="slide level2"><h2></h2>
-<p></p>
+<p><br></p>
 <div class="callout callout-important callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -546,7 +571,7 @@ https://github.com/quarto-ext/fontawesome  -->
 </div>
 </div>
 <div class="fragment">
-<p></p>
+<p><br></p>
 <p>Note that we want to test that the printed output <em>looks</em> as expected.</p>
 <p>Therefore, we need to check for all the little bells and whistles in the printed output.</p>
 </div>
@@ -566,7 +591,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb7-8"><a href="#cb7-8"></a>  )</span>
 <span id="cb7-9"><a href="#cb7-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -666,11 +691,11 @@ Output
 <span id="cb13-6"><a href="#cb13-6"></a>  )))</span>
 <span id="cb13-7"><a href="#cb13-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
-<p></p>
+<p><br></p>
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -703,7 +728,7 @@ Output
 <div class="cell">
 
 </div>
-<p></p>
+<p><br></p>
 <p>Failure message provides expected (<code>-</code>) vs observed (<code>+</code>) diff.</p>
 </div><div class="column" style="width:65%;">
 <p><strong>Test failure</strong></p>
@@ -749,7 +774,7 @@ old[2:6] vs new[2:6]
 <div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('foo.md')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p></p>
+<p><br></p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -979,7 +1004,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-1" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -1118,7 +1143,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb40-12"><a href="#cb40-12"></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb40-13"><a href="#cb40-13"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-2" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -1160,7 +1185,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <p>Exactly how tests for Shiny apps in R package are written depends on how the app is stored. There are two possibilities, and we will discuss them both separately.</p>
 </div>
 <div class="fragment">
-<p></p>
+<p><br></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Stored in <code>/inst</code> folder</strong></p>
@@ -1179,7 +1204,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <!-- Don't add an indefinite article; it breaks the phrase into two lines -->
 </div>
 </section></section><section><section id="shiny-app-in-subdirectory" class="title-slide slide level1 center"><h1>Shiny app in subdirectory</h1>
-<p></p>
+<p><br></p>
 <pre><code>├── DESCRIPTION
 ├── R
 ├── inst
@@ -1322,7 +1347,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </div>
 </div>
 </section></section><section><section id="function-returns-shiny-app" class="title-slide slide level1 center"><h1>Function returns Shiny app</h1>
-<p></p>
+<p><br></p>
 <pre><code>├── DESCRIPTION
 ├── R
 │   └── app-function.R</code></pre>
@@ -1357,7 +1382,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </div>
 </div>
 </section><section id="generating-test-and-snapshots" class="slide level2 smaller"><h2>Generating test and snapshots</h2>
-<p>We call <code>record_test()</code> directly on a Shiny app object, copy-paste commands to the test script, and run <code>devtools::test_active_file()</code> to generate snapshots.</p>
+<p>We call <code>record_test()</code> directly on a Shiny app object, copy-paste commands to the test script, and run <code><a href="https://devtools.r-lib.org/reference/test.html">devtools::test_active_file()</a></code> to generate snapshots.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><video data-src="media/shiny_app_function_return.mov" style="width:60.0%" controls=""><a href="media/shiny_app_function_return.mov">Video</a></video></p>
@@ -1402,7 +1427,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </div>
 </section><section id="final-directory-structure" class="slide level2 smaller"><h2>Final directory structure</h2>
 <p>The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps are included in R packages.</p>
-<p></p>
+<p><br></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Stored in <code>/inst</code> folder</strong></p>
@@ -1728,11 +1753,11 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </section></section><section id="for-more" class="title-slide slide level1 center"><h1>For more</h1>
 <p>If you are interested in reading more of my slide decks on related topics, visit <a href="https://sites.google.com/site/indrajeetspatilmorality/presentations" target="_blank">this</a> page.</p>
 </section><section id="find-me-at" class="title-slide slide level1 center"><h1>Find me at…</h1>
-<p><i class="fa-brands fa-twitter" aria-hidden="true"></i> <a href="http://twitter.com/patilindrajeets" target="_blank">Twitter</a></p>
-<p><i class="fa-brands fa-linkedin" aria-hidden="true"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-397865174/" target="_blank">LikedIn</a></p>
-<p><i class="fa-brands fa-github" aria-hidden="true"></i> <a href="http://github.com/IndrajeetPatil" target="_blank">GitHub</a></p>
-<p><i class="fa-solid fa-link" aria-hidden="true"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/" target="_blank">Website</a></p>
-<p><i class="fa-solid fa-envelope" aria-hidden="true"></i> <a href="mailto:patilindrajeet.science@gmail.com" target="_blank">E-mail</a></p>
+<p><i class="fa-brands fa-twitter" aria-label="twitter"></i> <a href="http://twitter.com/patilindrajeets" target="_blank">Twitter</a></p>
+<p><i class="fa-brands fa-linkedin" aria-label="linkedin"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-397865174/" target="_blank">LikedIn</a></p>
+<p><i class="fa-brands fa-github" aria-label="github"></i> <a href="http://github.com/IndrajeetPatil" target="_blank">GitHub</a></p>
+<p><i class="fa-solid fa-link" aria-label="link"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/" target="_blank">Website</a></p>
+<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> <a href="mailto:patilindrajeet.science@gmail.com" target="_blank">E-mail</a></p>
 </section><section><section id="thank-you" class="title-slide slide level1 center"><h1>Thank You</h1>
 <p>And Happy Snapshotting! 😊</p>
 </section><section id="session-information" class="slide level2 smaller"><h2>Session information</h2>
@@ -1742,80 +1767,84 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
  version  R version 4.2.2 (2022-10-31)
- os       Ubuntu 22.04.1 LTS
- system   x86_64, linux-gnu
+ os       macOS Ventura 13.0.1
+ system   aarch64, darwin20
  ui       X11
  language (EN)
- collate  C.UTF-8
- ctype    C.UTF-8
- tz       UTC
- date     2022-12-04
- pandoc   2.19.2 @ /usr/bin/ (via rmarkdown)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       Europe/Berlin
+ date     2022-12-07
+ pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
- package     * version date (UTC) lib source
- base        * 4.2.2   2022-10-31 [3] local
- brio          1.1.3   2021-11-30 [1] RSPM
- cli           3.4.1   2022-09-23 [1] RSPM
- colorspace    2.0-3   2022-02-21 [1] RSPM
- compiler      4.2.2   2022-10-31 [3] local
- crayon        1.5.2   2022-09-29 [1] RSPM
- datasets    * 4.2.2   2022-10-31 [3] local
- desc          1.4.2   2022-09-08 [1] RSPM
- diffobj       0.3.5   2021-10-05 [1] RSPM
- digest        0.6.30  2022-10-18 [1] RSPM
- evaluate      0.18    2022-11-07 [1] RSPM
- fansi         1.0.3   2022-03-24 [1] RSPM
- farver        2.1.1   2022-07-06 [1] RSPM
- fastmap       1.1.0   2021-01-25 [1] RSPM
- ggplot2     * 3.4.0   2022-11-04 [1] RSPM
- glue          1.6.2   2022-02-24 [1] RSPM
- graphics    * 4.2.2   2022-10-31 [3] local
- grDevices   * 4.2.2   2022-10-31 [3] local
- grid          4.2.2   2022-10-31 [3] local
- gtable        0.3.1   2022-09-01 [1] RSPM
- htmltools     0.5.3   2022-07-18 [1] RSPM
- jsonlite      1.8.3   2022-10-21 [1] RSPM
- knitr         1.41    2022-11-18 [1] RSPM
- labeling      0.4.2   2020-10-20 [1] RSPM
- lattice       0.20-45 2021-09-22 [3] CRAN (R 4.2.2)
- lifecycle     1.0.3   2022-10-07 [1] RSPM
- magrittr      2.0.3   2022-03-30 [1] RSPM
- Matrix        1.5-1   2022-09-13 [3] CRAN (R 4.2.2)
- methods     * 4.2.2   2022-10-31 [3] local
- mgcv          1.8-41  2022-10-21 [3] CRAN (R 4.2.2)
- munsell       0.5.0   2018-06-12 [1] RSPM
- nlme          3.1-160 2022-10-10 [3] CRAN (R 4.2.2)
- pillar        1.8.1   2022-08-19 [1] RSPM
- pkgconfig     2.0.3   2019-09-22 [1] RSPM
- pkgload       1.3.2   2022-11-16 [1] RSPM
- png           0.1-8   2022-11-29 [1] RSPM
- R6            2.5.1   2021-08-19 [1] RSPM
- rematch2      2.1.2   2020-05-01 [1] RSPM
- rlang         1.0.6   2022-09-24 [1] RSPM
- rmarkdown     2.18    2022-11-09 [1] RSPM
- rprojroot     2.0.3   2022-04-02 [1] RSPM
- scales        1.2.1   2022-08-20 [1] RSPM
- sessioninfo   1.2.2   2021-12-06 [1] any (@1.2.2)
- splines       4.2.2   2022-10-31 [3] local
- stats       * 4.2.2   2022-10-31 [3] local
- stringi       1.7.8   2022-07-11 [1] RSPM
- stringr       1.5.0   2022-12-02 [1] CRAN (R 4.2.2)
- testthat    * 3.1.5   2022-10-08 [1] RSPM
- tibble        3.1.8   2022-07-22 [1] RSPM
- tools         4.2.2   2022-10-31 [3] local
- utf8          1.2.2   2021-07-24 [1] RSPM
- utils       * 4.2.2   2022-10-31 [3] local
- vctrs         0.5.1   2022-11-16 [1] RSPM
- vdiffr      * 1.0.4   2022-03-15 [1] RSPM
- waldo         0.4.0   2022-03-16 [1] RSPM
- withr         2.5.0   2022-03-03 [1] RSPM
- xfun          0.35    2022-11-16 [1] RSPM
- yaml          2.3.6   2022-10-18 [1] RSPM
+ ! package     * version     date (UTC) lib source
+   base        * 4.2.2       2022-10-31 [?] local
+   brio          1.1.3       2021-11-30 [1] CRAN (R 4.2.0)
+   cli           3.4.1       2022-09-23 [1] CRAN (R 4.2.0)
+   colorspace    2.0-3       2022-02-21 [1] CRAN (R 4.2.0)
+ P compiler      4.2.2       2022-10-31 [1] local
+   crayon        1.5.2       2022-09-29 [1] CRAN (R 4.2.1)
+ P datasets    * 4.2.2       2022-10-31 [1] local
+   desc          1.4.2       2022-09-08 [1] CRAN (R 4.2.1)
+   diffobj       0.3.5       2021-10-05 [1] CRAN (R 4.2.0)
+   digest        0.6.30      2022-10-18 [1] CRAN (R 4.2.1)
+   dplyr         1.0.99.9000 2022-11-30 [1] Github (tidyverse/dplyr@0d25b6b)
+   evaluate      0.18        2022-11-07 [1] CRAN (R 4.2.2)
+   fansi         1.0.3       2022-03-24 [1] CRAN (R 4.2.0)
+   farver        2.1.1       2022-07-06 [1] CRAN (R 4.2.1)
+   fastmap       1.1.0       2021-01-25 [1] CRAN (R 4.2.0)
+   generics      0.1.3       2022-07-05 [1] CRAN (R 4.2.1)
+   ggplot2     * 3.4.0       2022-11-04 [1] CRAN (R 4.2.2)
+   glue          1.6.2       2022-02-24 [1] CRAN (R 4.2.0)
+ P graphics    * 4.2.2       2022-10-31 [1] local
+ P grDevices   * 4.2.2       2022-10-31 [1] local
+ P grid          4.2.2       2022-10-31 [1] local
+   gtable        0.3.1       2022-09-01 [1] CRAN (R 4.2.1)
+   htmltools     0.5.3       2022-07-18 [1] CRAN (R 4.2.1)
+   jsonlite      1.8.4       2022-12-06 [1] CRAN (R 4.2.2)
+   knitr         1.41        2022-11-18 [1] CRAN (R 4.2.2)
+   labeling      0.4.2       2020-10-20 [1] CRAN (R 4.2.0)
+   lattice       0.20-45     2021-09-22 [1] CRAN (R 4.2.2)
+   lifecycle     1.0.3       2022-10-07 [1] CRAN (R 4.2.1)
+   magrittr      2.0.3       2022-03-30 [1] CRAN (R 4.2.0)
+   Matrix        1.5-3       2022-11-11 [1] CRAN (R 4.2.0)
+ P methods     * 4.2.2       2022-10-31 [1] local
+   mgcv          1.8-41      2022-10-21 [1] CRAN (R 4.2.2)
+   munsell       0.5.0       2018-06-12 [1] CRAN (R 4.2.0)
+   nlme          3.1-160     2022-10-10 [1] CRAN (R 4.2.2)
+   pillar        1.8.1       2022-08-19 [1] CRAN (R 4.2.1)
+   pkgconfig     2.0.3       2019-09-22 [1] CRAN (R 4.2.0)
+   pkgload       1.3.2       2022-11-16 [1] CRAN (R 4.2.2)
+   png           0.1-8       2022-11-29 [1] CRAN (R 4.2.2)
+   R6            2.5.1.9000  2022-10-27 [1] local
+   rematch2      2.1.2       2020-05-01 [1] CRAN (R 4.2.0)
+   rlang         1.0.6       2022-09-24 [1] CRAN (R 4.2.1)
+   rmarkdown     2.18        2022-11-09 [1] CRAN (R 4.2.2)
+   rprojroot     2.0.3       2022-04-02 [1] CRAN (R 4.2.0)
+   rstudioapi    0.14        2022-08-22 [1] CRAN (R 4.2.1)
+   scales        1.2.1       2022-08-20 [1] CRAN (R 4.2.1)
+   sessioninfo   1.2.2       2021-12-06 [1] CRAN (R 4.2.0)
+ P splines       4.2.2       2022-10-31 [1] local
+ P stats       * 4.2.2       2022-10-31 [1] local
+   stringi       1.7.8       2022-07-11 [1] CRAN (R 4.2.1)
+   stringr       1.5.0       2022-12-02 [1] CRAN (R 4.2.2)
+   testthat    * 3.1.5       2022-10-08 [1] CRAN (R 4.2.1)
+   tibble        3.1.8.9002  2022-10-16 [1] local
+   tidyselect    1.2.0       2022-10-10 [1] CRAN (R 4.2.1)
+ P tools         4.2.2       2022-10-31 [1] local
+   utf8          1.2.2       2021-07-24 [1] CRAN (R 4.2.0)
+ P utils       * 4.2.2       2022-10-31 [1] local
+   vctrs         0.5.1       2022-11-16 [1] CRAN (R 4.2.2)
+   vdiffr      * 1.0.4       2022-03-15 [1] CRAN (R 4.2.0)
+   waldo         0.4.0       2022-03-16 [1] CRAN (R 4.2.0)
+   withr         2.5.0       2022-03-03 [1] CRAN (R 4.2.0)
+   xfun          0.35        2022-11-16 [1] CRAN (R 4.2.2)
+   yaml          2.3.6       2022-10-18 [1] CRAN (R 4.2.1)
 
- [1] /home/runner/work/_temp/Library
- [2] /opt/R/4.2.2/lib/R/site-library
- [3] /opt/R/4.2.2/lib/R/library
+ [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
+
+ P ── Loaded and on-disk path mismatch.
 
 ──────────────────────────────────────────────────────────────────────────────</code></pre>
 </div>
