@@ -32,17 +32,46 @@ Indrajeet Patil
 
 ## Unit testing {.smaller}
 
-The goal of a unit test is to capture the *expected* output of a function using *code* and making sure that *actual* output after any changes to the function matches the expected one.
+The goal of a unit test is to capture the *expected* output of a function using *code* and making sure that *actual* output after any changes matches the expected output.
 
-::: incremental
+[`{testthat}`](https://testthat.r-lib.org/) is a popular framework for writing unit tests in R. 
 
-- This insures against unintentionally changing function behaviour, or re-introducing already fixed bugs.
+:::: {.columns}
 
-- It also makes sure that we will stay informed of any upstream dependency changes that might change the behaviour of our function.
+::: {.column width='60%'}
 
-- Tests also act as the most basic form of developer-focused documentation.
+:::{.callout-important}
+
+## Benefits of unit testing
+
+- insures against unintentionally changing function behaviour
+- prevents re-introducing already fixed bugs
+- acts as the most basic form of developer-focused documentation
+- catches breaking changes coming from upstream dependencies
+- etc.
 
 :::
+
+:::
+
+::: {.column width='40%'}
+
+:::{.callout-tip}
+
+## Test output
+
+Test pass only when actual function behaviour matches expected.
+
+| actual | expected | tests |
+| ------- | ------- | ----- |
+| {{< fa regular file-lines size=2xl >}} | {{< fa regular file-lines size=2xl >}} | {{< fa regular circle-check size=2xl >}} |
+| {{< fa regular file size=2xl >}} | {{< fa regular file-lines size=2xl >}} | {{< fa regular circle-xmark size=2xl >}} |
+
+:::
+
+:::
+
+::::
 
 ## Unit testing with `{testthat}`: A recap {.smaller}
 
@@ -126,7 +155,7 @@ A **snapshot test** records expected output in a separate, human-readable file.
 
 (actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-lines size=2xl >}} (expected)
 
-## Why do we need snapshot testing?
+## Why do you need snapshot testing?
 
 If you develop R packages and have struggled to 
 
@@ -165,7 +194,7 @@ local_edition(3)
 
 **You don't need to do this in your package tests!**
 
-Just include this in the `DESCRIPTION` file to use `{testthat}` 3rd edition:
+It's sufficient to update the `DESCRIPTION` file to use `{testthat}` 3rd edition:
 
 ```r
 Config/testthat/edition: 3
@@ -179,11 +208,11 @@ For more, see [this](https://testthat.r-lib.org/articles/third-edition.html){tar
 
 Snapshot tests can be used to test that text output *prints* as expected.
 
-To test functions that pretty-print R objects to the console, create elegant and informative warning/error messages, etc.
+Important for testing functions that pretty-print R objects to the console, create elegant and informative exceptions, etc.
 
 ## Example function {.smaller}
 
-Let's say we want to write a unit test for the following function:
+Let's say you want to write a unit test for the following function:
 
 :::: {.columns}
 
@@ -221,13 +250,13 @@ cat(print_movies(
 
 <br>
 
-Note that we want to test that the printed output *looks* as expected. 
+Note that you want to test that the printed output *looks* as expected. 
 
-Therefore, we need to check for all the little bells and whistles in the printed output.
+Therefore, you need to check for all the little bells and whistles in the printed output.
 
 ## Example test {.smaller}
 
-Even testing this simple function is a bit painful because we need to keep track of every escape character, every space, etc. 
+Even testing this simple function is a bit painful because you need to keep track of every escape character, every space, etc. 
 
 ```{r, echo=FALSE}
 library(testthat)
@@ -262,7 +291,7 @@ This is not maintainable! 😩
 
 ## Alternative: Snapshot test {.smaller}
 
-Instead, we can use `expect_snapshot()`, which, when run for the first time, generates a Markdown file with expected/reference output.
+Instead, you can use `expect_snapshot()`, which, when run for the first time, generates a Markdown file with expected/reference output.
 
 ```{r include = FALSE}
 snapper <- local_snapshotter()
@@ -291,13 +320,13 @@ snapper$start_file("slides.qmd", "test")
 
 The first time a snapshot is created, it becomes *the truth* against which future function behaviour will be compared. 
 
-Thus, it is **crucial** that we carefully check that the output is indeed as expected. 🔎 
+Thus, it is **crucial** that you carefully check that the output is indeed as expected. 🔎 
 
 :::
 
 ## Human-readable Markdown file {.smaller}
 
-Compared to our unit test code representing the expected output
+Compared to your unit test code representing the expected output
 
 ```r
 "Movie: \n  Title: Salaam Bombay!\n  Director: Mira Nair"
@@ -464,7 +493,7 @@ You can update *all* new snapshots with `snapshot_accept()`. And, of course, che
 
 ## Capturing messages and warnings {.smaller}
 
-So far we have tested text output printed to the console, but we can also use snapshots to capture messages, warnings, and errors.
+So far you have tested text output printed to the console, but you can also use snapshots to capture messages, warnings, and errors.
 
 :::: {.columns}
 
@@ -504,7 +533,7 @@ test_that("g() warns", {
 
 Snapshot records both the *condition* and the corresponding *message*.
 
-We can now rest assured that the users are getting informed the way we want! 😌
+You can now rest assured that the users are getting informed the way you want! 😌
 
 :::
 
@@ -578,7 +607,7 @@ test_that("`log()` errors", {
 
 # Testing graphical outputs
 
-To create graphical expectations, we will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/){target="_blank"}.
+To create graphical expectations, you will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/){target="_blank"}.
 
 ## How does `{vdiffr}` work? {.smaller}
 
@@ -606,7 +635,7 @@ The figure to test can be:
 
 ## Example function {.smaller}
 
-Let's say we want to write a unit test for the following function:
+Let's say you want to write a unit test for the following function:
 
 :::: {.columns}
 
@@ -640,11 +669,11 @@ create_scatter()
 
 . . .
 
-Note that we want to test that the graphical output *looks* as expected, and this expectation is difficult to capture with a unit test.
+Note that you want to test that the graphical output *looks* as expected, and this expectation is difficult to capture with a unit test.
 
 ## Graphical snapshot test {.smaller}
 
-We can use `expect_doppelganger()` from `{vdiffr}` to test this!
+You can use `expect_doppelganger()` from `{vdiffr}` to test this!
 
 . . .
 
@@ -679,15 +708,15 @@ snapper$start_file("slides.qmd", "test")
 
 The first time a snapshot is created, it becomes *the truth* against which future function behaviour will be compared. 
 
-Thus, it is **crucial** that we carefully check that the output is indeed as expected. 🔎 
+Thus, it is **crucial** that you carefully check that the output is indeed as expected. 🔎 
 
-We can open `.svg` snapshot files in a web browser for closer inspection.
+You can open `.svg` snapshot files in a web browser for closer inspection.
 
 :::
 
 ## What test success looks like {.smaller}
 
-If we run the test again, it'll succeed:
+If you run the test again, it'll succeed:
 
 ```{r}
 test_that("`create_scatter()` plots as expected", {
@@ -802,7 +831,7 @@ Whole file snapshot testing makes sure that media, data frames, text files, etc.
 
 ## Writing test {.smaller}
 
-Let's say we want to test JSON files generated by `jsonlite::write_json()`.
+Let's say you want to test JSON files generated by `jsonlite::write_json()`.
 
 :::: {.columns}
 
@@ -849,7 +878,7 @@ snapper$start_file("slides.qmd", "test")
 
 :::{.callout-note}
 
-- To snapshot a file, we need to write a helper function that provides its path.
+- To snapshot a file, you need to write a helper function that provides its path.
 
 - If a test file is called `test-foo.R`, the snapshot will be saved to `test/testthat/_snaps/foo` folder.
 
@@ -866,7 +895,7 @@ snapper$start_file("slides.qmd", "test")
 
 ## What test success looks like {.smaller}
 
-If we run the test again, it'll succeed:
+If you run the test again, it'll succeed:
 
 ```{r}
 # File: tests/testthat/test-write-json.R
@@ -942,7 +971,7 @@ Documentation for [`expect_snapshot_file()`](https://testthat.r-lib.org/referenc
 
 # Testing Shiny applications
 
-To write formal tests for Shiny applications, we will use `{testthat}` extension package: [`{shinytest2}`](https://rstudio.github.io/shinytest2/){target="_blank"}.
+To write formal tests for Shiny applications, you will use `{testthat}` extension package: [`{shinytest2}`](https://rstudio.github.io/shinytest2/){target="_blank"}.
 
 ## How does `{shinytest2}` work? {.smaller}
 
@@ -951,7 +980,7 @@ To write formal tests for Shiny applications, we will use `{testthat}` extension
 . . . 
 
 Exactly how tests for Shiny apps in R package are written depends on how the app is stored.
-There are two possibilities, and we will discuss them both separately.
+There are two possibilities, and you will discuss them both separately.
 
 . . . 
 
@@ -1109,9 +1138,9 @@ knitr::include_graphics("media/unitConverter-001_.png")
 
 ## Creating a driver script {.smaller}
 
-Note that currently our test scripts and results are in the `/inst` folder, but we'd also want to run these tests automatically using `{testthat}`.
+Note that currently your test scripts and results are in the `/inst` folder, but you'd also want to run these tests automatically using `{testthat}`.
 
-For this, we will need to write a driver script like the following:
+For this, you will need to write a driver script like the following:
 
 ```{.r}
 library(shinytest2)
@@ -1126,13 +1155,13 @@ Now the Shiny apps will be tested with the rest of the source code in the packag
 
 :::{.callout-tip}
 
-We save the driver test in the `/tests` folder (`tests/testthat/test-inst-apps.R`), alongside other tests.
+You save the driver test in the `/tests` folder (`tests/testthat/test-inst-apps.R`), alongside other tests.
 
 :::
 
 ## What test failure looks like {.smaller}
 
-Let's say, while updating the app, we make a mistake, which leads to a failed test.
+Let's say, while updating the app, you make a mistake, which leads to a failed test.
 
 **Changed code with mistake**
 
@@ -1168,7 +1197,7 @@ Diff in snapshot file `shinytest2unitConverter-001.json`
 
 ## Updating snapshots {.smaller}
 
-Fixing this test will be similar to fixing any other snapshot test we've seen thus far.
+Fixing this test will be similar to fixing any other snapshot test you've seen thus far.
 
 `{testthat2}` provides a Shiny app for comparing the old and new snapshots.
 
@@ -1190,7 +1219,7 @@ knitr::include_graphics("media/shinytest_failure.mov")
 
 ## Example app and test {.smaller}
 
-The only difference in testing workflow when Shiny app objects are created by functions is that we will write the test ourselves, instead of `{shinytest2}` auto-generating it.
+The only difference in testing workflow when Shiny app objects are created by functions is that you will write the test ourselves, instead of `{shinytest2}` auto-generating it.
 
 :::: {.columns}
 
@@ -1239,7 +1268,7 @@ test_that("unitConverter app works", {
 
 ## Generating test and snapshots {.smaller}
 
-We call `record_test()` directly on a Shiny app object, copy-paste commands to the test script, and run `devtools::test_active_file()` to generate snapshots.
+you call `record_test()` directly on a Shiny app object, copy-paste commands to the test script, and run `devtools::test_active_file()` to generate snapshots.
 
 ```{r}
 #| echo: false
@@ -1453,7 +1482,7 @@ The following are some advanced topics that are beyond the scope of the current 
 
 It's not all kittens and roses when it comes to snapshot testing. 
 
-Let's now see some issues we might run into while using them. 🤕
+Let's now see some issues you might run into while using them. 🤕
 
 ## Testing behavior that you don't own {.smaller}
 
@@ -1475,7 +1504,7 @@ Tests that fail for reasons other than what they are testing for are problematic
 
 ## Failures in non-interactive environments {.smaller}
 
-If snapshots fail locally, we can just run `snapshot_review()`, but what if they fail in non-interactive environments (on CI/CD platforms, during `R CMD Check`, etc.)?
+If snapshots fail locally, you can just run `snapshot_review()`, but what if they fail in non-interactive environments (on CI/CD platforms, during `R CMD Check`, etc.)?
 
 The easiest solution is to copy the new snapshots to the local folder and run `snapshot_review()`.
 
@@ -1487,17 +1516,17 @@ If expected snapshot is called (e.g.) `foo.svg`, there will be a new snapshot fi
 
 :::
 
-But where can we find the new snapshots?
+But where can you find the new snapshots?
 
 ## Accessing new snapshots {.smaller}
 
-In local `R CMD Check`, we can find new snapshots in `.Rcheck` folder:
+In local `R CMD Check`, you can find new snapshots in `.Rcheck` folder:
 
 ```r
 package_name.Rcheck/tests/testthat/_snaps/
 ```
 
-On CI/CD platforms, we can find snapshots in artifacts folder:
+On CI/CD platforms, you can find snapshots in artifacts folder:
 
 - [AppVeyor](https://www.appveyor.com/docs/packaging-artifacts/){target="_blank"}
 
@@ -1517,7 +1546,7 @@ knitr::include_graphics("media/AppVeyor.png")
 
 Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots. 
 
-How do we review pull requests with complex snapshots changes? 
+How do you review pull requests with complex snapshots changes? 
 
 ## {.smaller}
 
@@ -1544,9 +1573,9 @@ Locally open the PR branch and play around with the changes to see if the new be
 
 Given their fragile nature, snapshot tests are skipped on CRAN by default. 
 
-Although this makes sense, it means that we miss out on anything but a breaking change from upstream dependency. E.g., if `{ggplot2}` (hypothetically) changes how the points look, we won't know about this change until we *happen to* run our snapshot tests again locally or on CI/CD.
+Although this makes sense, it means that you miss out on anything but a breaking change from upstream dependency. E.g., if `{ggplot2}` (hypothetically) changes how the points look, you won't know about this change until you *happen to* run your snapshot tests again locally or on CI/CD.
 
-Unit tests run on CRAN, on the other hand, will fail and we will be immediately informed about it.
+Unit tests run on CRAN, on the other hand, will fail and you will be immediately informed about it.
 
 :::{.callout-tip collapse=false appearance='default' icon=true}
 
@@ -1562,7 +1591,7 @@ What *not* to do
 
 It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g. when testing requires external benchmarking).
 
-Let's say we write a function to extract estimates from a regression model.
+Let's say you write a function to extract estimates from a regression model.
 
 ```{.r}
 extract_est <- function(m) m$coefficients
@@ -1608,13 +1637,13 @@ test_that("`extract_est()` works", {
 
 Snapshot testing is appropriate when the human needs to be in the loop to make sure that things are working as expected. Therefore, the snapshots should be human readable.
 
-E.g. if we write a function that plots something:
+E.g. if you write a function that plots something:
 
 ```{.r}
 point_plotter <- function() ggplot(mtcars, aes(wt, mpg)) + geom_point()
 ```
 
-To test it, we should snapshot the *plot*, and not the underlying *data*, which is hard to make sense of for a human.
+To test it, you should snapshot the *plot*, and not the underlying *data*, which is hard to make sense of for a human.
 
 :::: {.columns}
 
@@ -1658,7 +1687,7 @@ Resist formation of such a habit.
 
 # Self-study 
 
-In this presentation, we deliberately kept the examples and the tests simple. 
+In this presentation, you deliberately kept the examples and the tests simple. 
 
 To see a more realistic usage of snapshot tests, you can study open-source test suites.
 
@@ -1768,6 +1797,7 @@ And Happy Snapshotting! 😊
 ## Session information {.smaller}
 
 ```{r}
+quarto::quarto_version()
 sessioninfo::session_info(include_base = TRUE)
 ```
 
