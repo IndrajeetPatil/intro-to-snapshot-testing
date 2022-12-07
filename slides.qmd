@@ -13,7 +13,7 @@ execute:
   echo: true
 ---
 
-## Introduction to Snapshot Testing in R
+## Introduction to Snapshot Testing in R {style="margin-top: 1em;"}
 
 <!-- Don't render this file manually. Run `renderer.R` script instead. -->
 
@@ -26,7 +26,7 @@ Indrajeet Patil
 
 ::: {style="margin-top: 1em; font-size:0.75em"}
 
-![](media/logos_combined.jpeg){.absolute width="800" height="350"}
+![](media/logos_combined.jpeg){.absolute width="750" height="300"}
 
 :::
 
