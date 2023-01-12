@@ -2,11 +2,12 @@
 #title: "Introduction to Snapshot Testing in R"
 format:
   revealjs: 
+    css: style.css
     theme: simple
     slide-number: true
     preview-links: auto
     code-link: true
-    footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/intro-to-snapshot-testing)."
+    footer: "Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/){target='_blank'}."
 #author: "Indrajeet Patil"
 #affiliation: 
 execute:
