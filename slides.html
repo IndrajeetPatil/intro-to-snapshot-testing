@@ -11,7 +11,7 @@
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.107">
+<meta name="generator" content="quarto-1.3.119">
 <title>slides</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -526,17 +526,20 @@
 <li><p>You can generate a test file using <code>usethis::use_test()</code> function.</p></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># File: tests/testthat/test-op.R</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># test-1</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">test_that</span>(<span class="st">"multiplication works"</span>, {</span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="fu">expect_equal</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>, <span class="dv">4</span>) <span class="co"># expectation-1</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="fu">expect_equal</span>(<span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>, <span class="sc">-</span><span class="dv">4</span>) <span class="co"># expectation-2</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>})</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># test-2</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">test_that</span>(<span class="st">"addition works"</span>, {</span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="fu">expect_equal</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>, <span class="dv">4</span>) <span class="co"># expectation-1</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="fu">expect_equal</span>(<span class="sc">-</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>, <span class="dv">0</span>) <span class="co"># expectation-2</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>})</span>
-<span id="cb1-12"><a href="#cb1-12"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># test-1</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">test_that</span>(<span class="st">"multiplication works"</span>, {</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="fu">expect_equal</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>, <span class="dv">4</span>) <span class="co"># expectation-1</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="fu">expect_equal</span>(<span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>, <span class="sc">-</span><span class="dv">4</span>) <span class="co"># expectation-2</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>})</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># test-2</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">test_that</span>(<span class="st">"addition works"</span>, {</span>
+<span id="cb1-11"><a href="#cb1-11"></a>  <span class="fu">expect_equal</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>, <span class="dv">4</span>) <span class="co"># expectation-1</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>  <span class="fu">expect_equal</span>(<span class="sc">-</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>, <span class="dv">0</span>) <span class="co"># expectation-2</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>})</span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -645,7 +648,7 @@ https://github.com/quarto-ext/fontawesome  -->
 <span id="cb7-8"><a href="#cb7-8"></a>  )</span>
 <span id="cb7-9"><a href="#cb7-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -745,7 +748,7 @@ Output
 <span id="cb13-6"><a href="#cb13-6"></a>  )))</span>
 <span id="cb13-7"><a href="#cb13-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1058,7 +1061,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <span id="cb33-6"><a href="#cb33-6"></a>  )</span>
 <span id="cb33-7"><a href="#cb33-7"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-1" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -1086,14 +1089,15 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <span id="cb36-5"><a href="#cb36-5"></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
 <span id="cb36-6"><a href="#cb36-6"></a>  )</span>
 <span id="cb36-7"><a href="#cb36-7"></a>})</span>
-<span id="cb36-8"><a href="#cb36-8"></a>── <span class="fu">Failure</span> (<span class="st">'&lt;text&gt;:3'</span>)<span class="sc">:</span> <span class="st">`</span><span class="at">create_scatter()</span><span class="st">`</span> plots as expected ──────────────────</span>
-<span id="cb36-9"><a href="#cb36-9"></a>Snapshot of <span class="st">`</span><span class="at">testcase</span><span class="st">`</span> to <span class="st">'slides.qmd/create-scatter.svg'</span> has changed</span>
-<span id="cb36-10"><a href="#cb36-10"></a>Run <span class="st">`</span><span class="at">testthat::snapshot_review('slides.qmd/')</span><span class="st">`</span> to review changes</span>
-<span id="cb36-11"><a href="#cb36-11"></a>Backtrace<span class="sc">:</span></span>
-<span id="cb36-12"><a href="#cb36-12"></a> <span class="fl">1.</span> vdiffr<span class="sc">::</span><span class="fu">expect_doppelganger</span>(...)</span>
-<span id="cb36-13"><a href="#cb36-13"></a> <span class="fl">3.</span> testthat<span class="sc">::</span><span class="fu">expect_snapshot_file</span>(...)</span>
-<span id="cb36-14"><a href="#cb36-14"></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">reporter$stop_if_needed()</span><span class="st">`</span><span class="sc">:</span></span>
-<span id="cb36-15"><a href="#cb36-15"></a><span class="sc">!</span> Test failed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-8"><a href="#cb36-8"></a></span>
+<span id="cb36-9"><a href="#cb36-9"></a>── <span class="fu">Failure</span> (<span class="st">'&lt;text&gt;:3'</span>)<span class="sc">:</span> <span class="st">`</span><span class="at">create_scatter()</span><span class="st">`</span> plots as expected ──────────────────</span>
+<span id="cb36-10"><a href="#cb36-10"></a>Snapshot of <span class="st">`</span><span class="at">testcase</span><span class="st">`</span> to <span class="st">'slides.qmd/create-scatter.svg'</span> has changed</span>
+<span id="cb36-11"><a href="#cb36-11"></a>Run <span class="st">`</span><span class="at">testthat::snapshot_review('slides.qmd/')</span><span class="st">`</span> to review changes</span>
+<span id="cb36-12"><a href="#cb36-12"></a>Backtrace<span class="sc">:</span></span>
+<span id="cb36-13"><a href="#cb36-13"></a> <span class="fl">1.</span> vdiffr<span class="sc">::</span><span class="fu">expect_doppelganger</span>(...)</span>
+<span id="cb36-14"><a href="#cb36-14"></a> <span class="fl">3.</span> testthat<span class="sc">::</span><span class="fu">expect_snapshot_file</span>(...)</span>
+<span id="cb36-15"><a href="#cb36-15"></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">reporter$stop_if_needed()</span><span class="st">`</span><span class="sc">:</span></span>
+<span id="cb36-16"><a href="#cb36-16"></a><span class="sc">!</span> Test failed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section><section id="fixing-tests-1" class="slide level2 smaller"><h2>Fixing tests</h2>
@@ -1210,9 +1214,10 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb42-7"><a href="#cb42-7"></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
 <span id="cb42-8"><a href="#cb42-8"></a>    path</span>
 <span id="cb42-9"><a href="#cb42-9"></a>  }</span>
-<span id="cb42-10"><a href="#cb42-10"></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"b"</span>))</span>
-<span id="cb42-11"><a href="#cb42-11"></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
-<span id="cb42-12"><a href="#cb42-12"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-10"><a href="#cb42-10"></a></span>
+<span id="cb42-11"><a href="#cb42-11"></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"b"</span>))</span>
+<span id="cb42-12"><a href="#cb42-12"></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
+<span id="cb42-13"><a href="#cb42-13"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>── Failure ('&lt;text&gt;:12'): json writer works ────────────────────────────────────
@@ -1280,17 +1285,20 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </div><div class="column" style="width:60%;">
 <p><strong>Code</strong></p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb48-2"><a href="#cb48-2"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
-<span id="cb48-4"><a href="#cb48-4"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
-<span id="cb48-5"><a href="#cb48-5"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
-<span id="cb48-6"><a href="#cb48-6"></a>)</span>
-<span id="cb48-7"><a href="#cb48-7"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb48-8"><a href="#cb48-8"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
-<span id="cb48-9"><a href="#cb48-9"></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
-<span id="cb48-10"><a href="#cb48-10"></a>  )</span>
-<span id="cb48-11"><a href="#cb48-11"></a>}</span>
-<span id="cb48-12"><a href="#cb48-12"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-2"><a href="#cb48-2"></a></span>
+<span id="cb48-3"><a href="#cb48-3"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb48-4"><a href="#cb48-4"></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb48-5"><a href="#cb48-5"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb48-6"><a href="#cb48-6"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb48-7"><a href="#cb48-7"></a>)</span>
+<span id="cb48-8"><a href="#cb48-8"></a></span>
+<span id="cb48-9"><a href="#cb48-9"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb48-10"><a href="#cb48-10"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb48-11"><a href="#cb48-11"></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb48-12"><a href="#cb48-12"></a>  )</span>
+<span id="cb48-13"><a href="#cb48-13"></a>}</span>
+<span id="cb48-14"><a href="#cb48-14"></a></span>
+<span id="cb48-15"><a href="#cb48-15"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section><section id="generating-a-test" class="slide level2 smaller"><h2>Generating a test</h2>
@@ -1305,13 +1313,14 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <div class="column" style="width:60%;">
 <p><strong>Test</strong></p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">library</span>(shinytest2)</span>
-<span id="cb49-2"><a href="#cb49-2"></a><span class="fu">test_that</span>(<span class="st">"{shinytest2} recording: unitConverter"</span>, {</span>
-<span id="cb49-3"><a href="#cb49-3"></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(</span>
-<span id="cb49-4"><a href="#cb49-4"></a>  <span class="at">name =</span> <span class="st">"unitConverter"</span>, <span class="at">height =</span> <span class="dv">543</span>, <span class="at">width =</span> <span class="dv">426</span>)</span>
-<span id="cb49-5"><a href="#cb49-5"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">1</span>)</span>
-<span id="cb49-6"><a href="#cb49-6"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">10</span>)</span>
-<span id="cb49-7"><a href="#cb49-7"></a>  app<span class="sc">$</span><span class="fu">expect_values</span>()</span>
-<span id="cb49-8"><a href="#cb49-8"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-2"><a href="#cb49-2"></a></span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="fu">test_that</span>(<span class="st">"{shinytest2} recording: unitConverter"</span>, {</span>
+<span id="cb49-4"><a href="#cb49-4"></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb49-5"><a href="#cb49-5"></a>  <span class="at">name =</span> <span class="st">"unitConverter"</span>, <span class="at">height =</span> <span class="dv">543</span>, <span class="at">width =</span> <span class="dv">426</span>)</span>
+<span id="cb49-6"><a href="#cb49-6"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">1</span>)</span>
+<span id="cb49-7"><a href="#cb49-7"></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">10</span>)</span>
+<span id="cb49-8"><a href="#cb49-8"></a>  app<span class="sc">$</span><span class="fu">expect_values</span>()</span>
+<span id="cb49-9"><a href="#cb49-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:40%;">
 <p><strong>Snapshot</strong></p>
 <div class="cell">
@@ -1342,10 +1351,11 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <p>Note that currently your test scripts and results are in the <code>/inst</code> folder, but you’d also want to run these tests automatically using <a href="https://testthat.r-lib.org">testthat</a>.</p>
 <p>For this, you will need to write a driver script like the following:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">library</span>(shinytest2)</span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">test_that</span>(<span class="st">"`unitConverter` app works"</span>, {</span>
-<span id="cb50-3"><a href="#cb50-3"></a>  appdir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"package_name"</span>, <span class="st">"unitConverter"</span>)</span>
-<span id="cb50-4"><a href="#cb50-4"></a>  <span class="fu">test_app</span>(appdir)</span>
-<span id="cb50-5"><a href="#cb50-5"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-2"><a href="#cb50-2"></a></span>
+<span id="cb50-3"><a href="#cb50-3"></a><span class="fu">test_that</span>(<span class="st">"`unitConverter` app works"</span>, {</span>
+<span id="cb50-4"><a href="#cb50-4"></a>  appdir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"package_name"</span>, <span class="st">"unitConverter"</span>)</span>
+<span id="cb50-5"><a href="#cb50-5"></a>  <span class="fu">test_app</span>(appdir)</span>
+<span id="cb50-6"><a href="#cb50-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now the Shiny apps will be tested with the rest of the source code in the package! 🎊</p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
@@ -1368,12 +1378,14 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <span id="cb51-3"><a href="#cb51-3"></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
 <span id="cb51-4"><a href="#cb51-4"></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
 <span id="cb51-5"><a href="#cb51-5"></a>)</span>
-<span id="cb51-6"><a href="#cb51-6"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb51-7"><a href="#cb51-7"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
-<span id="cb51-8"><a href="#cb51-8"></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>) <span class="co"># should be `"Weight (in g): "`</span></span>
-<span id="cb51-9"><a href="#cb51-9"></a>  )</span>
-<span id="cb51-10"><a href="#cb51-10"></a>}</span>
-<span id="cb51-11"><a href="#cb51-11"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-6"><a href="#cb51-6"></a></span>
+<span id="cb51-7"><a href="#cb51-7"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb51-8"><a href="#cb51-8"></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb51-9"><a href="#cb51-9"></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>) <span class="co"># should be `"Weight (in g): "`</span></span>
+<span id="cb51-10"><a href="#cb51-10"></a>  )</span>
+<span id="cb51-11"><a href="#cb51-11"></a>}</span>
+<span id="cb51-12"><a href="#cb51-12"></a></span>
+<span id="cb51-13"><a href="#cb51-13"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Test failure JSON diff</strong></p>
 <div class="sourceCode" id="cb52" data-code-line-number="6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb52-1"><a href="#cb52-1"></a><span class="er">Diff</span> <span class="er">in</span> <span class="er">snapshot</span> <span class="er">file</span> <span class="er">`shinytest2unitConverter-001.json`</span></span>
 <span id="cb52-2"><a href="#cb52-2"></a><span class="er">&lt;</span> <span class="er">before</span>                            <span class="er">&gt;</span> <span class="er">after</span>                           </span>
@@ -1408,13 +1420,15 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <span id="cb54-5"><a href="#cb54-5"></a>    <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
 <span id="cb54-6"><a href="#cb54-6"></a>    <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
 <span id="cb54-7"><a href="#cb54-7"></a>  )</span>
-<span id="cb54-8"><a href="#cb54-8"></a>  server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb54-9"><a href="#cb54-9"></a>    output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
-<span id="cb54-10"><a href="#cb54-10"></a>      <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
-<span id="cb54-11"><a href="#cb54-11"></a>    )</span>
-<span id="cb54-12"><a href="#cb54-12"></a>  }</span>
-<span id="cb54-13"><a href="#cb54-13"></a>  <span class="fu">shinyApp</span>(ui, server)</span>
-<span id="cb54-14"><a href="#cb54-14"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-8"><a href="#cb54-8"></a></span>
+<span id="cb54-9"><a href="#cb54-9"></a>  server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb54-10"><a href="#cb54-10"></a>    output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb54-11"><a href="#cb54-11"></a>      <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb54-12"><a href="#cb54-12"></a>    )</span>
+<span id="cb54-13"><a href="#cb54-13"></a>  }</span>
+<span id="cb54-14"><a href="#cb54-14"></a></span>
+<span id="cb54-15"><a href="#cb54-15"></a>  <span class="fu">shinyApp</span>(ui, server)</span>
+<span id="cb54-16"><a href="#cb54-16"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:45%;">
 <p><strong>Test file to modify</strong></p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="co"># File: tests/testthat/test-unit-converter.R</span></span>
@@ -1807,7 +1821,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_version</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] '1.3.107'</code></pre>
+<pre><code>[1] '1.3.119'</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1821,7 +1835,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2023-01-15
+ date     2023-01-20
  pandoc   2.19.2 @ /usr/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
@@ -1836,7 +1850,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  desc          1.4.2      2022-09-08 [1] RSPM
  diffobj       0.3.5      2021-10-05 [1] RSPM
  digest        0.6.31     2022-12-11 [1] RSPM
- evaluate      0.19       2022-12-13 [1] RSPM
+ evaluate      0.20       2023-01-17 [1] RSPM
  fansi         1.0.3      2022-03-24 [1] RSPM
  farver        2.1.1      2022-07-06 [1] RSPM
  fastmap       1.1.0      2021-01-25 [1] RSPM
@@ -1870,7 +1884,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  Rcpp          1.0.9      2022-07-08 [1] RSPM
  rematch2      2.1.2      2020-05-01 [1] RSPM
  rlang         1.0.6      2022-09-24 [1] RSPM
- rmarkdown     2.19       2022-12-15 [1] RSPM
+ rmarkdown     2.20       2023-01-19 [1] RSPM
  rprojroot     2.0.3      2022-04-02 [1] RSPM
  rstudioapi    0.14       2022-08-22 [1] RSPM
  scales        1.2.1      2022-08-20 [1] RSPM
