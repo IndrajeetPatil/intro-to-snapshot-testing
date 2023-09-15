@@ -1,4 +1,5 @@
 Package: intro-to-snapshot-testing
+Type: Presentation
 Title: Introduction to Snapshot Testing in R
 Version: 1.0
 Authors@R: 
