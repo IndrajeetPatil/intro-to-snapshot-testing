@@ -1483,7 +1483,7 @@ The following are some advanced topics that are beyond the scope of the current 
 
 It's not all kittens and roses when it comes to snapshot testing. 
 
-Let's now see some issues you might run into while using them. 🤕
+Let's see some issues you might run into while using them. 🤕
 
 ## Testing behavior that you don't own {.smaller}
 
