@@ -20,7 +20,7 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
         with:
-          pandoc-version: "3.1.11"
+          pandoc-version: "latest"
 
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
@@ -43,7 +43,6 @@ jobs:
 
       - name: Render slides
         run: |
-          options(crayon.enabled = TRUE)
           callr::rscript("renderer.R")
         shell: Rscript {0}
 

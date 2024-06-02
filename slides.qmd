@@ -14,6 +14,18 @@ execute:
   echo: true
 ---
 
+```{r setup, include=FALSE}
+#| echo: false
+#| eval: true
+#| comment: "#>"
+options(
+  crayon.enabled = FALSE,
+  cli.num_colors = 0,
+  cli.hyperlink = FALSE
+)
+```
+
+
 ## Introduction to Snapshot Testing in R {style="margin-top: 1em;"}
 
 <!-- Don't render this file manually. Run `renderer.R` script instead. -->
