@@ -6,11 +6,11 @@
 <script src="slides_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-3a01e2046221230fdceeea94b1ec5d67.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="slides_files/libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="slides_files/libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="slides_files/libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.30">
+<meta name="generator" content="quarto-1.6.32">
 <title>slides</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -478,8 +478,8 @@
 <p>Testing infrastructure for R package has the following hierarchy:</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 37%">
-<col style="width: 62%">
+<col style="width: 44%">
+<col style="width: 55%">
 </colgroup>
 <thead><tr class="header">
 <th style="text-align: left;">Component</th>
@@ -490,20 +490,19 @@
 <td style="text-align: left;">
 <br><i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <strong>Test file</strong>
 </td>
-<td style="text-align: left;">Tests for code situated in <code>R/foo.R</code> will typically be in the file <code>tests/testthat/test-foo.R</code>.</td>
+<td style="text-align: left;">Tests for <code>R/foo.R</code> will typically be in <code>tests/testthat/test-foo.R</code>.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">
 <i class="fa-solid fa-flask fa-2xl" aria-label="flask"></i> <strong>Tests</strong>
 </td>
-<td style="text-align: left;">A single file can contain multiple tests. <br>
-</td>
+<td style="text-align: left;">A single file can contain multiple tests.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">
 <br><i class="fa-solid fa-equals fa-2xl" aria-label="equals"></i> <strong>Expectations</strong>
 </td>
-<td style="text-align: left;">A single test can have multiple expectations that formalize what you expect code to do.</td>
+<td style="text-align: left;">A single test can have multiple expectations.</td>
 </tr>
 </tbody>
 </table>
@@ -743,7 +742,7 @@ Output
 <span id="cb13-6"><a href=""></a>  )))</span>
 <span id="cb13-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1054,7 +1053,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <span id="cb33-6"><a href=""></a>  )</span>
 <span id="cb33-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-1" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -1191,7 +1190,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb40-12"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb40-13"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-2" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -1818,7 +1817,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a>quarto<span class="sc">::</span><span class="fu">quarto_version</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] '1.6.30'</code></pre>
+<pre><code>[1] '1.6.32'</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href=""></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1827,15 +1826,15 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  version  R version 4.4.1 (2024-06-14)
  os       Ubuntu 22.04.5 LTS
  system   x86_64, linux-gnu
- hostname fv-az1980-637
+ hostname fv-az1771-323
  ui       X11
  language (EN)
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2024-10-27
+ date     2024-10-30
  pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
- quarto   1.6.30 @ /usr/local/bin/quarto
+ quarto   1.6.32 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package     * version    date (UTC) lib source
@@ -1877,7 +1876,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  pkgload       1.4.0      2024-06-28 [1] RSPM
  png           0.1-8      2022-11-29 [1] RSPM
  processx      3.8.4      2024-03-16 [1] RSPM
- ps            1.8.0      2024-09-12 [1] RSPM
+ ps            1.8.1      2024-10-28 [1] RSPM
  quarto        1.4.4.9003 2024-09-22 [1] Github (quarto-dev/quarto-r@0fcb998)
  R6            2.5.1      2021-08-19 [1] RSPM
  Rcpp          1.0.13     2024-07-17 [1] RSPM
@@ -1898,7 +1897,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  vctrs         0.6.5      2023-12-01 [1] RSPM
  vdiffr      * 1.0.7      2023-09-22 [1] RSPM
  waldo         0.5.3      2024-08-23 [1] RSPM
- withr         3.0.1      2024-07-31 [1] RSPM
+ withr         3.0.2      2024-10-28 [1] RSPM
  xfun          0.48       2024-10-03 [1] RSPM
  yaml          2.3.10     2024-07-26 [1] RSPM
 
