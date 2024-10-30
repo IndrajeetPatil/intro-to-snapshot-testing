@@ -86,11 +86,11 @@ Test pass only when actual function behaviour matches expected.
 
 Testing infrastructure for R package has the following hierarchy:
 
-| Component                                                | Role                                                                                            |
-| :------------------------------------------------------- | :---------------------------------------------------------------------------------------------- |
-| <br> {{< fa regular file-code size=2xl >}} **Test file** | Tests for code situated in `R/foo.R` will typically be in the file `tests/testthat/test-foo.R`. |
-| {{< fa solid flask size=2xl >}} **Tests**           | A single file can contain multiple tests. <br>                                                  |
-| <br> {{< fa solid equals size=2xl >}} **Expectations**   | A single test can have multiple expectations that formalize what you expect code to do.         |
+| Component                                                | Role                                                                  |
+| :------------------------------------------------------- | :-------------------------------------------------------------------- |
+| <br> {{< fa regular file-code size=2xl >}} **Test file** | Tests for `R/foo.R` will typically be in `tests/testthat/test-foo.R`. |
+| {{< fa solid flask size=2xl >}} **Tests**                | A single file can contain multiple tests.                             |
+| <br> {{< fa solid equals size=2xl >}} **Expectations**   | A single test can have multiple expectations.                         |
 
 :::
 
