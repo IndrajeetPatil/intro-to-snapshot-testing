@@ -18,6 +18,9 @@ execute:
 
 <!-- Don't render this file manually. Run `renderer.R` script instead. -->
 
+<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
+<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
+
 ::: {style="margin-top: 0.5em; margin-bottom: 0.5em; font-size: 1em"}
 
 Indrajeet Patil
@@ -140,9 +143,6 @@ test_that("addition works", {
 A **unit test** records the code to describe expected output.
 
 <br>
-
-<!-- Need to install the Quarto extension for fontawesome to work:
-https://github.com/quarto-ext/fontawesome  -->
 
 (actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-code size=2xl >}} (expected)
 
