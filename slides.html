@@ -326,7 +326,7 @@
 <ul>
 <li><p>Every test is a call to <code><a href="https://testthat.r-lib.org/reference/test_that.html">testthat::test_that()</a></code> function.</p></li>
 <li><p>Every expectation is represented by <code>testthat::expect_*()</code> function.</p></li>
-<li><p>You can generate a test file using <code><a href="https://usethis.r-lib.org/reference/use_r.html">usethis::use_test()</a></code> function.</p></li>
+<li><p>You can generate a test file using <code>usethis::use_test()</code> function.</p></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># File: tests/testthat/test-op.R</span></span>
 <span id="cb1-2"><a href=""></a></span>
@@ -444,7 +444,7 @@
 <span id="cb7-8"><a href=""></a>  )</span>
 <span id="cb7-9"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -544,7 +544,7 @@ Output
 <span id="cb13-6"><a href=""></a>  )))</span>
 <span id="cb13-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -855,7 +855,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <span id="cb33-6"><a href=""></a>  )</span>
 <span id="cb33-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-1" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -992,7 +992,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb40-12"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb40-13"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-2" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -1239,7 +1239,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <span id="cb55-5"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section><section id="generating-test-and-snapshots" class="slide level2 smaller"><h2>Generating test and snapshots</h2>
-<p>you call <code>record_test()</code> directly on a Shiny app object, copy-paste commands to the test script, and run <code><a href="https://devtools.r-lib.org/reference/test.html">devtools::test_active_file()</a></code> to generate snapshots.</p>
+<p>you call <code>record_test()</code> directly on a Shiny app object, copy-paste commands to the test script, and run <code>devtools::test_active_file()</code> to generate snapshots.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1626,88 +1626,86 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
  version  R version 4.4.2 (2024-10-31)
- os       macOS Sequoia 15.1
- system   aarch64, darwin20
+ os       Ubuntu 22.04.5 LTS
+ system   x86_64, linux-gnu
+ hostname fv-az1380-903
  ui       X11
  language (EN)
- collate  en_US.UTF-8
- ctype    en_US.UTF-8
- tz       Europe/Berlin
+ collate  C.UTF-8
+ ctype    C.UTF-8
+ tz       UTC
  date     2024-11-08
- pandoc   3.5 @ /usr/local/bin/ (via rmarkdown)
+ pandoc   3.5 @ /opt/hostedtoolcache/pandoc/3.5/x64/ (via rmarkdown)
+ quarto   1.6.33 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
- package     * version  date (UTC) lib source
- base        * 4.4.2    2024-11-01 [2] local
- brio          1.1.5    2024-04-24 [1] CRAN (R 4.4.0)
- cli           3.6.3    2024-06-21 [1] CRAN (R 4.4.0)
- colorspace    2.1-1    2024-07-26 [2] CRAN (R 4.4.0)
- compiler      4.4.2    2024-11-01 [2] local
- crayon        1.5.3    2024-06-20 [1] CRAN (R 4.4.0)
- curl          6.0.0    2024-11-05 [1] CRAN (R 4.4.1)
- datasets    * 4.4.2    2024-11-01 [2] local
- desc          1.4.3    2023-12-10 [1] CRAN (R 4.4.0)
- diffobj       0.3.5    2021-10-05 [2] RSPM
- digest        0.6.37   2024-08-19 [1] CRAN (R 4.4.1)
- dplyr         1.1.4    2023-11-17 [2] CRAN (R 4.4.0)
- evaluate      1.0.1    2024-10-10 [1] CRAN (R 4.4.1)
- fansi         1.0.6    2023-12-08 [1] CRAN (R 4.4.0)
- farver        2.1.2    2024-05-13 [2] RSPM (R 4.4.0)
- fastmap       1.2.0    2024-05-15 [1] CRAN (R 4.4.0)
- fortunes      1.5-4    2016-12-29 [2] RSPM (R 4.4.0)
- generics      0.1.3    2022-07-05 [2] CRAN (R 4.4.0)
- ggplot2     * 3.5.1    2024-04-23 [2] CRAN (R 4.4.0)
- glue          1.8.0    2024-09-30 [1] CRAN (R 4.4.1)
- graphics    * 4.4.2    2024-11-01 [2] local
- grDevices   * 4.4.2    2024-11-01 [2] local
- grid          4.4.2    2024-11-01 [2] local
- gtable        0.3.5    2024-04-22 [2] CRAN (R 4.4.0)
- htmltools     0.5.8.1  2024-04-04 [1] CRAN (R 4.4.0)
- jsonlite      1.8.9    2024-09-20 [1] CRAN (R 4.4.1)
- knitr         1.49     2024-11-08 [1] CRAN (R 4.4.2)
- labeling      0.4.3    2023-08-29 [2] CRAN (R 4.4.0)
- later         1.3.2    2023-12-06 [1] CRAN (R 4.4.0)
- lattice       0.22-6   2024-03-20 [2] CRAN (R 4.4.2)
- lifecycle     1.0.4    2023-11-07 [1] CRAN (R 4.4.0)
- magrittr      2.0.3    2022-03-30 [1] CRAN (R 4.4.0)
- Matrix        1.7-1    2024-10-18 [2] CRAN (R 4.4.2)
- methods     * 4.4.2    2024-11-01 [2] local
- mgcv          1.9-1    2023-12-21 [2] CRAN (R 4.4.2)
- munsell       0.5.1    2024-04-01 [2] CRAN (R 4.4.0)
- nlme          3.1-166  2024-08-14 [2] CRAN (R 4.4.2)
- pillar        1.9.0    2023-03-22 [1] CRAN (R 4.4.0)
- pkgconfig     2.0.3    2019-09-22 [1] CRAN (R 4.4.0)
- pkgload       1.4.0    2024-06-28 [2] RSPM (R 4.4.0)
- png           0.1-8    2022-11-29 [2] RSPM
- processx      3.8.4    2024-03-16 [1] CRAN (R 4.4.0)
- ps            1.8.1    2024-10-28 [1] CRAN (R 4.4.1)
- quarto        1.4.4    2024-07-20 [2] CRAN (R 4.4.0)
- R6            2.5.1    2021-08-19 [1] CRAN (R 4.4.0)
- Rcpp          1.0.13-1 2024-11-02 [1] CRAN (R 4.4.1)
- rematch2      2.1.2    2020-05-01 [2] RSPM
- rlang         1.1.4    2024-06-04 [1] CRAN (R 4.4.0)
- rmarkdown     2.29     2024-11-04 [1] CRAN (R 4.4.1)
- rprojroot     2.0.4    2023-11-05 [2] CRAN (R 4.4.0)
- rstudioapi    0.17.1   2024-10-22 [1] CRAN (R 4.4.1)
- scales        1.3.0    2023-11-28 [2] CRAN (R 4.4.0)
- sessioninfo   1.2.2    2021-12-06 [2] RSPM
- splines       4.4.2    2024-11-01 [2] local
- stats       * 4.4.2    2024-11-01 [2] local
- testthat    * 3.2.1.1  2024-04-14 [2] RSPM
- tibble        3.2.1    2023-03-20 [1] CRAN (R 4.4.0)
- tidyselect    1.2.1    2024-03-11 [2] CRAN (R 4.4.0)
- tools         4.4.2    2024-11-01 [2] local
- utf8          1.2.4    2023-10-22 [1] CRAN (R 4.4.0)
- utils       * 4.4.2    2024-11-01 [2] local
- vctrs         0.6.5    2023-12-01 [1] CRAN (R 4.4.0)
- vdiffr      * 1.0.8    2024-10-31 [1] CRAN (R 4.4.1)
- waldo         0.5.3    2024-08-23 [2] CRAN (R 4.4.1)
- withr         3.0.2    2024-10-28 [1] CRAN (R 4.4.1)
- xfun          0.49     2024-10-31 [1] CRAN (R 4.4.1)
- yaml          2.3.10   2024-07-26 [1] CRAN (R 4.4.1)
+ package     * version    date (UTC) lib source
+ base        * 4.4.2      2024-10-31 [3] local
+ brio          1.1.5      2024-04-24 [1] RSPM
+ cli           3.6.3      2024-06-21 [1] RSPM
+ colorspace    2.1-1      2024-07-26 [1] RSPM
+ compiler      4.4.2      2024-10-31 [3] local
+ crayon        1.5.3      2024-06-20 [1] RSPM
+ datasets    * 4.4.2      2024-10-31 [3] local
+ desc          1.4.3      2023-12-10 [1] RSPM
+ diffobj       0.3.5      2021-10-05 [1] RSPM
+ digest        0.6.37     2024-08-19 [1] RSPM
+ evaluate      1.0.1      2024-10-10 [1] RSPM
+ fansi         1.0.6      2023-12-08 [1] RSPM
+ farver        2.1.2      2024-05-13 [1] RSPM
+ fastmap       1.2.0      2024-05-15 [1] RSPM
+ ggplot2     * 3.5.1      2024-04-23 [1] RSPM
+ glue          1.8.0      2024-09-30 [1] RSPM
+ graphics    * 4.4.2      2024-10-31 [3] local
+ grDevices   * 4.4.2      2024-10-31 [3] local
+ grid          4.4.2      2024-10-31 [3] local
+ gtable        0.3.6      2024-10-25 [1] RSPM
+ htmltools     0.5.8.1    2024-04-04 [1] RSPM
+ jsonlite      1.8.9      2024-09-20 [1] RSPM
+ knitr         1.49       2024-11-08 [1] CRAN (R 4.4.2)
+ labeling      0.4.3      2023-08-29 [1] RSPM
+ later         1.3.2      2023-12-06 [1] RSPM
+ lattice       0.22-6     2024-03-20 [3] CRAN (R 4.4.2)
+ lifecycle     1.0.4      2023-11-07 [1] RSPM
+ magrittr      2.0.3      2022-03-30 [1] RSPM
+ Matrix        1.7-1      2024-10-18 [3] CRAN (R 4.4.2)
+ methods     * 4.4.2      2024-10-31 [3] local
+ mgcv          1.9-1      2023-12-21 [3] CRAN (R 4.4.2)
+ munsell       0.5.1      2024-04-01 [1] RSPM
+ nlme          3.1-166    2024-08-14 [3] CRAN (R 4.4.2)
+ pillar        1.9.0      2023-03-22 [1] RSPM
+ pkgconfig     2.0.3      2019-09-22 [1] RSPM
+ pkgload       1.4.0      2024-06-28 [1] RSPM
+ png           0.1-8      2022-11-29 [1] RSPM
+ processx      3.8.4      2024-03-16 [1] RSPM
+ ps            1.8.1      2024-10-28 [1] RSPM
+ quarto        1.4.4.9003 2024-11-03 [1] Github (quarto-dev/quarto-r@0fcb998)
+ R6            2.5.1      2021-08-19 [1] RSPM
+ Rcpp          1.0.13-1   2024-11-02 [1] RSPM
+ rlang         1.1.4      2024-06-04 [1] RSPM
+ rmarkdown     2.29       2024-11-04 [1] RSPM
+ rprojroot     2.0.4      2023-11-05 [1] RSPM
+ rstudioapi    0.17.1     2024-10-22 [1] RSPM
+ scales        1.3.0      2023-11-28 [1] RSPM
+ sessioninfo   1.2.2.9000 2024-11-03 [1] Github (r-lib/sessioninfo@37c81af)
+ splines       4.4.2      2024-10-31 [3] local
+ stats       * 4.4.2      2024-10-31 [3] local
+ testthat    * 3.2.1.1    2024-04-14 [1] RSPM
+ tibble        3.2.1      2023-03-20 [1] RSPM
+ tools         4.4.2      2024-10-31 [3] local
+ utf8          1.2.4      2023-10-22 [1] RSPM
+ utils       * 4.4.2      2024-10-31 [3] local
+ vctrs         0.6.5      2023-12-01 [1] RSPM
+ vdiffr      * 1.0.8      2024-10-31 [1] RSPM
+ waldo         0.6.1      2024-11-07 [1] RSPM
+ withr         3.0.2      2024-10-28 [1] RSPM
+ xfun          0.49       2024-10-31 [1] RSPM
+ yaml          2.3.10     2024-07-26 [1] RSPM
 
- [1] /Users/indrajeetpatil/Library/R/arm64/4.4/library
- [2] /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library
+ [1] /home/runner/work/_temp/Library
+ [2] /opt/R/4.4.2/lib/R/site-library
+ [3] /opt/R/4.4.2/lib/R/library
+ * ── Packages attached to the search path.
 
 ──────────────────────────────────────────────────────────────────────────────</code></pre>
 </div>
