@@ -63,10 +63,10 @@ The goal of a unit test is to capture the *expected* output of a function using 
 
 Test pass only when actual function behaviour matches expected.
 
-| actual | expected | tests |
-| ------- | ------- | ----- |
+| actual                                 | expected                               | tests                                    |
+| :------------------------------------- | :------------------------------------- | :--------------------------------------- |
 | {{< fa regular file-lines size=2xl >}} | {{< fa regular file-lines size=2xl >}} | {{< fa regular circle-check size=2xl >}} |
-| {{< fa regular file size=2xl >}} | {{< fa regular file-lines size=2xl >}} | {{< fa regular circle-xmark size=2xl >}} |
+| {{< fa regular file size=2xl >}}       | {{< fa regular file-lines size=2xl >}} | {{< fa regular circle-xmark size=2xl >}} |
 
 :::
 
