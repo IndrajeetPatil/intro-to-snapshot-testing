@@ -7,6 +7,7 @@ format:
     slide-number: true
     preview-links: auto
     code-link: true
+    embed-resources: true
     footer: "Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/){target='_blank'}."
 #author: "Indrajeet Patil"
 #affiliation: 
