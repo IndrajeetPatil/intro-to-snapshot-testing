@@ -7,8 +7,8 @@ format:
     slide-number: true
     preview-links: auto
     code-link: true
-    embed-resources: true
-    footer: "Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/){target='_blank'}."
+    #embed-resources: true
+    # footer: "Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/){target='_blank'}."
 #author: "Indrajeet Patil"
 #affiliation: 
 execute:
@@ -98,7 +98,7 @@ Testing infrastructure for R package has the following hierarchy:
 | :------------------------------------------------------- | :-------------------------------------------------------------------- |
 | <br> {{< fa regular file-code size=2xl >}} **Test file** | Tests for `R/foo.R` will typically be in `tests/testthat/test-foo.R`. |
 | {{< fa solid flask size=2xl >}} **Tests**                | A single file can contain multiple tests.                             |
-| <br> {{< fa solid equals size=2xl >}} **Expectations**   | A single test can have multiple expectations.                         |
+| {{< fa solid equals size=2xl >}} **Expectations**        | A single test can have multiple expectations.                         |
 
 :::
 
