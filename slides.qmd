@@ -1577,7 +1577,7 @@ Unit tests run on CRAN, on the other hand, will fail and you will be immediately
 
 :::{.callout-tip collapse=false appearance='default' icon=true}
 
-A way to insure against such silent failures is to run tests **daily** on CI/CD platforms (e.g. AppVeyor nightly builds).
+A way to insure against such silent failures is to run tests **daily** on CI/CD platforms (e.g. nightly builds).
 
 :::
 
@@ -1752,27 +1752,9 @@ These are only suggestions. Feel free to contribute to any project you like! ðŸ¤
 
 :::
 
-## General reading {.smaller}
-
-Although current presentation is focused only on snapshot testing, here is reading material on automated testing in general.
-
-- McConnell, S. (2004). *Code Complete*. Microsoft Press. (**pp. 499-533**)
-
-- Boswell, D., & Foucher, T. (2011). *The Art of Readable Code*. O'Reilly Media, Inc. (**pp. 149-162**)
-
-- Riccomini, C., & Ryaboy D. (2021). *The Missing Readme*. No Starch Press. (**pp. 89-108**)
-
-- Martin, R. C. (2009). *Clean Code*. Pearson Education. (**pp. 121-133**)
-
-- Fowler, M. (2018). *Refactoring.* Addison-Wesley Professional. (**pp. 85-100**)
-
-- Beck, K. (2003). *Test-Driven Development*. Addison-Wesley Professional.
-
-## Additional resources 
+# For more
 
 For a comprehensive collection of packages for unit testing in R, see [this](https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing){target="_blank"} page.
-
-# For more
 
 If you are interested in good programming and software development practices, check out my other [slide decks](https://sites.google.com/site/indrajeetspatilmorality/presentations){target="_blank"}.
 
