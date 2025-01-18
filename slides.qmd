@@ -1532,15 +1532,7 @@ In local `R CMD Check`, you can find new snapshots in `.Rcheck` folder:
 package_name.Rcheck/tests/testthat/_snaps/
 ```
 
-On CI/CD platforms, you can find snapshots in artifacts folder:
-
-- [AppVeyor](https://www.appveyor.com/docs/packaging-artifacts/){target="_blank"}
-
-```{r, echo=FALSE, fig.height=1.5}
-knitr::include_graphics("media/AppVeyor.png")
-```
-
-- [GitHub actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package){target="_blank"}
+On [GitHub actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package){target="_blank"}, you need to upload snapshots:
 
 ```yaml
       - uses: r-lib/actions/check-r-package@v2
