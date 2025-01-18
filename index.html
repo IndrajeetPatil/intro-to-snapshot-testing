@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.13">
 <meta name="author" content="Indrajeet Patil">
-<meta name="dcterms.date" content="2025-01-18 09:38:28.24238">
+<meta name="dcterms.date" content="2025-01-18 10:03:49.586339">
 <meta name="keywords" content="snapshot testing, testthat, shinytest2, vdiffr, r programming">
 <title>Introduction to Snapshot Testing in R</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -447,7 +447,7 @@
 <span id="cb7-8"><a href=""></a>  )</span>
 <span id="cb7-9"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -547,7 +547,7 @@ Output
 <span id="cb13-6"><a href=""></a>  )))</span>
 <span id="cb13-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -858,7 +858,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <span id="cb33-6"><a href=""></a>  )</span>
 <span id="cb33-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-1" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -995,7 +995,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb40-12"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb40-13"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-2" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -1445,14 +1445,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </section><section id="accessing-new-snapshots" class="slide level2 smaller"><h2>Accessing new snapshots</h2>
 <p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>On CI/CD platforms, you can find snapshots in artifacts folder:</p>
-<ul>
-<li><a href="https://www.appveyor.com/docs/packaging-artifacts/" target="_blank">AppVeyor</a></li>
-</ul>
-
-<img data-src="media/AppVeyor.png" width="484" class="r-stretch"><ul>
-<li><a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package" target="_blank">GitHub actions</a></li>
-</ul>
+<p>On <a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package" target="_blank">GitHub actions</a>, you need to upload snapshots:</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb63-1"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
 <span id="cb63-2"><a href=""></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
 <span id="cb63-3"><a href=""></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1631,7 +1624,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  version  R version 4.4.2 (2024-10-31)
  os       Ubuntu 24.04.1 LTS
  system   x86_64, linux-gnu
- hostname fv-az1693-209
+ hostname fv-az1704-409
  ui       X11
  language (EN)
  collate  C.UTF-8
