@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.13">
 <meta name="author" content="Indrajeet Patil">
-<meta name="dcterms.date" content="2025-02-09 08:17:18.222987">
+<meta name="dcterms.date" content="2025-02-09 08:30:41.96125">
 <meta name="keywords" content="snapshot testing, testthat, shinytest2, vdiffr, r programming">
 <title>Introduction to Snapshot Testing in R</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -376,30 +376,10 @@
 <div class="fragment">
 <p>then you should be excited to know more about <em>snapshot tests</em> (aka <em>golden tests</em>)! 🤩</p>
 </div>
-</section><section><section id="prerequisites" class="title-slide slide level1 center"><h1>Prerequisites</h1>
+</section><section id="prerequisites" class="title-slide slide level1 center"><h1>Prerequisites</h1>
 <p>Familiarity with writing unit tests using <a href="https://testthat.r-lib.org/index.html" target="_blank"><code>{testthat}</code></a>.</p>
 <p>If not, have a look at <a href="https://r-pkgs.org/testing-basics.html" target="_blank">this</a> chapter from <em>R Packages</em> book.</p>
-</section><section id="section" class="slide level2"><h2></h2>
-<p><br></p>
-<div class="callout callout-important callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong><em>Nota bene</em></strong></p>
-</div>
-<div class="callout-content">
-<p>In the following slides, in all snapshot tests, I include the following line of code:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">local_edition</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>You don’t need to do this in your package tests!</strong></p>
-<p>It’s sufficient to update the <code>DESCRIPTION</code> file to use <a href="https://testthat.r-lib.org">testthat</a> 3rd edition:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>Config<span class="sc">/</span>testthat<span class="sc">/</span>edition<span class="sc">:</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>For more, see <a href="https://testthat.r-lib.org/articles/third-edition.html" target="_blank">this</a> article.</p>
-</div>
-</div>
-</div>
-</section></section><section><section id="testing-text-outputs" class="title-slide slide level1 center"><h1>Testing text outputs</h1>
+</section><section><section id="testing-text-outputs" class="title-slide slide level1 center"><h1>Testing text outputs</h1>
 <p>Snapshot tests can be used to test that text output <em>prints</em> as expected.</p>
 <p>Important for testing functions that pretty-print R objects to the console, create elegant and informative exceptions, etc.</p>
 </section><section id="example-function" class="slide level2 smaller"><h2>Example function</h2>
@@ -408,20 +388,20 @@
 <div class="column" style="width:60%;">
 <p><strong>Source code</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
-<span id="cb4-2"><a href=""></a>  <span class="fu">paste0</span>(</span>
-<span id="cb4-3"><a href=""></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb4-4"><a href=""></a>    <span class="fu">paste0</span>(<span class="st">"  "</span>, keys, <span class="st">": "</span>, values, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb4-5"><a href=""></a>  )</span>
-<span id="cb4-6"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
+<span id="cb2-2"><a href=""></a>  <span class="fu">paste0</span>(</span>
+<span id="cb2-3"><a href=""></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb2-4"><a href=""></a>    <span class="fu">paste0</span>(<span class="st">"  "</span>, keys, <span class="st">": "</span>, values, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-5"><a href=""></a>  )</span>
+<span id="cb2-6"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:40%;">
 <p><strong>Output</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
-<span id="cb5-2"><a href=""></a>  <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
-<span id="cb5-3"><a href=""></a>  <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
-<span id="cb5-4"><a href=""></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb3-2"><a href=""></a>  <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb3-3"><a href=""></a>  <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb3-4"><a href=""></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Movie: 
   Title: Salaam Bombay!
@@ -437,17 +417,17 @@
 </section><section id="example-test" class="slide level2 smaller"><h2>Example test</h2>
 <p>Even testing this simple function is a bit painful because you need to keep track of every escape character, every space, etc.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
-<span id="cb7-2"><a href=""></a>  <span class="fu">expect_equal</span>(</span>
-<span id="cb7-3"><a href=""></a>    <span class="fu">print_movies</span>(</span>
-<span id="cb7-4"><a href=""></a>      <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
-<span id="cb7-5"><a href=""></a>      <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
-<span id="cb7-6"><a href=""></a>    ),</span>
-<span id="cb7-7"><a href=""></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span>
-<span id="cb7-8"><a href=""></a>  )</span>
-<span id="cb7-9"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb5-2"><a href=""></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb5-3"><a href=""></a>    <span class="fu">print_movies</span>(</span>
+<span id="cb5-4"><a href=""></a>      <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb5-5"><a href=""></a>      <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb5-6"><a href=""></a>    ),</span>
+<span id="cb5-7"><a href=""></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span>
+<span id="cb5-8"><a href=""></a>  )</span>
+<span id="cb5-9"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -472,13 +452,12 @@
 </section><section id="alternative-snapshot-test" class="slide level2 smaller"><h2>Alternative: Snapshot test</h2>
 <p>Instead, you can use <code>expect_snapshot()</code>, which, when run for the first time, generates a Markdown file with expected/reference output.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
-<span id="cb9-2"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb9-3"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
-<span id="cb9-4"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
-<span id="cb9-5"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
-<span id="cb9-6"><a href=""></a>  )))</span>
-<span id="cb9-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb7-2"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb7-3"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb7-4"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb7-5"><a href=""></a>  )))</span>
+<span id="cb7-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning: `print_movies()` prints as expected ────────────────────────────────
 Adding new snapshot:
@@ -508,14 +487,14 @@ Output
 </div>
 </section><section id="human-readable-markdown-file" class="slide level2 smaller"><h2>Human-readable Markdown file</h2>
 <p>Compared to your unit test code representing the expected output</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>notice how much more human-friendly the Markdown output is!</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href=""></a>Code</span>
-<span id="cb12-2"><a href=""></a>  cat(print_movies(c("Title", "Director"), c("Salaam Bombay!", "Mira Nair")))</span>
-<span id="cb12-3"><a href=""></a>Output</span>
-<span id="cb12-4"><a href=""></a>  Movie: </span>
-<span id="cb12-5"><a href=""></a>    Title: Salaam Bombay!</span>
-<span id="cb12-6"><a href=""></a>    Director: Mira Nair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href=""></a>Code</span>
+<span id="cb10-2"><a href=""></a>  cat(print_movies(c("Title", "Director"), c("Salaam Bombay!", "Mira Nair")))</span>
+<span id="cb10-3"><a href=""></a>Output</span>
+<span id="cb10-4"><a href=""></a>  Movie: </span>
+<span id="cb10-5"><a href=""></a>    Title: Salaam Bombay!</span>
+<span id="cb10-6"><a href=""></a>    Director: Mira Nair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It is easy to <em>see</em> what the printed text output is <em>supposed</em> to look like. In other words, snapshot tests are useful when the <em>intent</em> of the code can only be verified by a human.</p>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -539,15 +518,14 @@ Output
 </section><section id="what-test-success-looks-like" class="slide level2 smaller"><h2>What test success looks like</h2>
 <p>If you run the test again, it’ll succeed:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
-<span id="cb13-2"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb13-3"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
-<span id="cb13-4"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
-<span id="cb13-5"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
-<span id="cb13-6"><a href=""></a>  )))</span>
-<span id="cb13-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb11-2"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb11-3"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb11-4"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb11-5"><a href=""></a>  )))</span>
+<span id="cb11-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -572,25 +550,25 @@ Output
 <div class="columns">
 <div class="column" style="width:35%;">
 <p><strong>Changes to function</strong></p>
-<div class="sourceCode" id="cb15" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
-<span id="cb15-2"><a href=""></a>  <span class="fu">paste0</span>(</span>
-<span id="cb15-3"><a href=""></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb15-4"><a href=""></a>    <span class="fu">paste0</span>(</span>
-<span id="cb15-5"><a href=""></a>      <span class="st">"  "</span>, keys, <span class="st">"- "</span>, values,</span>
-<span id="cb15-6"><a href=""></a>      <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span></span>
-<span id="cb15-7"><a href=""></a>    )</span>
-<span id="cb15-8"><a href=""></a>  )</span>
-<span id="cb15-9"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
+<span id="cb13-2"><a href=""></a>  <span class="fu">paste0</span>(</span>
+<span id="cb13-3"><a href=""></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb13-4"><a href=""></a>    <span class="fu">paste0</span>(</span>
+<span id="cb13-5"><a href=""></a>      <span class="st">"  "</span>, keys, <span class="st">"- "</span>, values,</span>
+<span id="cb13-6"><a href=""></a>      <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span></span>
+<span id="cb13-7"><a href=""></a>    )</span>
+<span id="cb13-8"><a href=""></a>  )</span>
+<span id="cb13-9"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>Failure message provides expected (<code>-</code>) vs observed (<code>+</code>) diff.</p>
 </div><div class="column" style="width:65%;">
 <p><strong>Test failure</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
-<span id="cb16-2"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
-<span id="cb16-3"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
-<span id="cb16-4"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
-<span id="cb16-5"><a href=""></a>  )))</span>
-<span id="cb16-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb14-2"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb14-3"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb14-4"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb14-5"><a href=""></a>  )))</span>
+<span id="cb14-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>── Failure: `print_movies()` prints as expected ────────────────────────────────
@@ -619,11 +597,11 @@ old[2:6] vs new[2:6]
 <ul>
 <li>If the change was <em>deliberate</em>, you can accept the new snapshot as the current <em>truth</em>.</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_accept('foo.md')</span><span class="st">`</span> to accept the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_accept('foo.md')</span><span class="st">`</span> to accept the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>If this was <em>unexpected</em>, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('foo.md')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('foo.md')</span><span class="st">`</span> to interactively review the change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
@@ -648,12 +626,11 @@ old[2:6] vs new[2:6]
 <div class="column" style="width:50%;">
 <p><strong>message</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">message</span>(<span class="st">"Some info for you."</span>)</span>
-<span id="cb21-2"><a href=""></a></span>
-<span id="cb21-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"f() messages"</span>, {</span>
-<span id="cb21-4"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb21-5"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">f</span>())</span>
-<span id="cb21-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">message</span>(<span class="st">"Some info for you."</span>)</span>
+<span id="cb19-2"><a href=""></a></span>
+<span id="cb19-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"f() messages"</span>, {</span>
+<span id="cb19-4"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">f</span>())</span>
+<span id="cb19-5"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning: f() messages ───────────────────────────────────────────────────────
 Adding new snapshot:
@@ -666,12 +643,11 @@ Message
 </div><div class="column" style="width:50%;">
 <p><strong>warning</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">warning</span>(<span class="st">"Managed to recover."</span>)</span>
-<span id="cb23-2"><a href=""></a></span>
-<span id="cb23-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"g() warns"</span>, {</span>
-<span id="cb23-4"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb23-5"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">g</span>())</span>
-<span id="cb23-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">warning</span>(<span class="st">"Managed to recover."</span>)</span>
+<span id="cb21-2"><a href=""></a></span>
+<span id="cb21-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"g() warns"</span>, {</span>
+<span id="cb21-4"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">g</span>())</span>
+<span id="cb21-5"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning: g() warns ──────────────────────────────────────────────────────────
 Adding new snapshot:
@@ -700,10 +676,9 @@ Condition
 </section><section id="capturing-errors" class="slide level2 smaller"><h2>Capturing errors</h2>
 <p>In case of an error, the function <code>expect_snapshot()</code> itself will produce an error.</p>
 <p>You can capture it:</p>
-<div class="sourceCode" id="cb25" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`log()` errors"</span>, {</span>
-<span id="cb25-2"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb25-3"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">log</span>(<span class="st">"x"</span>), <span class="at">error =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb25-4"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`log()` errors"</span>, {</span>
+<span id="cb23-2"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">log</span>(<span class="st">"x"</span>), <span class="at">error =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-3"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning: `log()` errors ─────────────────────────────────────────────────────
@@ -757,18 +732,18 @@ Condition
 <div class="column" style="width:50%;">
 <p><strong>Source code</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb27-2"><a href=""></a></span>
-<span id="cb27-3"><a href=""></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb27-4"><a href=""></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
-<span id="cb27-5"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb27-6"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
-<span id="cb27-7"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb25-2"><a href=""></a></span>
+<span id="cb25-3"><a href=""></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb25-4"><a href=""></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb25-5"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb25-7"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <p><strong>Output</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="fu">create_scatter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">create_scatter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure><p><img data-src="slides_files/figure-revealjs/unnamed-chunk-16-1.png" style="width:100.0%"></p>
@@ -785,13 +760,12 @@ Condition
 <div class="fragment">
 <p>The <em>first time</em> you run the test, it’d generate an <code>.svg</code> file with expected output.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
-<span id="cb29-2"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb29-3"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
-<span id="cb29-4"><a href=""></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
-<span id="cb29-5"><a href=""></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
-<span id="cb29-6"><a href=""></a>  )</span>
-<span id="cb29-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb27-2"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb27-3"><a href=""></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb27-4"><a href=""></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb27-5"><a href=""></a>  )</span>
+<span id="cb27-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning: `create_scatter()` plots as expected ───────────────────────────────
 Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre>
@@ -818,15 +792,14 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 </section><section id="what-test-success-looks-like-1" class="slide level2 smaller"><h2>What test success looks like</h2>
 <p>If you run the test again, it’ll succeed:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
-<span id="cb31-2"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb31-3"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
-<span id="cb31-4"><a href=""></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
-<span id="cb31-5"><a href=""></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
-<span id="cb31-6"><a href=""></a>  )</span>
-<span id="cb31-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb29-2"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb29-3"><a href=""></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb29-4"><a href=""></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb29-5"><a href=""></a>  )</span>
+<span id="cb29-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-1" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -834,32 +807,31 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <div class="columns">
 <div class="column" style="width:40%;">
 <p><strong>Changes to function</strong></p>
-<div class="sourceCode" id="cb33" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb33-2"><a href=""></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
-<span id="cb33-3"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
-<span id="cb33-4"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
-<span id="cb33-5"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb31-2"><a href=""></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb31-3"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb31-5"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:60%;">
 <p><strong>Test failure</strong></p>
 <!-- Currently, doesn't work properly with on GHA workflow -->
 <!-- The exact error is the following: -->
 <!-- Error: Can't find `tests/testthat/` in current directory -->
-<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
-<span id="cb34-2"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb34-3"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
-<span id="cb34-4"><a href=""></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
-<span id="cb34-5"><a href=""></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
-<span id="cb34-6"><a href=""></a>  )</span>
-<span id="cb34-7"><a href=""></a>})</span>
-<span id="cb34-8"><a href=""></a></span>
-<span id="cb34-9"><a href=""></a>── <span class="fu">Failure</span> (<span class="st">'&lt;text&gt;:3'</span>)<span class="sc">:</span> <span class="st">`</span><span class="at">create_scatter()</span><span class="st">`</span> plots as expected ──────────────────</span>
-<span id="cb34-10"><a href=""></a>Snapshot of <span class="st">`</span><span class="at">testcase</span><span class="st">`</span> to <span class="st">'slides.qmd/create-scatter.svg'</span> has changed</span>
-<span id="cb34-11"><a href=""></a>Run <span class="st">`</span><span class="at">testthat::snapshot_review('slides.qmd/')</span><span class="st">`</span> to review changes</span>
-<span id="cb34-12"><a href=""></a>Backtrace<span class="sc">:</span></span>
-<span id="cb34-13"><a href=""></a> <span class="fl">1.</span> vdiffr<span class="sc">::</span><span class="fu">expect_doppelganger</span>(...)</span>
-<span id="cb34-14"><a href=""></a> <span class="fl">3.</span> testthat<span class="sc">::</span><span class="fu">expect_snapshot_file</span>(...)</span>
-<span id="cb34-15"><a href=""></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">reporter$stop_if_needed()</span><span class="st">`</span><span class="sc">:</span></span>
-<span id="cb34-16"><a href=""></a><span class="sc">!</span> Test failed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb32-2"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb32-3"><a href=""></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb32-4"><a href=""></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb32-5"><a href=""></a>  )</span>
+<span id="cb32-6"><a href=""></a>})</span>
+<span id="cb32-7"><a href=""></a></span>
+<span id="cb32-8"><a href=""></a>── <span class="fu">Failure</span> (<span class="st">'&lt;text&gt;:3'</span>)<span class="sc">:</span> <span class="st">`</span><span class="at">create_scatter()</span><span class="st">`</span> plots as expected ──────────────────</span>
+<span id="cb32-9"><a href=""></a>Snapshot of <span class="st">`</span><span class="at">testcase</span><span class="st">`</span> to <span class="st">'slides.qmd/create-scatter.svg'</span> has changed</span>
+<span id="cb32-10"><a href=""></a>Run <span class="st">`</span><span class="at">testthat::snapshot_review('slides.qmd/')</span><span class="st">`</span> to review changes</span>
+<span id="cb32-11"><a href=""></a>Backtrace<span class="sc">:</span></span>
+<span id="cb32-12"><a href=""></a> <span class="fl">1.</span> vdiffr<span class="sc">::</span><span class="fu">expect_doppelganger</span>(...)</span>
+<span id="cb32-13"><a href=""></a> <span class="fl">3.</span> testthat<span class="sc">::</span><span class="fu">expect_snapshot_file</span>(...)</span>
+<span id="cb32-14"><a href=""></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">reporter$stop_if_needed()</span><span class="st">`</span><span class="sc">:</span></span>
+<span id="cb32-15"><a href=""></a><span class="sc">!</span> Test failed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section><section id="fixing-tests-1" class="slide level2 smaller"><h2>Fixing tests</h2>
 <p>Running <code>snapshot_review()</code> launches a Shiny app which can be used to either accept or reject the new output(s).</p>
@@ -871,7 +843,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 </div>
 </div>
 </div>
-</section><section id="section-1" class="slide level2"><h2></h2>
+</section><section id="section" class="slide level2"><h2></h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -906,26 +878,24 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <div class="column" style="width:50%;">
 <p><strong>Test</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="co"># File: tests/testthat/test-write-json.R</span></span>
-<span id="cb35-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"json writer works"</span>, {</span>
-<span id="cb35-3"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb35-4"><a href=""></a>  </span>
-<span id="cb35-5"><a href=""></a>  r_to_json <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb35-6"><a href=""></a>    path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".json"</span>)</span>
-<span id="cb35-7"><a href=""></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
-<span id="cb35-8"><a href=""></a>    path</span>
-<span id="cb35-9"><a href=""></a>  }</span>
-<span id="cb35-10"><a href=""></a></span>
-<span id="cb35-11"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"a"</span>))</span>
-<span id="cb35-12"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
-<span id="cb35-13"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="co"># File: tests/testthat/test-write-json.R</span></span>
+<span id="cb33-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"json writer works"</span>, {</span>
+<span id="cb33-3"><a href=""></a>  r_to_json <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb33-4"><a href=""></a>    path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".json"</span>)</span>
+<span id="cb33-5"><a href=""></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
+<span id="cb33-6"><a href=""></a>    path</span>
+<span id="cb33-7"><a href=""></a>  }</span>
+<span id="cb33-8"><a href=""></a></span>
+<span id="cb33-9"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"a"</span>))</span>
+<span id="cb33-10"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
+<span id="cb33-11"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning: json writer works ──────────────────────────────────────────────────
 Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 </div>
 </div>
 <p><strong>Snapshot</strong></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb37-1"><a href=""></a><span class="ot">[[</span><span class="dv">1</span><span class="ot">],</span><span class="fu">{</span><span class="dt">"x"</span><span class="fu">:</span><span class="ot">[</span><span class="st">"a"</span><span class="ot">]</span><span class="fu">}</span><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb35-1"><a href=""></a><span class="ot">[[</span><span class="dv">1</span><span class="ot">],</span><span class="fu">{</span><span class="dt">"x"</span><span class="fu">:</span><span class="ot">[</span><span class="st">"a"</span><span class="ot">]</span><span class="fu">}</span><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -949,38 +919,34 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 </section><section id="what-test-success-looks-like-2" class="slide level2 smaller"><h2>What test success looks like</h2>
 <p>If you run the test again, it’ll succeed:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># File: tests/testthat/test-write-json.R</span></span>
-<span id="cb38-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"json writer works"</span>, {</span>
-<span id="cb38-3"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb38-4"><a href=""></a>  </span>
-<span id="cb38-5"><a href=""></a>  r_to_json <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb38-6"><a href=""></a>    path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".json"</span>)</span>
-<span id="cb38-7"><a href=""></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
-<span id="cb38-8"><a href=""></a>    path</span>
-<span id="cb38-9"><a href=""></a>  }</span>
-<span id="cb38-10"><a href=""></a></span>
-<span id="cb38-11"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"a"</span>))</span>
-<span id="cb38-12"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
-<span id="cb38-13"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="co"># File: tests/testthat/test-write-json.R</span></span>
+<span id="cb36-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"json writer works"</span>, {</span>
+<span id="cb36-3"><a href=""></a>  r_to_json <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb36-4"><a href=""></a>    path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".json"</span>)</span>
+<span id="cb36-5"><a href=""></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
+<span id="cb36-6"><a href=""></a>    path</span>
+<span id="cb36-7"><a href=""></a>  }</span>
+<span id="cb36-8"><a href=""></a></span>
+<span id="cb36-9"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"a"</span>))</span>
+<span id="cb36-10"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
+<span id="cb36-11"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-2" class="slide level2 smaller"><h2>What test failure looks like</h2>
 <p>If the new output doesn’t match the expected one, the test will fail:</p>
-<div class="sourceCode" id="cb40" data-code-line-numbers="11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="co"># File: tests/testthat/test-write-json.R</span></span>
-<span id="cb40-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"json writer works"</span>, {</span>
-<span id="cb40-3"><a href=""></a>  <span class="fu">local_edition</span>(<span class="dv">3</span>)</span>
-<span id="cb40-4"><a href=""></a>  </span>
-<span id="cb40-5"><a href=""></a>  r_to_json <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb40-6"><a href=""></a>    path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".json"</span>)</span>
-<span id="cb40-7"><a href=""></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
-<span id="cb40-8"><a href=""></a>    path</span>
-<span id="cb40-9"><a href=""></a>  }</span>
-<span id="cb40-10"><a href=""></a></span>
-<span id="cb40-11"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"b"</span>))</span>
-<span id="cb40-12"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
-<span id="cb40-13"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38" data-code-line-numbers="11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># File: tests/testthat/test-write-json.R</span></span>
+<span id="cb38-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"json writer works"</span>, {</span>
+<span id="cb38-3"><a href=""></a>  r_to_json <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb38-4"><a href=""></a>    path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".json"</span>)</span>
+<span id="cb38-5"><a href=""></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
+<span id="cb38-6"><a href=""></a>    path</span>
+<span id="cb38-7"><a href=""></a>  }</span>
+<span id="cb38-8"><a href=""></a></span>
+<span id="cb38-9"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"b"</span>))</span>
+<span id="cb38-10"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
+<span id="cb38-11"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>── Failure: json writer works ──────────────────────────────────────────────────
@@ -1049,21 +1015,21 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </div>
 </div><div class="column" style="width:60%;">
 <p><strong>Code</strong></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">library</span>(shiny)</span>
-<span id="cb46-2"><a href=""></a></span>
-<span id="cb46-3"><a href=""></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb46-4"><a href=""></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
-<span id="cb46-5"><a href=""></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
-<span id="cb46-6"><a href=""></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
-<span id="cb46-7"><a href=""></a>)</span>
-<span id="cb46-8"><a href=""></a></span>
-<span id="cb46-9"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb46-10"><a href=""></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
-<span id="cb46-11"><a href=""></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
-<span id="cb46-12"><a href=""></a>  )</span>
-<span id="cb46-13"><a href=""></a>}</span>
-<span id="cb46-14"><a href=""></a></span>
-<span id="cb46-15"><a href=""></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a><span class="fu">library</span>(shiny)</span>
+<span id="cb44-2"><a href=""></a></span>
+<span id="cb44-3"><a href=""></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb44-4"><a href=""></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb44-5"><a href=""></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb44-6"><a href=""></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb44-7"><a href=""></a>)</span>
+<span id="cb44-8"><a href=""></a></span>
+<span id="cb44-9"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb44-10"><a href=""></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb44-11"><a href=""></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb44-12"><a href=""></a>  )</span>
+<span id="cb44-13"><a href=""></a>}</span>
+<span id="cb44-14"><a href=""></a></span>
+<span id="cb44-15"><a href=""></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section><section id="generating-a-test" class="slide level2 smaller"><h2>Generating a test</h2>
 <p>To create a snapshot test, go to the app directory and run <code>record_test()</code>.</p>
@@ -1079,15 +1045,15 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <div class="columns">
 <div class="column" style="width:60%;">
 <p><strong>Test</strong></p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">library</span>(shinytest2)</span>
-<span id="cb47-2"><a href=""></a></span>
-<span id="cb47-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"{shinytest2} recording: unitConverter"</span>, {</span>
-<span id="cb47-4"><a href=""></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(</span>
-<span id="cb47-5"><a href=""></a>  <span class="at">name =</span> <span class="st">"unitConverter"</span>, <span class="at">height =</span> <span class="dv">543</span>, <span class="at">width =</span> <span class="dv">426</span>)</span>
-<span id="cb47-6"><a href=""></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">1</span>)</span>
-<span id="cb47-7"><a href=""></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">10</span>)</span>
-<span id="cb47-8"><a href=""></a>  app<span class="sc">$</span><span class="fu">expect_values</span>()</span>
-<span id="cb47-9"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">library</span>(shinytest2)</span>
+<span id="cb45-2"><a href=""></a></span>
+<span id="cb45-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"{shinytest2} recording: unitConverter"</span>, {</span>
+<span id="cb45-4"><a href=""></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb45-5"><a href=""></a>  <span class="at">name =</span> <span class="st">"unitConverter"</span>, <span class="at">height =</span> <span class="dv">543</span>, <span class="at">width =</span> <span class="dv">426</span>)</span>
+<span id="cb45-6"><a href=""></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">1</span>)</span>
+<span id="cb45-7"><a href=""></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">10</span>)</span>
+<span id="cb45-8"><a href=""></a>  app<span class="sc">$</span><span class="fu">expect_values</span>()</span>
+<span id="cb45-9"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:40%;">
 <p><strong>Snapshot</strong></p>
 <div class="cell">
@@ -1119,12 +1085,12 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </section><section id="creating-a-driver-script" class="slide level2 smaller"><h2>Creating a driver script</h2>
 <p>Note that currently your test scripts and results are in the <code>/inst</code> folder, but you’d also want to run these tests automatically using <a href="https://testthat.r-lib.org">testthat</a>.</p>
 <p>For this, you will need to write a driver script like the following:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">library</span>(shinytest2)</span>
-<span id="cb48-2"><a href=""></a></span>
-<span id="cb48-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`unitConverter` app works"</span>, {</span>
-<span id="cb48-4"><a href=""></a>  appdir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"package_name"</span>, <span class="st">"unitConverter"</span>)</span>
-<span id="cb48-5"><a href=""></a>  <span class="fu">test_app</span>(appdir)</span>
-<span id="cb48-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">library</span>(shinytest2)</span>
+<span id="cb46-2"><a href=""></a></span>
+<span id="cb46-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`unitConverter` app works"</span>, {</span>
+<span id="cb46-4"><a href=""></a>  appdir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"package_name"</span>, <span class="st">"unitConverter"</span>)</span>
+<span id="cb46-5"><a href=""></a>  <span class="fu">test_app</span>(appdir)</span>
+<span id="cb46-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now the Shiny apps will be tested with the rest of the source code in the package! 🎊</p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -1142,28 +1108,28 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </section><section id="what-test-failure-looks-like-3" class="slide level2 smaller"><h2>What test failure looks like</h2>
 <p>Let’s say, while updating the app, you make a mistake, which leads to a failed test.</p>
 <p><strong>Changed code with mistake</strong></p>
-<div class="sourceCode" id="cb49" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb49-2"><a href=""></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
-<span id="cb49-3"><a href=""></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
-<span id="cb49-4"><a href=""></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
-<span id="cb49-5"><a href=""></a>)</span>
-<span id="cb49-6"><a href=""></a></span>
-<span id="cb49-7"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb49-8"><a href=""></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
-<span id="cb49-9"><a href=""></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>) <span class="co"># should be `"Weight (in g): "`</span></span>
-<span id="cb49-10"><a href=""></a>  )</span>
-<span id="cb49-11"><a href=""></a>}</span>
-<span id="cb49-12"><a href=""></a></span>
-<span id="cb49-13"><a href=""></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb47-2"><a href=""></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb47-3"><a href=""></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb47-4"><a href=""></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb47-5"><a href=""></a>)</span>
+<span id="cb47-6"><a href=""></a></span>
+<span id="cb47-7"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb47-8"><a href=""></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb47-9"><a href=""></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>) <span class="co"># should be `"Weight (in g): "`</span></span>
+<span id="cb47-10"><a href=""></a>  )</span>
+<span id="cb47-11"><a href=""></a>}</span>
+<span id="cb47-12"><a href=""></a></span>
+<span id="cb47-13"><a href=""></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Test failure JSON diff</strong></p>
-<div class="sourceCode" id="cb50" data-code-line-number="6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb50-1"><a href=""></a><span class="er">Diff</span> <span class="er">in</span> <span class="er">snapshot</span> <span class="er">file</span> <span class="er">`shinytest2unitConverter-001.json`</span></span>
-<span id="cb50-2"><a href=""></a><span class="er">&lt;</span> <span class="er">before</span>                            <span class="er">&gt;</span> <span class="er">after</span>                           </span>
-<span id="cb50-3"><a href=""></a><span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                           <span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                         </span>
-<span id="cb50-4"><a href=""></a>    <span class="er">},</span>                                  <span class="er">},</span>                            </span>
-<span id="cb50-5"><a href=""></a>    <span class="er">"output":</span> <span class="fu">{</span>                         <span class="dt">"output"</span><span class="fu">:</span> <span class="fu">{</span>                   </span>
-<span id="cb50-6"><a href=""></a><span class="er">&lt;</span>     <span class="dt">"g"</span><span class="fu">:</span> <span class="st">"Weight (in g): 10000"</span>   <span class="er">&gt;</span>     <span class="st">"g"</span><span class="er">:</span> <span class="st">"Weight (in kg): 10000"</span></span>
-<span id="cb50-7"><a href=""></a>    <span class="fu">},</span>                                  <span class="fu">}</span><span class="er">,</span>                            </span>
-<span id="cb50-8"><a href=""></a>    <span class="er">"export":</span> <span class="fu">{</span>                         <span class="dt">"export"</span><span class="fu">:</span> <span class="fu">{</span>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb48" data-code-line-number="6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb48-1"><a href=""></a><span class="er">Diff</span> <span class="er">in</span> <span class="er">snapshot</span> <span class="er">file</span> <span class="er">`shinytest2unitConverter-001.json`</span></span>
+<span id="cb48-2"><a href=""></a><span class="er">&lt;</span> <span class="er">before</span>                            <span class="er">&gt;</span> <span class="er">after</span>                           </span>
+<span id="cb48-3"><a href=""></a><span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                           <span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                         </span>
+<span id="cb48-4"><a href=""></a>    <span class="er">},</span>                                  <span class="er">},</span>                            </span>
+<span id="cb48-5"><a href=""></a>    <span class="er">"output":</span> <span class="fu">{</span>                         <span class="dt">"output"</span><span class="fu">:</span> <span class="fu">{</span>                   </span>
+<span id="cb48-6"><a href=""></a><span class="er">&lt;</span>     <span class="dt">"g"</span><span class="fu">:</span> <span class="st">"Weight (in g): 10000"</span>   <span class="er">&gt;</span>     <span class="st">"g"</span><span class="er">:</span> <span class="st">"Weight (in kg): 10000"</span></span>
+<span id="cb48-7"><a href=""></a>    <span class="fu">},</span>                                  <span class="fu">}</span><span class="er">,</span>                            </span>
+<span id="cb48-8"><a href=""></a>    <span class="er">"export":</span> <span class="fu">{</span>                         <span class="dt">"export"</span><span class="fu">:</span> <span class="fu">{</span>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="updating-snapshots" class="slide level2 smaller"><h2>Updating snapshots</h2>
 <p>Fixing this test will be similar to fixing any other snapshot test you’ve seen thus far.</p>
 <p><code>{testthat2}</code> provides a Shiny app for comparing the old and new snapshots.</p>
@@ -1185,29 +1151,29 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <div class="columns">
 <div class="column" style="width:55%;">
 <p><strong>Source code</strong></p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a><span class="co"># File: R/unit-converter.R</span></span>
-<span id="cb52-2"><a href=""></a>unitConverter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb52-3"><a href=""></a>  ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb52-4"><a href=""></a>    <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
-<span id="cb52-5"><a href=""></a>    <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
-<span id="cb52-6"><a href=""></a>    <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
-<span id="cb52-7"><a href=""></a>  )</span>
-<span id="cb52-8"><a href=""></a></span>
-<span id="cb52-9"><a href=""></a>  server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb52-10"><a href=""></a>    output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
-<span id="cb52-11"><a href=""></a>      <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
-<span id="cb52-12"><a href=""></a>    )</span>
-<span id="cb52-13"><a href=""></a>  }</span>
-<span id="cb52-14"><a href=""></a></span>
-<span id="cb52-15"><a href=""></a>  <span class="fu">shinyApp</span>(ui, server)</span>
-<span id="cb52-16"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a><span class="co"># File: R/unit-converter.R</span></span>
+<span id="cb50-2"><a href=""></a>unitConverter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb50-3"><a href=""></a>  ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb50-4"><a href=""></a>    <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb50-5"><a href=""></a>    <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb50-6"><a href=""></a>    <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb50-7"><a href=""></a>  )</span>
+<span id="cb50-8"><a href=""></a></span>
+<span id="cb50-9"><a href=""></a>  server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb50-10"><a href=""></a>    output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb50-11"><a href=""></a>      <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb50-12"><a href=""></a>    )</span>
+<span id="cb50-13"><a href=""></a>  }</span>
+<span id="cb50-14"><a href=""></a></span>
+<span id="cb50-15"><a href=""></a>  <span class="fu">shinyApp</span>(ui, server)</span>
+<span id="cb50-16"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:45%;">
 <p><strong>Test file to modify</strong></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a><span class="co"># File: tests/testthat/test-unit-converter.R</span></span>
-<span id="cb53-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"unitConverter app works"</span>, {</span>
-<span id="cb53-3"><a href=""></a>  shiny_app <span class="ot">&lt;-</span> <span class="fu">unitConverter</span>()</span>
-<span id="cb53-4"><a href=""></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(shiny_app)</span>
-<span id="cb53-5"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="co"># File: tests/testthat/test-unit-converter.R</span></span>
+<span id="cb51-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"unitConverter app works"</span>, {</span>
+<span id="cb51-3"><a href=""></a>  shiny_app <span class="ot">&lt;-</span> <span class="fu">unitConverter</span>()</span>
+<span id="cb51-4"><a href=""></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(shiny_app)</span>
+<span id="cb51-5"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section><section id="generating-test-and-snapshots" class="slide level2 smaller"><h2>Generating test and snapshots</h2>
 <p>you call <code>record_test()</code> directly on a Shiny app object, copy-paste commands to the test script, and run <code>devtools::test_active_file()</code> to generate snapshots.</p>
@@ -1412,15 +1378,15 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <p>But where can you find the new snapshots?</p>
 </section><section id="accessing-new-snapshots" class="slide level2 smaller"><h2>Accessing new snapshots</h2>
 <p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>On <a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package" target="_blank">GitHub actions</a>, you need to upload snapshots:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb61-1"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
-<span id="cb61-2"><a href=""></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb61-3"><a href=""></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb59-1"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb59-2"><a href=""></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb59-3"><a href=""></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="code-review-with-snapshot-tests" class="slide level2 smaller"><h2>Code review with snapshot tests</h2>
 <p>Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots.</p>
 <p>How do you review pull requests with complex snapshots changes?</p>
-</section><section id="section-2" class="slide level2 smaller"><h2></h2>
+</section><section id="section-1" class="slide level2 smaller"><h2></h2>
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby">
 <li><a data-tabby-default="" href="#tabset-1-1">Option-1</a></li>
@@ -1466,46 +1432,46 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </h2>
 <p>It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g.&nbsp;when testing requires external benchmarking).</p>
 <p>Let’s say you write a function to extract estimates from a regression model.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a>extract_est <span class="ot">&lt;-</span> <span class="cf">function</span>(m) m<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a>extract_est <span class="ot">&lt;-</span> <span class="cf">function</span>(m) m<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Its test should compare results against an external benchmark, and not a snapshot.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Good</strong></p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`extract_est()` works"</span>, {</span>
-<span id="cb63-2"><a href=""></a>  m <span class="ot">&lt;-</span> <span class="fu">lm</span>(wt <span class="sc">~</span> mpg, mtcars)</span>
-<span id="cb63-3"><a href=""></a>  <span class="fu">expect_equal</span>(</span>
-<span id="cb63-4"><a href=""></a>    <span class="fu">extract_est</span>(m)[[<span class="dv">1</span>]],</span>
-<span id="cb63-5"><a href=""></a>    m<span class="sc">$</span>coefficients[[<span class="dv">1</span>]]</span>
-<span id="cb63-6"><a href=""></a>  )</span>
-<span id="cb63-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`extract_est()` works"</span>, {</span>
+<span id="cb61-2"><a href=""></a>  m <span class="ot">&lt;-</span> <span class="fu">lm</span>(wt <span class="sc">~</span> mpg, mtcars)</span>
+<span id="cb61-3"><a href=""></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb61-4"><a href=""></a>    <span class="fu">extract_est</span>(m)[[<span class="dv">1</span>]],</span>
+<span id="cb61-5"><a href=""></a>    m<span class="sc">$</span>coefficients[[<span class="dv">1</span>]]</span>
+<span id="cb61-6"><a href=""></a>  )</span>
+<span id="cb61-7"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p><strong>Bad</strong></p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`extract_est()` works"</span>, {</span>
-<span id="cb64-2"><a href=""></a>  m <span class="ot">&lt;-</span> <span class="fu">lm</span>(wt <span class="sc">~</span> mpg, mtcars)</span>
-<span id="cb64-3"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">extract_est</span>(m))</span>
-<span id="cb64-4"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`extract_est()` works"</span>, {</span>
+<span id="cb62-2"><a href=""></a>  m <span class="ot">&lt;-</span> <span class="fu">lm</span>(wt <span class="sc">~</span> mpg, mtcars)</span>
+<span id="cb62-3"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">extract_est</span>(m))</span>
+<span id="cb62-4"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section><section id="snapshot-for-humans-not-machines" class="slide level2 smaller"><h2>Snapshot for humans, not machines</h2>
 <p>Snapshot testing is appropriate when the human needs to be in the loop to make sure that things are working as expected. Therefore, the snapshots should be human readable.</p>
 <p>E.g. if you write a function that plots something:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a>point_plotter <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>point_plotter <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To test it, you should snapshot the <em>plot</em>, and not the underlying <em>data</em>, which is hard to make sense of for a human.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Good</strong></p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`point_plotter()` works"</span>, {</span>
-<span id="cb66-2"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
-<span id="cb66-3"><a href=""></a>    <span class="st">"point-plotter-mtcars"</span>,</span>
-<span id="cb66-4"><a href=""></a>    <span class="fu">point_plotter</span>()</span>
-<span id="cb66-5"><a href=""></a>  )</span>
-<span id="cb66-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`point_plotter()` works"</span>, {</span>
+<span id="cb64-2"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb64-3"><a href=""></a>    <span class="st">"point-plotter-mtcars"</span>,</span>
+<span id="cb64-4"><a href=""></a>    <span class="fu">point_plotter</span>()</span>
+<span id="cb64-5"><a href=""></a>  )</span>
+<span id="cb64-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p><strong>Bad</strong></p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`point_plotter()` works"</span>, {</span>
-<span id="cb67-2"><a href=""></a>  p <span class="ot">&lt;-</span> <span class="fu">point_plotter</span>()</span>
-<span id="cb67-3"><a href=""></a>  pb <span class="ot">&lt;-</span> <span class="fu">ggplot_build</span>(p)</span>
-<span id="cb67-4"><a href=""></a>  <span class="fu">expect_snapshot</span>(pb<span class="sc">$</span>data)</span>
-<span id="cb67-5"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`point_plotter()` works"</span>, {</span>
+<span id="cb65-2"><a href=""></a>  p <span class="ot">&lt;-</span> <span class="fu">point_plotter</span>()</span>
+<span id="cb65-3"><a href=""></a>  pb <span class="ot">&lt;-</span> <span class="fu">ggplot_build</span>(p)</span>
+<span id="cb65-4"><a href=""></a>  <span class="fu">expect_snapshot</span>(pb<span class="sc">$</span>data)</span>
+<span id="cb65-5"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section><section id="dont-blindly-accept-snapshot-changes" class="slide level2 smaller"><h2>Don’t <strong>blindly accept</strong> snapshot changes</h2>
 <p>Resist formation of such a habit.</p>
@@ -1571,11 +1537,11 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <p>And Happy Snapshotting! 😊</p>
 </section><section id="session-information" class="slide level2 smaller"><h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a>quarto<span class="sc">::</span><span class="fu">quarto_version</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>quarto<span class="sc">::</span><span class="fu">quarto_version</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] '1.7.13'</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
