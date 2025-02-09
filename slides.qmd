@@ -184,32 +184,6 @@ Familiarity with writing unit tests using [`{testthat}`](https://testthat.r-lib.
 
 If not, have a look at [this](https://r-pkgs.org/testing-basics.html){target="_blank"} chapter from *R Packages* book.
 
-## 
-
-<br>
-
-:::{.callout-important}
-
-## *Nota bene*
-
-In the following slides, in all snapshot tests, I include the following line of code:
-
-```r
-local_edition(3)
-```
-
-**You don't need to do this in your package tests!**
-
-It's sufficient to update the `DESCRIPTION` file to use `{testthat}` 3rd edition:
-
-```r
-Config/testthat/edition: 3
-```
-
-For more, see [this](https://testthat.r-lib.org/articles/third-edition.html){target="_blank"} article.
-
-:::
-
 # Testing text outputs
 
 Snapshot tests can be used to test that text output *prints* as expected.
@@ -306,7 +280,6 @@ snapper$start_file("slides.qmd", "test")
 
 ```{r}
 test_that("`print_movies()` prints as expected", {
-  local_edition(3)
   expect_snapshot(cat(print_movies(
     c("Title", "Director"),
     c("Salaam Bombay!", "Mira Nair")
@@ -371,7 +344,6 @@ If you run the test again, it'll succeed:
 
 ```{r}
 test_that("`print_movies()` prints as expected", {
-  local_edition(3)
   expect_snapshot(cat(print_movies(
     c("Title", "Director"),
     c("Salaam Bombay!", "Mira Nair")
@@ -452,7 +424,6 @@ test_that("`print_movies()` prints as expected", {
 
 ```{r, echo=FALSE, error=TRUE}
 test_that("`print_movies()` prints as expected", {
-  local_edition(3)
   expect_snapshot(cat(print_movies(
     c("Title", "Director"),
     c("Salaam Bombay!", "Mira Nair")
@@ -511,7 +482,6 @@ So far you have tested text output printed to the console, but you can also use 
 f <- function() message("Some info for you.")
 
 test_that("f() messages", {
-  local_edition(3)
   expect_snapshot(f())
 })
 ```
@@ -526,7 +496,6 @@ test_that("f() messages", {
 g <- function() warning("Managed to recover.")
 
 test_that("g() warns", {
-  local_edition(3)
   expect_snapshot(g())
 })
 ```
@@ -551,14 +520,12 @@ You can capture it:
 
 ```{.r code-line-numbers="3"}
 test_that("`log()` errors", {
-  local_edition(3)
   expect_snapshot(log("x"), error = TRUE)
 })
 ```
 
 ```{r, echo=FALSE}
 test_that("`log()` errors", {
-  local_edition(3)
   expect_snapshot(log("x"), error = TRUE)
 })
 ```
@@ -655,7 +622,6 @@ snapper$start_file("slides.qmd", "test")
 
 ```{r}
 test_that("`create_scatter()` plots as expected", {
-  local_edition(3)
   expect_doppelganger(
     title = "create scatter",
     fig = create_scatter(),
@@ -687,7 +653,6 @@ If you run the test again, it'll succeed:
 
 ```{r}
 test_that("`create_scatter()` plots as expected", {
-  local_edition(3)
   expect_doppelganger(
     title = "create scatter",
     fig = create_scatter(),
@@ -740,7 +705,6 @@ create_scatter <- function() {
 
 ```{.r}
 test_that("`create_scatter()` plots as expected", {
-  local_edition(3)
   expect_doppelganger(
     title = "create scatter",
     fig = create_scatter(),
@@ -814,8 +778,6 @@ snapper$start_file("slides.qmd", "test")
 ```{r}
 # File: tests/testthat/test-write-json.R
 test_that("json writer works", {
-  local_edition(3)
-  
   r_to_json <- function(x) {
     path <- tempfile(fileext = ".json")
     jsonlite::write_json(x, path)
@@ -867,8 +829,6 @@ If you run the test again, it'll succeed:
 ```{r}
 # File: tests/testthat/test-write-json.R
 test_that("json writer works", {
-  local_edition(3)
-  
   r_to_json <- function(x) {
     path <- tempfile(fileext = ".json")
     jsonlite::write_json(x, path)
@@ -893,8 +853,6 @@ If the new output doesn't match the expected one, the test will fail:
 ```{.r code-line-numbers="11"}
 # File: tests/testthat/test-write-json.R
 test_that("json writer works", {
-  local_edition(3)
-  
   r_to_json <- function(x) {
     path <- tempfile(fileext = ".json")
     jsonlite::write_json(x, path)
@@ -910,8 +868,6 @@ test_that("json writer works", {
 #| echo: false
 # File: tests/testthat/test-write-json.R
 test_that("json writer works", {
-  local_edition(3)
-  
   r_to_json <- function(x) {
     path <- tempfile(fileext = ".json")
     jsonlite::write_json(x, path)
@@ -1741,4 +1697,3 @@ And Happy Snapshotting! 😊
 quarto::quarto_version()
 sessioninfo::session_info(include_base = TRUE)
 ```
-

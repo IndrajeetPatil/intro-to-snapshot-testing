@@ -28,3 +28,4 @@ Depends:
     shinytest2,
     testthat,
     vdiffr
+Config/testthat/edition: 3
