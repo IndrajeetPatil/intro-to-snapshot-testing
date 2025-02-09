@@ -545,14 +545,9 @@ You can now rest assured that the users are getting informed the way you want! ð
 
 ## Capturing errors {.smaller}
 
-In case of an error, the function `expect_snapshot()` itself will produce an error. 
-You have two ways around this:
+In case of an error, the function `expect_snapshot()` itself will produce an error.
 
-:::: {.columns}
-
-::: {.column width='50%'}
-
-**Option-1** (recommended)
+You can capture it:
 
 ```{.r code-line-numbers="3"}
 test_that("`log()` errors", {
@@ -567,40 +562,6 @@ test_that("`log()` errors", {
   expect_snapshot(log("x"), error = TRUE)
 })
 ```
-
-:::
-
-::: {.column width='50%'}
-
-**Option-2**
-
-```{.r code-line-numbers="3"}
-test_that("`log()` errors", {
-  local_edition(3)
-  expect_snapshot_error(log("x"))
-})
-```
-
-```{r, echo=FALSE}
-test_that("`log()` errors", {
-  local_edition(3)
-  expect_snapshot_error(log("x"))
-})
-```
-
-:::
-
-::::
-
-:::{.callout-tip}
-
-### Which option should I use?
-
-- If you want to capture both the code and the error message, use `expect_snapshot(..., error = TRUE)`.
-
-- If you want to capture only the error message, use `expect_snapshot_error()`.
-
-:::
 
 ## Further reading {.smaller}
 
