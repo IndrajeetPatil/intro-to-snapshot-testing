@@ -1694,6 +1694,5 @@ And Happy Snapshotting! 😊
 ## Session information {.smaller}
 
 ```{r}
-quarto::quarto_version()
 sessioninfo::session_info(include_base = TRUE)
 ```
