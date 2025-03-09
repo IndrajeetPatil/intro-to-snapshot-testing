@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.14">
 <meta name="author" content="Indrajeet Patil">
-<meta name="dcterms.date" content="2025-03-09 00:12:30.846025">
+<meta name="dcterms.date" content="2025-03-09 15:56:10.171506">
 <meta name="keywords" content="snapshot testing, testthat, shinytest2, vdiffr, r programming">
 <title>Introduction to Snapshot Testing in R</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -427,7 +427,7 @@
 <span id="cb5-8"><a href=""></a>  )</span>
 <span id="cb5-9"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -525,7 +525,7 @@ Output
 <span id="cb11-5"><a href=""></a>  )))</span>
 <span id="cb11-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -931,7 +931,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb36-10"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb36-11"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-2" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -1537,11 +1537,7 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 <p>And Happy Snapshotting! 😊</p>
 </section><section id="session-information" class="slide level2 smaller"><h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>quarto<span class="sc">::</span><span class="fu">quarto_version</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] '1.7.14'</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
@@ -1582,7 +1578,6 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  jsonlite      1.9.1   2025-03-03 [1] RSPM
  knitr         1.49    2024-11-08 [1] RSPM
  labeling      0.4.3   2023-08-29 [1] RSPM
- later         1.4.1   2024-11-27 [1] RSPM
  lattice       0.22-6  2024-03-20 [3] CRAN (R 4.4.3)
  lifecycle     1.0.4   2023-11-07 [1] RSPM
  magrittr      2.0.3   2022-03-30 [1] RSPM
@@ -1595,15 +1590,10 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  pkgconfig     2.0.3   2019-09-22 [1] RSPM
  pkgload       1.4.0   2024-06-28 [1] RSPM
  png           0.1-8   2022-11-29 [1] RSPM
- processx      3.8.6   2025-02-21 [1] RSPM
- ps            1.9.0   2025-02-18 [1] RSPM
- quarto        1.4.4   2024-07-20 [1] RSPM
  R6            2.6.1   2025-02-15 [1] RSPM
- Rcpp          1.0.14  2025-01-12 [1] RSPM
  rlang         1.1.5   2025-01-17 [1] RSPM
  rmarkdown     2.29    2024-11-04 [1] RSPM
  rprojroot     2.0.4   2023-11-05 [1] RSPM
- rstudioapi    0.17.1  2024-10-22 [1] RSPM
  scales        1.3.0   2023-11-28 [1] RSPM
  sessioninfo   1.2.3   2025-02-05 [1] any (@1.2.3)
  splines       4.4.3   2025-02-28 [3] local
