@@ -6,6 +6,7 @@ format:
     theme: simple
     slide-number: true
     preview-links: auto
+    link-external-newwindow: true
     code-link: true
     #embed-resources: true
     # footer: "Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/){target='_blank'}."
@@ -180,9 +181,9 @@ then you should be excited to know more about *snapshot tests* (aka *golden test
 
 # Prerequisites
 
-Familiarity with writing unit tests using [`{testthat}`](https://testthat.r-lib.org/index.html){target="_blank"}.
+Familiarity with writing unit tests using [`{testthat}`](https://testthat.r-lib.org/index.html).
 
-If not, have a look at [this](https://r-pkgs.org/testing-basics.html){target="_blank"} chapter from *R Packages* book.
+If not, have a look at [this](https://r-pkgs.org/testing-basics.html) chapter from *R Packages* book.
 
 # Testing text outputs
 
@@ -532,16 +533,16 @@ test_that("`log()` errors", {
 
 ## Further reading {.smaller}
 
-- `{testthat}` article on [snapshot testing](https://testthat.r-lib.org/articles/snapshotting.html){target="_blank"}
+- `{testthat}` article on [snapshot testing](https://testthat.r-lib.org/articles/snapshotting.html)
 
-- Introduction to [golden testing](https://ro-che.info/articles/2017-12-04-golden-tests){target="_blank"}
+- Introduction to [golden testing](https://ro-che.info/articles/2017-12-04-golden-tests)
 
-- Docs for [Jest](https://jestjs.io/docs/snapshot-testing){target="_blank"} library in JavaScript, which inspired snapshot testing implementation in `{testthat}`
+- Docs for [Jest](https://jestjs.io/docs/snapshot-testing) library in JavaScript, which inspired snapshot testing implementation in `{testthat}`
 
 
 # Testing graphical outputs
 
-To create graphical expectations, you will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/){target="_blank"}.
+To create graphical expectations, you will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/).
 
 ## How does `{vdiffr}` work? {.smaller}
 
@@ -754,7 +755,7 @@ For these reasons, snapshot tests for plots tend to be fragile and are not run o
 
 ## Further reading
 
-- `{vdiffr}` package [website](https://vdiffr.r-lib.org/){target="_blank"}
+- `{vdiffr}` package [website](https://vdiffr.r-lib.org/)
 
 # Testing entire files
 
@@ -890,11 +891,11 @@ knitr::include_graphics("media/json_snapshot.png")
 
 ## Further reading {.smaller}
 
-Documentation for [`expect_snapshot_file()`](https://testthat.r-lib.org/reference/expect_snapshot_file.html){target="_blank"}
+Documentation for [`expect_snapshot_file()`](https://testthat.r-lib.org/reference/expect_snapshot_file.html)
 
 # Testing Shiny applications
 
-To write formal tests for Shiny applications, you will use `{testthat}` extension package: [`{shinytest2}`](https://rstudio.github.io/shinytest2/){target="_blank"}.
+To write formal tests for Shiny applications, you will use `{testthat}` extension package: [`{shinytest2}`](https://rstudio.github.io/shinytest2/).
 
 ## How does `{shinytest2}` work? {.smaller}
 
@@ -1201,7 +1202,7 @@ knitr::include_graphics("media/shiny_app_function_return.mov")
 
 ## Testing apps from frameworks {.smaller}
 
-This testing workflow is also relevant for app frameworks (e.g. [`{golem}`](https://thinkr-open.github.io/golem/index.html){target="_blank"}, [`{rhino}`](https://appsilon.github.io/rhino/){target="_blank"}, etc.).
+This testing workflow is also relevant for app frameworks (e.g. [`{golem}`](https://thinkr-open.github.io/golem/index.html), [`{rhino}`](https://appsilon.github.io/rhino/), etc.).
 
 :::: {.columns}
 
@@ -1385,9 +1386,9 @@ The following are some advanced topics that are beyond the scope of the current 
 
 ## Extra
 
-- If you want to test Shiny apps with continuous integration using `{shinytest2}`, read [this](https://rstudio.github.io/shinytest2/articles/use-ci.html){target="_blank"} article.
+- If you want to test Shiny apps with continuous integration using `{shinytest2}`, read [this](https://rstudio.github.io/shinytest2/articles/use-ci.html) article.
 
-- `{shinytest2}` is a successor to `{shinytest}` package. If you want to migrate from the latter to the former, have a look at [this](https://rstudio.github.io/shinytest2/articles/z-migration.html){target="_blank"}.
+- `{shinytest2}` is a successor to `{shinytest}` package. If you want to migrate from the latter to the former, have a look at [this](https://rstudio.github.io/shinytest2/articles/z-migration.html).
 
 :::
 
@@ -1395,11 +1396,11 @@ The following are some advanced topics that are beyond the scope of the current 
 
 ## Further reading {.smaller}
 
-- [Testing](https://mastering-shiny.org/scaling-testing.html){target="_blank"} chapter from *Mastering Shiny* book
+- [Testing](https://mastering-shiny.org/scaling-testing.html) chapter from *Mastering Shiny* book
 
-- `{shinytest2}` article introducing its [workflow](https://rstudio.github.io/shinytest2/articles/shinytest2.html){target="_blank"}
+- `{shinytest2}` article introducing its [workflow](https://rstudio.github.io/shinytest2/articles/shinytest2.html)
 
-- `{shinytest2}` article on how to test apps in [R packages](https://rstudio.github.io/shinytest2/articles/use-package.html){target="_blank"}
+- `{shinytest2}` article on how to test apps in [R packages](https://rstudio.github.io/shinytest2/articles/use-package.html)
 
 # Headaches 
 
@@ -1421,7 +1422,7 @@ Tests that fail for reasons other than what they are testing for are problematic
 
 :::{.callout-note}
 
-*A* way to reduce the burden of keeping snapshots up-to-date is to [automate this process](https://github.com/krlmlr/actions-sync/tree/base/update-snapshots){target="_blank"}. But there is no free lunch in this universe, and now you need to maintain this automation! 🤷
+*A* way to reduce the burden of keeping snapshots up-to-date is to [automate this process](https://github.com/krlmlr/actions-sync/tree/base/update-snapshots). But there is no free lunch in this universe, and now you need to maintain this automation! 🤷
 
 :::
 
@@ -1449,7 +1450,7 @@ In local `R CMD Check`, you can find new snapshots in `.Rcheck` folder:
 package_name.Rcheck/tests/testthat/_snaps/
 ```
 
-On [GitHub actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package){target="_blank"}, you need to upload snapshots:
+On [GitHub actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package), you need to upload snapshots:
 
 ```yaml
       - uses: r-lib/actions/check-r-package@v2
@@ -1614,13 +1615,13 @@ To see a more realistic usage of snapshot tests, you can study open-source test 
 ::: {.column width="33%"}
 ### Print outputs
 
-- [`{cli}`](https://github.com/r-lib/cli/tree/main/tests/testthat){target="_blank"} (for testing command line interfaces)
+- [`{cli}`](https://github.com/r-lib/cli/tree/main/tests/testthat) (for testing command line interfaces)
 
-- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/tests/testthat){target="_blank"} (for testing generated HTML documents)
+- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/tests/testthat) (for testing generated HTML documents)
 
-- [`{dbplyr}`](https://github.com/tidyverse/dbplyr/tree/main/tests/testthat){target="_blank"} (for testing printing of generated SQL queries)
+- [`{dbplyr}`](https://github.com/tidyverse/dbplyr/tree/main/tests/testthat) (for testing printing of generated SQL queries)
 
-- [`{gt}`](https://github.com/rstudio/gt/tree/master/tests/testthat){target="_blank"} (for testing table printing)
+- [`{gt}`](https://github.com/rstudio/gt/tree/master/tests/testthat) (for testing table printing)
 :::
 
 <!-- 2nd column -->
@@ -1628,9 +1629,9 @@ To see a more realistic usage of snapshot tests, you can study open-source test 
 
 ### Visualizations
 
-- [`{ggplot2}`](https://github.com/tidyverse/ggplot2/tree/main/tests/testthat){target="_blank"}
+- [`{ggplot2}`](https://github.com/tidyverse/ggplot2/tree/main/tests/testthat)
 
-- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat){target="_blank"}
+- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat)
 
 :::
 
@@ -1639,9 +1640,9 @@ To see a more realistic usage of snapshot tests, you can study open-source test 
 
 ### Shiny apps 
 
-- [`{shinytest2}`](https://github.com/rstudio/shinytest2/tree/main/tests/testthat){target="_blank"}
+- [`{shinytest2}`](https://github.com/rstudio/shinytest2/tree/main/tests/testthat)
 
-- [`{designer}`](https://github.com/ashbaldry/designer/tree/dev/tests/testthat){target="_blank"}
+- [`{designer}`](https://github.com/ashbaldry/designer/tree/dev/tests/testthat)
 
 :::
 
@@ -1659,33 +1660,31 @@ These are only suggestions. Feel free to contribute to any project you like! �
 
 ## Suggestions 
 
-- See if `{ggplot2}` [extensions](https://exts.ggplot2.tidyverse.org/gallery/){target="_blank"} you like use snapshot tests for graphics. If not, you can add them for key functions.
+- See if `{ggplot2}` [extensions](https://exts.ggplot2.tidyverse.org/gallery/) you like use snapshot tests for graphics. If not, you can add them for key functions.
 
-- Check out hard reverse dependencies of [`{shiny}`](https://cran.r-project.org/web/packages/shiny/index.html){target="_blank"}, and add snapshot tests using `{shinytest2}` to an app of your liking.
+- Check out hard reverse dependencies of [`{shiny}`](https://cran.r-project.org/web/packages/shiny/index.html), and add snapshot tests using `{shinytest2}` to an app of your liking.
 
 - Add more `{vdiffr}` snapshot tests to plotting functions in [`{see}`](https://github.com/easystats/see), a library for statistical visualizations (I can chaperone your PRs here).
 
-- `{shinytest2}` is the successor to `{shinytest}` package. Check out which packages currently use it for [testing](https://cran.r-project.org/web/packages/shinytest/index.html){target="_blank"} Shiny apps, and see if you can use `{shinytest2}` instead (see how-to [here](https://rstudio.github.io/shinytest2/articles/z-migration.html){target="_blank"}).
+- `{shinytest2}` is the successor to `{shinytest}` package. Check out which packages currently use it for [testing](https://cran.r-project.org/web/packages/shinytest/index.html) Shiny apps, and see if you can use `{shinytest2}` instead (see how-to [here](https://rstudio.github.io/shinytest2/articles/z-migration.html)).
 
 :::
 
 # For more
 
-For a comprehensive collection of packages for unit testing in R, see [this](https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing){target="_blank"} page.
+For a comprehensive collection of packages for unit testing in R, see [this](https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing) page.
 
-If you are interested in good programming and software development practices, check out my other [slide decks](https://sites.google.com/site/indrajeetspatilmorality/presentations){target="_blank"}.
+If you are interested in good programming and software development practices, check out my other [slide decks](https://sites.google.com/site/indrajeetspatilmorality/presentations).
 
 # Find me at...
 
-{{< fa brands twitter >}} [Twitter](http://twitter.com/patilindrajeets){target="_blank"}
+{{< fa brands linkedin >}} [LinkedIn](https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/)
 
-{{< fa brands linkedin >}} [LikedIn](https://www.linkedin.com/in/indrajeet-patil-397865174/){target="_blank"}
+{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil)
 
-{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil){target="_blank"}
+{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/)
 
-{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/){target="_blank"}
-
-{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com){target="_blank"}
+{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com)
 
 # Thank You 
 
