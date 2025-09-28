@@ -10,10 +10,6 @@ format:
     code-link: true
     include-in-header: meta-tags.html
     google-analytics: "G-Z140SPPYBN"
-    #embed-resources: true
-    # footer: "Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/){target='_blank'}."
-#author: "Indrajeet Patil"
-#affiliation:
 execute:
   echo: true
 keywords: ["snapshot testing", "testthat", "shinytest2", "vdiffr", "r programming"]
@@ -30,8 +26,6 @@ canonical-url: "https://indrajeetpatil.github.io/intro-to-snapshot-testing/"
 ---
 
 ## Introduction to Snapshot Testing in R {style="margin-top: 1em;"}
-
-<!-- Don't render this file manually. Run `renderer.R` script instead. -->
 
 <!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
 <!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
