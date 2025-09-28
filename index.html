@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-c6982bbdd90c704a9b15aa23d87ad911.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="index_files/libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.2">
+<meta name="author" content="Indrajeet Patil">
+<meta name="dcterms.date" content="2025-09-28 17:45:41.093301">
+<meta name="keywords" content="snapshot testing, testthat, shinytest2, vdiffr, r programming">
+<title>Introduction to Snapshot Testing in R</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+<style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+<link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-0fde88a82f0356838740f155f1088782.css">
+<link rel="stylesheet" href="style.css">
+<link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+<!-- Google tag (gtag.js) --><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-Z140SPPYBN"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-Z140SPPYBN");
+  </script><meta property="og:title" content="Introduction to Snapshot Testing in R">
+<meta property="og:description" content="A comprehensive guide to snapshot testing in R using testthat, vdiffr, and shinytest2. Learn how to test text outputs, graphical outputs, and Shiny applications with automated testing.">
+<meta property="og:image" content="https://indrajeetpatil.github.io/intro-to-snapshot-testing/media/social-media-card.png">
+<meta property="og:url" content="https://indrajeetpatil.github.io/intro-to-snapshot-testing/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Introduction to Snapshot Testing in R">
+<meta name="author" content="Indrajeet Patil">
+<meta name="keywords" content="snapshot testing, testthat, shinytest2, vdiffr, r programming">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Introduction to Snapshot Testing in R">
+<meta name="twitter:description" content="A comprehensive guide to snapshot testing in R using testthat, vdiffr, and shinytest2. Learn how to test text outputs, graphical outputs, and Shiny applications with automated testing.">
+<meta name="twitter:image" content="https://indrajeetpatil.github.io/intro-to-snapshot-testing/media/social-media-card.png">
+<meta name="twitter:creator" content="@patilindrajeets">
+<link rel="canonical" href="https://indrajeetpatil.github.io/intro-to-snapshot-testing/">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+
+<section id="introduction-to-snapshot-testing-in-r" class="slide level2" style="margin-top: 1em;"><h2>Introduction to Snapshot Testing in R</h2>
+<!-- Don't render this file manually. Run `renderer.R` script instead. -->
+<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
+<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
+<div style="margin-top: 0.5em; margin-bottom: 0.5em; font-size: 1em">
+<p>Indrajeet Patil</p>
+</div>
+<div style="margin-top: 1em; font-size:0.75em">
+<p><img data-src="media/logos_combined.jpeg" class="absolute" style="width: 750px; height: 300px; "></p>
+</div>
+</section><section id="unit-testing" class="slide level2 smaller"><h2>Unit testing</h2>
+<p>The goal of a unit test is to capture the <em>expected</em> output of a function using <em>code</em> and making sure that <em>actual</em> output after any changes matches the expected output.</p>
+<p><a href="https://testthat.r-lib.org/"><code>{testthat}</code></a> is a popular framework for writing unit tests in R.</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Benefits of unit testing</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>insures against unintentionally changing function behaviour</li>
+<li>prevents re-introducing already fixed bugs</li>
+<li>acts as the most basic form of developer-focused documentation</li>
+<li>catches breaking changes coming from upstream dependencies</li>
+<li>etc.</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Test output</strong></p>
+</div>
+<div class="callout-content">
+<p>Test pass only when actual function behaviour matches expected.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 32%">
+<col style="width: 34%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">actual</th>
+<th style="text-align: left;">expected</th>
+<th style="text-align: left;">tests</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><i class="fa-regular fa-file-lines fa-2xl" aria-label="file-lines"></i></p></td>
+<td style="text-align: left;"><p><i class="fa-regular fa-file-lines fa-2xl" aria-label="file-lines"></i></p></td>
+<td style="text-align: left;"><p><i class="fa-regular fa-circle-check fa-2xl" aria-label="circle-check"></i></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><i class="fa-regular fa-file fa-2xl" aria-label="file"></i></p></td>
+<td style="text-align: left;"><p><i class="fa-regular fa-file-lines fa-2xl" aria-label="file-lines"></i></p></td>
+<td style="text-align: left;"><p><i class="fa-regular fa-circle-xmark fa-2xl" aria-label="circle-xmark"></i></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></div>
+</section><section id="unit-testing-with-testthat-a-recap" class="slide level2 smaller"><h2>Unit testing with <code>{testthat}</code>: A recap</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Test organization</strong></p>
+</div>
+<div class="callout-content">
+<p>Testing infrastructure for R package has the following hierarchy:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 55%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Role</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">
+<br><i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <strong>Test file</strong>
+</td>
+<td style="text-align: left;">Tests for <code>R/foo.R</code> will typically be in <code>tests/testthat/test-foo.R</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">
+<i class="fa-solid fa-flask fa-2xl" aria-label="flask"></i> <strong>Tests</strong>
+</td>
+<td style="text-align: left;">A single file can contain multiple tests.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">
+<i class="fa-solid fa-equals fa-2xl" aria-label="equals"></i> <strong>Expectations</strong>
+</td>
+<td style="text-align: left;">A single test can have multiple expectations.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Example test file</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>Every test is a call to <code><a href="https://testthat.r-lib.org/reference/test_that.html">testthat::test_that()</a></code> function.</p></li>
+<li><p>Every expectation is represented by <code>testthat::expect_*()</code> function.</p></li>
+<li><p>You can generate a test file using <code>usethis::use_test()</code> function.</p></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># File: tests/testthat/test-op.R</span></span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a><span class="co"># test-1</span></span>
+<span id="cb1-4"><a href=""></a><span class="fu">test_that</span>(<span class="st">"multiplication works"</span>, {</span>
+<span id="cb1-5"><a href=""></a>  <span class="fu">expect_equal</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>, <span class="dv">4</span>) <span class="co"># expectation-1</span></span>
+<span id="cb1-6"><a href=""></a>  <span class="fu">expect_equal</span>(<span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>, <span class="sc">-</span><span class="dv">4</span>) <span class="co"># expectation-2</span></span>
+<span id="cb1-7"><a href=""></a>})</span>
+<span id="cb1-8"><a href=""></a></span>
+<span id="cb1-9"><a href=""></a><span class="co"># test-2</span></span>
+<span id="cb1-10"><a href=""></a><span class="fu">test_that</span>(<span class="st">"addition works"</span>, {</span>
+<span id="cb1-11"><a href=""></a>  <span class="fu">expect_equal</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>, <span class="dv">4</span>) <span class="co"># expectation-1</span></span>
+<span id="cb1-12"><a href=""></a>  <span class="fu">expect_equal</span>(<span class="sc">-</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>, <span class="dv">0</span>) <span class="co"># expectation-2</span></span>
+<span id="cb1-13"><a href=""></a>})</span>
+<span id="cb1-14"><a href=""></a></span>
+<span id="cb1-15"><a href=""></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div></div>
+</section><section id="what-is-different-about-snapshot-testing" class="slide level2"><h2>What is different about snapshot testing?</h2>
+<div class="fragment">
+<p>A <strong>unit test</strong> records the code to describe expected output.</p>
+<p><br></p>
+<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-label="arrows-left-right"></i> <i class="fa-solid fa-file-code fa-2xl" aria-label="file-code"></i> (expected)</p>
+<p><br></p>
+</div>
+<div class="fragment">
+<p>A <strong>snapshot test</strong> records expected output in a separate, human-readable file.</p>
+<p><br></p>
+<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-label="arrows-left-right"></i> <i class="fa-solid fa-file-lines fa-2xl" aria-label="file-lines"></i> (expected)</p>
+</div>
+</section><section id="why-do-you-need-snapshot-testing" class="slide level2"><h2>Why do you need snapshot testing?</h2>
+<p>If you develop R packages and have struggled to</p>
+<ul>
+<li class="fragment">test that text output <em>prints</em> as expected</li>
+<li class="fragment">test that an entire file <em>is</em> as expected</li>
+<li class="fragment">test that generated graphical output <em>looks</em> as expected</li>
+<li class="fragment">update such tests <em>en masse</em>
+</li>
+</ul>
+<div class="fragment">
+<p>then you should be excited to know more about <em>snapshot tests</em> (aka <em>golden tests</em>)! 🤩</p>
+</div>
+</section><section id="prerequisites" class="title-slide slide level1 center"><h1>Prerequisites</h1>
+<p>Familiarity with writing unit tests using <a href="https://testthat.r-lib.org/index.html"><code>{testthat}</code></a>.</p>
+<p>If not, have a look at <a href="https://r-pkgs.org/testing-basics.html">this</a> chapter from <em>R Packages</em> book.</p>
+</section><section><section id="testing-text-outputs" class="title-slide slide level1 center"><h1>Testing text outputs</h1>
+<p>Snapshot tests can be used to test that text output <em>prints</em> as expected.</p>
+<p>Important for testing functions that pretty-print R objects to the console, create elegant and informative exceptions, etc.</p>
+</section><section id="example-function" class="slide level2 smaller"><h2>Example function</h2>
+<p>Let’s say you want to write a unit test for the following function:</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Source code</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
+<span id="cb2-2"><a href=""></a>  <span class="fu">paste0</span>(</span>
+<span id="cb2-3"><a href=""></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb2-4"><a href=""></a>    <span class="fu">paste0</span>(<span class="st">"  "</span>, keys, <span class="st">": "</span>, values, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-5"><a href=""></a>  )</span>
+<span id="cb2-6"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column" style="width:40%;">
+<p><strong>Output</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb3-2"><a href=""></a>  <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb3-3"><a href=""></a>  <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb3-4"><a href=""></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Movie: 
+  Title: Salaam Bombay!
+  Director: Mira Nair</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p><br></p>
+<p>Note that you want to test that the printed output <em>looks</em> as expected.</p>
+<p>Therefore, you need to check for all the little bells and whistles in the printed output.</p>
+</div>
+</section><section id="example-test" class="slide level2 smaller"><h2>Example test</h2>
+<p>Even testing this simple function is a bit painful because you need to keep track of every escape character, every space, etc.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb5-2"><a href=""></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb5-3"><a href=""></a>    <span class="fu">print_movies</span>(</span>
+<span id="cb5-4"><a href=""></a>      <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb5-5"><a href=""></a>      <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb5-6"><a href=""></a>    ),</span>
+<span id="cb5-7"><a href=""></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span>
+<span id="cb5-8"><a href=""></a>  )</span>
+<span id="cb5-9"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed 😀</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>With a more complex code, it’d be impossible for a human to reason about what the output is supposed to look like.</p>
+</div>
+<div class="fragment">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>If this is a utility function used by many other functions, changing its behaviour would entail <em>manually</em> changing expected outputs for many tests.</p>
+<p>This is not maintainable! 😩</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="alternative-snapshot-test" class="slide level2 smaller"><h2>Alternative: Snapshot test</h2>
+<p>Instead, you can use <code>expect_snapshot()</code>, which, when run for the first time, generates a Markdown file with expected/reference output.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb7-2"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb7-3"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb7-4"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb7-5"><a href=""></a>  )))</span>
+<span id="cb7-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Warning: `print_movies()` prints as expected ────────────────────────────────
+Adding new snapshot:
+Code
+  cat(print_movies(c("Title", "Director"), c("Salaam Bombay!", "Mira Nair")))
+Output
+  Movie: 
+    Title: Salaam Bombay!
+    Director: Mira Nair</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>The first time a snapshot is created, it becomes <em>the truth</em> against which future function behaviour will be compared.</p>
+<p>Thus, it is <strong>crucial</strong> that you carefully check that the output is indeed as expected. 🔎</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="human-readable-markdown-file" class="slide level2 smaller"><h2>Human-readable Markdown file</h2>
+<p>Compared to your unit test code representing the expected output</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="st">"Movie: </span><span class="sc">\n</span><span class="st">  Title: Salaam Bombay!</span><span class="sc">\n</span><span class="st">  Director: Mira Nair"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>notice how much more human-friendly the Markdown output is!</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource md number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href=""></a>Code</span>
+<span id="cb10-2"><a href=""></a>  cat(print_movies(c("Title", "Director"), c("Salaam Bombay!", "Mira Nair")))</span>
+<span id="cb10-3"><a href=""></a>Output</span>
+<span id="cb10-4"><a href=""></a>  Movie: </span>
+<span id="cb10-5"><a href=""></a>    Title: Salaam Bombay!</span>
+<span id="cb10-6"><a href=""></a>    Director: Mira Nair</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>It is easy to <em>see</em> what the printed text output is <em>supposed</em> to look like. In other words, snapshot tests are useful when the <em>intent</em> of the code can only be verified by a human.</p>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>More about snapshot Markdown files</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>If test file is called <code>test-foo.R</code>, the snapshot will be saved to <code>test/testthat/_snaps/foo.md</code>.</p></li>
+<li><p>If there are multiple snapshot tests in a single file, corresponding snapshots will also share the same <code>.md</code> file.</p></li>
+<li><p>By default, <code>expect_snapshot()</code> will capture the code, the object values, and any side-effects.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section><section id="what-test-success-looks-like" class="slide level2 smaller"><h2>What test success looks like</h2>
+<p>If you run the test again, it’ll succeed:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb11-2"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb11-3"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb11-4"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb11-5"><a href=""></a>  )))</span>
+<span id="cb11-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed 😸</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Why does my test fail on a re-run?</strong></p>
+</div>
+<div class="callout-content">
+<p>If testing a snapshot you just generated fails on re-running the test, this is most likely because your test is not deterministic. For example, if your function deals with random number generation.</p>
+<p>In such cases, setting a seed (e.g.&nbsp;<code>set.seed(42)</code>) should help.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="what-test-failure-looks-like" class="slide level2 smaller"><h2>What test failure looks like</h2>
+<p>When function changes, snapshot doesn’t match the reference, and the test fails:</p>
+<div class="columns">
+<div class="column" style="width:35%;">
+<p><strong>Changes to function</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>print_movies <span class="ot">&lt;-</span> <span class="cf">function</span>(keys, values) {</span>
+<span id="cb13-2"><a href=""></a>  <span class="fu">paste0</span>(</span>
+<span id="cb13-3"><a href=""></a>    <span class="st">"Movie: </span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb13-4"><a href=""></a>    <span class="fu">paste0</span>(</span>
+<span id="cb13-5"><a href=""></a>      <span class="st">"  "</span>, keys, <span class="st">"- "</span>, values,</span>
+<span id="cb13-6"><a href=""></a>      <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span></span>
+<span id="cb13-7"><a href=""></a>    )</span>
+<span id="cb13-8"><a href=""></a>  )</span>
+<span id="cb13-9"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
+<p>Failure message provides expected (<code>-</code>) vs observed (<code>+</code>) diff.</p>
+</div><div class="column" style="width:65%;">
+<p><strong>Test failure</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`print_movies()` prints as expected"</span>, {</span>
+<span id="cb14-2"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">cat</span>(<span class="fu">print_movies</span>(</span>
+<span id="cb14-3"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Title"</span>, <span class="st">"Director"</span>),</span>
+<span id="cb14-4"><a href=""></a>    <span class="fu">c</span>(<span class="st">"Salaam Bombay!"</span>, <span class="st">"Mira Nair"</span>)</span>
+<span id="cb14-5"><a href=""></a>  )))</span>
+<span id="cb14-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>── Failure: `print_movies()` prints as expected ────────────────────────────────
+Snapshot of code has changed:
+old[2:6] vs new[2:6]
+    cat(print_movies(c("Title", "Director"), c("Salaam Bombay!", "Mira Nair")))
+  Output
+    Movie: 
+-     Title: Salaam Bombay!
++     Title- Salaam Bombay!
+-     Director: Mira Nair
++     Director- Mira Nair
+
+* Run `testthat::snapshot_accept('slides.qmd')` to accept the change.
+* Run `testthat::snapshot_review('slides.qmd')` to interactively review the change.</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! Test failed</code></pre>
+</div>
+</div>
+</div></div>
+</section><section id="fixing-tests" class="slide level2 smaller"><h2>Fixing tests</h2>
+<p>Message accompanying failed tests make it explicit how to fix them.</p>
+<div class="fragment">
+<ul>
+<li>If the change was <em>deliberate</em>, you can accept the new snapshot as the current <em>truth</em>.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_accept('foo.md')</span><span class="st">`</span> to accept the change</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>If this was <em>unexpected</em>, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="sc">*</span> Run <span class="st">`</span><span class="at">snapshot_review('foo.md')</span><span class="st">`</span> to interactively review the change</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="fragment">
+<p><br></p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Fixing multiple snapshot tests</strong></p>
+</div>
+<div class="callout-content">
+<p>If this is a utility function used by many other functions, changing its behaviour would lead to failure of many tests.</p>
+<p>You can update <em>all</em> new snapshots with <code>snapshot_accept()</code>. And, of course, check the diffs to make sure that the changes are expected.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="capturing-messages-and-warnings" class="slide level2 smaller"><h2>Capturing messages and warnings</h2>
+<p>So far you have tested text output printed to the console, but you can also use snapshots to capture messages, warnings, and errors.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>message</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">message</span>(<span class="st">"Some info for you."</span>)</span>
+<span id="cb19-2"><a href=""></a></span>
+<span id="cb19-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"f() messages"</span>, {</span>
+<span id="cb19-4"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">f</span>())</span>
+<span id="cb19-5"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Warning: f() messages ───────────────────────────────────────────────────────
+Adding new snapshot:
+Code
+  f()
+Message
+  Some info for you.</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p><strong>warning</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">warning</span>(<span class="st">"Managed to recover."</span>)</span>
+<span id="cb21-2"><a href=""></a></span>
+<span id="cb21-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"g() warns"</span>, {</span>
+<span id="cb21-4"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">g</span>())</span>
+<span id="cb21-5"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Warning: g() warns ──────────────────────────────────────────────────────────
+Adding new snapshot:
+Code
+  g()
+Condition
+  Warning in `g()`:
+  Managed to recover.</code></pre>
+</div>
+</div>
+</div></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Snapshot records both the <em>condition</em> and the corresponding <em>message</em>.</p>
+<p>You can now rest assured that the users are getting informed the way you want! 😌</p>
+</div>
+</div>
+</div>
+</section><section id="capturing-errors" class="slide level2 smaller"><h2>Capturing errors</h2>
+<p>In case of an error, the function <code>expect_snapshot()</code> itself will produce an error.</p>
+<p>You can capture it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`log()` errors"</span>, {</span>
+<span id="cb23-2"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">log</span>(<span class="st">"x"</span>), <span class="at">error =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-3"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>── Warning: `log()` errors ─────────────────────────────────────────────────────
+Adding new snapshot:
+Code
+  log("x")
+Condition
+  Error in `log()`:
+  ! non-numeric argument to mathematical function</code></pre>
+</div>
+</div>
+</section><section id="further-reading" class="slide level2 smaller"><h2>Further reading</h2>
+<ul>
+<li><p><a href="https://testthat.r-lib.org">testthat</a> article on <a href="https://testthat.r-lib.org/articles/snapshotting.html">snapshot testing</a></p></li>
+<li><p>Introduction to <a href="https://ro-che.info/articles/2017-12-04-golden-tests">golden testing</a></p></li>
+<li><p>Docs for <a href="https://jestjs.io/docs/snapshot-testing">Jest</a> library in JavaScript, which inspired snapshot testing implementation in <a href="https://testthat.r-lib.org">testthat</a></p></li>
+</ul></section></section><section><section id="testing-graphical-outputs" class="title-slide slide level1 center"><h1>Testing graphical outputs</h1>
+<p>To create graphical expectations, you will use <a href="https://testthat.r-lib.org">testthat</a> extension package: <a href="https://vdiffr.r-lib.org/"><code>{vdiffr}</code></a>.</p>
+</section><section id="how-does-vdiffr-work" class="slide level2 smaller"><h2>How does <code>{vdiffr}</code> work?</h2>
+<p><a href="https://vdiffr.r-lib.org/">vdiffr</a> introduces <code>expect_doppelganger()</code> to generate <a href="https://testthat.r-lib.org">testthat</a> expectations for graphics. It does this by writing SVG snapshot files for outputs!</p>
+<div class="fragment">
+<p>The figure to test can be:</p>
+<ul>
+<li>a <code>ggplot</code> object (from <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code>)</li>
+<li>a <code>recordedplot</code> object (from <code><a href="https://rdrr.io/r/grDevices/recordplot.html">grDevices::recordPlot()</a></code>)</li>
+<li>any object with a <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>If test file is called <code>test-foo.R</code>, the snapshot will be saved to <code>test/testthat/_snaps/foo</code> folder.</p></li>
+<li><p>In this folder, there will be one <code>.svg</code> file for every test in <code>test-foo.R</code>.</p></li>
+<li><p>The name for the <code>.svg</code> file will be sanitized version of <code>title</code> argument to <code>expect_doppelganger()</code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section><section id="example-function-1" class="slide level2 smaller"><h2>Example function</h2>
+<p>Let’s say you want to write a unit test for the following function:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Source code</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb25-2"><a href=""></a></span>
+<span id="cb25-3"><a href=""></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb25-4"><a href=""></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb25-5"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb25-7"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column" style="width:50%;">
+<p><strong>Output</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">create_scatter</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img data-src="index_files/figure-revealjs/unnamed-chunk-16-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p>Note that you want to test that the graphical output <em>looks</em> as expected, and this expectation is difficult to capture with a unit test.</p>
+</div>
+</section><section id="graphical-snapshot-test" class="slide level2 smaller"><h2>Graphical snapshot test</h2>
+<p>You can use <code>expect_doppelganger()</code> from <a href="https://vdiffr.r-lib.org/">vdiffr</a> to test this!</p>
+<div class="fragment">
+<p>The <em>first time</em> you run the test, it’d generate an <code>.svg</code> file with expected output.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb27-2"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb27-3"><a href=""></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb27-4"><a href=""></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb27-5"><a href=""></a>  )</span>
+<span id="cb27-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Warning: `create_scatter()` plots as expected ───────────────────────────────
+Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>The first time a snapshot is created, it becomes <em>the truth</em> against which future function behaviour will be compared.</p>
+<p>Thus, it is <strong>crucial</strong> that you carefully check that the output is indeed as expected. 🔎</p>
+<p>You can open <code>.svg</code> snapshot files in a web browser for closer inspection.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="what-test-success-looks-like-1" class="slide level2 smaller"><h2>What test success looks like</h2>
+<p>If you run the test again, it’ll succeed:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb29-2"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb29-3"><a href=""></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb29-4"><a href=""></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb29-5"><a href=""></a>  )</span>
+<span id="cb29-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed 🌈</code></pre>
+</div>
+</div>
+</section><section id="what-test-failure-looks-like-1" class="slide level2 smaller"><h2>What test failure looks like</h2>
+<p>When function changes, snapshot doesn’t match the reference, and the test fails:</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><strong>Changes to function</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>create_scatter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb31-2"><a href=""></a>  <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb31-3"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb31-5"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:60%;">
+<p><strong>Test failure</strong></p>
+<!-- Currently, doesn't work properly with on GHA workflow -->
+<!-- The exact error is the following: -->
+<!-- Error: Can't find `tests/testthat/` in current directory -->
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`create_scatter()` plots as expected"</span>, {</span>
+<span id="cb32-2"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb32-3"><a href=""></a>    <span class="at">title =</span> <span class="st">"create scatter"</span>,</span>
+<span id="cb32-4"><a href=""></a>    <span class="at">fig =</span> <span class="fu">create_scatter</span>(),</span>
+<span id="cb32-5"><a href=""></a>  )</span>
+<span id="cb32-6"><a href=""></a>})</span>
+<span id="cb32-7"><a href=""></a></span>
+<span id="cb32-8"><a href=""></a>── <span class="fu">Failure</span> (<span class="st">'&lt;text&gt;:3'</span>)<span class="sc">:</span> <span class="st">`</span><span class="at">create_scatter()</span><span class="st">`</span> plots as expected ──────────────────</span>
+<span id="cb32-9"><a href=""></a>Snapshot of <span class="st">`</span><span class="at">testcase</span><span class="st">`</span> to <span class="st">'slides.qmd/create-scatter.svg'</span> has changed</span>
+<span id="cb32-10"><a href=""></a>Run <span class="st">`</span><span class="at">testthat::snapshot_review('slides.qmd/')</span><span class="st">`</span> to review changes</span>
+<span id="cb32-11"><a href=""></a>Backtrace<span class="sc">:</span></span>
+<span id="cb32-12"><a href=""></a> <span class="fl">1.</span> vdiffr<span class="sc">::</span><span class="fu">expect_doppelganger</span>(...)</span>
+<span id="cb32-13"><a href=""></a> <span class="fl">3.</span> testthat<span class="sc">::</span><span class="fu">expect_snapshot_file</span>(...)</span>
+<span id="cb32-14"><a href=""></a>Error <span class="cf">in</span> <span class="st">`</span><span class="at">reporter$stop_if_needed()</span><span class="st">`</span><span class="sc">:</span></span>
+<span id="cb32-15"><a href=""></a><span class="sc">!</span> Test failed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section><section id="fixing-tests-1" class="slide level2 smaller"><h2>Fixing tests</h2>
+<p>Running <code>snapshot_review()</code> launches a Shiny app which can be used to either accept or reject the new output(s).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><video data-src="media/shiny_app_graphics.mov" style="width:60.0%" controls=""><a href="media/shiny_app_graphics.mov">Video</a></video></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="section" class="slide level2"><h2></h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Why are my snapshots for plots failing?! 😔</strong></p>
+</div>
+<div class="callout-content">
+<p>If tests fail even if the function didn’t change, it can be due to any of the following reasons:</p>
+<ul>
+<li>R’s graphics engine changed</li>
+<li>
+<a href="https://ggplot2.tidyverse.org">ggplot2</a> itself changed</li>
+<li>non-deterministic behaviour</li>
+<li>changes in system libraries</li>
+</ul>
+<p>For these reasons, snapshot tests for plots tend to be fragile and are not run on CRAN machines by default.</p>
+</div>
+</div>
+</div>
+</section><section id="further-reading-1" class="slide level2"><h2>Further reading</h2>
+<ul>
+<li>
+<a href="https://vdiffr.r-lib.org/">vdiffr</a> package <a href="https://vdiffr.r-lib.org/">website</a>
+</li>
+</ul></section></section><section><section id="testing-entire-files" class="title-slide slide level1 center"><h1>Testing entire files</h1>
+<p>Whole file snapshot testing makes sure that media, data frames, text files, etc. are as expected.</p>
+</section><section id="writing-test" class="slide level2 smaller"><h2>Writing test</h2>
+<p>Let’s say you want to test JSON files generated by <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/read_json.html">jsonlite::write_json()</a></code>.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Test</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="co"># File: tests/testthat/test-write-json.R</span></span>
+<span id="cb33-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"json writer works"</span>, {</span>
+<span id="cb33-3"><a href=""></a>  r_to_json <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb33-4"><a href=""></a>    path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".json"</span>)</span>
+<span id="cb33-5"><a href=""></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
+<span id="cb33-6"><a href=""></a>    path</span>
+<span id="cb33-7"><a href=""></a>  }</span>
+<span id="cb33-8"><a href=""></a></span>
+<span id="cb33-9"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"a"</span>))</span>
+<span id="cb33-10"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
+<span id="cb33-11"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Warning: json writer works ──────────────────────────────────────────────────
+Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
+</div>
+</div>
+<p><strong>Snapshot</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb35-1"><a href=""></a><span class="ot">[[</span><span class="dv">1</span><span class="ot">],</span><span class="fu">{</span><span class="dt">"x"</span><span class="fu">:</span><span class="ot">[</span><span class="st">"a"</span><span class="ot">]</span><span class="fu">}</span><span class="ot">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>To snapshot a file, you need to write a helper function that provides its path.</p></li>
+<li><p>If a test file is called <code>test-foo.R</code>, the snapshot will be saved to <code>test/testthat/_snaps/foo</code> folder.</p></li>
+<li><p>In this folder, there will be one file (e.g.&nbsp;<code>.json</code>) for every <code>expect_snapshot_file()</code> expectation in <code>test-foo.R</code>.</p></li>
+<li><p>The name for snapshot file is taken from <code>name</code> argument to <code>expect_snapshot_file()</code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+</section><section id="what-test-success-looks-like-2" class="slide level2 smaller"><h2>What test success looks like</h2>
+<p>If you run the test again, it’ll succeed:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="co"># File: tests/testthat/test-write-json.R</span></span>
+<span id="cb36-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"json writer works"</span>, {</span>
+<span id="cb36-3"><a href=""></a>  r_to_json <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb36-4"><a href=""></a>    path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".json"</span>)</span>
+<span id="cb36-5"><a href=""></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
+<span id="cb36-6"><a href=""></a>    path</span>
+<span id="cb36-7"><a href=""></a>  }</span>
+<span id="cb36-8"><a href=""></a></span>
+<span id="cb36-9"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"a"</span>))</span>
+<span id="cb36-10"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
+<span id="cb36-11"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed 🎉</code></pre>
+</div>
+</div>
+</section><section id="what-test-failure-looks-like-2" class="slide level2 smaller"><h2>What test failure looks like</h2>
+<p>If the new output doesn’t match the expected one, the test will fail:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38" data-code-line-numbers="11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># File: tests/testthat/test-write-json.R</span></span>
+<span id="cb38-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"json writer works"</span>, {</span>
+<span id="cb38-3"><a href=""></a>  r_to_json <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb38-4"><a href=""></a>    path <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".json"</span>)</span>
+<span id="cb38-5"><a href=""></a>    jsonlite<span class="sc">::</span><span class="fu">write_json</span>(x, path)</span>
+<span id="cb38-6"><a href=""></a>    path</span>
+<span id="cb38-7"><a href=""></a>  }</span>
+<span id="cb38-8"><a href=""></a></span>
+<span id="cb38-9"><a href=""></a>  x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="fu">list</span>(<span class="st">"x"</span> <span class="ot">=</span> <span class="st">"b"</span>))</span>
+<span id="cb38-10"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
+<span id="cb38-11"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>── Failure: json writer works ──────────────────────────────────────────────────
+Snapshot of `r_to_json(x)` to 'slides.qmd/demo.json' has changed
+Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! Test failed</code></pre>
+</div>
+</div>
+</section><section id="fixing-tests-2" class="slide level2 smaller"><h2>Fixing tests</h2>
+<p>Running <code>snapshot_review()</code> launches a Shiny app which can be used to either accept or reject the new output(s).</p>
+
+<img data-src="media/json_snapshot.png" width="622" class="r-stretch"></section><section id="further-reading-2" class="slide level2 smaller"><h2>Further reading</h2>
+<p>Documentation for <a href="https://testthat.r-lib.org/reference/expect_snapshot_file.html"><code>expect_snapshot_file()</code></a></p>
+</section></section><section><section id="testing-shiny-applications" class="title-slide slide level1 center"><h1>Testing Shiny applications</h1>
+<p>To write formal tests for Shiny applications, you will use <a href="https://testthat.r-lib.org">testthat</a> extension package: <a href="https://rstudio.github.io/shinytest2/"><code>{shinytest2}</code></a>.</p>
+</section><section id="how-does-shinytest2-work" class="slide level2 smaller"><h2>How does <code>{shinytest2}</code> work?</h2>
+<p><a href="https://rstudio.github.io/shinytest2/">shinytest2</a> uses a Shiny app (how meta! 😅) to record user interactions with the app and generate snapshots of the application’s state. Future behaviour of the app will be compared against these snapshots to check for any changes.</p>
+<div class="fragment">
+<p>Exactly how tests for Shiny apps in R package are written depends on how the app is stored. There are two possibilities, and you will discuss them both separately.</p>
+</div>
+<div class="fragment">
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Stored in <code>/inst</code> folder</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app
+│       └── app.R</code></pre>
+</div><div class="column" style="width:50%;">
+<p><strong>Returned by a function</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+│   └── app-function.R</code></pre>
+</div></div>
+<!-- Don't add an indefinite article; it breaks the phrase into two lines -->
+</div>
+</section></section><section><section id="shiny-app-in-subdirectory" class="title-slide slide level1 center"><h1>Shiny app in subdirectory</h1>
+<p><br></p>
+<pre><code>├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app
+│       └── app.R</code></pre>
+</section><section id="example-app" class="slide level2 smaller"><h2>Example app</h2>
+<p>Let’s say this app resides in the <code>inst/unitConverter/app.R</code> file.</p>
+<!-- 
+  TODO: How to embed a Shiny app? 
+  If I just include the code in R chunk, I see:
+  "Shiny applications not supported in static R Markdown documents"
+-->
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><strong>App</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><video data-src="media/shiny_app.mov" controls=""><a href="media/shiny_app.mov">Video</a></video></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<p><strong>Code</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a><span class="fu">library</span>(shiny)</span>
+<span id="cb44-2"><a href=""></a></span>
+<span id="cb44-3"><a href=""></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb44-4"><a href=""></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb44-5"><a href=""></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb44-6"><a href=""></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb44-7"><a href=""></a>)</span>
+<span id="cb44-8"><a href=""></a></span>
+<span id="cb44-9"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb44-10"><a href=""></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb44-11"><a href=""></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb44-12"><a href=""></a>  )</span>
+<span id="cb44-13"><a href=""></a>}</span>
+<span id="cb44-14"><a href=""></a></span>
+<span id="cb44-15"><a href=""></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section><section id="generating-a-test" class="slide level2 smaller"><h2>Generating a test</h2>
+<p>To create a snapshot test, go to the app directory and run <code>record_test()</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><video data-src="media/shinytest_record.mov" style="width:60.0%" controls=""><a href="media/shinytest_record.mov">Video</a></video></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="auto-generated-artifacts" class="slide level2 smaller"><h2>Auto-generated artifacts</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Test</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">library</span>(shinytest2)</span>
+<span id="cb45-2"><a href=""></a></span>
+<span id="cb45-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"{shinytest2} recording: unitConverter"</span>, {</span>
+<span id="cb45-4"><a href=""></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb45-5"><a href=""></a>  <span class="at">name =</span> <span class="st">"unitConverter"</span>, <span class="at">height =</span> <span class="dv">543</span>, <span class="at">width =</span> <span class="dv">426</span>)</span>
+<span id="cb45-6"><a href=""></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">1</span>)</span>
+<span id="cb45-7"><a href=""></a>  app<span class="sc">$</span><span class="fu">set_inputs</span>(<span class="at">kg =</span> <span class="dv">10</span>)</span>
+<span id="cb45-8"><a href=""></a>  app<span class="sc">$</span><span class="fu">expect_values</span>()</span>
+<span id="cb45-9"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:40%;">
+<p><strong>Snapshot</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><img data-src="media/unitConverter-001_.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><code>record_test()</code> will auto-generate a test file in the app directory. The test script will be saved in a <em>subdirectory</em> of the app (<code>inst/my-app/tests/testthat/test-shinytest2.R</code>).</p></li>
+<li><p>There will be one <code>/tests</code> folder inside <em>every</em> app folder.</p></li>
+<li><p>The snapshots are saved as <code>.png</code> file in <code>tests/testthat/test-shinytest2/_snaps/{.variant}/shinytest2</code>. The <code>{.variant}</code> here corresponds to operating system and R version used to record tests. For example, <code>_snaps/windows-4.1/shinytest2</code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section><section id="creating-a-driver-script" class="slide level2 smaller"><h2>Creating a driver script</h2>
+<p>Note that currently your test scripts and results are in the <code>/inst</code> folder, but you’d also want to run these tests automatically using <a href="https://testthat.r-lib.org">testthat</a>.</p>
+<p>For this, you will need to write a driver script like the following:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">library</span>(shinytest2)</span>
+<span id="cb46-2"><a href=""></a></span>
+<span id="cb46-3"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`unitConverter` app works"</span>, {</span>
+<span id="cb46-4"><a href=""></a>  appdir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"package_name"</span>, <span class="st">"unitConverter"</span>)</span>
+<span id="cb46-5"><a href=""></a>  <span class="fu">test_app</span>(appdir)</span>
+<span id="cb46-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now the Shiny apps will be tested with the rest of the source code in the package! 🎊</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>You save the driver test in the <code>/tests</code> folder (<code>tests/testthat/test-inst-apps.R</code>), alongside other tests.</p>
+</div>
+</div>
+</div>
+</section><section id="what-test-failure-looks-like-3" class="slide level2 smaller"><h2>What test failure looks like</h2>
+<p>Let’s say, while updating the app, you make a mistake, which leads to a failed test.</p>
+<p><strong>Changed code with mistake</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb47-2"><a href=""></a>  <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb47-3"><a href=""></a>  <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb47-4"><a href=""></a>  <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb47-5"><a href=""></a>)</span>
+<span id="cb47-6"><a href=""></a></span>
+<span id="cb47-7"><a href=""></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb47-8"><a href=""></a>  output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb47-9"><a href=""></a>    <span class="fu">paste0</span>(<span class="st">"Weight (in kg): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>) <span class="co"># should be `"Weight (in g): "`</span></span>
+<span id="cb47-10"><a href=""></a>  )</span>
+<span id="cb47-11"><a href=""></a>}</span>
+<span id="cb47-12"><a href=""></a></span>
+<span id="cb47-13"><a href=""></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Test failure JSON diff</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48" data-code-line-number="6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb48-1"><a href=""></a><span class="er">Diff</span> <span class="er">in</span> <span class="er">snapshot</span> <span class="er">file</span> <span class="er">`shinytest2unitConverter-001.json`</span></span>
+<span id="cb48-2"><a href=""></a><span class="er">&lt;</span> <span class="er">before</span>                            <span class="er">&gt;</span> <span class="er">after</span>                           </span>
+<span id="cb48-3"><a href=""></a><span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                           <span class="er">@@</span> <span class="er">4,5</span> <span class="er">@@</span>                         </span>
+<span id="cb48-4"><a href=""></a>    <span class="er">},</span>                                  <span class="er">},</span>                            </span>
+<span id="cb48-5"><a href=""></a>    <span class="er">"output":</span> <span class="fu">{</span>                         <span class="dt">"output"</span><span class="fu">:</span> <span class="fu">{</span>                   </span>
+<span id="cb48-6"><a href=""></a><span class="er">&lt;</span>     <span class="dt">"g"</span><span class="fu">:</span> <span class="st">"Weight (in g): 10000"</span>   <span class="er">&gt;</span>     <span class="st">"g"</span><span class="er">:</span> <span class="st">"Weight (in kg): 10000"</span></span>
+<span id="cb48-7"><a href=""></a>    <span class="fu">},</span>                                  <span class="fu">}</span><span class="er">,</span>                            </span>
+<span id="cb48-8"><a href=""></a>    <span class="er">"export":</span> <span class="fu">{</span>                         <span class="dt">"export"</span><span class="fu">:</span> <span class="fu">{</span>    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section><section id="updating-snapshots" class="slide level2 smaller"><h2>Updating snapshots</h2>
+<p>Fixing this test will be similar to fixing any other snapshot test you’ve seen thus far.</p>
+<p><code>{testthat2}</code> provides a Shiny app for comparing the old and new snapshots.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><video data-src="media/shinytest_failure.mov" style="width:60.0%" controls=""><a href="media/shinytest_failure.mov">Video</a></video></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section><section id="function-returns-shiny-app" class="title-slide slide level1 center"><h1>Function returns Shiny app</h1>
+<p><br></p>
+<pre><code>├── DESCRIPTION
+├── R
+│   └── app-function.R</code></pre>
+</section><section id="example-app-and-test" class="slide level2 smaller"><h2>Example app and test</h2>
+<p>The only difference in testing workflow when Shiny app objects are created by functions is that you will write the test ourselves, instead of <a href="https://rstudio.github.io/shinytest2/">shinytest2</a> auto-generating it.</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><strong>Source code</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a><span class="co"># File: R/unit-converter.R</span></span>
+<span id="cb50-2"><a href=""></a>unitConverter <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb50-3"><a href=""></a>  ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb50-4"><a href=""></a>    <span class="fu">titlePanel</span>(<span class="st">"Convert kilograms to grams"</span>),</span>
+<span id="cb50-5"><a href=""></a>    <span class="fu">numericInput</span>(<span class="st">"kg"</span>, <span class="st">"Weight (in kg)"</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb50-6"><a href=""></a>    <span class="fu">textOutput</span>(<span class="st">"g"</span>)</span>
+<span id="cb50-7"><a href=""></a>  )</span>
+<span id="cb50-8"><a href=""></a></span>
+<span id="cb50-9"><a href=""></a>  server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb50-10"><a href=""></a>    output<span class="sc">$</span>g <span class="ot">&lt;-</span> <span class="fu">renderText</span>(</span>
+<span id="cb50-11"><a href=""></a>      <span class="fu">paste0</span>(<span class="st">"Weight (in g): "</span>, input<span class="sc">$</span>kg <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb50-12"><a href=""></a>    )</span>
+<span id="cb50-13"><a href=""></a>  }</span>
+<span id="cb50-14"><a href=""></a></span>
+<span id="cb50-15"><a href=""></a>  <span class="fu">shinyApp</span>(ui, server)</span>
+<span id="cb50-16"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:45%;">
+<p><strong>Test file to modify</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="co"># File: tests/testthat/test-unit-converter.R</span></span>
+<span id="cb51-2"><a href=""></a><span class="fu">test_that</span>(<span class="st">"unitConverter app works"</span>, {</span>
+<span id="cb51-3"><a href=""></a>  shiny_app <span class="ot">&lt;-</span> <span class="fu">unitConverter</span>()</span>
+<span id="cb51-4"><a href=""></a>  app <span class="ot">&lt;-</span> AppDriver<span class="sc">$</span><span class="fu">new</span>(shiny_app)</span>
+<span id="cb51-5"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section><section id="generating-test-and-snapshots" class="slide level2 smaller"><h2>Generating test and snapshots</h2>
+<p>you call <code>record_test()</code> directly on a Shiny app object, copy-paste commands to the test script, and run <code>devtools::test_active_file()</code> to generate snapshots.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><video data-src="media/shiny_app_function_return.mov" style="width:60.0%" controls=""><a href="media/shiny_app_function_return.mov">Video</a></video></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="testing-apps-from-frameworks" class="slide level2 smaller"><h2>Testing apps from frameworks</h2>
+<p>This testing workflow is also relevant for app frameworks (e.g.&nbsp;<a href="https://thinkr-open.github.io/golem/index.html"><code>{golem}</code></a>, <a href="https://appsilon.github.io/rhino/"><code>{rhino}</code></a>, etc.).</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong><a href="https://thinkr-open.github.io/golem/">golem</a></strong></p>
+<p>Function in <code>run_app.R</code> returns app.</p>
+<pre><code>├── DESCRIPTION 
+├── NAMESPACE 
+├── R 
+│   ├── app_config.R 
+│   ├── app_server.R 
+│   ├── app_ui.R 
+│   └── run_app.R </code></pre>
+</div><div class="column" style="width:50%;">
+<p><strong><a href="https://appsilon.github.io/rhino/">rhino</a></strong></p>
+<p>Function in <code>app.R</code> returns app.</p>
+<pre><code>├── app
+│   ├── js
+│   │   └── index.js
+│   ├── logic
+│   │   └── __init__.R
+│   ├── static
+│   │   └── favicon.ico
+│   ├── styles
+│   │   └── main.scss
+│   ├── view
+│   │   └── __init__.R
+│   └── main.R
+├── tests
+│   ├── ...
+├── app.R
+├── RhinoApplication.Rproj
+├── dependencies.R
+├── renv.lock
+└── rhino.yml</code></pre>
+</div></div>
+</section><section id="final-directory-structure" class="slide level2 smaller"><h2>Final directory structure</h2>
+<p>The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps are included in R packages.</p>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Stored in <code>/inst</code> folder</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+└── tests
+    ├── testthat
+    │   └── test-inst-apps.R
+    └── testthat.R</code></pre>
+</div><div class="column" style="width:50%;">
+<p><strong>Returned by a function</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+│   └── app-function.R
+└── tests
+    ├── testthat
+    │   ├── _snaps
+    │   │   └── app-function
+    │   │       └── 001.json
+    │   └── test-app-function.R
+    └── testthat.R</code></pre>
+</div></div>
+</section><section id="testing-multiple-apps" class="slide level2 smaller"><h2>Testing multiple apps</h2>
+<p>For the sake of completeness, here is what the test directory structure would like when there are multiple apps in a single package.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Stored in <code>/inst</code> folder</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+├── inst
+│   └── sample_app1
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+│   └── sample_app2
+│       ├── app.R
+│       └── tests
+│           ├── testthat
+│           │   ├── _snaps
+│           │   │   └── shinytest2
+│           │   │       └── 001.json
+│           │   └── test-shinytest2.R
+│           └── testthat.R
+└── tests
+    ├── testthat
+    │   └── test-inst-apps.R
+    └── testthat.R</code></pre>
+</div><div class="column" style="width:50%;">
+<p><strong>Returned by a function</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+│   └── app-function1.R
+│   └── app-function2.R
+└── tests
+    ├── testthat
+    │   ├── _snaps
+    │   │   └── app-function1
+    │   │       └── 001.json
+    │   │   └── app-function2
+    │   │       └── 001.json
+    │   └── test-app-function1.R
+    │   └── test-app-function2.R
+    └── testthat.R</code></pre>
+</div></div>
+</section><section id="advanced-topics" class="slide level2 smaller"><h2>Advanced topics</h2>
+<p>The following are some advanced topics that are beyond the scope of the current presentation, but you may wish to know more about.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Extra</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>If you want to test Shiny apps with continuous integration using <a href="https://rstudio.github.io/shinytest2/">shinytest2</a>, read <a href="https://rstudio.github.io/shinytest2/articles/use-ci.html">this</a> article.</p></li>
+<li><p><a href="https://rstudio.github.io/shinytest2/">shinytest2</a> is a successor to <a href="https://github.com/rstudio/shinytest">shinytest</a> package. If you want to migrate from the latter to the former, have a look at <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html">this</a>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section><section id="further-reading-3" class="slide level2 smaller"><h2>Further reading</h2>
+<ul>
+<li><p><a href="https://mastering-shiny.org/scaling-testing.html">Testing</a> chapter from <em>Mastering Shiny</em> book</p></li>
+<li><p><a href="https://rstudio.github.io/shinytest2/">shinytest2</a> article introducing its <a href="https://rstudio.github.io/shinytest2/articles/shinytest2.html">workflow</a></p></li>
+<li><p><a href="https://rstudio.github.io/shinytest2/">shinytest2</a> article on how to test apps in <a href="https://rstudio.github.io/shinytest2/articles/use-package.html">R packages</a></p></li>
+</ul></section></section><section><section id="headaches" class="title-slide slide level1 center"><h1>Headaches</h1>
+<p>It’s not all kittens and roses when it comes to snapshot testing.</p>
+<p>Let’s see some issues you might run into while using them. 🤕</p>
+</section><section id="testing-behavior-that-you-dont-own" class="slide level2 smaller"><h2>Testing behavior that you don’t own</h2>
+<p>Let’s say you write a graphical snapshot test for a function that produces a <code>ggplot</code> object. If <a href="https://ggplot2.tidyverse.org">ggplot2</a> authors make some modifications to this object, your tests will fail, even though your function works as expected!</p>
+<p>In other words, <em>your</em> tests are now at the mercy of <em>other package authors</em> because snapshots are capturing things beyond your package’s control.</p>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Caution</strong></p>
+</div>
+<div class="callout-content">
+<p>Tests that fail for reasons other than what they are testing for are problematic. Thus, be careful about <em>what</em> you snapshot and keep in mind the maintenance burden that comes with dependencies with volatile APIs.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p><em>A</em> way to reduce the burden of keeping snapshots up-to-date is to <a href="https://github.com/krlmlr/actions-sync/tree/base/update-snapshots">automate this process</a>. But there is no free lunch in this universe, and now you need to maintain this automation! 🤷</p>
+</div>
+</div>
+</div>
+</section><section id="failures-in-non-interactive-environments" class="slide level2 smaller"><h2>Failures in non-interactive environments</h2>
+<p>If snapshots fail locally, you can just run <code>snapshot_review()</code>, but what if they fail in non-interactive environments (on CI/CD platforms, during <code>R CMD Check</code>, etc.)?</p>
+<p>The easiest solution is to copy the new snapshots to the local folder and run <code>snapshot_review()</code>.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>If expected snapshot is called (e.g.) <code>foo.svg</code>, there will be a new snapshot file <code>foo.new.svg</code> in the same folder when the test fails.</p>
+<p><code>snapshot_review()</code> compares these files to reveal how the outputs have changed.</p>
+</div>
+</div>
+</div>
+<p>But where can you find the new snapshots?</p>
+</section><section id="accessing-new-snapshots" class="slide level2 smaller"><h2>Accessing new snapshots</h2>
+<p>In local <code>R CMD Check</code>, you can find new snapshots in <code>.Rcheck</code> folder:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a>package_name.Rcheck<span class="sc">/</span>tests<span class="sc">/</span>testthat<span class="sc">/</span>_snaps<span class="sc">/</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On <a href="https://github.com/r-lib/actions/tree/v2-branch/check-r-package">GitHub actions</a>, you need to upload snapshots:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb59-1"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span>
+<span id="cb59-2"><a href=""></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb59-3"><a href=""></a><span class="at">          </span><span class="fu">upload-snapshots</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section><section id="code-review-with-snapshot-tests" class="slide level2 smaller"><h2>Code review with snapshot tests</h2>
+<p>Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots.</p>
+<p>How do you review pull requests with complex snapshots changes?</p>
+</section><section id="section-1" class="slide level2 smaller"><h2></h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby">
+<li><a data-tabby-default="" href="#tabset-1-1">Option-1</a></li>
+<li><a href="#tabset-1-2">Option-2</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>Use tools provided for code review by hosting platforms (like GitHub). For example, to review changes in SVG snapshots:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><video data-src="media/github_pr.mov" style="width:70.0%" controls=""><a href="media/github_pr.mov">Video</a></video></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<p>Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷</p>
+</div>
+</div>
+</div>
+</section><section id="danger-of-silent-failures" class="slide level2 smaller"><h2>Danger of silent failures</h2>
+<p>Given their fragile nature, snapshot tests are skipped on CRAN by default.</p>
+<p>Although this makes sense, it means that you miss out on anything but a breaking change from upstream dependency. E.g., if <a href="https://ggplot2.tidyverse.org">ggplot2</a> (hypothetically) changes how the points look, you won’t know about this change until you <em>happen to</em> run your snapshot tests again locally or on CI/CD.</p>
+<p>Unit tests run on CRAN, on the other hand, will fail and you will be immediately informed about it.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>A way to insure against such silent failures is to run tests <strong>daily</strong> on CI/CD platforms (e.g.&nbsp;nightly builds).</p>
+</div>
+</div>
+</div>
+</section></section><section><section id="parting-wisdom" class="title-slide slide level1 center"><h1>Parting wisdom</h1>
+<p>What <em>not</em> to do</p>
+</section><section id="dont-use-snapshot-tests-for-everything" class="slide level2 smaller"><h2>Don’t use snapshot tests for <em>everything</em>
+</h2>
+<p>It is tempting to use them everywhere out of laziness. But they are sometimes inappropriate (e.g.&nbsp;when testing requires external benchmarking).</p>
+<p>Let’s say you write a function to extract estimates from a regression model.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a>extract_est <span class="ot">&lt;-</span> <span class="cf">function</span>(m) m<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Its test should compare results against an external benchmark, and not a snapshot.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Good</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`extract_est()` works"</span>, {</span>
+<span id="cb61-2"><a href=""></a>  m <span class="ot">&lt;-</span> <span class="fu">lm</span>(wt <span class="sc">~</span> mpg, mtcars)</span>
+<span id="cb61-3"><a href=""></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb61-4"><a href=""></a>    <span class="fu">extract_est</span>(m)[[<span class="dv">1</span>]],</span>
+<span id="cb61-5"><a href=""></a>    m<span class="sc">$</span>coefficients[[<span class="dv">1</span>]]</span>
+<span id="cb61-6"><a href=""></a>  )</span>
+<span id="cb61-7"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<p><strong>Bad</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`extract_est()` works"</span>, {</span>
+<span id="cb62-2"><a href=""></a>  m <span class="ot">&lt;-</span> <span class="fu">lm</span>(wt <span class="sc">~</span> mpg, mtcars)</span>
+<span id="cb62-3"><a href=""></a>  <span class="fu">expect_snapshot</span>(<span class="fu">extract_est</span>(m))</span>
+<span id="cb62-4"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section><section id="snapshot-for-humans-not-machines" class="slide level2 smaller"><h2>Snapshot for humans, not machines</h2>
+<p>Snapshot testing is appropriate when the human needs to be in the loop to make sure that things are working as expected. Therefore, the snapshots should be human readable.</p>
+<p>E.g. if you write a function that plots something:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>point_plotter <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To test it, you should snapshot the <em>plot</em>, and not the underlying <em>data</em>, which is hard to make sense of for a human.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Good</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`point_plotter()` works"</span>, {</span>
+<span id="cb64-2"><a href=""></a>  <span class="fu">expect_doppelganger</span>(</span>
+<span id="cb64-3"><a href=""></a>    <span class="st">"point-plotter-mtcars"</span>,</span>
+<span id="cb64-4"><a href=""></a>    <span class="fu">point_plotter</span>()</span>
+<span id="cb64-5"><a href=""></a>  )</span>
+<span id="cb64-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<p><strong>Bad</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a><span class="fu">test_that</span>(<span class="st">"`point_plotter()` works"</span>, {</span>
+<span id="cb65-2"><a href=""></a>  p <span class="ot">&lt;-</span> <span class="fu">point_plotter</span>()</span>
+<span id="cb65-3"><a href=""></a>  pb <span class="ot">&lt;-</span> <span class="fu">ggplot_build</span>(p)</span>
+<span id="cb65-4"><a href=""></a>  <span class="fu">expect_snapshot</span>(pb<span class="sc">$</span>data)</span>
+<span id="cb65-5"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section><section id="dont-blindly-accept-snapshot-changes" class="slide level2 smaller"><h2>Don’t <strong>blindly accept</strong> snapshot changes</h2>
+<p>Resist formation of such a habit.</p>
+<p><a href="https://testthat.r-lib.org">testthat</a> provides tools to make it very easy to review changes, so no excuses!</p>
+</section></section><section><section id="self-study" class="title-slide slide level1 center"><h1>Self-study</h1>
+<p>In this presentation, you deliberately kept the examples and the tests simple.</p>
+<p>To see a more realistic usage of snapshot tests, you can study open-source test suites.</p>
+</section><section id="suggested-repositories" class="slide level2 smaller"><h2>Suggested repositories</h2>
+<div class="columns">
+<!-- 1st column --><div class="column" style="width:33%;">
+<h3 id="print-outputs">Print outputs</h3>
+<ul>
+<li><p><a href="https://github.com/r-lib/cli/tree/main/tests/testthat"><code>{cli}</code></a> (for testing command line interfaces)</p></li>
+<li><p><a href="https://github.com/r-lib/pkgdown/tree/main/tests/testthat"><code>{pkgdown}</code></a> (for testing generated HTML documents)</p></li>
+<li><p><a href="https://github.com/tidyverse/dbplyr/tree/main/tests/testthat"><code>{dbplyr}</code></a> (for testing printing of generated SQL queries)</p></li>
+<li><p><a href="https://github.com/rstudio/gt/tree/master/tests/testthat"><code>{gt}</code></a> (for testing table printing)</p></li>
+</ul>
+</div><!-- 2nd column --><div class="column" style="width:33%;">
+<h3 id="visualizations">Visualizations</h3>
+<ul>
+<li><p><a href="https://github.com/tidyverse/ggplot2/tree/main/tests/testthat"><code>{ggplot2}</code></a></p></li>
+<li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot/tree/main/tests/testthat"><code>{ggstatsplot}</code></a></p></li>
+</ul>
+</div><!-- 3rd column --><div class="column" style="width:33%;">
+<h3 id="shiny-apps">Shiny apps</h3>
+<ul>
+<li><p><a href="https://github.com/rstudio/shinytest2/tree/main/tests/testthat"><code>{shinytest2}</code></a></p></li>
+<li><p><a href="https://github.com/ashbaldry/designer/tree/dev/tests/testthat"><code>{designer}</code></a></p></li>
+</ul>
+</div></div>
+</section></section><section><section id="activities" class="title-slide slide level1 center"><h1>Activities</h1>
+<p>If you feel confident enough to contribute to open-source projects to practice these skills, here are some options.</p>
+</section><section id="practice-makes-it-perfect" class="slide level2 smaller"><h2>Practice makes it perfect</h2>
+<p>These are only suggestions. Feel free to contribute to any project you like! 🤝</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Suggestions</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>See if <a href="https://ggplot2.tidyverse.org">ggplot2</a> <a href="https://exts.ggplot2.tidyverse.org/gallery/">extensions</a> you like use snapshot tests for graphics. If not, you can add them for key functions.</p></li>
+<li><p>Check out hard reverse dependencies of <a href="https://cran.r-project.org/web/packages/shiny/index.html"><code>{shiny}</code></a>, and add snapshot tests using <a href="https://rstudio.github.io/shinytest2/">shinytest2</a> to an app of your liking.</p></li>
+<li><p>Add more <a href="https://vdiffr.r-lib.org/">vdiffr</a> snapshot tests to plotting functions in <a href="https://github.com/easystats/see"><code>{see}</code></a>, a library for statistical visualizations (I can chaperone your PRs here).</p></li>
+<li><p><a href="https://rstudio.github.io/shinytest2/">shinytest2</a> is the successor to <a href="https://github.com/rstudio/shinytest">shinytest</a> package. Check out which packages currently use it for <a href="https://cran.r-project.org/web/packages/shinytest/index.html">testing</a> Shiny apps, and see if you can use <a href="https://rstudio.github.io/shinytest2/">shinytest2</a> instead (see how-to <a href="https://rstudio.github.io/shinytest2/articles/z-migration.html">here</a>).</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section></section><section id="for-more" class="title-slide slide level1 center"><h1>For more</h1>
+<p>For a comprehensive collection of packages for unit testing in R, see <a href="https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing">this</a> page.</p>
+<p>If you are interested in good programming and software development practices, check out my other <a href="https://sites.google.com/site/indrajeetspatilmorality/presentations">slide decks</a>.</p>
+</section><section id="find-me-at" class="title-slide slide level1 center"><h1>Find me at…</h1>
+<p><i class="fa-brands fa-linkedin" aria-label="linkedin"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/">LinkedIn</a></p>
+<p><i class="fa-brands fa-github" aria-label="github"></i> <a href="http://github.com/IndrajeetPatil">GitHub</a></p>
+<p><i class="fa-solid fa-link" aria-label="link"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/">Website</a></p>
+<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> <a href="mailto:patilindrajeet.science@gmail.com">E-mail</a></p>
+</section><section><section id="thank-you" class="title-slide slide level1 center"><h1>Thank You</h1>
+<p>And Happy Snapshotting! 😊</p>
+</section><section id="session-information" class="slide level2 smaller"><h2>Session information</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.5.1 (2025-06-13)
+ os       Ubuntu 24.04.3 LTS
+ system   x86_64, linux-gnu
+ ui       X11
+ language (EN)
+ collate  C.UTF-8
+ ctype    C.UTF-8
+ tz       UTC
+ date     2025-09-28
+ pandoc   3.8 @ /opt/hostedtoolcache/pandoc/3.8/x64/ (via rmarkdown)
+ quarto   1.9.2 @ /usr/local/bin/quarto
+
+─ Packages ───────────────────────────────────────────────────────────────────
+ package      * version date (UTC) lib source
+ base         * 4.5.1   2025-06-13 [3] local
+ brio           1.1.5   2024-04-24 [1] RSPM
+ cli            3.6.5   2025-04-23 [1] RSPM
+ compiler       4.5.1   2025-06-13 [3] local
+ crayon         1.5.3   2024-06-20 [1] RSPM
+ datasets     * 4.5.1   2025-06-13 [3] local
+ desc           1.4.3   2023-12-10 [1] RSPM
+ diffobj        0.3.6   2025-04-21 [1] RSPM
+ digest         0.6.37  2024-08-19 [1] RSPM
+ evaluate       1.0.5   2025-08-27 [1] RSPM
+ farver         2.1.2   2024-05-13 [1] RSPM
+ fastmap        1.2.0   2024-05-15 [1] RSPM
+ ggplot2      * 4.0.0   2025-09-11 [1] RSPM
+ glue           1.8.0   2024-09-30 [1] RSPM
+ graphics     * 4.5.1   2025-06-13 [3] local
+ grDevices    * 4.5.1   2025-06-13 [3] local
+ grid           4.5.1   2025-06-13 [3] local
+ gtable         0.3.6   2024-10-25 [1] RSPM
+ htmltools      0.5.8.1 2024-04-04 [1] RSPM
+ jsonlite       2.0.0   2025-03-27 [1] RSPM
+ knitr          1.50    2025-03-16 [1] RSPM
+ labeling       0.4.3   2023-08-29 [1] RSPM
+ lattice        0.22-7  2025-04-02 [3] CRAN (R 4.5.1)
+ lifecycle      1.0.4   2023-11-07 [1] RSPM
+ magrittr       2.0.4   2025-09-12 [1] RSPM
+ Matrix         1.7-4   2025-08-28 [1] RSPM
+ methods      * 4.5.1   2025-06-13 [3] local
+ mgcv           1.9-3   2025-04-04 [3] CRAN (R 4.5.1)
+ nlme           3.1-168 2025-03-31 [3] CRAN (R 4.5.1)
+ pillar         1.11.0  2025-07-04 [1] RSPM
+ pkgload        1.4.1   2025-09-23 [1] RSPM
+ png            0.1-8   2022-11-29 [1] RSPM
+ R6             2.6.1   2025-02-15 [1] RSPM
+ RColorBrewer   1.1-3   2022-04-03 [1] RSPM
+ rlang          1.1.6   2025-04-11 [1] RSPM
+ rmarkdown      2.30    2025-09-28 [1] CRAN (R 4.5.1)
+ rprojroot      2.1.1   2025-08-26 [1] RSPM
+ S7             0.2.0   2024-11-07 [1] RSPM
+ scales         1.4.0   2025-04-24 [1] RSPM
+ sessioninfo    1.2.3   2025-02-05 [1] any (@1.2.3)
+ splines        4.5.1   2025-06-13 [3] local
+ stats        * 4.5.1   2025-06-13 [3] local
+ testthat     * 3.2.3   2025-01-13 [1] RSPM
+ tools          4.5.1   2025-06-13 [3] local
+ utils        * 4.5.1   2025-06-13 [3] local
+ vctrs          0.6.5   2023-12-01 [1] RSPM
+ vdiffr       * 1.0.8   2024-10-31 [1] RSPM
+ waldo          0.6.2   2025-07-11 [1] RSPM
+ withr          3.0.2   2024-10-28 [1] RSPM
+ xfun           0.53    2025-08-19 [1] RSPM
+ yaml           2.3.10  2024-07-26 [1] RSPM
+
+ [1] /home/runner/work/_temp/Library
+ [2] /opt/R/4.5.1/lib/R/site-library
+ [3] /opt/R/4.5.1/lib/R/library
+ * ── Packages attached to the search path.
+
+──────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+</div>
+
+</section></section>
+</div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="index_files/libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script><script src="index_files/libs/revealjs/plugin/notes/notes.js"></script><script src="index_files/libs/revealjs/plugin/search/search.js"></script><script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script><script src="index_files/libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script><script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script><script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+                // target, if specified
+                link.setAttribute("target", "_blank");
+                if (link.getAttribute("rel") === null) {
+                  link.setAttribute("rel", "noopener");
+                }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+
+
+</body></html>
