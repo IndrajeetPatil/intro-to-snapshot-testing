@@ -1,23 +1,32 @@
 ---
 #title: "Introduction to Snapshot Testing in R"
 format:
-  revealjs: 
+  revealjs:
     css: style.css
     theme: simple
     slide-number: true
     preview-links: auto
     link-external-newwindow: true
     code-link: true
+    include-in-header: meta-tags.html
+    google-analytics: "G-Z140SPPYBN"
     #embed-resources: true
     # footer: "Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/){target='_blank'}."
 #author: "Indrajeet Patil"
-#affiliation: 
+#affiliation:
 execute:
   echo: true
 keywords: ["snapshot testing", "testthat", "shinytest2", "vdiffr", "r programming"]
+description-meta: "A comprehensive guide to snapshot testing in R using testthat, vdiffr, and shinytest2. Learn how to test text outputs, graphical outputs, and Shiny applications with automated testing."
+license: "CC0 1.0 Universal"
 pagetitle: "Introduction to Snapshot Testing in R"
 author-meta: "Indrajeet Patil"
 date-meta: "`r Sys.time()`"
+lang: "en"
+dir: "ltr"
+image: "media/social-media-card.png"
+image-alt: "Preview image for presentation about snapshot testing in R"
+canonical-url: "https://indrajeetpatil.github.io/intro-to-snapshot-testing/"
 ---
 
 ## Introduction to Snapshot Testing in R {style="margin-top: 1em;"}
