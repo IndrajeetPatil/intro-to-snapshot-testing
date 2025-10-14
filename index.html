@@ -6,13 +6,13 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-485605091aded536db53fb751867c3cd.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-2e0b4708489a94d7cf3aaa82802539fe.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="index_files/libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
 <link href="index_files/libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.4">
+<meta name="generator" content="quarto-1.9.5">
 <meta name="author" content="Indrajeet Patil">
-<meta name="dcterms.date" content="2025-10-12 00:14:38.630994">
+<meta name="dcterms.date" content="2025-10-14 21:11:34.570241">
 <meta name="keywords" content="snapshot testing, testthat, shinytest2, vdiffr, r programming">
 <title>Introduction to Snapshot Testing in R</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -228,6 +228,9 @@
 </div>
 <div style="margin-top: 1em; font-size:0.75em">
 <p><img data-src="media/logos_combined.jpeg" class="absolute" style="width: 750px; height: 300px; "></p>
+</div>
+<div style="text-align: center; font-size: 0.7em; margin-top: 2em; color: #666;">
+<p>Source code for these slides can be found <a href="https://github.com/IndrajeetPatil/intro-to-snapshot-testing/">on GitHub</a>.</p>
 </div>
 </section><section id="unit-testing" class="slide level2 smaller"><h2>Unit testing</h2>
 <p>The goal of a unit test is to capture the <em>expected</em> output of a function using <em>code</em> and making sure that <em>actual</em> output after any changes matches the expected output.</p>
@@ -447,7 +450,7 @@
 <span id="cb5-8"><a href=""></a>  )</span>
 <span id="cb5-9"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -545,7 +548,7 @@ Output
 <span id="cb11-5"><a href=""></a>  )))</span>
 <span id="cb11-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -819,7 +822,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <span id="cb29-5"><a href=""></a>  )</span>
 <span id="cb29-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🌈</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-1" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -951,7 +954,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb36-10"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb36-11"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎉</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-2" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -1544,16 +1547,15 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
 </div>
 </div>
 </div>
-</section></section><section id="for-more" class="title-slide slide level1 center"><h1>For more</h1>
-<p>For a comprehensive collection of packages for unit testing in R, see <a href="https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing">this</a> page.</p>
-<p>If you are interested in good programming and software development practices, check out my other <a href="https://sites.google.com/site/indrajeetspatilmorality/presentations">slide decks</a>.</p>
-</section><section id="find-me-at" class="title-slide slide level1 center"><h1>Find me at…</h1>
-<p><i class="fa-brands fa-linkedin" aria-label="linkedin"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/">LinkedIn</a></p>
-<p><i class="fa-brands fa-github" aria-label="github"></i> <a href="http://github.com/IndrajeetPatil">GitHub</a></p>
-<p><i class="fa-solid fa-link" aria-label="link"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/">Website</a></p>
-<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> <a href="mailto:patilindrajeet.science@gmail.com">E-mail</a></p>
-</section><section><section id="thank-you" class="title-slide slide level1 center"><h1>Thank You</h1>
+</section></section><section><section id="thank-you" class="title-slide slide level1 center"><h1>Thank You</h1>
 <p>And Happy Snapshotting! 😊</p>
+<p><br><br></p>
+<div style="text-align: center; font-size: 0.7em;">
+<p>Check out my other <a href="https://sites.google.com/site/indrajeetspatilmorality/presentations">slide decks</a> on software development best practices</p>
+</div>
+<div style="text-align: center; font-size: 1em;">
+<p><a href="https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/"><i class="fa-brands fa-linkedin" aria-label="linkedin"></i></a> &nbsp;&nbsp; <a href="http://github.com/IndrajeetPatil"><i class="fa-brands fa-github" aria-label="github"></i></a> &nbsp;&nbsp; <a href="mailto:patilindrajeet.science@gmail.com"><i class="fa-solid fa-envelope" aria-label="envelope"></i></a></p>
+</div>
 </section><section id="session-information" class="slide level2 smaller"><h2>Session information</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1568,9 +1570,9 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2025-10-12
+ date     2025-10-14
  pandoc   3.8.2 @ /opt/hostedtoolcache/pandoc/3.8.2/x64/ (via rmarkdown)
- quarto   1.9.4 @ /usr/local/bin/quarto
+ quarto   1.9.5 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package      * version date (UTC) lib source
