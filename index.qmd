@@ -43,7 +43,7 @@ Indrajeet Patil
 
 :::
 
-::: {style="text-align: center; font-size: 0.7em; margin-top: 2em; color: #666;"}
+::: footer
 Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/).
 :::
 
