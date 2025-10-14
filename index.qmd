@@ -43,6 +43,10 @@ Indrajeet Patil
 
 :::
 
+::: {style="text-align: center; font-size: 0.7em; margin-top: 2em; color: #666;"}
+Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/).
+:::
+
 ## Unit testing {.smaller}
 
 The goal of a unit test is to capture the *expected* output of a function using *code* and making sure that *actual* output after any changes matches the expected output.
@@ -1673,25 +1677,28 @@ These are only suggestions. Feel free to contribute to any project you like! ðŸ¤
 
 :::
 
-# For more
-
-For a comprehensive collection of packages for unit testing in R, see [this](https://indrajeetpatil.github.io/awesome-r-pkgtools/#unit-testing) page.
-
-If you are interested in good programming and software development practices, check out my other [slide decks](https://sites.google.com/site/indrajeetspatilmorality/presentations).
-
-# Find me at...
-
-{{< fa brands linkedin >}} [LinkedIn](https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/)
-
-{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil)
-
-{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/)
-
-{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com)
-
 # Thank You 
 
 And Happy Snapshotting! ðŸ˜Š
+
+<br>
+<br>
+
+::: {style="text-align: center; font-size: 0.7em;"}
+
+Check out my other [slide decks](https://sites.google.com/site/indrajeetspatilmorality/presentations) on software development best practices
+
+:::
+
+::: {style="text-align: center; font-size: 1em;"}
+
+[{{< fa brands linkedin >}}](https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/)
+&nbsp;&nbsp;
+[{{< fa brands github >}}](http://github.com/IndrajeetPatil) 
+&nbsp;&nbsp;
+[{{< fa solid envelope >}}](mailto:patilindrajeet.science@gmail.com)
+
+:::
 
 ## Session information {.smaller}
 
