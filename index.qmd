@@ -248,6 +248,8 @@ Even testing this simple function is a bit painful because you need to keep trac
 
 ```{r, echo=FALSE}
 library(testthat)
+# Allow snapshot creation in CI for presentation purposes
+Sys.setenv(CI = "false")
 ```
 
 
