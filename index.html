@@ -6,13 +6,13 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-fbc9fa5c4eb84233a847a9c3a07af88a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-cdaacfc258cb6f151192107f105ac881.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="index_files/libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
 <link href="index_files/libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.10">
+<meta name="generator" content="quarto-1.9.12">
 <meta name="author" content="Indrajeet Patil">
-<meta name="dcterms.date" content="2025-11-09 00:16:10.815957">
+<meta name="dcterms.date" content="2025-11-23 03:06:05.625542">
 <meta name="keywords" content="snapshot testing, testthat, shinytest2, vdiffr, r programming">
 <title>Introduction to Snapshot Testing in R</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -450,7 +450,7 @@
 <span id="cb5-8"><a href=""></a>  )</span>
 <span id="cb5-9"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed with 1 success 🥳.</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -489,7 +489,8 @@ Code
 Output
   Movie: 
     Title: Salaam Bombay!
-    Director: Mira Nair</code></pre>
+    Director: Mira Nair
+Test passed with 1 success 🎉.</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -548,7 +549,7 @@ Output
 <span id="cb11-5"><a href=""></a>  )))</span>
 <span id="cb11-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😸</code></pre>
+<pre><code>Test passed with 1 success 🌈.</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -604,13 +605,12 @@ old[2:6] vs new[2:6]
 +     Title- Salaam Bombay!
 -     Director: Mira Nair
 +     Director- Mira Nair
-
-* Run `testthat::snapshot_accept('slides.qmd')` to accept the change.
-* Run `testthat::snapshot_review('slides.qmd')` to interactively review the change.</code></pre>
+* Run `testthat::snapshot_accept("slides.qmd")` to accept the change.
+* Run `testthat::snapshot_review("slides.qmd")` to review the change.</code></pre>
 </div>
 <div class="cell-output cell-output-error">
 <pre><code>Error:
-! Test failed</code></pre>
+! Test failed with 1 failure and 0 successes.</code></pre>
 </div>
 </div>
 </div></div>
@@ -660,7 +660,8 @@ Adding new snapshot:
 Code
   f()
 Message
-  Some info for you.</code></pre>
+  Some info for you.
+Test passed with 1 success 🎉.</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -678,7 +679,8 @@ Code
   g()
 Condition
   Warning in `g()`:
-  Managed to recover.</code></pre>
+  Managed to recover.
+Test passed with 1 success 🎊.</code></pre>
 </div>
 </div>
 </div></div>
@@ -710,7 +712,8 @@ Code
   log("x")
 Condition
   Error in `log()`:
-  ! non-numeric argument to mathematical function</code></pre>
+  ! non-numeric argument to mathematical function
+Test passed with 1 success 🎊.</code></pre>
 </div>
 </div>
 </section><section id="further-reading" class="slide level2 smaller"><h2>Further reading</h2>
@@ -791,7 +794,8 @@ Condition
 <span id="cb27-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning: `create_scatter()` plots as expected ───────────────────────────────
-Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre>
+Adding new file snapshot: 'tests/testthat/_snaps/slides.qmd/create-scatter.svg'
+Test passed with 1 success 🎉.</code></pre>
 </div>
 </div>
 </div>
@@ -822,7 +826,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <span id="cb29-5"><a href=""></a>  )</span>
 <span id="cb29-6"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed with 1 success 🌈.</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-1" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -914,7 +918,8 @@ Adding new file snapshot: 'tests/testthat/_snaps/create-scatter.svg'</code></pre
 <span id="cb33-11"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>── Warning: json writer works ──────────────────────────────────────────────────
-Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
+Adding new file snapshot: 'tests/testthat/_snaps/slides.qmd/demo.json'
+Test passed with 1 success 🥳.</code></pre>
 </div>
 </div>
 <p><strong>Snapshot</strong></p>
@@ -954,7 +959,7 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <span id="cb36-10"><a href=""></a>  <span class="fu">expect_snapshot_file</span>(<span class="fu">r_to_json</span>(x), <span class="st">"demo.json"</span>)</span>
 <span id="cb36-11"><a href=""></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥇</code></pre>
+<pre><code>Test passed with 1 success 🎉.</code></pre>
 </div>
 </div>
 </section><section id="what-test-failure-looks-like-2" class="slide level2 smaller"><h2>What test failure looks like</h2>
@@ -973,12 +978,16 @@ Adding new file snapshot: 'tests/testthat/_snaps/demo.json'</code></pre>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>── Failure: json writer works ──────────────────────────────────────────────────
-Snapshot of `r_to_json(x)` to 'slides.qmd/demo.json' has changed
-Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
+Snapshot of `r_to_json(x)` has changed.
+Differences:
+    old               | new                  
+[1] [[1],{"x":["a"]}] - [[1],{"x":["b"]}] [1]
+* Run `testthat::snapshot_accept("slides.qmd/")` to accept the change.
+* Run `testthat::snapshot_review("slides.qmd/")` to review the change.</code></pre>
 </div>
 <div class="cell-output cell-output-error">
 <pre><code>Error:
-! Test failed</code></pre>
+! Test failed with 1 failure and 0 successes.</code></pre>
 </div>
 </div>
 </section><section id="fixing-tests-2" class="slide level2 smaller"><h2>Fixing tests</h2>
@@ -1570,9 +1579,9 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2025-11-09
+ date     2025-11-23
  pandoc   3.8.2.1 @ /opt/hostedtoolcache/pandoc/3.8.2.1/x64/ (via rmarkdown)
- quarto   1.9.10 @ /usr/local/bin/quarto
+ quarto   1.9.12 @ /usr/local/bin/quarto
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package      * version date (UTC) lib source
@@ -1584,11 +1593,11 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  datasets     * 4.5.2   2025-10-31 [3] local
  desc           1.4.3   2023-12-10 [1] RSPM
  diffobj        0.3.6   2025-04-21 [1] RSPM
- digest         0.6.37  2024-08-19 [1] RSPM
+ digest         0.6.39  2025-11-19 [1] RSPM
  evaluate       1.0.5   2025-08-27 [1] RSPM
  farver         2.1.2   2024-05-13 [1] RSPM
  fastmap        1.2.0   2024-05-15 [1] RSPM
- ggplot2      * 4.0.0   2025-09-11 [1] RSPM
+ ggplot2      * 4.0.1   2025-11-14 [1] RSPM
  glue           1.8.0   2024-09-30 [1] RSPM
  graphics     * 4.5.2   2025-10-31 [3] local
  grDevices    * 4.5.2   2025-10-31 [3] local
@@ -1612,12 +1621,12 @@ Run `testthat::snapshot_review('slides.qmd/')` to review changes</code></pre>
  rlang          1.1.6   2025-04-11 [1] RSPM
  rmarkdown      2.30    2025-09-28 [1] RSPM
  rprojroot      2.1.1   2025-08-26 [1] RSPM
- S7             0.2.0   2024-11-07 [1] RSPM
+ S7             0.2.1   2025-11-14 [1] RSPM
  scales         1.4.0   2025-04-24 [1] RSPM
  sessioninfo    1.2.3   2025-02-05 [1] any (@1.2.3)
  splines        4.5.2   2025-10-31 [3] local
  stats        * 4.5.2   2025-10-31 [3] local
- testthat     * 3.2.3   2025-01-13 [1] RSPM
+ testthat     * 3.3.0   2025-11-13 [1] RSPM
  tools          4.5.2   2025-10-31 [3] local
  utils        * 4.5.2   2025-10-31 [3] local
  vctrs          0.6.5   2023-12-01 [1] RSPM

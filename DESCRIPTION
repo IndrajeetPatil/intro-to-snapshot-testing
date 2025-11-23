@@ -26,6 +26,6 @@ Depends:
     quarto,
     reticulate,
     shinytest2,
-    testthat,
+    testthat (>= 3.3.0),
     vdiffr
 Config/testthat/edition: 3
