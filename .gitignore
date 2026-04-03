@@ -5,3 +5,8 @@
 .DS_Store
 .claude
 /.luarc.json
+
+# Quarto
+/.quarto/
+_site/
+_extensions/
