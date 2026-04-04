@@ -15,7 +15,7 @@ tests are valuable in testing:
 - entire files
 
 Slides can be seen here:
-<https://indrajeetpatil.github.io/intro-to-snapshot-testing/>
+<https://www.indrapatil.com/intro-to-snapshot-testing/>
 
 Feedback and suggestions are welcome!
 
