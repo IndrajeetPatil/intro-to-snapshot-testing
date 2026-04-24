@@ -9,7 +9,7 @@ format:
     link-external-newwindow: true
     code-link: true
     include-in-header: meta-tags.html
-    google-analytics: "G-Z140SPPYBN"
+    google-analytics: "G-3BQ49J7KYH"
 execute:
   echo: true
 keywords: ["snapshot testing", "testthat", "shinytest2", "vdiffr", "r programming"]
