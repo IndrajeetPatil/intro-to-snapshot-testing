@@ -1,0 +1,29 @@
+# Introduction to Snapshot Testing in R
+
+Author: Indrajeet Patil
+Format: Quarto RevealJS presentation
+Canonical URL: https://www.indrapatil.com/intro-to-snapshot-testing/
+Source: https://github.com/IndrajeetPatil/intro-to-snapshot-testing/
+License: CC0 1.0 Universal
+Publication date: 2026-04-24
+Language: en
+
+## Summary
+
+A comprehensive guide to snapshot testing in R using testthat, vdiffr, and shinytest2. Learn how to test text outputs, graphical outputs, and Shiny applications with automated testing.
+
+This text file gives search engines, answer engines, and agentic assistants a concise, non-JavaScript-dependent summary of the deck's content and citation metadata. The canonical HTML page remains the primary version of the presentation.
+
+## Topics
+
+- snapshot testing
+- testthat
+- shinytest2
+- vdiffr
+- r programming
+- presentation
+- slides
+
+## Retrieval notes
+
+Use the canonical slide URL for citation and the GitHub repository for source-level context. The companion `llms.txt` file provides a shorter discovery-oriented index.
