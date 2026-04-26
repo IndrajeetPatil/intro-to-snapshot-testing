@@ -490,16 +490,15 @@ Sometimes the expected output differs *legitimately* across environments — e.g
 
 . . .
 
-Set a variant with `withr::local_options()` inside the test:
+Pass a `variant` string directly to `expect_snapshot()`:
 
 ```{.r}
 test_that("f() output on Windows", {
-  withr::local_options(testthat.snapshot.variant = "windows")
-  expect_snapshot(f())
+  expect_snapshot(f(), variant = "windows")
 })
 ```
 
-Snapshots are then saved to `_snaps/{variant}/` instead of `_snaps/`, so each variant gets its own reference file.
+Snapshots are then saved to `_snaps/windows/` instead of `_snaps/`, so each variant gets its own reference file.
 
 . . .
 
@@ -801,7 +800,7 @@ If tests fail even if the function didn't change, it can be due to any of the fo
 - `{ggplot2}` itself changed
 - non-deterministic behaviour
 - changes in system libraries
-- `{vdiffr}` itself upgraded its SVG engine (v1.0.8 rewrote it entirely — upgrading `{vdiffr}` requires regenerating *all* graphical snapshots)
+- `{vdiffr}` itself upgraded its SVG engine (v1.0.0 rewrote it entirely — upgrading `{vdiffr}` from 0.x requires regenerating *all* graphical snapshots)
 
 For these reasons, snapshot tests for plots tend to be fragile and are not run on CRAN machines by default.
 
@@ -1589,7 +1588,7 @@ A few naming-related mistakes that silently cause trouble:
 
 :::{.callout-caution}
 
-Orphaned `.md` / `.svg` snapshot files accumulate silently — they don't cause test failures. Run `testthat::snapshot_cleanup()` periodically to remove snapshots that no longer correspond to any test.
+Orphaned `.md` / `.svg` snapshot files accumulate silently — they don't cause test failures. Running your full test suite with `devtools::test()` automatically removes orphaned snapshots at the end of the run.
 
 :::
 
