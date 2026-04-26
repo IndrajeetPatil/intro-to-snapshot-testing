@@ -765,6 +765,10 @@ Error in `reporter$stop_if_needed()`:
 ! Test failed
 ```
 
+:::
+
+::::
+
 :::{.callout-note}
 
 ## Behaviour on GitHub Actions vs CRAN
@@ -781,10 +785,6 @@ expect_doppelganger("my plot", fig = my_plot(), cran = TRUE)
 ```
 
 :::
-
-:::
-
-::::
 
 ## Fixing tests {.smaller}
 
@@ -1455,7 +1455,7 @@ It's not all kittens and roses when it comes to snapshot testing.
 
 Let's see some issues you might run into while using them. 🤕
 
-## Testing behavior that you don't own {.smaller}
+## Testing behaviour that you don't own {.smaller}
 
 Let's say you write a graphical snapshot test for a function that produces a `ggplot` object. If `{ggplot2}` authors make some modifications to this object, your tests will fail, even though your function works as expected!
 
@@ -1737,29 +1737,7 @@ To see a more realistic usage of snapshot tests, you can study open-source test 
 
 :::
 
-# Activities
-
-If you feel confident enough to contribute to open-source projects to practice these skills, here are some options.
-
-## Practice makes it perfect {.smaller}
-
-These are only suggestions. Feel free to contribute to any project you like! 🤝
-
-:::{.callout-tip}
-
-## Suggestions 
-
-- See if `{ggplot2}` [extensions](https://exts.ggplot2.tidyverse.org/gallery/) you like use snapshot tests for graphics. If not, you can add them for key functions.
-
-- Check out hard reverse dependencies of [`{shiny}`](https://cran.r-project.org/web/packages/shiny/index.html), and add snapshot tests using `{shinytest2}` to an app of your liking.
-
-- Add more `{vdiffr}` snapshot tests to plotting functions in [`{see}`](https://github.com/easystats/see), a library for statistical visualizations (I can chaperone your PRs here).
-
-- `{shinytest2}` is the successor to `{shinytest}` package. Check out which packages currently use it for [testing](https://cran.r-project.org/web/packages/shinytest/index.html) Shiny apps, and see if you can use `{shinytest2}` instead (see how-to [here](https://rstudio.github.io/shinytest2/articles/z-migration.html)).
-
-:::
-
-# Thank You 
+# Thank You
 
 And Happy Snapshotting! 😊
 
