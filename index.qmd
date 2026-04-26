@@ -765,6 +765,23 @@ Error in `reporter$stop_if_needed()`:
 ! Test failed
 ```
 
+:::{.callout-note}
+
+## Behaviour on GitHub Actions vs CRAN
+
+`expect_doppelganger()` has a `cran` argument (default `FALSE`) that controls where failures are enforced:
+
+- **CRAN**: mismatches are *silently skipped* (to avoid spurious failures from graphics engine or `{ggplot2}` updates)
+- **CI / locally**: mismatches *do* cause failures — GitHub Actions sets the `CI` environment variable automatically, so no extra configuration is needed
+
+If you deliberately want CRAN to enforce graphical snapshots too, pass `cran = TRUE`:
+
+```{.r}
+expect_doppelganger("my plot", fig = my_plot(), cran = TRUE)
+```
+
+:::
+
 :::
 
 ::::
