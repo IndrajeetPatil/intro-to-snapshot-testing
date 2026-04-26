@@ -19,6 +19,7 @@ URL: https://github.com/IndrajeetPatil/intro-to-snapshot-testing/,
     https://www.indrapatil.com/intro-to-snapshot-testing/
 BugReports: https://github.com/IndrajeetPatil/intro-to-snapshot-testing/issues
 Depends:
+    R (>= 4.6.0),
     downlit,
     ggplot2,
     knitr,
