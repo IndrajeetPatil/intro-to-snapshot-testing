@@ -196,7 +196,7 @@ If not, have a look at [this](https://r-pkgs.org/testing-basics.html) chapter fr
 
 ## Package versions assumed
 
-Examples in these slides assume `{testthat}` ≥ 3.3.0 and `{vdiffr}` ≥ 1.0.8.
+Examples in these slides assume `{testthat}` ≥ 3.3.0, `{vdiffr}` ≥ 1.0.8, and `{shinytest2}` ≥ 0.5.0.
 
 :::
 
@@ -1124,34 +1124,9 @@ knitr::include_graphics("media/unitConverter-001_.png")
 
 :::{.callout-note}
 
-- `record_test()` will auto-generate a test file in the app directory. The test script will be saved in a *subdirectory* of the app (`inst/my-app/tests/testthat/test-shinytest2.R`).
+- `record_test()` saves the test file directly to the package's `tests/testthat/` directory (e.g. `tests/testthat/test-shinytest2.R`). No separate driver script is needed.
 
-- There will be one `/tests` folder inside *every* app folder.
-
-- The snapshots are saved as `.png` file in `tests/testthat/test-shinytest2/_snaps/{.variant}/shinytest2`. The `{.variant}` here corresponds to operating system and R version used to record tests. For example, `_snaps/windows-4.1/shinytest2`.
-
-:::
-
-## Creating a driver script {.smaller}
-
-Note that currently your test scripts and results are in the `/inst` folder, but you'd also want to run these tests automatically using `{testthat}`.
-
-For this, you will need to write a driver script like the following:
-
-```{.r}
-library(shinytest2)
-
-test_that("`unitConverter` app works", {
-  appdir <- system.file(package = "package_name", "unitConverter")
-  test_app(appdir)
-})
-```
-
-Now the Shiny apps will be tested with the rest of the source code in the package! 🎊	
-
-:::{.callout-tip}
-
-You save the driver test in the `/tests` folder (`tests/testthat/test-inst-apps.R`), alongside other tests.
+- The snapshots are saved in `tests/testthat/_snaps/{test-name}/`. The `{.variant}` subdirectory (e.g. `_snaps/windows-4.1/`) is used when tests produce OS- or R-version-specific output.
 
 :::
 
@@ -1195,7 +1170,7 @@ Diff in snapshot file `shinytest2unitConverter-001.json`
 
 Fixing this test will be similar to fixing any other snapshot test you've seen thus far.
 
-`{testthat2}` provides a Shiny app for comparing the old and new snapshots.
+`{shinytest2}` provides a Shiny app for comparing the old and new snapshots.
 
 ```{r}
 #| echo: false
