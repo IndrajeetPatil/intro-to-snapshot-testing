@@ -458,13 +458,19 @@ Message accompanying failed tests make it explicit how to fix them.
 * Run `snapshot_accept('foo.md')` to accept the change
 ```
 
-- If this was *unexpected*, you can review the changes, and decide whether to change the snapshot or to correct the function behaviour instead.
+- If this was *unexpected*, you can reject the changes, discarding all `.new` snapshot files.
+
+```r
+* Run `snapshot_reject('foo.md')` to reject the change
+```
+
+- If you are unsure, you can review the changes interactively and decide per snapshot.
 
 ```r
 * Run `snapshot_review('foo.md')` to interactively review the change
 ```
 
-. . . 
+. . .
 
 <br>
 
@@ -472,9 +478,34 @@ Message accompanying failed tests make it explicit how to fix them.
 
 ## Fixing multiple snapshot tests
 
-If this is a utility function used by many other functions, changing its behaviour would lead to failure of many tests. 
+If this is a utility function used by many other functions, changing its behaviour would lead to failure of many tests.
 
-You can update *all* new snapshots with `snapshot_accept()`. And, of course, check the diffs to make sure that the changes are expected.
+You can update *all* new snapshots with `snapshot_accept()`, or discard them all with `snapshot_reject()`. And, of course, check the diffs to make sure that the changes are expected.
+
+:::
+
+## Snapshot variants {.smaller}
+
+Sometimes the expected output differs *legitimately* across environments — e.g. on Windows vs. macOS, or across R versions. Rather than maintaining separate test files, you can use **snapshot variants**.
+
+. . .
+
+Set a variant with `withr::local_options()` inside the test:
+
+```{.r}
+test_that("f() output on Windows", {
+  withr::local_options(testthat.snapshot.variant = "windows")
+  expect_snapshot(f())
+})
+```
+
+Snapshots are then saved to `_snaps/{variant}/` instead of `_snaps/`, so each variant gets its own reference file.
+
+. . .
+
+:::{.callout-note}
+
+Variants are most useful when you *know* the output will differ and you want to track each variant explicitly. For output that should be identical everywhere, avoid variants — they multiply the maintenance burden.
 
 :::
 
@@ -709,10 +740,6 @@ create_scatter <- function() {
 
 **Test failure**
 
-<!-- Currently, doesn't work properly with on GHA workflow -->
-<!-- The exact error is the following: -->
-<!-- Error: Can't find `tests/testthat/` in current directory -->
-
 ```{.r}
 test_that("`create_scatter()` plots as expected", {
   expect_doppelganger(
@@ -730,6 +757,21 @@ Backtrace:
 Error in `reporter$stop_if_needed()`:
 ! Test failed
 ```
+
+:::{.callout-note}
+
+## Behaviour on GitHub Actions
+
+The failure above is what you see locally. On GitHub Actions, `{vdiffr}` tests are **skipped by default** — they only run if the `VDIFFR_RUN_TESTS` environment variable is set to `"true"`:
+
+```yaml
+env:
+  VDIFFR_RUN_TESTS: "true"
+```
+
+Without this, a changed plot will not cause a CI failure, which is the intended behaviour for CRAN-like check runs but can be surprising if you expect CI to catch visual regressions.
+
+:::
 
 :::
 
@@ -757,8 +799,21 @@ If tests fail even if the function didn't change, it can be due to any of the fo
 - `{ggplot2}` itself changed
 - non-deterministic behaviour
 - changes in system libraries
+- `{vdiffr}` itself upgraded its SVG engine (v1.0.8 rewrote it entirely — upgrading `{vdiffr}` requires regenerating *all* graphical snapshots)
 
 For these reasons, snapshot tests for plots tend to be fragile and are not run on CRAN machines by default.
+
+:::
+
+:::{.callout-note}
+
+## Graphical snapshot variants
+
+Just like text snapshots, `expect_doppelganger()` supports a `variant` argument (added in `{vdiffr}` 1.0.8) for cases where the expected plot legitimately differs across environments:
+
+```{.r}
+expect_doppelganger("my plot", fig = my_plot(), variant = "windows")
+```
 
 :::
 
@@ -1439,13 +1494,23 @@ Tests that fail for reasons other than what they are testing for are problematic
 
 If snapshots fail locally, you can just run `snapshot_review()`, but what if they fail in non-interactive environments (on CI/CD platforms, during `R CMD Check`, etc.)?
 
-The easiest solution is to copy the new snapshots to the local folder and run `snapshot_review()`.
+The easiest solution is to download the new snapshots to your local folder and run `snapshot_review()`.
 
 :::{.callout-tip}
 
 If expected snapshot is called (e.g.) `foo.svg`, there will be a new snapshot file `foo.new.svg` in the same folder when the test fails.
 
 `snapshot_review()` compares these files to reveal how the outputs have changed.
+
+:::
+
+:::{.callout-important}
+
+## New snapshots must be created locally first (testthat ≥ 3.3.0)
+
+As of `{testthat}` 3.3.0, `expect_snapshot()` **intentionally fails on CI** when it encounters a *new* snapshot that has never been committed — this signals that you forgot to run the tests locally before pushing.
+
+Always run your tests locally first and commit the generated snapshot files before opening a pull request.
 
 :::
 
@@ -1459,13 +1524,21 @@ In local `R CMD Check`, you can find new snapshots in `.Rcheck` folder:
 package_name.Rcheck/tests/testthat/_snaps/
 ```
 
-On [GitHub actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package), you need to upload snapshots:
+On [GitHub Actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package), upload snapshots as artifacts so you can retrieve them:
 
 ```yaml
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
 ```
+
+Then download them directly into your local package with `snapshot_download_gh()` (added in `{testthat}` 3.3.0):
+
+```{.r}
+testthat::snapshot_download_gh()
+```
+
+This replaces the manual step of downloading the artifact zip and copying files by hand.
 
 ## Code review with snapshot tests {.smaller}
 
@@ -1494,9 +1567,33 @@ Locally open the PR branch and play around with the changes to see if the new be
 
 :::
 
+## Common gotchas {.smaller}
+
+A few naming-related mistakes that silently cause trouble:
+
+. . .
+
+- **Reusing a test name within the same file** — the second test overwrites the first test's snapshot file, so the first test no longer has a reference to compare against.
+
+. . .
+
+- **Renaming a test while also changing the test body** — the old snapshot is *orphaned* (no test points to it anymore) and a brand-new snapshot is created on the next run, accepting whatever the new output happens to be.
+
+. . .
+
+- **Renaming the test file while changing source or test code at the same time** — because the snapshot folder is derived from the test file name, you lose the old snapshots entirely and fresh ones are accepted automatically.
+
+. . .
+
+:::{.callout-caution}
+
+Orphaned `.md` / `.svg` snapshot files accumulate silently — they don't cause test failures. Run `testthat::snapshot_cleanup()` periodically to remove snapshots that no longer correspond to any test.
+
+:::
+
 ## Danger of silent failures {.smaller}
 
-Given their fragile nature, snapshot tests are skipped on CRAN by default. 
+Given their fragile nature, snapshot tests are skipped on CRAN by default.
 
 Although this makes sense, it means that you miss out on anything but a breaking change from upstream dependency. E.g., if `{ggplot2}` (hypothetically) changes how the points look, you won't know about this change until you *happen to* run your snapshot tests again locally or on CI/CD.
 
