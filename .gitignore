@@ -3,8 +3,9 @@
 .RData
 .Ruserdata
 .DS_Store
-.claude
-/.luarc.json
+
+# Claude
+/.claude/
 
 # Quarto
 /.quarto/

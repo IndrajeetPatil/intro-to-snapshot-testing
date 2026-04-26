@@ -18,7 +18,3 @@ Slides can be seen here:
 <https://www.indrapatil.com/intro-to-snapshot-testing/>
 
 Feedback and suggestions are welcome!
-
-## Code of Conduct
-
-Please note that this project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/3/0/code_of_conduct/). By contributing to this project, you agree to abide by its terms.
