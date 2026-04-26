@@ -192,6 +192,14 @@ Familiarity with writing unit tests using [`{testthat}`](https://testthat.r-lib.
 
 If not, have a look at [this](https://r-pkgs.org/testing-basics.html) chapter from *R Packages* book.
 
+:::{.callout-note}
+
+## Package versions assumed
+
+Examples in these slides assume `{testthat}` ≥ 3.3.0 and `{vdiffr}` ≥ 1.0.8.
+
+:::
+
 # Testing text outputs
 
 Snapshot tests can be used to test that text output *prints* as expected.
@@ -800,7 +808,6 @@ If tests fail even if the function didn't change, it can be due to any of the fo
 - `{ggplot2}` itself changed
 - non-deterministic behaviour
 - changes in system libraries
-- `{vdiffr}` itself upgraded its SVG engine (v1.0.0 rewrote it entirely — upgrading `{vdiffr}` from 0.x requires regenerating *all* graphical snapshots)
 
 For these reasons, snapshot tests for plots tend to be fragile and are not run on CRAN machines by default.
 
@@ -810,7 +817,7 @@ For these reasons, snapshot tests for plots tend to be fragile and are not run o
 
 ## Graphical snapshot variants
 
-Just like text snapshots, `expect_doppelganger()` supports a `variant` argument (added in `{vdiffr}` 1.0.8) for cases where the expected plot legitimately differs across environments:
+Just like text snapshots, `expect_doppelganger()` supports a `variant` argument for cases where the expected plot legitimately differs across environments:
 
 ```{.r}
 expect_doppelganger("my plot", fig = my_plot(), variant = "windows")
@@ -1507,9 +1514,9 @@ If expected snapshot is called (e.g.) `foo.svg`, there will be a new snapshot fi
 
 :::{.callout-important}
 
-## New snapshots must be created locally first (testthat ≥ 3.3.0)
+## New snapshots must be created locally first
 
-As of `{testthat}` 3.3.0, `expect_snapshot()` **intentionally fails on CI** when it encounters a *new* snapshot that has never been committed — this signals that you forgot to run the tests locally before pushing.
+`expect_snapshot()` **intentionally fails on CI** when it encounters a *new* snapshot that has never been committed — this signals that you forgot to run the tests locally before pushing.
 
 Always run your tests locally first and commit the generated snapshot files before opening a pull request.
 
@@ -1533,7 +1540,7 @@ On [GitHub Actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-pack
           upload-snapshots: true
 ```
 
-Then download them directly into your local package with `snapshot_download_gh()` (added in `{testthat}` 3.3.0):
+Then download them directly into your local package with `snapshot_download_gh()`:
 
 ```{.r}
 testthat::snapshot_download_gh()
