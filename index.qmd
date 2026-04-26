@@ -760,16 +760,18 @@ Error in `reporter$stop_if_needed()`:
 
 :::{.callout-note}
 
-## Behaviour on GitHub Actions
+## Behaviour on GitHub Actions vs CRAN
 
-The failure above is what you see locally. On GitHub Actions, `{vdiffr}` tests are **skipped by default** — they only run if the `VDIFFR_RUN_TESTS` environment variable is set to `"true"`:
+`expect_doppelganger()` has a `cran` argument (default `FALSE`) that controls where failures are enforced:
 
-```yaml
-env:
-  VDIFFR_RUN_TESTS: "true"
+- **CRAN**: mismatches are *silently skipped* (to avoid spurious failures from graphics engine or `{ggplot2}` updates)
+- **CI / locally**: mismatches *do* cause failures — GitHub Actions sets the `CI` environment variable automatically, so no extra configuration is needed
+
+If you deliberately want CRAN to enforce graphical snapshots too, pass `cran = TRUE`:
+
+```{.r}
+expect_doppelganger("my plot", fig = my_plot(), cran = TRUE)
 ```
-
-Without this, a changed plot will not cause a CI failure, which is the intended behaviour for CRAN-like check runs but can be surprising if you expect CI to catch visual regressions.
 
 :::
 
