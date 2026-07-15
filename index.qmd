@@ -39,7 +39,7 @@ Indrajeet Patil
 
 ::: {style="margin-top: 1em; font-size:0.75em"}
 
-![](media/logos_combined.jpeg){.absolute width="750" height="300"}
+![](media/logos_combined.webp){.absolute width="750" height="300"}
 
 :::
 
@@ -958,7 +958,7 @@ Running `snapshot_review()` launches a Shiny app which can be used to either acc
 
 ```{r}
 #| echo: false
-knitr::include_graphics("media/json_snapshot.png")
+knitr::include_graphics("media/json_snapshot.webp")
 ```
 
 ## Further reading {.smaller}
@@ -1115,7 +1115,7 @@ test_that("{shinytest2} recording: unitConverter", {
 ```{r}
 #| echo: false
 #| out-width: "100%"
-knitr::include_graphics("media/unitConverter-001_.png")
+knitr::include_graphics("media/unitConverter-001_.webp")
 ```
 
 :::
