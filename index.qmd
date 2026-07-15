@@ -20,7 +20,7 @@ author-meta: "Indrajeet Patil"
 date-meta: "`r Sys.time()`"
 lang: "en"
 dir: "ltr"
-image: "media/social-media-card.png"
+image: "media/social-media-card.webp"
 image-alt: "Preview image for presentation about snapshot testing in R"
 canonical-url: "https://www.indrapatil.com/intro-to-snapshot-testing/"
 ---
