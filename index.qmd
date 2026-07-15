@@ -27,9 +27,6 @@ canonical-url: "https://www.indrapatil.com/intro-to-snapshot-testing/"
 
 ## Introduction to Snapshot Testing in R {style="margin-top: 1em;"}
 
-<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
-<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
-
 ::: {style="margin-top: 0.5em; margin-bottom: 0.5em; font-size: 1em"}
 
 Indrajeet Patil
@@ -81,8 +78,8 @@ Test pass only when actual function behaviour matches expected.
 
 | actual                                 | expected                               | tests                                    |
 | :------------------------------------- | :------------------------------------- | :--------------------------------------- |
-| {{< fa regular file-lines size=2xl >}} | {{< fa regular file-lines size=2xl >}} | {{< fa regular circle-check size=2xl >}} |
-| {{< fa regular file size=2xl >}}       | {{< fa regular file-lines size=2xl >}} | {{< fa regular circle-xmark size=2xl >}} |
+| <span class="deck-icon deck-icon-2xl deck-icon-regular-file-lines" role="img" aria-label="file lines"></span> | <span class="deck-icon deck-icon-2xl deck-icon-regular-file-lines" role="img" aria-label="file lines"></span> | <span class="deck-icon deck-icon-2xl deck-icon-regular-circle-check" role="img" aria-label="circle check"></span> |
+| <span class="deck-icon deck-icon-2xl deck-icon-regular-file" role="img" aria-label="file"></span>       | <span class="deck-icon deck-icon-2xl deck-icon-regular-file-lines" role="img" aria-label="file lines"></span> | <span class="deck-icon deck-icon-2xl deck-icon-regular-circle-xmark" role="img" aria-label="circle xmark"></span> |
 
 :::
 
@@ -104,9 +101,9 @@ Testing infrastructure for R package has the following hierarchy:
 
 | Component                                                | Role                                                                  |
 | :------------------------------------------------------- | :-------------------------------------------------------------------- |
-| <br> {{< fa regular file-code size=2xl >}} **Test file** | Tests for `R/foo.R` will typically be in `tests/testthat/test-foo.R`. |
-| {{< fa solid flask size=2xl >}} **Tests**                | A single file can contain multiple tests.                             |
-| {{< fa solid equals size=2xl >}} **Expectations**        | A single test can have multiple expectations.                         |
+| <br> <span class="deck-icon deck-icon-2xl deck-icon-regular-file-code" role="img" aria-label="file code"></span> **Test file** | Tests for `R/foo.R` will typically be in `tests/testthat/test-foo.R`. |
+| <span class="deck-icon deck-icon-2xl deck-icon-solid-flask" role="img" aria-label="flask"></span> **Tests**                | A single file can contain multiple tests.                             |
+| <span class="deck-icon deck-icon-2xl deck-icon-solid-equals" role="img" aria-label="equals"></span> **Expectations**        | A single test can have multiple expectations.                         |
 
 :::
 
@@ -157,7 +154,7 @@ A **unit test** records the code to describe expected output.
 
 <br>
 
-(actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-code size=2xl >}} (expected)
+(actual) <span class="deck-icon deck-icon-2xl deck-icon-regular-file-code" role="img" aria-label="file code"></span> <span class="deck-icon deck-icon-2xl deck-icon-solid-arrows-left-right" role="img" aria-label="arrows left right"></span> <span class="deck-icon deck-icon-2xl deck-icon-solid-file-code" role="img" aria-label="file code"></span> (expected)
 
 <br>
 
@@ -167,7 +164,7 @@ A **snapshot test** records expected output in a separate, human-readable file.
 
 <br>
 
-(actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-lines size=2xl >}} (expected)
+(actual) <span class="deck-icon deck-icon-2xl deck-icon-regular-file-code" role="img" aria-label="file code"></span> <span class="deck-icon deck-icon-2xl deck-icon-solid-arrows-left-right" role="img" aria-label="arrows left right"></span> <span class="deck-icon deck-icon-2xl deck-icon-solid-file-lines" role="img" aria-label="file lines"></span> (expected)
 
 ## Why do you need snapshot testing?
 
@@ -1752,11 +1749,11 @@ Check out my other [slide decks](https://www.indrapatil.com/presentations/) on s
 
 ::: {style="text-align: center; font-size: 1em;"}
 
-[{{< fa brands linkedin >}}](https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/)
+<a class="deck-icon-link" href="https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/" aria-label="LinkedIn"><span class="deck-icon deck-icon-brands-linkedin" aria-hidden="true"></span></a>
 &nbsp;&nbsp;
-[{{< fa brands github >}}](http://github.com/IndrajeetPatil) 
+<a class="deck-icon-link" href="http://github.com/IndrajeetPatil" aria-label="GitHub"><span class="deck-icon deck-icon-brands-github" aria-hidden="true"></span></a>
 &nbsp;&nbsp;
-[{{< fa solid envelope >}}](mailto:patilindrajeet.science@gmail.com)
+<a class="deck-icon-link" href="mailto:patilindrajeet.science@gmail.com" aria-label="Email"><span class="deck-icon deck-icon-solid-envelope" aria-hidden="true"></span></a>
 
 :::
 
