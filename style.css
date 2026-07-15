@@ -1,3 +1,44 @@
 .footer > p {
   font-size: 10px;
 }
+
+/* Font Awesome Free 6.7.2 subsets. Fonts: SIL OFL 1.1; https://fontawesome.com/license/free */
+
+@font-face {
+  font-family: "Deck Icons Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("data:font/woff2;base64,d09GMgABAAAAAAOkAAoAAAAABnwAAANeAwcFAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAAPMqFUAE2AiQDDMsIBCAFgzQHIBvNBVGUDE6J4KsCngyfZIjUN3W7VcRyKEKz4iBqDa33670IEY5Di8vx8LLf79zvToPGOokmbhlfl5xYpzRY9/wmrvlFEBXW59/a68Qx7KY+/2ua3vt/tau2p9J8cpU01qa0VU2YO0qgCXFwsEOAhxsFwkPE/PLYlaWQcSUYBsn6OKxTxtv4DQkKzKxwqef/cnp3IGNVNrb1Akzp/qfmtrkpHdPbZmXT1uCFaZhgttkSyl9DcXbJulZ920EmPgNZYjkEYK6J/w35FFOyaQ1veJeJva0V36/8GnFSxLtFgICYjI1hAFJIowMWQiJG0VwopEixJEFi9Utd989ChuSg0BCcpQG8ACNN0ypZJDavyrGxw7rMiZ1M36Ebu9mOtjCtsbafp3UZh6qspJKdUwkvpjdptipsZweANy5lpKxSBV4Pjr/i3HrGu0UMHG4oots2DmbFiR8AgZ+gPjwN0tntXIXbK8g43tk4Jrx6vj649r2Ige+G9vs3AuS8MImD4M3yNCHEcfm0P9V+gJPTT382ZPM/PtqQRO1ZaLoJ1lzXzh86xciqXBfTq1UW5bjMfZdJZa1UZeUIM826rZKmN5PpXeuCK8ZhXdZeuXVZXd/sxQDA1KxIoUIqJyyrvDDKAhyCzsb3e03esVXAZmT+PwgJ4eAcjgNv+LSizvfd/L67I3z58isFJWmeu64bklQJtA7SogxF+KlpSDohEXnp0Y7OmotzHcZx6BFxqBTipK5PYyD9+eUz0LTffzy8EDMREwfMADM1xILBgkI6k+ZRCEZG2jQBJgh+MJ7p7u7p8eqqhhZBVREcWdJWu1AScER6LI98yrOHXOtQpmnNW82eB9eViutcS4Za59+qcjsKustT7WjUV1ePD+t6cY7DegLvpS4RSNqxYBJvSTDuFSSEIJ3PelzyP6vzvxukwMfr8iVumfwnlSJGQQoEP82Zeikhb4pg7k3HM/FGfAGewoBIZ9YwtPqyKe8QLDJFjAEyRRhnKlJqbhRps97dmaoi69rv1Jyx6EV29h6OFmbmzlCsHheNacW8Bb8XuBmd7GyMeBHKhgodtbaGhURlmjMXa21t2ineIolN5pDpKiMInSyoQP+pw2GRqTQei0Gjs6DYyb1X2rgPnWTjxutpr/1WfVL/MAM=") format("woff2");
+  unicode-range: U+F08C, U+F09B;
+}
+
+.fa-brands,.fab {
+  font-family: "Deck Icons Brands" !important;
+}
+
+@font-face {
+  font-family: "Deck Icons Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("data:font/woff2;base64,d09GMgABAAAAAAOEAAoAAAAAB8gAAAM+AwcFAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAARMqIEAE2AiQDFMsOBCAFgygHIBsXB1FUDMoQXx3whvinMkSidIRtvQ5rMDTghBMaHENDPJEQz3V+RhCM1Wbf3SFp+kYWC4nYuPiVLBqKeDof3K9tZ76zgZ/a+zbMs0kS8SZWj9Au4SGRiERKodQP1OTEn+hrkbckEEjtQOqFSdVy/Y/rjz+TubaG7ufrgkbTh4vCATfYiO/dIpJGs7aoBh3ouOJ34ReJfozN+4Zw6c4gLd7EK+nEXixis5B+q3bnT5GeqhCLvJbly9N9398uETfJiBtbiIBYjE80IUhBKsoYBb+OyRAiS5YUvl0xkvh2STaxsILXgi6UuFwqyUSKSKihmkauYoQDYR4OBa0WjcRj6RSiKkIzyMwbARhgIN6UtrQBLY08fAg0WjiHFQBLWAhwsGjpNARYUlYr0mCnJAbLzU1NzSXtF4EjMzOJWCzBS0a477igoFxOCGPlclp+E63W1QJCAI1N4p/6UERjXd2Dq/NzsSjlZWPDpPFMhAtlsyRAosnCeYMEpaqHq8LvK/pkY6+cuLN6nzZFn/NekWII8Xx1uWHSJwRDHLF0SlVBICIYwjxK6XHJkJbsCjFkUxS0XYfRvsIYLci21wqDein5RJT4G59VOl8KO/7VumNQH/XSiN3uGY1C/Xlh0CoebeSq1d862HacXpG2nOh521R2pNnkASEEeVgGYTZEmdVieaiFd9ohGCxLGql4PADQWBnI1njoUtWXNbV12P/NrCWrmajm2RUGQ7h6hovXXNFo1D9x1W+x689HMCYbndeGlAoNuG4BzkSO6AdNSV4Wewb/PBSTJu2zQdH5kaaa540ZUg09fU9j4x1Ihs+fRtM/9lMNOTSD/poWSIa/HxKkZqZ7fXkX1u8sUsDXl9fGKaaUx/jhRxOB4GdlTHneADOY0/fItHhOCg8v5eJMj/xFbzyl2AQyMv/LN2xmvivTbUaRlo0xRNLDBIWeosA1PdWKi9K0ZvR0D3y9VIahaDFo34FLRzat23AiImNZVsSIfXvIr9fv3Kpj+3atVrkitI5GRxIilOPAJOtO7Vh0xIsxzMmKNCVCiWTaqiPHNgc7eYQgqEoqoJ1KBhKVpBwnLD8baLRDZBJdtmsmo9eWyKnYu9EO") format("woff2");
+  unicode-range: U+F057, U+F058, U+F15B, U+F15C, U+F1C9;
+}
+
+.fa-regular,.far {
+  font-family: "Deck Icons Regular" !important;
+}
+
+@font-face {
+  font-family: "Deck Icons Solid";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("data:font/woff2;base64,d09GMgABAAAAAAPAAAoAAAAAB8AAAAN3AwcFAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAAXMqHeAE2AiQDGssQBCAFgxgHIBsPByCehbFj7UAkEpm61fr1DUb2vE69JzlW5MZCy27ZVDthfYsSVoqECnQiXBGHEXH22A4LbwEe/HZ/O89FQqYEla4JWl2OulbI//ra5PoG/59jqRcRGil4ivf+VdeyKYNPcGUV2qSj8Ww4sFmK18n3KJw9A6Hk+W6UAJ20DsD4V/DfIN01jtjw8mnG/wXt9+ypCLT8H+hTfwC9mAwgAOigpwCSAIAD8IAYHgFiQiYAJKU4YS3fsV+vfv3b7w/9AKvv6H8td8u+nJXuSy0g+KM5Cj+ekQ9DFeiLwFjYiCXiVooVPNex87lMynAImpKIiEQrxHX7rlk5yZ9hVQvLng+XgwB+gna0wMhNiNeRZ5srLaRFSDCSx8DSI7AtGrcKXj0pNsAUoKsrUBLFFZHo3yhR2VesFECdak2lHHviihWWFZ+nosLPrOMwgIP+50TGo5YPtFoZLMctg8UyphhPxBMp5qK8eM5xamhkRnAMx2IGy7s5U54sJYOgnq4Ut0ZIjw0jd1hMp8iWyDI+ucLXMw/TOlVXywlNfqbGfIH/jpj6TNZOODrfnMDDsyPq60dkAQ4ADhUM1aCPDeYS4nXW4HnM9XLDYD4lGE6GTU4VfmAmnc+bMSlKpBV1vagRRaVY3wqTNG0IBUM0jYqqYahFCtxGDJRulZXdkgaGcez4DvACntu/34xGb6KkupDB5GGyCnzTMrNKZWknVJZhK9TVT5uxDMewWJ63MlY8ERYyLJd3PcPC5qfqIignBJIoXnseBOeuIS0TyXxOqoueh/X3BbGUkqIoBWjpB00yHSv78l4gVLRjqTdlHSF4QoLFhXDPgIYwJNSgl8gLDoFZwwpOqnUuxXKuH4GCJKmqyRmmqsZ2mKamcZtjmVx9hQfPZvNTcUN60mkat5cBBHwvwYIr3btcbv5fOoADAPzs3HTpvdg/cSfpE4BSPiIEPysnVyfifUBwXjgCgB4oCRENXwG/otkZPyhL56gHBBB6FwwAQHCdYBEeDSIAG1QpKbClnIh1Ul6rHUtD3qQl1njyWWHVoWG07XY4aJeN1ttgj6Ryq1VIGme7bZZfr91+a+223VZrncJJbkDDLhU2p9nTwBYbrVEWOvjjarhqeWoVzLPWLrttjOjxSR6Po5aJaeCwMAVOMeaY2PJ94+5GyURsFUFnWu1u9pRrNs8DAAAA") format("woff2");
+  unicode-range: U+003D, U+F07E, U+F0C3, U+F0E0, U+F15C, U+F1C9;
+}
+
+.fa-solid,.fas {
+  font-family: "Deck Icons Solid" !important;
+}
