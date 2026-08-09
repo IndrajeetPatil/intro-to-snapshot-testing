@@ -509,7 +509,7 @@ Snapshots are then saved to `_snaps/windows/` instead of `_snaps/`, so each vari
 
 :::{.callout-note}
 
-Variants are most useful when you *know* the output will differ and you want to track each variant explicitly. For output that should be identical everywhere, avoid variants — they multiply the maintenance burden.
+Variants are most useful when you *know* the output will differ and you want to track each variant explicitly. For output that should be identical everywhere, avoid variants — they multiply the maintenance burden. Delete variant directories when they are no longer used because testthat cannot infer every valid variant in advance.
 
 :::
 
@@ -1416,28 +1416,6 @@ knitr::include_graphics("media/github_pr.mov")
 ### Option-2
 
 Locally open the PR branch and play around with the changes to see if the new behaviour makes sense. 🤷 
-
-:::
-
-## Native safety rails {.smaller}
-
-`{testthat}` now handles several snapshot-management problems itself:
-
-. . .
-
-- **Duplicate file names** — reusing a name in `expect_snapshot_file()` produces a clear error instead of silently overwriting the first snapshot. This also protects wrappers such as `vdiffr::expect_doppelganger()`.
-
-. . .
-
-- **Dangling snapshots** — after a complete local test run, ordinary snapshot files that no test generated are deleted automatically. You don't need a manual orphan-cleanup step.
-
-. . .
-
-- **Unreviewed additions on CI** — a brand-new snapshot fails on CI instead of being accepted as the new reference.
-
-:::{.callout-caution}
-
-Variants are the exception: testthat cannot know every valid variant in advance, so you remain responsible for deleting variant directories that are no longer used.
 
 :::
 
