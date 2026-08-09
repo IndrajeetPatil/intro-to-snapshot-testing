@@ -1244,20 +1244,6 @@ Native function support removes the need to construct and serialise the app obje
 
 :::
 
-## Testing apps from frameworks {.smaller}
-
-Frameworks such as [`{golem}`](https://thinkr-open.github.io/golem/index.html) and [`{rhino}`](https://appsilon.github.io/rhino/) need no separate shinytest2 driver layer when they expose a package function that runs or returns an app.
-
-. . .
-
-Pass that function directly to `AppDriver$new()`. During local package development, shinytest2 runs it in a background process and loads the development package source for you.
-
-:::{.callout-tip}
-
-Installing the package before local testing is no longer required.
-
-:::
-
 ## One package-level test layout {.smaller}
 
 Package authors should keep every Shiny test in the package's existing `tests/testthat/` infrastructure, whether an app is stored under `inst/` or returned by a function.
