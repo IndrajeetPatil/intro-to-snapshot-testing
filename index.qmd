@@ -766,23 +766,6 @@ Error in `reporter$stop_if_needed()`:
 
 ::::
 
-:::{.callout-note}
-
-## Behaviour on GitHub Actions vs CRAN
-
-`expect_doppelganger()` has a `cran` argument (default `FALSE`) that controls where failures are enforced:
-
-- **CRAN**: mismatches are *silently skipped* (to avoid spurious failures from graphics engine or `{ggplot2}` updates)
-- **CI / locally**: mismatches *do* cause failures — GitHub Actions sets the `CI` environment variable automatically, so no extra configuration is needed
-
-If you deliberately want CRAN to enforce graphical snapshots too, pass `cran = TRUE`:
-
-```{.r}
-expect_doppelganger("my plot", fig = my_plot(), cran = TRUE)
-```
-
-:::
-
 ## Fixing tests {.smaller}
 
 For text file types such as `.json`, `.txt`, and `.md`, `{testthat}` now includes a line diff directly in the failure message.
@@ -1029,21 +1012,20 @@ There are two possibilities, and you will discuss them both separately.
 
 Let's say this app resides in the `inst/unitConverter/app.R` file.
 
-<!-- 
-  TODO: How to embed a Shiny app? 
-  If I just include the code in R chunk, I see:
-  "Shiny applications not supported in static R Markdown documents"
--->
-
 :::: {.columns}
 
 ::: {.column width='40%'}
 
 **App**
 
-```{r}
-#| echo: false
-knitr::include_graphics("media/shiny_app.mov")
+```{=html}
+<iframe
+  src="https://shinylive.io/r/app/#h=0&amp;code=NobwRAdghgtgpmAXGKAHVA6ASmANGAYwHsIAXOMpMAGwEsAjAJykYE8AKAZwAtaJWAlAB0IIgK60ABAB4AtJIBm1CQBMAClADmcdiMmTStUtTgaIcarrABhEgDc4jUpIDWtakU3MYnA0UlesJxCYAK4epIQYvCMtAQAkhCoYqRWLpohuJIhAOpwtJrczux8rprCeJJ2UMpwkgC8kgAMYRHkAB6kAPIpyakhGaEiwqIQnI4OjDLyCmIQBIYkJUkpWUS9q5LjnJy0JAKSIBHrpH0AJJrTkowUKo4AKnCduhD6+qhQnORNVnkFRZJlgEBIhspU+Od0pIAFSSACMTURI30IwAviIRDw+KwAILodgSLLjRiTEZgVEAXSAA"
+  title="Interactive Shiny app that converts kilograms to grams"
+  aria-label="Interactive Shiny app that converts kilograms to grams"
+  loading="lazy"
+  style="width: 100%; height: 420px; border: 1px solid #dee2e6; border-radius: 8px; background: #ffffff;"
+></iframe>
 ```
 
 :::
@@ -1073,6 +1055,12 @@ shinyApp(ui, server)
 :::
 
 ::::
+
+::: {style="font-size: 0.45em; text-align: center; margin-top: 0.2em;"}
+
+Runs entirely in the browser via [Shinylive](https://posit-dev.github.io/r-shinylive/); the first load can take a few seconds.
+
+:::
 
 ## Generating a test {.smaller}
 
