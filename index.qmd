@@ -193,7 +193,7 @@ If not, have a look at [this](https://r-pkgs.org/testing-basics.html) chapter fr
 
 ## Package versions assumed
 
-Examples in these slides assume `{testthat}` ≥ 3.3.0, `{vdiffr}` ≥ 1.0.8, and `{shinytest2}` ≥ 0.5.0.
+Examples in these slides assume `{testthat}` ≥ 3.3.2, `{vdiffr}` ≥ 1.0.8, and `{shinytest2}` ≥ 0.5.1.
 
 :::
 
@@ -345,7 +345,7 @@ It is easy to *see* what the printed text output is *supposed* to look like. In 
 
 ## More about snapshot Markdown files
 
-- If test file is called `test-foo.R`, the snapshot will be saved to `test/testthat/_snaps/foo.md`.
+- If test file is called `test-foo.R`, the snapshot will be saved to `tests/testthat/_snaps/foo.md`.
 
 - If there are multiple snapshot tests in a single file, corresponding snapshots will also share the same `.md` file.
 
@@ -382,7 +382,7 @@ snapper$start_file("slides.qmd", "test")
 
 If testing a snapshot you just generated fails on re-running the test, this is most likely because your test is not deterministic. For example, if your function deals with random number generation.
 
-In such cases, setting a seed (e.g. `set.seed(42)`) should help.
+In such cases, setting a seed (e.g. `set.seed(42)`) should help. For volatile text such as temporary paths or timestamps, use the native `transform` argument to normalise the output before comparison.
 
 :::
 
@@ -509,7 +509,7 @@ Snapshots are then saved to `_snaps/windows/` instead of `_snaps/`, so each vari
 
 :::{.callout-note}
 
-Variants are most useful when you *know* the output will differ and you want to track each variant explicitly. For output that should be identical everywhere, avoid variants — they multiply the maintenance burden.
+Variants are most useful when you *know* the output will differ and you want to track each variant explicitly. For output that should be identical everywhere, avoid variants — they multiply the maintenance burden. Delete variant directories when they are no longer used because testthat cannot infer every valid variant in advance.
 
 :::
 
@@ -604,7 +604,7 @@ The figure to test can be:
 
 :::{.callout-note}
 
-- If test file is called `test-foo.R`, the snapshot will be saved to `test/testthat/_snaps/foo` folder.
+- If test file is called `test-foo.R`, the snapshot will be saved to `tests/testthat/_snaps/foo` folder.
 
 - In this folder, there will be one `.svg` file for every test in `test-foo.R`.
 
@@ -785,7 +785,9 @@ expect_doppelganger("my plot", fig = my_plot(), cran = TRUE)
 
 ## Fixing tests {.smaller}
 
-Running `snapshot_review()` launches a Shiny app which can be used to either accept or reject the new output(s).
+For text file types such as `.json`, `.txt`, and `.md`, `{testthat}` now includes a line diff directly in the failure message.
+
+Running `snapshot_review()` launches a Shiny app when you want to inspect and accept or reject changes interactively, or review binary snapshots.
 
 ```{r}
 #| echo: false
@@ -879,7 +881,7 @@ snapper$start_file("slides.qmd", "test")
 
 - To snapshot a file, you need to write a helper function that provides its path.
 
-- If a test file is called `test-foo.R`, the snapshot will be saved to `test/testthat/_snaps/foo` folder.
+- If a test file is called `test-foo.R`, the snapshot will be saved to `tests/testthat/_snaps/foo` folder.
 
 - In this folder, there will be one file (e.g. `.json`) for every `expect_snapshot_file()` expectation in `test-foo.R`.
 
@@ -1187,7 +1189,7 @@ knitr::include_graphics("media/shinytest_failure.mov")
 
 ## Example app and test {.smaller}
 
-The only difference in testing workflow when Shiny app objects are created by functions is that you will write the test ourselves, instead of `{shinytest2}` auto-generating it.
+`{shinytest2}` can run the package function directly in its background R process. You don't need to create and serialise the Shiny app object first.
 
 :::: {.columns}
 
@@ -1224,8 +1226,12 @@ unitConverter <- function() {
 ```{.r}
 # File: tests/testthat/test-unit-converter.R
 test_that("unitConverter app works", {
-  shiny_app <- unitConverter()
-  app <- AppDriver$new(shiny_app)
+  app <- AppDriver$new(
+    unitConverter,
+    name = "unit-converter"
+  )
+  app$set_inputs(kg = 10)
+  app$expect_values()
 })
 ```
 
@@ -1234,193 +1240,59 @@ test_that("unitConverter app works", {
 
 ::::
 
-## Generating test and snapshots {.smaller}
+## Recording function-based apps {.smaller}
 
-you call `record_test()` directly on a Shiny app object, copy-paste commands to the test script, and run `devtools::test_active_file()` to generate snapshots.
+Pass the function itself to `record_test()`:
 
-```{r}
-#| echo: false
-#| out.width: "60%"
-knitr::include_graphics("media/shiny_app_function_return.mov")
+```{.r}
+record_test(unitConverter, name = "unit-converter")
 ```
+
+The recorder can capture the interactions, but it cannot save a function-based test automatically. Copy the generated commands into the test file, then run `devtools::test_active_file()` to generate snapshots.
+
+:::{.callout-note}
+
+Native function support removes the need to construct and serialise the app object. The copy-paste step remains because the recorder cannot write a reusable function reference into the generated test.
+
+:::
 
 ## Testing apps from frameworks {.smaller}
 
-This testing workflow is also relevant for app frameworks (e.g. [`{golem}`](https://thinkr-open.github.io/golem/index.html), [`{rhino}`](https://appsilon.github.io/rhino/), etc.).
+Frameworks such as [`{golem}`](https://thinkr-open.github.io/golem/index.html) and [`{rhino}`](https://appsilon.github.io/rhino/) need no separate shinytest2 driver layer when they expose a package function that runs or returns an app.
 
-:::: {.columns}
+. . .
 
-::: {.column width='50%'}
+Pass that function directly to `AppDriver$new()`. During local package development, shinytest2 runs it in a background process and loads the development package source for you.
 
-**`{golem}`**
+:::{.callout-tip}
 
-Function in `run_app.R`
-returns app.
-
-```
-├── DESCRIPTION 
-├── NAMESPACE 
-├── R 
-│   ├── app_config.R 
-│   ├── app_server.R 
-│   ├── app_ui.R 
-│   └── run_app.R 
-```
+Installing the package before local testing is no longer required.
 
 :::
 
-::: {.column width='50%'}
+## One package-level test layout {.smaller}
 
-**`{rhino}`**
-
-Function in `app.R`
-returns app.
+Package authors should keep every Shiny test in the package's existing `tests/testthat/` infrastructure, whether an app is stored under `inst/` or returned by a function.
 
 ```
-├── app
-│   ├── js
-│   │   └── index.js
-│   ├── logic
-│   │   └── __init__.R
-│   ├── static
-│   │   └── favicon.ico
-│   ├── styles
-│   │   └── main.scss
-│   ├── view
-│   │   └── __init__.R
-│   └── main.R
-├── tests
-│   ├── ...
-├── app.R
-├── RhinoApplication.Rproj
-├── dependencies.R
-├── renv.lock
-└── rhino.yml
-```
-
-:::
-
-::::
-
-
-## Final directory structure {.smaller}
-
-The final location of the tests and snapshots should look like the following for the two possible ways Shiny apps are included in R packages.
-
-<br>
-
-:::: {.columns}
-
-::: {.column width='50%'}
-
-**Stored in `/inst` folder**
-
-```
-├── DESCRIPTION
-├── R
 ├── inst
 │   └── sample_app
-│       ├── app.R
-│       └── tests
-│           ├── testthat
-│           │   ├── _snaps
-│           │   │   └── shinytest2
-│           │   │       └── 001.json
-│           │   └── test-shinytest2.R
-│           └── testthat.R
-└── tests
-    ├── testthat
-    │   └── test-inst-apps.R
-    └── testthat.R
-```
-
-:::
-
-::: {.column width='50%'}
-
-**Returned by a function**
-
-```
-├── DESCRIPTION
+│       └── app.R
 ├── R
-│   └── app-function.R
+│   └── unit-converter.R
 └── tests
     ├── testthat
     │   ├── _snaps
-    │   │   └── app-function
-    │   │       └── 001.json
-    │   └── test-app-function.R
+    │   │   ├── app-sample_app
+    │   │   │   └── sample_app-001.json
+    │   │   └── unit-converter
+    │   │       └── unit-converter-001.json
+    │   ├── test-app-sample_app.R
+    │   └── test-unit-converter.R
     └── testthat.R
 ```
 
-:::
-
-::::
-
-## Testing multiple apps {.smaller}
-
-For the sake of completeness, here is what the test directory structure would like when there are multiple apps in a single package.
-
-:::: {.columns}
-
-::: {.column width='50%'}
-
-**Stored in `/inst` folder**
-
-```
-├── DESCRIPTION
-├── R
-├── inst
-│   └── sample_app1
-│       ├── app.R
-│       └── tests
-│           ├── testthat
-│           │   ├── _snaps
-│           │   │   └── shinytest2
-│           │   │       └── 001.json
-│           │   └── test-shinytest2.R
-│           └── testthat.R
-│   └── sample_app2
-│       ├── app.R
-│       └── tests
-│           ├── testthat
-│           │   ├── _snaps
-│           │   │   └── shinytest2
-│           │   │       └── 001.json
-│           │   └── test-shinytest2.R
-│           └── testthat.R
-└── tests
-    ├── testthat
-    │   └── test-inst-apps.R
-    └── testthat.R
-```
-
-:::
-
-::: {.column width='50%'}
-
-**Returned by a function**
-
-```
-├── DESCRIPTION
-├── R
-│   └── app-function1.R
-│   └── app-function2.R
-└── tests
-    ├── testthat
-    │   ├── _snaps
-    │   │   └── app-function1
-    │   │       └── 001.json
-    │   │   └── app-function2
-    │   │       └── 001.json
-    │   └── test-app-function1.R
-    │   └── test-app-function2.R
-    └── testthat.R
-```
-
-:::
-
-::::
+There is no nested `inst/.../tests/` tree and no package-level driver test. For multiple apps, use one ordinary test file per app.
 
 ## Advanced topics {.smaller}
 
@@ -1547,41 +1419,17 @@ Locally open the PR branch and play around with the changes to see if the new be
 
 :::
 
-## Common gotchas {.smaller}
-
-A few naming-related mistakes that silently cause trouble:
-
-. . .
-
-- **Reusing a test name within the same file** — the second test overwrites the first test's snapshot file, so the first test no longer has a reference to compare against.
-
-. . .
-
-- **Renaming a test while also changing the test body** — the old snapshot is *orphaned* (no test points to it anymore) and a brand-new snapshot is created on the next run, accepting whatever the new output happens to be.
-
-. . .
-
-- **Renaming the test file while changing source or test code at the same time** — because the snapshot folder is derived from the test file name, you lose the old snapshots entirely and fresh ones are accepted automatically.
-
-. . .
-
-:::{.callout-caution}
-
-Orphaned `.md` / `.svg` snapshot files accumulate silently — they don't cause test failures. Running your full test suite with `devtools::test()` automatically removes orphaned snapshots at the end of the run.
-
-:::
-
 ## Danger of silent failures {.smaller}
 
-Given their fragile nature, snapshot tests are skipped on CRAN by default.
+Given their fragile nature, most snapshot comparisons are not enforced on CRAN by default. `{testthat}` returns without comparing, `{vdiffr}` does not fail on a mismatch, and `{shinytest2}` skips when an `AppDriver` is initialised.
 
 Although this makes sense, it means that you miss out on anything but a breaking change from upstream dependency. E.g., if `{ggplot2}` (hypothetically) changes how the points look, you won't know about this change until you *happen to* run your snapshot tests again locally or on CI/CD.
 
-Unit tests run on CRAN, on the other hand, will fail and you will be immediately informed about it.
+Ordinary deterministic unit expectations run on CRAN, on the other hand, and will report failures.
 
 :::{.callout-tip collapse=false appearance='default' icon=true}
 
-A way to insure against such silent failures is to run tests **daily** on CI/CD platforms (e.g. nightly builds).
+A way to insure against such silent failures is to run tests **regularly** on CI/CD platforms (e.g. nightly or weekly builds).
 
 :::
 
