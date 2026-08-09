@@ -1018,14 +1018,9 @@ Let's say this app resides in the `inst/unitConverter/app.R` file.
 
 **App**
 
-```{=html}
-<iframe
-  src="https://shinylive.io/r/app/#h=0&amp;code=NobwRAdghgtgpmAXGKAHVA6ASmANGAYwHsIAXOMpMAGwEsAjAJykYE8AKAZwAtaJWAlAB0IIgK60ABAB4AtJIBm1CQBMAClADmcdiMmTStUtTgaIcarrABhEgDc4jUpIDWtakU3MYnA0UlesJxCYAK4epIQYvCMtAQAkhCoYqRWLpohuJIhAOpwtJrczux8rprCeJJ2UMpwkgC8kgAMYRHkAB6kAPIpyakhGaEiwqIQnI4OjDLyCmIQBIYkJUkpWUS9q5LjnJy0JAKSIBHrpH0AJJrTkowUKo4AKnCduhD6+qhQnORNVnkFRZJlgEBIhspU+Od0pIAFSSACMTURI30IwAviIRDw+KwAILodgSLLjRiTEZgVEAXSAA"
-  title="Interactive Shiny app that converts kilograms to grams"
-  aria-label="Interactive Shiny app that converts kilograms to grams"
-  loading="lazy"
-  style="width: 100%; height: 420px; border: 1px solid #dee2e6; border-radius: 8px; background: #ffffff;"
-></iframe>
+```{r}
+#| echo: false
+knitr::include_graphics("media/shiny_app.mov")
 ```
 
 :::
@@ -1055,12 +1050,6 @@ shinyApp(ui, server)
 :::
 
 ::::
-
-::: {style="font-size: 0.45em; text-align: center; margin-top: 0.2em;"}
-
-Runs entirely in the browser via [Shinylive](https://posit-dev.github.io/r-shinylive/); the first load can take a few seconds.
-
-:::
 
 ## Generating a test {.smaller}
 
