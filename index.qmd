@@ -766,23 +766,6 @@ Error in `reporter$stop_if_needed()`:
 
 ::::
 
-:::{.callout-note}
-
-## Behaviour on GitHub Actions vs CRAN
-
-`expect_doppelganger()` has a `cran` argument (default `FALSE`) that controls where failures are enforced:
-
-- **CRAN**: mismatches are *silently skipped* (to avoid spurious failures from graphics engine or `{ggplot2}` updates)
-- **CI / locally**: mismatches *do* cause failures — GitHub Actions sets the `CI` environment variable automatically, so no extra configuration is needed
-
-If you deliberately want CRAN to enforce graphical snapshots too, pass `cran = TRUE`:
-
-```{.r}
-expect_doppelganger("my plot", fig = my_plot(), cran = TRUE)
-```
-
-:::
-
 ## Fixing tests {.smaller}
 
 For text file types such as `.json`, `.txt`, and `.md`, `{testthat}` now includes a line diff directly in the failure message.
@@ -1029,12 +1012,6 @@ There are two possibilities, and you will discuss them both separately.
 
 Let's say this app resides in the `inst/unitConverter/app.R` file.
 
-<!-- 
-  TODO: How to embed a Shiny app? 
-  If I just include the code in R chunk, I see:
-  "Shiny applications not supported in static R Markdown documents"
--->
-
 :::: {.columns}
 
 ::: {.column width='40%'}
@@ -1253,20 +1230,6 @@ The recorder can capture the interactions, but it cannot save a function-based t
 :::{.callout-note}
 
 Native function support removes the need to construct and serialise the app object. The copy-paste step remains because the recorder cannot write a reusable function reference into the generated test.
-
-:::
-
-## Testing apps from frameworks {.smaller}
-
-Frameworks such as [`{golem}`](https://thinkr-open.github.io/golem/index.html) and [`{rhino}`](https://appsilon.github.io/rhino/) need no separate shinytest2 driver layer when they expose a package function that runs or returns an app.
-
-. . .
-
-Pass that function directly to `AppDriver$new()`. During local package development, shinytest2 runs it in a background process and loads the development package source for you.
-
-:::{.callout-tip}
-
-Installing the package before local testing is no longer required.
 
 :::
 
