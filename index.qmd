@@ -41,7 +41,7 @@ Indrajeet Patil
 :::
 
 ::: footer
-Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/).
+Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/){style="text-decoration: underline;"}.
 :::
 
 ## Unit testing {.smaller}
@@ -934,7 +934,7 @@ test_that("json writer works", {
 })
 ```
 
-## Fixing tests {.smaller}
+## Fixing tests {.smaller .nostretch}
 
 Running `snapshot_review()` launches a Shiny app which can be used to either accept or reject the new output(s).
 
