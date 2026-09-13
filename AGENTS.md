@@ -14,6 +14,7 @@ A single-page [Quarto](https://quarto.org/) presentation rendered to [RevealJS](
 index.qmd           # All slide content (the only file you usually need to edit)
 _quarto.yml          # Quarto project config (output dir, resources list)
 _quarto-a11y.yml     # Opt-in profile enabling the axe accessibility checker (`just axe`)
+accessibility.html  # Production fixes for zoom, menu controls, and keyboard focus
 style.css            # Custom RevealJS theme (fonts, colours, component classes)
 meta-tags.html       # OpenGraph, Twitter Card, JSON-LD, and analytics tags
 justfile             # Command runner (install, render, preview, clean, etc.)
@@ -61,6 +62,7 @@ Check which set is present to know which language context applies.
   Verify with `just axe`, which appends an "Accessibility Report" slide listing axe-core violations. Keep `axe` in
   `_quarto-a11y.yml`, not `index.qmd`, so production builds exclude the audit payload. CLI metadata such as
   `-M axe:true` cannot override this deck's `format:` block. Links inside muted text need a non-colour cue such as an underline.
+  Keep the production keyboard/zoom fixes in `accessibility.html`. Inspect all slides, revealed fragments, and tab panels in both presentation and scroll view; the initial report alone does not exercise every state.
 - **Icons.** Icons use lightweight HTML spans backed by only the required SVG path data in the custom stylesheet; no icon-font or Quarto icon extension is needed.
   When adding an icon, add only its mask data, preserve the source licence attribution, keep an accessible label where the icon conveys meaning, and render the deck to verify it.
 - **Mermaid performance boundary.** Keep Mermaid diagrams as Mermaid source. Do not replace them with pre-rendered SVGs solely to reduce the website bundle.

@@ -48,7 +48,7 @@ just axe      # Preview with an Accessibility Report slide
 just          # Install dependencies and start live-reload preview
 ```
 
-`just axe` enables the opt-in `a11y` profile. Run `just render` for the production deck, which excludes the audit payload and report.
+`just axe` enables the opt-in `a11y` profile. It accepts preview options, for example `just axe --no-browser --port 8834`. Inspect slide and scroll views, including all fragments and tab panels. Run `just render` for the production deck, which excludes the audit payload and report.
 
 ## Feedback
 
