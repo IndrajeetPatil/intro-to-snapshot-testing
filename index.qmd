@@ -9,6 +9,7 @@ format:
     link-external-newwindow: true
     code-link: true
     include-in-header: meta-tags.html
+    include-after-body: accessibility.html
     google-analytics: "G-3BQ49J7KYH"
 execute:
   echo: true
@@ -36,7 +37,7 @@ Indrajeet Patil
 
 ::: {style="margin-top: 1em; font-size:0.75em"}
 
-![](media/logos_combined.webp){.absolute width="750" height="300"}
+![](media/logos_combined.webp){.absolute width="750" height="300" fig-alt="Logos for testthat, vdiffr, and shinytest2."}
 
 :::
 
@@ -639,6 +640,7 @@ create_scatter <- function() {
 
 ```{r}
 #| out.width: "100%"
+#| fig-alt: "Scatterplot of fuel economy (mpg) versus vehicle weight (wt) in mtcars, with a downward-sloping fitted line and a confidence band."
 create_scatter()
 ```
 
@@ -778,7 +780,7 @@ Running `snapshot_review()` launches a Shiny app when you want to inspect and ac
 knitr::include_graphics("media/shiny_app_graphics.mov")
 ```
 
-##
+## <span class="visually-hidden">Graphical snapshot failures and variants</span> {#section}
 
 :::{.callout-tip}
 
@@ -934,12 +936,13 @@ test_that("json writer works", {
 })
 ```
 
-## Fixing tests {.smaller}
+## Fixing tests {.smaller .nostretch}
 
 Running `snapshot_review()` launches a Shiny app which can be used to either accept or reject the new output(s).
 
 ```{r}
 #| echo: false
+#| fig-alt: "JSON snapshot review showing the value of x changing from a to b, with Skip and Accept controls."
 knitr::include_graphics("media/json_snapshot.webp")
 ```
 
@@ -1091,6 +1094,7 @@ test_that("{shinytest2} recording: unitConverter", {
 ```{r}
 #| echo: false
 #| out-width: "100%"
+#| fig-alt: "Screenshot of a kilograms-to-grams Shiny app with input 10 kilograms and output 10000 grams."
 knitr::include_graphics("media/unitConverter-001_.webp")
 ```
 
@@ -1361,7 +1365,7 @@ Despite snapshot tests making the expected outputs more human-readable, given a 
 
 How do you review pull requests with complex snapshots changes? 
 
-## {.smaller}
+## <span class="visually-hidden">Reviewing snapshot changes</span> {#section-1 .smaller}
 
 :::panel-tabset
 

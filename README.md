@@ -44,8 +44,11 @@ just preview  # Start a live preview with auto-reload
 just open     # Alias for preview (live-reload dev server over localhost)
 just clean    # Remove generated files and caches
 just check    # Check the Quarto and R version setup
+just axe      # Preview with an Accessibility Report slide
 just          # Install dependencies and start live-reload preview
 ```
+
+`just axe` enables the opt-in `a11y` profile. It accepts preview options, for example `just axe --no-browser --port 8834`. Inspect slide and scroll views, including all fragments and tab panels. Run `just render` for the production deck, which excludes the audit payload and report.
 
 ## Feedback
 

@@ -13,6 +13,8 @@ A single-page [Quarto](https://quarto.org/) presentation rendered to [RevealJS](
 ```
 index.qmd           # All slide content (the only file you usually need to edit)
 _quarto.yml          # Quarto project config (output dir, resources list)
+_quarto-a11y.yml     # Opt-in profile enabling the axe accessibility checker (`just axe`)
+accessibility.html  # Production fixes for zoom, menu controls, and keyboard focus
 style.css            # Custom RevealJS theme (fonts, colours, component classes)
 meta-tags.html       # OpenGraph, Twitter Card, JSON-LD, and analytics tags
 justfile             # Command runner (install, render, preview, clean, etc.)
@@ -54,8 +56,13 @@ Check which set is present to know which language context applies.
 - **Slide syntax.** Slides are separated by `##` headings. Use Quarto's RevealJS dialect: fenced divs (`:::`), columns (`.columns` / `.column`), raw HTML blocks (`{=html}`), and the `{.smaller}` class for dense slides.
 - **Inline styling.** Visual design uses inline `style` attributes on fenced divs with a small palette of background colours (e.g. `#e3f2fd`, `#e8f5e9`, `#fff3e0`, `#ffebee`, `#FFFBC1`, `#f8f9fa`). The CSS maps these to the custom theme. Do not change these colour values without updating `style.css`.
 - **Image classes.** Images may use semantic classes (e.g. `.hero`, `.artifact`, `.illustration`) that control border, shadow, and rounding in `style.css`. Check the existing CSS before adding new image classes.
+  The snapshot-review screenshot uses per-slide `.nostretch` to prevent RevealJS auto-stretch from collapsing it. Verify image sizing in both presentation mode and native `?view=scroll` when changing that slide.
 - **Sources.** Every factual claim has a source citation at the bottom of its slide in a small-font centered div. Keep this pattern.
 - **Accessibility.** Images must have `fig-alt` text. Raw HTML widgets use `role="img"` and `aria-label`. Keep these.
+  Verify with `just axe`, which appends an "Accessibility Report" slide listing axe-core violations. Keep `axe` in
+  `_quarto-a11y.yml`, not `index.qmd`, so production builds exclude the audit payload. CLI metadata such as
+  `-M axe:true` cannot override this deck's `format:` block. Links inside muted text need a non-colour cue such as an underline.
+  Keep the production keyboard/zoom fixes in `accessibility.html`. Inspect all slides, revealed fragments, and tab panels in both presentation and scroll view; the initial report alone does not exercise every state.
 - **Icons.** Icons use lightweight HTML spans backed by only the required SVG path data in the custom stylesheet; no icon-font or Quarto icon extension is needed.
   When adding an icon, add only its mask data, preserve the source licence attribution, keep an accessible label where the icon conveys meaning, and render the deck to verify it.
 - **Mermaid performance boundary.** Keep Mermaid diagrams as Mermaid source. Do not replace them with pre-rendered SVGs solely to reduce the website bundle.
@@ -74,9 +81,10 @@ just open      # Alias for preview (live-reload dev server over localhost)
 just clean     # Remove build artifacts
 just check     # Verify Quarto setup
 just update    # Update language dependencies
+just axe       # Preview with the axe accessibility checker enabled
 ```
 
-Python decks prefix the render command with `QUARTO_PYTHON=.venv/bin/python`. R decks call `quarto render` directly (R is discovered automatically). See the `justfile` for exact commands.
+This R deck calls Quarto directly; R is discovered automatically. Python companion decks use `uv run` to synchronize and select their project environment. See the `justfile` for exact commands.
 
 ## Editing slides
 
@@ -100,7 +108,8 @@ When modifying `index.qmd`:
 
 ## CI/CD
 
-- The GitHub Actions workflow in `.github/workflows/` renders the deck and deploys to GitHub Pages on push to `main`. It calls a reusable workflow from `IndrajeetPatil/workflows` (Python and R decks use different workflow files). Do not inline the workflow; update the ref SHA if the upstream workflow changes.
+- The GitHub Actions workflow in `.github/workflows/` renders the deck and deploys to GitHub Pages on push to `main`. It calls a reusable workflow from `IndrajeetPatil/workflows` (Python and R decks use different workflow files). Do not inline the workflow.
+- **Reference the first-party reusable workflow as `@main`.** This intentionally receives upstream fixes immediately, including stable Quarto builds and removal of the unused FontAwesome installation. Do not pin it to a commit SHA.
 - Dependabot keeps GitHub Actions dependencies up to date weekly. Python decks also have Dependabot configured for `uv`; R decks do not use Dependabot for R packages.
 
 ## What not to do
