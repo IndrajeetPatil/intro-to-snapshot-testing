@@ -4,6 +4,18 @@ format:
   revealjs:
     css: style.css
     theme: simple
+    revealjs-plugins:
+      - a11y
+    revealjs-a11y:
+      # 0.2.3's menus introduce ARIA failures; retain our slide-menu handling.
+      slide-menu-a11y: false
+      menu: false
+      # Use the extension's core accessibility fixes without extra UI/shortcuts.
+      font-size-controls: false
+      font-selection: false
+      text-spacing: false
+      transcript: false
+      slide-change-cue: false
     slide-number: true
     preview-links: auto
     link-external-newwindow: true
@@ -204,7 +216,7 @@ Snapshot tests can be used to test that text output *prints* as expected.
 
 Important for testing functions that pretty-print R objects to the console, create elegant and informative exceptions, etc.
 
-## Example function {.smaller}
+## Example function {.smaller aria-label="Text snapshots: Example function"}
 
 Let's say you want to write a unit test for the following function:
 
@@ -354,7 +366,7 @@ It is easy to *see* what the printed text output is *supposed* to look like. In 
 
 :::
 
-## What test success looks like {.smaller}
+## What test success looks like {.smaller aria-label="Text snapshots: What test success looks like"}
 
 If you run the test again, it'll succeed:
 
@@ -387,7 +399,7 @@ In such cases, setting a seed (e.g. `set.seed(42)`) should help. For volatile te
 
 :::
 
-## What test failure looks like {.smaller}
+## What test failure looks like {.smaller aria-label="Text snapshots: What test failure looks like"}
 
 When function changes, snapshot doesn't match the reference, and the test fails:
 
@@ -452,7 +464,7 @@ test_that("`print_movies()` prints as expected", {
 ::::
 
 
-## Fixing tests {.smaller}
+## Fixing tests {.smaller aria-label="Text snapshots: Fixing tests"}
 
 Message accompanying failed tests make it explicit how to fix them.
 
@@ -576,7 +588,7 @@ test_that("`log()` errors", {
 })
 ```
 
-## Further reading {.smaller}
+## Further reading {.smaller aria-label="Text snapshots: Further reading"}
 
 - `{testthat}` article on [snapshot testing](https://testthat.r-lib.org/articles/snapshotting.html)
 
@@ -613,7 +625,7 @@ The figure to test can be:
 
 :::
 
-## Example function {.smaller}
+## Example function {.smaller aria-label="Graphical snapshots: Example function"}
 
 Let's say you want to write a unit test for the following function:
 
@@ -694,7 +706,7 @@ You can open `.svg` snapshot files in a web browser for closer inspection.
 
 :::
 
-## What test success looks like {.smaller}
+## What test success looks like {.smaller aria-label="Graphical snapshots: What test success looks like"}
 
 If you run the test again, it'll succeed:
 
@@ -713,7 +725,7 @@ snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
 
-## What test failure looks like {.smaller}
+## What test failure looks like {.smaller aria-label="Graphical snapshots: What test failure looks like"}
 
 When function changes, snapshot doesn't match the reference, and the test fails:
 
@@ -768,7 +780,7 @@ Error in `reporter$stop_if_needed()`:
 
 ::::
 
-## Fixing tests {.smaller}
+## Fixing tests {.smaller aria-label="Graphical snapshots: Fixing tests"}
 
 For text file types such as `.json`, `.txt`, and `.md`, `{testthat}` now includes a line diff directly in the failure message.
 
@@ -809,7 +821,7 @@ expect_doppelganger("my plot", fig = my_plot(), variant = "windows")
 
 :::
 
-## Further reading
+## Further reading {aria-label="Graphical snapshots: Further reading"}
 
 - `{vdiffr}` package [website](https://vdiffr.r-lib.org/)
 
@@ -879,7 +891,7 @@ snapper$start_file("slides.qmd", "test")
 ::::
 
 
-## What test success looks like {.smaller}
+## What test success looks like {.smaller aria-label="File snapshots: What test success looks like"}
 
 If you run the test again, it'll succeed:
 
@@ -903,7 +915,7 @@ snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
 
-## What test failure looks like {.smaller}
+## What test failure looks like {.smaller aria-label="File snapshots: What test failure looks like"}
 
 If the new output doesn't match the expected one, the test will fail:
 
@@ -936,7 +948,7 @@ test_that("json writer works", {
 })
 ```
 
-## Fixing tests {.smaller .nostretch}
+## Fixing tests {.smaller .nostretch aria-label="File snapshots: Fixing tests"}
 
 Running `snapshot_review()` launches a Shiny app which can be used to either accept or reject the new output(s).
 
@@ -946,7 +958,7 @@ Running `snapshot_review()` launches a Shiny app which can be used to either acc
 knitr::include_graphics("media/json_snapshot.webp")
 ```
 
-## Further reading {.smaller}
+## Further reading {.smaller aria-label="File snapshots: Further reading"}
 
 Documentation for [`expect_snapshot_file()`](https://testthat.r-lib.org/reference/expect_snapshot_file.html)
 
@@ -1110,7 +1122,7 @@ knitr::include_graphics("media/unitConverter-001_.webp")
 
 :::
 
-## What test failure looks like {.smaller}
+## What test failure looks like {.smaller aria-label="Shiny snapshots: What test failure looks like"}
 
 Let's say, while updating the app, you make a mistake, which leads to a failed test.
 
@@ -1277,7 +1289,7 @@ The following are some advanced topics that are beyond the scope of the current 
 
 
 
-## Further reading {.smaller}
+## Further reading {.smaller aria-label="Shiny snapshots: Further reading"}
 
 - [Testing](https://mastering-shiny.org/scaling-testing.html) chapter from *Mastering Shiny* book
 

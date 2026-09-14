@@ -1,14 +1,5 @@
 <script>
 (() => {
-// Quarto's Reveal template disables pinch zoom; preserve normal browser scaling.
-const viewport = document.querySelector('meta[name="viewport"]');
-if (viewport) {
-  viewport.content = viewport.content
-    .split(",")
-    .filter((value) => !/^(maximum-scale|user-scalable)\s*=/i.test(value.trim()))
-    .join(",");
-}
-
 // Keep generated controls in DOM order, with one tab stop per tabset.
 const normalizeTabOrder = () => {
   document.querySelectorAll('[tabindex]').forEach((element) => {
@@ -47,35 +38,29 @@ const focusScrollableCode = () => {
   });
 };
 
-// Reveal leaves opacity-zero slides in the DOM; keep their controls out of focus.
-const syncSlideFocus = () => {
+// The extension handles inert slides. Reveal 5 still leaves stale hidden
+// attributes in scroll/overview views, and a11y 0.2.3 labels stacks as duplicate
+// landmarks. A vertical stack groups slides; each slide remains its own region.
+const syncSlideSemantics = () => {
   const scrolling = window.Reveal?.isScrollView?.();
-  const overview = window.Reveal?.isOverview?.();
   document.querySelectorAll('.reveal .slides section').forEach((slide) => {
-    // Native scroll pages form a readable document. Reveal can leave stale
-    // aria-hidden attributes on vertical slides after moving them into pages.
-    const scrollPage = scrolling && slide.closest('.scroll-page');
-    // Overview exposes all thumbnails for pointer and keyboard interaction.
-    if (overview) slide.removeAttribute("hidden");
-    if ((scrollPage || overview) && slide.getAttribute("aria-hidden") === "true") {
-      slide.removeAttribute("aria-hidden");
+    if (slide.classList.contains('stack') || (scrolling && slide.parentElement.matches('.slides'))) {
+      slide.setAttribute('role', 'group');
     }
-    const inactive = !scrollPage && !overview && slide.getAttribute("aria-hidden") === "true";
-    if (slide.inert !== inactive) slide.inert = inactive;
+    if (window.Reveal?.isOverview?.() || (scrolling && slide.closest('.scroll-page'))) {
+      slide.removeAttribute('hidden');
+      slide.removeAttribute('aria-hidden');
+    }
   });
 };
 
-// Supply names and keyboard access missing from the bundled Reveal menu.
+// Keep tab navigation and code scrolling from changing slides.
 document.addEventListener("DOMContentLoaded", () => {
   const updateCode = () => requestAnimationFrame(focusScrollableCode);
   normalizeTabOrder();
-  syncSlideFocus();
-  const slides = document.querySelector('.reveal .slides');
-  if (slides) new MutationObserver(syncSlideFocus).observe(slides, {
-    subtree: true,
-    childList: true,
-    attributes: true,
-    attributeFilter: ["aria-hidden"],
+  syncSlideSemantics();
+  new MutationObserver(syncSlideSemantics).observe(document.querySelector('.reveal .slides'), {
+    subtree: true, childList: true, attributes: true, attributeFilter: ['aria-hidden'],
   });
   new MutationObserver((changes) => {
     normalizeTabOrder();
@@ -86,7 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
     attributeFilter: ["tabindex", "aria-selected"],
   });
   if (window.Reveal) {
-    // Let code scroll and Tabby's arrow-key navigation run without changing slides.
+    ['ready', 'overviewshown', 'overviewhidden'].forEach((event) => Reveal.on(event, syncSlideSemantics));
+    // Let arrow/page keys scroll focused code instead of navigating the deck.
     const previousKeyboardCondition = Reveal.getConfig().keyboardCondition;
     const navigationKeys = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "PageUp", "PageDown", "Home", "End", " "]);
     Reveal.configure({
@@ -106,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     });
     ["ready", "slidechanged", "fragmentshown", "fragmenthidden", "resize"].forEach((event) => Reveal.on(event, updateCode));
-    ["overviewshown", "overviewhidden"].forEach((event) => Reveal.on(event, syncSlideFocus));
   }
   // Quarto's bundled Tabby only handles Home/End; restore arrow navigation.
   document.addEventListener("keydown", (event) => {
@@ -176,9 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 </script>
 <style>
-.reveal pre:focus-visible,
-.reveal pre > code:focus-visible,
-.reveal .sourceCode:focus-visible,
 .slide-menu-panel:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
