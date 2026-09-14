@@ -94,3 +94,8 @@
 .reveal .slides div.sourceCode pre code.has-line-highlights > span.highlight-line {
   background-color: #fff8e1;
 }
+
+/* Quarto moves footers outside the extension's .slides link styling. */
+.reveal .footer a {
+  text-decoration: underline;
+}

@@ -59,7 +59,7 @@ The extension handles browser zoom, slide isolation, focus indicators, link
 underlines, reduced motion, and screen-reader announcements.
 
 The `accessibility.html` helper still handles scrollable code, slide-menu focus,
-and vertical-slide semantics. Unused tabset handling has been removed.
+and vertical-slide semantics. Tab ordering and arrow-key navigation remain for this deck's tabset.
 The extension's slide-menu patch and accessibility settings panel are disabled
 as in the reference deck: version 0.2.3 introduces ARIA and contrast failures in
 those components.
