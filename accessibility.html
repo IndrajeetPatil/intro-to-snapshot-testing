@@ -121,6 +121,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", updateCode);
   updateCode();
   document.fonts.ready.then(updateCode);
+  // Footnotes move to the references slide; Pandoc leaves an empty aside behind.
+  document.querySelectorAll(".reveal .slides aside:empty").forEach((aside) => aside.remove());
+
   const menu = document.querySelector(".slide-menu");
   const toggle = document.querySelector(".slide-menu-button a");
   if (!menu || !toggle) return;
