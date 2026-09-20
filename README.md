@@ -1,5 +1,7 @@
 # Introduction to snapshot (aka golden) testing (in R)
 
+[![Build and Deploy Presentation](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/actions/workflows/build-presentation.yaml/badge.svg)](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/actions/workflows/build-presentation.yaml)
+
 In this presentation, I introduce what is snapshot testing, why is it
 necessary, and its implementation in R in `{testthat}` package and its
 extensions.
@@ -19,7 +21,7 @@ Slides can be seen here:
 
 ## Development
 
-This project uses R 4.6.0 or later (declared in `DESCRIPTION`), [Quarto](https://quarto.org/) for rendering slides, and [just](https://github.com/casey/just) as a command runner.
+This project uses R 4.6.1 or later (declared in `DESCRIPTION`), [Quarto](https://quarto.org/) for rendering slides, and [just](https://github.com/casey/just) as a command runner.
 
 ### Prerequisites
 
@@ -39,6 +41,8 @@ just install
 ```bash
 just help     # Show all available commands
 just install  # Install R dependencies and the a11y extension
+just sync     # Alias for install
+just update   # Update R dependencies
 just render   # Render slides to HTML
 just preview  # Start a live preview with auto-reload
 just open     # Alias for preview (live-reload dev server over localhost)
@@ -59,7 +63,13 @@ The extension handles browser zoom, slide isolation, focus indicators, link
 underlines, reduced motion, and screen-reader announcements.
 
 The `accessibility.html` helper still handles scrollable code, slide-menu focus,
-and vertical-slide semantics. Tab ordering and arrow-key navigation remain for this deck's tabset.
+and vertical-slide semantics. It is shared verbatim across the whole presentation
+fleet — by convention, kept in sync by hand rather than by any automated check —
+so it carries every branch any deck in the fleet needs, not just the ones this
+deck exercises. Its tab-ordering and arrow-key block is inert in decks that have
+no tabsets; this deck does have a `panel-tabset`, so that block is live here. Do
+not trim unused branches from the file: change it here and copy the same change
+to the other decks, never patch a single deck in isolation.
 The extension's slide-menu patch and accessibility settings panel are disabled
 as in the reference deck: version 0.2.3 introduces ARIA and contrast failures in
 those components.

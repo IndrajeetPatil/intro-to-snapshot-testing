@@ -5,7 +5,7 @@ Format: Quarto RevealJS presentation
 Canonical URL: https://www.indrapatil.com/intro-to-snapshot-testing/
 Source: https://github.com/IndrajeetPatil/intro-to-snapshot-testing/
 License: CC0 1.0 Universal
-Publication date: 2026-04-24
+Publication date: 2022-08-05
 Language: en
 
 ## Summary
