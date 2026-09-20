@@ -33,7 +33,7 @@ description-meta: "A comprehensive guide to snapshot testing in R using testthat
 license: "CC0 1.0 Universal"
 pagetitle: "Introduction to Snapshot Testing in R"
 author-meta: "Indrajeet Patil"
-date-meta: "2026-04-24"
+date-meta: "2022-08-05"
 lang: "en"
 dir: "ltr"
 image: "media/social-media-card.webp"
