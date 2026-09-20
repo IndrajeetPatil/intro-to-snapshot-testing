@@ -1,5 +1,7 @@
 # Introduction to snapshot (aka golden) testing (in R)
 
+[![Build and Deploy Presentation](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/actions/workflows/build-presentation.yaml/badge.svg)](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/actions/workflows/build-presentation.yaml)
+
 In this presentation, I introduce what is snapshot testing, why is it
 necessary, and its implementation in R in `{testthat}` package and its
 extensions.
@@ -39,6 +41,8 @@ just install
 ```bash
 just help     # Show all available commands
 just install  # Install R dependencies and the a11y extension
+just sync     # Alias for install
+just update   # Update R dependencies
 just render   # Render slides to HTML
 just preview  # Start a live preview with auto-reload
 just open     # Alias for preview (live-reload dev server over localhost)
