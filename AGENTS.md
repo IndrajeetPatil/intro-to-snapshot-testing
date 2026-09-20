@@ -65,12 +65,12 @@ Check which set is present to know which language context applies.
   The `a11y` extension supplies zoom, focus indicators, link underlines, reduced motion,
   slide isolation, and screen-reader announcements. Keep `accessibility.html` for
   code scrolling, menu focus, and vertical-slide semantics.
-  `accessibility.html` is a shared fleet-wide file, kept byte-identical to the template by the
-  scheduled `Check Template Drift` workflow. It is therefore a superset: it contains every branch
+  `accessibility.html` is a shared fleet-wide file, copied verbatim across decks and kept in sync
+  by hand; nothing enforces this automatically. It is therefore a superset: it contains every branch
   any deck in the fleet needs. The tab-ordering and arrow-key branch is inert in decks with no
   tabsets, but this deck has a `panel-tabset` (the "Reviewing snapshot changes" slide), so the
-  branch is live here. Never delete a branch from this file because it looks unused — change it in
-  the template and re-sync, otherwise the drift check fails.
+  branch is live here. Never delete a branch from this file because it looks unused — change it
+  here and copy the same change to the other decks.
   Keep explicit `aria-label` attributes on repeated slide headings so scroll-view
   landmarks have unique names.
   Disable the extension's slide-menu patch and settings menu as in the reference
@@ -122,7 +122,7 @@ When modifying `index.qmd`:
 ## CI/CD
 
 - The GitHub Actions workflow in `.github/workflows/` renders the deck and deploys to GitHub Pages on push to `main`. It calls a reusable workflow from `IndrajeetPatil/workflows` (Python and R decks use different workflow files). Do not inline the workflow.
-- Two scheduled companion workflows also call reusable workflows from `IndrajeetPatil/workflows`: `check-link-rot.yaml` (weekly, Sunday 00:00 UTC) verifies the deck's external links, and `check-template-drift.yaml` (weekly, Monday 06:00 UTC) reports divergence from the shared presentation template.
+- A scheduled companion workflow also calls a reusable workflow from `IndrajeetPatil/workflows`: `check-link-rot.yaml` (weekly, Sunday 00:00 UTC) verifies the deck's external links.
 - **Reference the first-party reusable workflow as `@main`.** This intentionally receives upstream fixes immediately, including stable Quarto builds and removal of the unused FontAwesome installation. Do not pin it to a commit SHA.
 - Install the latest a11y extension directly from upstream with
   `quarto add mcanouil/quarto-revealjs-a11y --no-prompt` in both `justfile` and CI.
