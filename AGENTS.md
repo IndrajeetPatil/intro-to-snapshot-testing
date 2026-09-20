@@ -65,7 +65,12 @@ Check which set is present to know which language context applies.
   The `a11y` extension supplies zoom, focus indicators, link underlines, reduced motion,
   slide isolation, and screen-reader announcements. Keep `accessibility.html` for
   code scrolling, menu focus, and vertical-slide semantics.
-  Retain tab ordering and arrow-key navigation for this deck's tabset.
+  `accessibility.html` is a shared fleet-wide file, kept byte-identical to the template by the
+  scheduled `Check Template Drift` workflow. It is therefore a superset: it contains every branch
+  any deck in the fleet needs. The tab-ordering and arrow-key branch is inert in decks with no
+  tabsets, but this deck has a `panel-tabset` (the "Reviewing snapshot changes" slide), so the
+  branch is live here. Never delete a branch from this file because it looks unused — change it in
+  the template and re-sync, otherwise the drift check fails.
   Keep explicit `aria-label` attributes on repeated slide headings so scroll-view
   landmarks have unique names.
   Disable the extension's slide-menu patch and settings menu as in the reference

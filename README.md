@@ -63,7 +63,13 @@ The extension handles browser zoom, slide isolation, focus indicators, link
 underlines, reduced motion, and screen-reader announcements.
 
 The `accessibility.html` helper still handles scrollable code, slide-menu focus,
-and vertical-slide semantics. Tab ordering and arrow-key navigation remain for this deck's tabset.
+and vertical-slide semantics. It is shared verbatim across the whole presentation
+fleet — the scheduled `Check Template Drift` workflow asserts it stays
+byte-identical to the template — so it carries every branch any deck in the
+fleet needs, not just the ones this deck exercises. Its tab-ordering and
+arrow-key block is inert in decks that have no tabsets; this deck does have a
+`panel-tabset`, so that block is live here. Do not trim unused branches from the
+file: it is edited in the template and synced down, never patched per deck.
 The extension's slide-menu patch and accessibility settings panel are disabled
 as in the reference deck: version 0.2.3 introduces ARIA and contrast failures in
 those components.
