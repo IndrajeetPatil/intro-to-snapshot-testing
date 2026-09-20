@@ -15,12 +15,13 @@ URL: https://github.com/IndrajeetPatil/intro-to-snapshot-testing/,
     https://www.indrapatil.com/intro-to-snapshot-testing/
 BugReports: https://github.com/IndrajeetPatil/intro-to-snapshot-testing/issues
 Depends:
-    R (>= 4.6.0),
-    downlit,
-    fs,
-    ggplot2,
-    knitr,
-    quarto,
+    R (>= 4.6.1),
+    downlit (>= 0.4.5),
+    fs (>= 2.1.0),
+    ggplot2 (>= 4.0.3),
+    knitr (>= 1.52),
+    quarto (>= 1.5.1),
     shinytest2 (>= 0.5.1),
     testthat (>= 3.3.2),
-    vdiffr (>= 1.0.8)
+    vdiffr (>= 1.0.9)
+Config/testthat/edition: 3
