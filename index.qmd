@@ -275,7 +275,6 @@ Sys.setenv(CI = "false")
 
 
 ```{r}
-#| error: true
 test_that("`print_movies()` prints as expected", {
   expect_equal(
     print_movies(
@@ -310,14 +309,23 @@ snapper <- local_snapshotter()
 snapper$start_file("slides.qmd", "test")
 ```
 
-```{r}
-#| error: true
+```{.r}
 test_that("`print_movies()` prints as expected", {
   expect_snapshot(cat(print_movies(
     c("Title", "Director"),
     c("Salaam Bombay!", "Mira Nair")
   )))
 })
+```
+
+```{r}
+#| echo: false
+suppressWarnings(test_that("`print_movies()` prints as expected", {
+  expect_snapshot(cat(print_movies(
+    c("Title", "Director"),
+    c("Salaam Bombay!", "Mira Nair")
+  )))
+}), classes = "testthat_warn")
 ```
 
 ```{r, include = FALSE}
@@ -376,7 +384,6 @@ It is easy to *see* what the printed text output is *supposed* to look like. In 
 If you run the test again, it'll succeed:
 
 ```{r}
-#| error: true
 test_that("`print_movies()` prints as expected", {
   expect_snapshot(cat(print_movies(
     c("Title", "Director"),
