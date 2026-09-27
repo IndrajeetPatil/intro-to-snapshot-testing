@@ -542,12 +542,20 @@ So far you have tested text output printed to the console, but you can also use 
 
 **message**
 
-```{r}
+```{.r}
 f <- function() message("Some info for you.")
 
 test_that("f() messages", {
   expect_snapshot(f())
 })
+```
+
+```{r}
+#| echo: false
+f <- function() message("Some info for you.")
+suppressWarnings(test_that("f() messages", {
+  expect_snapshot(f())
+}), classes = "testthat_warn")
 ```
 
 :::
@@ -556,12 +564,22 @@ test_that("f() messages", {
 
 **warning**
 
-```{r}
+```{.r}
 g <- function() warning("Managed to recover.")
 
 test_that("g() warns", {
   expect_snapshot(g())
 })
+```
+
+```{r}
+#| echo: false
+g <- function() warning("Managed to recover.")
+suppressWarnings(withr::with_options(list(warn = 1), {
+  test_that("g() warns", {
+    expect_snapshot(g())
+  })
+}), classes = "testthat_warn")
 ```
 
 :::
@@ -589,9 +607,9 @@ test_that("`log()` errors", {
 ```
 
 ```{r, echo=FALSE}
-test_that("`log()` errors", {
+suppressWarnings(test_that("`log()` errors", {
   expect_snapshot(log("x"), error = TRUE)
-})
+}), classes = "testthat_warn")
 ```
 
 ## Further reading {.smaller aria-label="Text snapshots: Further reading"}
@@ -685,13 +703,23 @@ snapper <- local_snapshotter()
 snapper$start_file("slides.qmd", "test")
 ```
 
-```{r}
+```{.r}
 test_that("`create_scatter()` plots as expected", {
   expect_doppelganger(
     title = "create scatter",
     fig = create_scatter(),
   )
 })
+```
+
+```{r}
+#| echo: false
+suppressWarnings(test_that("`create_scatter()` plots as expected", {
+  expect_doppelganger(
+    title = "create scatter",
+    fig = create_scatter(),
+  )
+}), classes = "testthat_warn")
 ```
 
 ```{r, include = FALSE}
@@ -850,7 +878,7 @@ snapper <- local_snapshotter()
 snapper$start_file("slides.qmd", "test")
 ```
 
-```{r}
+```{.r}
 # File: tests/testthat/test-write-json.R
 test_that("json writer works", {
   r_to_json <- function(x) {
@@ -862,6 +890,20 @@ test_that("json writer works", {
   x <- list(1, list("x" = "a"))
   expect_snapshot_file(r_to_json(x), "demo.json")
 })
+```
+
+```{r}
+#| echo: false
+suppressWarnings(test_that("json writer works", {
+  r_to_json <- function(x) {
+    path <- tempfile(fileext = ".json")
+    jsonlite::write_json(x, path)
+    path
+  }
+
+  x <- list(1, list("x" = "a"))
+  expect_snapshot_file(r_to_json(x), "demo.json")
+}), classes = "testthat_warn")
 ```
 
 ```{r, include = FALSE}
