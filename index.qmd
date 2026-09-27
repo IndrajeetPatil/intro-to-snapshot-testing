@@ -448,7 +448,6 @@ Failure message provides expected (`-`) vs observed (`+`) diff.
 **Test failure**
 
 ```{.r}
-#| error: true
 test_that("`print_movies()` prints as expected", {
   expect_snapshot(cat(print_movies(
     c("Title", "Director"),
@@ -458,7 +457,6 @@ test_that("`print_movies()` prints as expected", {
 ```
 
 ```{r, echo=FALSE, error=TRUE}
-#| error: true
 test_that("`print_movies()` prints as expected", {
   expect_snapshot(cat(print_movies(
     c("Title", "Director"),
