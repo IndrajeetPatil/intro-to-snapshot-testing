@@ -1131,7 +1131,7 @@ To create a snapshot test, go to the app directory and run `record_test()`.
 knitr::include_graphics("media/shinytest_record.mov")
 ```
 
-## Auto-generated artifacts {.smaller}
+## Auto-generated artefacts {.smaller}
 
 :::: {.columns}
 
@@ -1410,7 +1410,7 @@ In local `R CMD Check`, you can find new snapshots in `.Rcheck` folder:
 package_name.Rcheck/tests/testthat/_snaps/
 ```
 
-On [GitHub Actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package), upload snapshots as artifacts so you can retrieve them:
+On [GitHub Actions](https://github.com/r-lib/actions/tree/v2-branch/check-r-package), upload snapshots as artefacts so you can retrieve them:
 
 ```yaml
       - uses: r-lib/actions/check-r-package@v2
@@ -1424,7 +1424,7 @@ Then download them directly into your local package with `snapshot_download_gh()
 testthat::snapshot_download_gh()
 ```
 
-This replaces the manual step of downloading the artifact zip and copying files by hand.
+This replaces the manual step of downloading the artefact zip and copying files by hand.
 
 ## Code review with snapshot tests {.smaller}
 
