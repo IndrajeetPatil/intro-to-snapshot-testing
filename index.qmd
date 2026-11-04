@@ -60,6 +60,13 @@ Indrajeet Patil
 Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/intro-to-snapshot-testing/).
 :::
 
+
+::: {.notes}
+- Welcome the audience to this presentation on snapshot testing in R.
+- Introduce the core ecosystem: `{testthat}` for test organisation and text snapshots, `{vdiffr}` for visual regression testing of graphical outputs, and `{shinytest2}` for automated testing of Shiny applications.
+- Point out that the complete source code, slides, and reproducible examples are available on GitHub via the repository link in the footer.
+:::
+
 ## Unit testing {.smaller}
 
 The goal of a unit test is to capture the *expected* output of a function using *code* and making sure that *actual* output after any changes matches the expected output.
@@ -102,6 +109,14 @@ Test pass only when actual function behaviour matches expected.
 :::
 
 ::::
+
+
+::: {.notes}
+- Define the fundamental purpose of unit testing: capturing expected function behaviour using executable code assertions and making sure that actual output after code modifications matches those expectations.
+- Introduce `{testthat}` as the de facto unit testing framework for R packages.
+- Review the core benefits in the callout: insuring against unintentional behavioural regressions, preventing the re-introduction of fixed bugs, serving as developer-focused documentation, and catching breaking changes coming from upstream dependencies.
+- Walk through the test output matrix in the second column: a test passes only when actual output strictly matches expected output, and fails whenever discrepancies arise.
+:::
 
 ## Unit testing with `{testthat}`: A recap {.smaller}
 
@@ -162,6 +177,12 @@ test_that("addition works", {
 ::::
 
 
+::: {.notes}
+- Recap the three-tier structural hierarchy of `{testthat}`: test files (such as `tests/testthat/test-foo.R` for `R/foo.R`), individual tests (`test_that()`), and expectations (`expect_*()`).
+- Walk through the example test file `test-op.R`: test 1 verifies multiplication using two `expect_equal()` calls (`2 * 2 == 4` and `-2 * 2 == -4`), while test 2 verifies addition (`2 + 2 == 4` and `-2 + 2 == 0`).
+- Mention `usethis::use_test()` as the recommended workflow helper to create or open corresponding test files automatically.
+:::
+
 ## What is different about snapshot testing?
 
 . . .
@@ -182,6 +203,13 @@ A **snapshot test** records expected output in a separate, human-readable file.
 
 (actual) <span class="deck-icon deck-icon-2xl deck-icon-regular-file-code" role="img" aria-label="file code"></span> <span class="deck-icon deck-icon-2xl deck-icon-solid-arrows-left-right" role="img" aria-label="arrows left right"></span> <span class="deck-icon deck-icon-2xl deck-icon-solid-file-lines" role="img" aria-label="file lines"></span> (expected)
 
+
+::: {.notes}
+- Contrast the philosophy of classical unit tests with snapshot tests.
+- In classical unit tests, both the input and the expected output are encoded directly in executable R code assertions within the test file.
+- In snapshot tests, the expected output is persisted in a separate, human-readable external file, allowing complex outputs to be compared without cluttering test scripts with sprawling string literals or serialised objects.
+:::
+
 ## Why do you need snapshot testing?
 
 If you develop R packages and have struggled to 
@@ -199,6 +227,13 @@ If you develop R packages and have struggled to
 
 then you should be excited to know more about *snapshot tests* (aka *golden tests*)! 🤩
 
+
+::: {.notes}
+- Detail the real-world motivations for snapshot testing in R package development.
+- Highlight common friction points where classical unit tests fail: testing console text formatting, verifying full file exports, validating visual appearance of graphics, and updating dozens of test expectations en masse when deliberate design changes occur.
+- Explain that snapshot tests, also known as golden tests in other programming languages, solve these exact maintenance challenges.
+:::
+
 # Prerequisites
 
 Familiarity with writing unit tests using [`{testthat}`](https://testthat.r-lib.org/index.html).
@@ -213,11 +248,24 @@ Examples in these slides assume `{testthat}` ≥ 3.3.2, `{vdiffr}` ≥ 1.0.8, an
 
 :::
 
+
+::: {.notes}
+- Introduce the prerequisites for this workshop: familiarity with writing baseline unit tests using `{testthat}`.
+- Direct attendees unfamiliar with unit testing to the 'Testing basics' chapter in the *R Packages* book by Hadley Wickham and Jenny Bryan.
+- Emphasise the assumed minimal package versions noted in the callout: `{testthat}` >= 3.3.2, `{vdiffr}` >= 1.0.8, and `{shinytest2}` >= 0.5.1.
+:::
+
 # Testing text outputs
 
 Snapshot tests can be used to test that text output *prints* as expected.
 
 Important for testing functions that pretty-print R objects to the console, create elegant and informative exceptions, etc.
+
+
+::: {.notes}
+- Transition to the first major topic: snapshot testing for text and console outputs.
+- Explain that this technique is indispensable for functions that pretty-print custom R objects, output formatted CLI messages, or construct informative error and warning conditions.
+:::
 
 ## Example function {.smaller aria-label="Text snapshots: Example function"}
 
@@ -263,6 +311,13 @@ Note that you want to test that the printed output *looks* as expected.
 
 Therefore, you need to check for all the little bells and whistles in the printed output.
 
+
+::: {.notes}
+- Walk through the `print_movies()` utility function, which takes vectors of `keys` and `values` and formats them with `paste0()` into indented console text headed by `'Movie: \n'`.
+- Examine the printed output for `'Title'` ('Salaam Bombay!') and `'Director'` ('Mira Nair').
+- Stress that the testing goal is to verify that the printed representation looks visually correct with proper indentation, prefixes, and line breaks.
+:::
+
 ## Example test {.smaller}
 
 Even testing this simple function is a bit painful because you need to keep track of every escape character, every space, etc. 
@@ -298,6 +353,13 @@ If this is a utility function used by many other functions, changing its behavio
 
 This is not maintainable! 😩
 
+:::
+
+
+::: {.notes}
+- Show how a traditional unit test using `expect_equal()` asserts on `print_movies()`.
+- Point out the awkward escaped string literal `"Movie: \n  Title: Salaam Bombay!\n  Director: Mira Nair"`, which is tedious to write and mentally parse.
+- Highlight the maintenance warning in the callout: if this utility function is shared across multiple package routines, any styling adjustment requires manually updating hard-coded strings across numerous test files.
 :::
 
 ## Alternative: Snapshot test {.smaller}
@@ -344,6 +406,13 @@ Thus, it is **crucial** that you carefully check that the output is indeed as ex
 
 :::
 
+
+::: {.notes}
+- Introduce `expect_snapshot()` as the modern alternative that automatically records console output when executed for the first time.
+- Note the temporary suppression of CI restrictions via `Sys.setenv(CI = 'false')` used in this deck to demonstrate snapshot generation.
+- Stress the critical warning: the initial snapshot becomes the authoritative truth against which all future runs are judged, requiring careful manual verification before committing.
+:::
+
 ## Human-readable Markdown file {.smaller}
 
 Compared to your unit test code representing the expected output
@@ -379,6 +448,13 @@ It is easy to *see* what the printed text output is *supposed* to look like. In 
 
 :::
 
+
+::: {.notes}
+- Compare the opaque escaped string literal with the cleanly formatted Markdown file generated in `tests/testthat/_snaps/slides.md`.
+- Show how the Markdown representation clearly separates the evaluated expression (`cat(print_movies(...))`) from the resulting rendered output.
+- Review the storage rules in the callout: snapshot files live under `tests/testthat/_snaps/`, multiple tests within `test-foo.R` share `_snaps/foo.md`, and snapshots capture code, evaluated values, and console side-effects by default.
+:::
+
 ## What test success looks like {.smaller aria-label="Text snapshots: What test success looks like"}
 
 If you run the test again, it'll succeed:
@@ -410,6 +486,13 @@ If testing a snapshot you just generated fails on re-running the test, this is m
 
 In such cases, setting a seed (e.g. `set.seed(42)`) should help. For volatile text such as temporary paths or timestamps, use the native `transform` argument to normalise the output before comparison.
 
+:::
+
+
+::: {.notes}
+- Demonstrate a succeeding test run when `print_movies()` produces output matching the saved Markdown snapshot.
+- Discuss reasons why a newly generated snapshot might unexpectedly fail on immediate re-runs, such as non-deterministic pseudo-random number generation.
+- Recommend setting a seed with `set.seed()` or using the `transform` argument to normalise volatile outputs such as dynamic timestamps, process IDs, or temporary file paths.
 :::
 
 ## What test failure looks like {.smaller aria-label="Text snapshots: What test failure looks like"}
@@ -477,6 +560,11 @@ test_that("`print_movies()` prints as expected", {
 ::::
 
 
+::: {.notes}
+- Demonstrate how `{testthat}` handles a regression when `print_movies()` is altered to format key-value pairs with hyphens (`'  ', keys, '- ', values`) instead of colons.
+- Walk through the side-by-side failure diff output, showing how expected text lines are marked with minus signs (`-`) and observed modifications with plus signs (`+`).
+:::
+
 ## Fixing tests {.smaller aria-label="Text snapshots: Fixing tests"}
 
 Message accompanying failed tests make it explicit how to fix them.
@@ -515,6 +603,13 @@ You can update *all* new snapshots with `snapshot_accept()`, or discard them all
 
 :::
 
+
+::: {.notes}
+- Outline the three standard remediation pathways provided by `{testthat}`: accept, reject, or interactive review.
+- Explain running `snapshot_accept()` if the change was intentional, `snapshot_reject()` to discard transient `.new` snapshot files, or `snapshot_review()` for an interactive Shiny-driven inspection.
+- Highlight the batch-update tip in the callout: when changes affect shared utility functions, updating or rejecting all snapshots en masse prevents tedious manual interventions.
+:::
+
 ## Snapshot variants {.smaller}
 
 Sometimes the expected output differs *legitimately* across environments — e.g. on Windows vs. macOS, or across R versions. Rather than maintaining separate test files, you can use **snapshot variants**.
@@ -537,6 +632,17 @@ Snapshots are then saved to `_snaps/windows/` instead of `_snaps/`, so each vari
 
 Variants are most useful when you *know* the output will differ and you want to track each variant explicitly. For output that should be identical everywhere, avoid variants — they multiply the maintenance burden. Delete variant directories when they are no longer used because testthat cannot infer every valid variant in advance.
 
+:::
+
+::: {style="text-align: center; font-size: 0.7em;"}
+Source: [{testthat} Snapshot variants](https://testthat.r-lib.org/reference/expect_snapshot.html)
+:::
+
+
+::: {.notes}
+- Introduce snapshot variants via the `variant` argument in `expect_snapshot()` for legitimate cross-platform or cross-R-version disparities (e.g. Windows versus macOS path delimiters or error messages).
+- Explain that variants are stored in dedicated subdirectories such as `_snaps/windows/`.
+- Review the caution in the callout: avoid unnecessary variants as they multiply maintenance overhead, and remember to clean up stale variant directories manually when environments are retired.
 :::
 
 ## Capturing messages and warnings {.smaller}
@@ -601,6 +707,13 @@ You can now rest assured that the users are getting informed the way you want! �
 
 :::
 
+
+::: {.notes}
+- Demonstrate that `expect_snapshot()` captures signalling conditions, including `message()` and `warning()`.
+- Walk through the side-by-side code blocks showing function `f()` raising an informational message and function `g()` raising a warning.
+- Highlight the callout tip: snapshots capture both the condition signal and the corresponding message text, noting that recording specific condition classes requires explicitly opting in via `cnd_class = TRUE`.
+:::
+
 ## Capturing errors {.smaller}
 
 In case of an error, the function `expect_snapshot()` itself will produce an error.
@@ -619,6 +732,13 @@ suppressWarnings(test_that("`log()` errors", {
 }), classes = "testthat_warn")
 ```
 
+
+::: {.notes}
+- Explain how to capture expected errors using `expect_snapshot(..., error = TRUE)`.
+- Point out that omitting `error = TRUE` causes the test runner to abort with an unhandled exception when an error is thrown.
+- Note the example where `log('x')` produces a non-numeric argument error, demonstrating how the snapshot documents the exact error message text.
+:::
+
 ## Further reading {.smaller aria-label="Text snapshots: Further reading"}
 
 - `{testthat}` article on [snapshot testing](https://testthat.r-lib.org/articles/snapshotting.html)
@@ -628,9 +748,20 @@ suppressWarnings(test_that("`log()` errors", {
 - Docs for [Jest](https://jestjs.io/docs/snapshot-testing) library in JavaScript, which inspired snapshot testing implementation in `{testthat}`
 
 
+::: {.notes}
+- Direct attendees to additional resources for mastering text snapshots.
+- Recommend the official `{testthat}` article on snapshotting, the conceptual guide to golden testing by Roman Cheplyaka, and the Jest documentation in JavaScript, which served as the conceptual inspiration for R's implementation.
+:::
+
 # Testing graphical outputs
 
 To create graphical expectations, you will use `{testthat}` extension package: [`{vdiffr}`](https://vdiffr.r-lib.org/).
+
+
+::: {.notes}
+- Transition to the second module: visual regression testing for graphical outputs in R packages.
+- Introduce `{vdiffr}`, the `{testthat}` extension package that brings snapshot testing capabilities to graphical objects.
+:::
 
 ## How does `{vdiffr}` work? {.smaller}
 
@@ -654,6 +785,14 @@ The figure to test can be:
 
 - The name for the `.svg` file will be sanitized version of `title` argument to `expect_doppelganger()`.
 
+:::
+
+
+::: {.notes}
+- Explain the mechanism behind `{vdiffr}` and its primary expectation function, `expect_doppelganger()`.
+- Describe how visual regressions are detected by serialising graphical figures into Scalable Vector Graphics (SVG) snapshot files and comparing them against saved references.
+- Clarify the supported graphical inputs: `ggplot` objects, `recordedplot` objects from base graphics, or any R object implementing a `print()` method.
+- Review snapshot storage rules: test file `test-foo.R` stores SVGs in `tests/testthat/_snaps/foo/`, named using a sanitised version of the test title.
 :::
 
 ## Example function {.smaller aria-label="Graphical snapshots: Example function"}
@@ -694,6 +833,12 @@ create_scatter()
 . . .
 
 Note that you want to test that the graphical output *looks* as expected, and this expectation is difficult to capture with a unit test.
+
+
+::: {.notes}
+- Walk through the `create_scatter()` example function, which constructs a `{ggplot2}` scatterplot of `mpg` versus `wt` from `mtcars` with `geom_point(size = 3, alpha = 0.75)` and a linear regression smoother `geom_smooth(method = 'lm')`.
+- Discuss why traditional unit tests struggle to validate plots: asserting on internal list structures of ggplot objects is brittle and fails to capture visual layout, scaling, font rendering, or graphical artefacts.
+:::
 
 ## Graphical snapshot test {.smaller}
 
@@ -747,6 +892,13 @@ You can open `.svg` snapshot files in a web browser for closer inspection.
 
 :::
 
+
+::: {.notes}
+- Introduce `expect_doppelganger()` with parameters `title = 'create scatter'` and `fig = create_scatter()`.
+- Explain that the first execution creates the initial reference SVG file on disk.
+- Emphasise the warning callout: authors must open and inspect newly generated SVG snapshots in a web browser to ensure visual accuracy before committing them as the gold standard.
+:::
+
 ## What test success looks like {.smaller aria-label="Graphical snapshots: What test success looks like"}
 
 If you run the test again, it'll succeed:
@@ -765,6 +917,16 @@ test_that("`create_scatter()` plots as expected", {
 snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
+
+::: {style="text-align: center; font-size: 0.7em;"}
+Source: [{vdiffr} documentation](https://vdiffr.r-lib.org/)
+:::
+
+
+::: {.notes}
+- Show that subsequent runs of `expect_doppelganger()` pass silently when the generated plot matches the stored SVG reference file.
+- Explain that `{vdiffr}` verifies that the newly rendered figure matches the reference file saved in the `_snaps/` directory.
+:::
 
 ## What test failure looks like {.smaller aria-label="Graphical snapshots: What test failure looks like"}
 
@@ -821,6 +983,12 @@ Error in `reporter$stop_if_needed()`:
 
 ::::
 
+
+::: {.notes}
+- Walk through what happens when graphical parameters change in `create_scatter()`: point size is reduced from 3 to 2 and alpha increased from 0.75 to 0.85.
+- Examine the test failure trace from `{vdiffr}`, pointing to a mismatch in `slides.qmd/create-scatter.svg` and advising the developer to invoke `testthat::snapshot_review('slides.qmd/')`.
+:::
+
 ## Fixing tests {.smaller aria-label="Graphical snapshots: Fixing tests"}
 
 For text file types such as `.json`, `.txt`, and `.md`, `{testthat}` now includes a line diff directly in the failure message.
@@ -832,6 +1000,12 @@ Running `snapshot_review()` launches a Shiny app when you want to inspect and ac
 #| out.width: "60%"
 knitr::include_graphics("media/shiny_app_graphics.mov")
 ```
+
+
+::: {.notes}
+- Explain how to inspect graphical failures using `snapshot_review()`.
+- Describe the embedded Shiny review interface shown in the video: side-by-side SVG comparisons, an interactive slider to swipe between before and after versions, toggle overlays, and one-click controls to accept or reject changes.
+:::
 
 ## <span class="visually-hidden">Graphical snapshot failures and variants</span> {#section}
 
@@ -862,13 +1036,31 @@ expect_doppelganger("my plot", fig = my_plot(), variant = "windows")
 
 :::
 
+
+::: {.notes}
+- Review common external factors causing plot snapshots to fail unexpectedly: updates to R's graphics engine, upstream changes in `{ggplot2}`, non-deterministic plotting behaviours, and platform-specific system font or rendering libraries.
+- Mention why CRAN skips graphical snapshot comparisons by default to avoid false positive check failures across differing build environments.
+- Explain that `expect_doppelganger()` supports the `variant` parameter for cases where plots legitimately render differently across operating systems.
+:::
+
 ## Further reading {aria-label="Graphical snapshots: Further reading"}
 
 - `{vdiffr}` package [website](https://vdiffr.r-lib.org/)
 
+
+::: {.notes}
+- Point attendees to the official `{vdiffr}` package website for advanced configuration options, custom SVG engines, and integration tips with continuous integration pipelines.
+:::
+
 # Testing entire files
 
 Whole file snapshot testing makes sure that media, data frames, text files, etc. are as expected.
+
+
+::: {.notes}
+- Transition to the third module: snapshot testing for entire generated files.
+- Explain that whole-file snapshots are designed for verifying tabular data exports, JSON APIs, serialised objects, HTML fragments, or binary media.
+:::
 
 ## Writing test {.smaller}
 
@@ -946,6 +1138,12 @@ snapper$start_file("slides.qmd", "test")
 ::::
 
 
+::: {.notes}
+- Demonstrate `expect_snapshot_file()` using the `r_to_json()` helper function, which writes a nested R list to a temporary file using `jsonlite::write_json()` and returns the file path.
+- Explain that `expect_snapshot_file()` moves and tracks this file under `tests/testthat/_snaps/foo/demo.json`.
+- Review the callout notes: the test author must provide a helper returning the file path, and files are stored and named according to the test file name and the `name` argument.
+:::
+
 ## What test success looks like {.smaller aria-label="File snapshots: What test success looks like"}
 
 If you run the test again, it'll succeed:
@@ -969,6 +1167,12 @@ test_that("json writer works", {
 snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
+
+
+::: {.notes}
+- Demonstrate a succeeding file snapshot test where the output written by `r_to_json()` identically matches `demo.json`.
+- Reiterate that `{testthat}` performs a file comparison to verify that the byte content or text lines match the committed snapshot.
+:::
 
 ## What test failure looks like {.smaller aria-label="File snapshots: What test failure looks like"}
 
@@ -1003,6 +1207,12 @@ test_that("json writer works", {
 })
 ```
 
+
+::: {.notes}
+- Illustrate a file snapshot failure when the data payload in `x` is modified from `'a'` to `'b'`.
+- Show how the mismatch triggers an immediate test failure during test execution, alerting the developer that the generated JSON artefact differs from the reference file.
+:::
+
 ## Fixing tests {.smaller .nostretch aria-label="File snapshots: Fixing tests"}
 
 Running `snapshot_review()` launches a Shiny app which can be used to either accept or reject the new output(s).
@@ -1013,13 +1223,31 @@ Running `snapshot_review()` launches a Shiny app which can be used to either acc
 knitr::include_graphics("media/json_snapshot.webp")
 ```
 
+
+::: {.notes}
+- Review the `snapshot_review()` workflow for file snapshots, pointing to the embedded screenshot showing a JSON diff where `'x': ['a']` changes to `'x': ['b']`.
+- Highlight the intuitive review controls: Skip and Accept, which allow developers to inspect changes file-by-file before updating references.
+:::
+
 ## Further reading {.smaller aria-label="File snapshots: Further reading"}
 
 Documentation for [`expect_snapshot_file()`](https://testthat.r-lib.org/reference/expect_snapshot_file.html)
 
+
+::: {.notes}
+- Direct attendees to the official documentation for `expect_snapshot_file()`.
+- Mention advanced options available, such as specifying custom file comparators (e.g. `compare_file_text()` or `compare_file_binary()`) and transform functions.
+:::
+
 # Testing Shiny applications
 
 To write formal tests for Shiny applications, you will use `{testthat}` extension package: [`{shinytest2}`](https://rstudio.github.io/shinytest2/).
+
+
+::: {.notes}
+- Transition to the fourth module: automated snapshot testing for Shiny applications in R packages.
+- Introduce `{shinytest2}`, the official testing framework built on `{testthat}` and headless browser automation.
+:::
 
 ## How does `{shinytest2}` work? {.smaller}
 
@@ -1066,6 +1294,12 @@ There are two possibilities, and you will discuss them both separately.
 
 <!-- Don't add an indefinite article; it breaks the phrase into two lines -->
 
+
+::: {.notes}
+- Explain that `{shinytest2}` drives headless Chrome instances using `{chromote}` to simulate user interactions and capture the application's reactive state and visual appearance.
+- Contrast the two primary application architectures in R packages: standalone apps placed in the `inst/` folder (such as `inst/sample_app/app.R`) and dynamic apps returned by package functions (in `R/app-function.R`).
+:::
+
 # Shiny app in subdirectory 
 
 <br>
@@ -1077,6 +1311,11 @@ There are two possibilities, and you will discuss them both separately.
 │   └── sample_app
 │       └── app.R
 ```
+
+
+::: {.notes}
+- Introduce testing for the classic directory layout where Shiny applications are stored within subdirectories of the package `inst/` tree.
+:::
 
 ## Example app {.smaller}
 
@@ -1121,6 +1360,13 @@ shinyApp(ui, server)
 
 ::::
 
+
+::: {.notes}
+- Walk through the kilograms-to-grams unit converter app located at `inst/unitConverter/app.R`.
+- Review the UI with `numericInput('kg', 'Weight (in kg)', value = 0)` and `textOutput('g')`, paired with server logic that multiplies kilograms by 1000 to display formatted grams.
+- Note the accompanying screen recording illustrating real-time reactive conversion.
+:::
+
 ## Generating a test {.smaller}
 
 To create a snapshot test, go to the app directory and run `record_test()`.
@@ -1130,6 +1376,12 @@ To create a snapshot test, go to the app directory and run `record_test()`.
 #| out.width: "60%"
 knitr::include_graphics("media/shinytest_record.mov")
 ```
+
+
+::: {.notes}
+- Introduce `shinytest2::record_test()`, an interactive test recorder that launches the Shiny app in a dedicated browser window.
+- Walk through the workflow shown in the video: typing inputs, clicking buttons, recording expectation checkpoints, and exporting generated test scripts.
+:::
 
 ## Auto-generated artefacts {.smaller}
 
@@ -1177,6 +1429,13 @@ knitr::include_graphics("media/unitConverter-001_.webp")
 
 :::
 
+
+::: {.notes}
+- Examine the generated test script utilising `AppDriver$new(name = 'unitConverter', height = 543, width = 426)`, `app$set_inputs(kg = 1)`, `app$set_inputs(kg = 10)`, and `app$expect_values()`.
+- Review the generated output artefacts: a JSON file capturing reactive inputs, outputs, and exports, alongside high-resolution PNG screenshots.
+- Emphasise the modern architecture: tests are saved directly into `tests/testthat/test-shinytest2.R`, and snapshots into `tests/testthat/_snaps/`, avoiding nested inst test suites.
+:::
+
 ## What test failure looks like {.smaller aria-label="Shiny snapshots: What test failure looks like"}
 
 Let's say, while updating the app, you make a mistake, which leads to a failed test.
@@ -1213,6 +1472,11 @@ Diff in snapshot file `shinytest2unitConverter-001.json`
 ```
 
 
+::: {.notes}
+- Show what happens when a regression is introduced into the server logic: displaying `'Weight (in kg): '` instead of `'Weight (in g): '`.
+- Examine the JSON diff output from `{shinytest2}`, highlighting how lines 4-5 clearly pinpoint the altered string label in the reactive output payload.
+:::
+
 ## Updating snapshots {.smaller}
 
 Fixing this test will be similar to fixing any other snapshot test you've seen thus far.
@@ -1225,6 +1489,12 @@ Fixing this test will be similar to fixing any other snapshot test you've seen t
 knitr::include_graphics("media/shinytest_failure.mov")
 ```
 
+
+::: {.notes}
+- Explain how to review and update Shiny snapshots using the dedicated comparison tool launched by `{shinytest2}`.
+- Walk through the video demo showcasing interactive side-by-side inspection of JSON state diffs and visual screenshot discrepancies.
+:::
+
 # Function returns Shiny app
 
 <br>
@@ -1234,6 +1504,11 @@ knitr::include_graphics("media/shinytest_failure.mov")
 ├── R
 │   └── app-function.R
 ```
+
+
+::: {.notes}
+- Transition to testing the second architectural pattern: Shiny applications created dynamically and returned by exported package functions.
+:::
 
 ## Example app and test {.smaller}
 
@@ -1288,6 +1563,13 @@ test_that("unitConverter app works", {
 
 ::::
 
+
+::: {.notes}
+- Walk through `unitConverter()` defined in `R/unit-converter.R`, which constructs and returns a `shinyApp(ui, server)` object.
+- Show how the corresponding test file `tests/testthat/test-unit-converter.R` initialises an `AppDriver` directly with `AppDriver$new(unitConverter, name = 'unit-converter')`.
+- Highlight the advantage: native function support in `{shinytest2}` executes the function in a background R process without requiring manual serialisation.
+:::
+
 ## Recording function-based apps {.smaller}
 
 Pass the function itself to `record_test()`:
@@ -1302,6 +1584,13 @@ The recorder can capture the interactions, but it cannot save a function-based t
 
 Native function support removes the need to construct and serialise the app object. The copy-paste step remains because the recorder cannot write a reusable function reference into the generated test.
 
+:::
+
+
+::: {.notes}
+- Explain how to record tests for function-based apps by running `record_test(unitConverter, name = 'unit-converter')`.
+- Detail the practical workflow: record interactions interactively, copy the generated driver commands into your test file, and run `devtools::test_active_file()` to generate snapshot files.
+- Review the callout note explaining why manual copying is necessary: the interactive recorder cannot infer how the function reference should be resolved across package namespaces.
 :::
 
 ## One package-level test layout {.smaller}
@@ -1328,6 +1617,13 @@ Package authors should keep every Shiny test in the package's existing `tests/te
 
 There is no nested `inst/.../tests/` tree and no package-level driver test. For multiple apps, use one ordinary test file per app.
 
+
+::: {.notes}
+- Advocate for the canonical single package-level testing layout where all tests reside in `tests/testthat/`.
+- Review the directory tree showing `_snaps/app-sample_app/` and `_snaps/unit-converter/` living side by side under `tests/testthat/_snaps/`.
+- Emphasise that developers should never maintain nested test suites inside `inst/` or rely on complex package-level wrapper scripts.
+:::
+
 ## Advanced topics {.smaller}
 
 The following are some advanced topics that are beyond the scope of the current presentation, but you may wish to know more about.
@@ -1343,6 +1639,10 @@ The following are some advanced topics that are beyond the scope of the current 
 :::
 
 
+::: {.notes}
+- Introduce advanced considerations for production Shiny testing.
+- Point attendees to the callout links: configuring headless browsers and system dependencies for continuous integration pipelines in `{shinytest2}`, and step-by-step guidance for migrating legacy test suites from `{shinytest}` to `{shinytest2}`.
+:::
 
 ## Further reading {.smaller aria-label="Shiny snapshots: Further reading"}
 
@@ -1352,11 +1652,23 @@ The following are some advanced topics that are beyond the scope of the current 
 
 - `{shinytest2}` article on how to test apps in [R packages](https://rstudio.github.io/shinytest2/articles/use-package.html)
 
+
+::: {.notes}
+- Recommend foundational literature for testing Shiny applications.
+- Direct attendees to the testing chapter in Hadley Wickham's *Mastering Shiny* and the official `{shinytest2}` workflow and package testing guides.
+:::
+
 # Headaches 
 
 It's not all kittens and roses when it comes to snapshot testing. 
 
 Let's see some issues you might run into while using them. 🤕
+
+
+::: {.notes}
+- Introduce the practical challenges and pitfalls associated with snapshot testing.
+- Remind attendees that while snapshot tests offer great power, they introduce specific maintenance trade-offs and operational headaches that developers must actively manage.
+:::
 
 ## Testing behaviour that you don't own {.smaller}
 
@@ -1374,6 +1686,13 @@ Tests that fail for reasons other than what they are testing for are problematic
 
 *A* way to reduce the burden of keeping snapshots up-to-date is to [automate this process](https://github.com/krlmlr/actions-sync/tree/base/update-snapshots). But there is no free lunch in this universe, and now you need to maintain this automation! 🤷
 
+:::
+
+
+::: {.notes}
+- Explain the hazard of testing behaviour owned by external dependencies: if `{ggplot2}` or another upstream package changes internal representations, your snapshot tests will fail despite your code functioning perfectly.
+- Discuss the caution callout: snapshotting volatile third-party structures ties package maintenance to external release cycles.
+- Review the automation note: while tools like GitHub Actions snapshot-sync workflows can automate updating snapshots, they introduce infrastructure maintenance of their own.
 :::
 
 ## Failures in non-interactive environments {.smaller}
@@ -1402,6 +1721,17 @@ Always run your tests locally first and commit the generated snapshot files befo
 
 But where can you find the new snapshots?
 
+::: {style="text-align: center; font-size: 0.7em;"}
+Source: [{testthat} Snapshotting in CI](https://testthat.r-lib.org/articles/snapshotting.html#snapshotting-in-ci)
+:::
+
+
+::: {.notes}
+- Discuss the operational challenge when snapshot tests fail in non-interactive environments such as continuous integration servers or during `R CMD check`.
+- Explain that failed tests generate `.new` snapshot files alongside the reference files.
+- Emphasise the critical callout: `expect_snapshot()` deliberately fails on CI when encountering a brand new snapshot, preventing unverified outputs from being committed remotely; all snapshots must be created locally first.
+:::
+
 ## Accessing new snapshots {.smaller}
 
 In local `R CMD Check`, you can find new snapshots in `.Rcheck` folder:
@@ -1426,11 +1756,24 @@ testthat::snapshot_download_gh()
 
 This replaces the manual step of downloading the artefact zip and copying files by hand.
 
+
+::: {.notes}
+- Explain how to retrieve snapshot artefacts generated during non-interactive runs.
+- Point out where to find them locally in `package_name.Rcheck/tests/testthat/_snaps/`.
+- Walk through retrieving remote CI failures: configure `check-r-package` in GitHub Actions with `upload-snapshots: true`, then run `testthat::snapshot_download_gh()` locally to download and unpack the artefacts directly into your working tree.
+:::
+
 ## Code review with snapshot tests {.smaller}
 
 Despite snapshot tests making the expected outputs more human-readable, given a big enough change and complex enough output, sometimes it can be challenging to review changes to snapshots. 
 
 How do you review pull requests with complex snapshots changes? 
+
+
+::: {.notes}
+- Frame the difficulties that arise during code review when pull requests include massive changes to snapshot files.
+- Pose the central question: how do reviewers effectively assess complex snapshot modifications without getting overwhelmed by voluminous diffs?
+:::
 
 ## <span class="visually-hidden">Reviewing snapshot changes</span> {#section-1 .smaller}
 
@@ -1453,6 +1796,13 @@ Locally open the PR branch and play around with the changes to see if the new be
 
 :::
 
+
+::: {.notes}
+- Contrast the two primary review workflows in the tabset.
+- Option 1 leverages code review tooling provided by hosting platforms like GitHub, which offers rich diff views, swipe comparisons, and visual overlays for SVG and image artefacts.
+- Option 2 involves pulling the branch locally to run `snapshot_review()` interactively, allowing hands-on inspection of application behaviour and visual diffs.
+:::
+
 ## Danger of silent failures {.smaller}
 
 Given their fragile nature, most snapshot comparisons are not enforced on CRAN by default. `{testthat}` returns without comparing, `{vdiffr}` does not fail on a mismatch, and `{shinytest2}` skips when an `AppDriver` is initialised.
@@ -1467,9 +1817,21 @@ A way to insure against such silent failures is to run tests **regularly** on CI
 
 :::
 
+
+::: {.notes}
+- Warn attendees about silent snapshot failures caused by skipped tests on CRAN.
+- Explain that `{testthat}` silences snapshot comparisons, `{vdiffr}` avoids failing on mismatches, and `{shinytest2}` skips when `AppDriver` is initialised on CRAN to prevent spurious package archivals.
+- Emphasise the callout tip: configure recurring CI schedules (such as nightly or weekly builds) against development versions of dependencies to catch upstream visual regressions before your users encounter them.
+:::
+
 # Parting wisdom
 
 What *not* to do
+
+
+::: {.notes}
+- Introduce the concluding summary section focusing on best practices, common anti-patterns, and disciplined rules of thumb for snapshot testing.
+:::
 
 ## Don't use snapshot tests for *everything* {.smaller}
 
@@ -1517,6 +1879,13 @@ test_that("`extract_est()` works", {
 
 ::::
 
+
+::: {.notes}
+- Warn against the anti-pattern of overusing snapshot tests out of convenience.
+- Walk through the `extract_est()` example function extracting regression coefficients: deterministic calculations belong in standard `expect_equal()` assertions compared against external benchmarks, not snapshots.
+- Emphasise that relying on snapshots for numerical results masks unintended mathematical regressions and defeats the purpose of rigorous unit verification.
+:::
+
 ## Snapshot for humans, not machines {.smaller}
 
 Snapshot testing is appropriate when the human needs to be in the loop to make sure that things are working as expected. Therefore, the snapshots should be human readable.
@@ -1562,6 +1931,12 @@ test_that("`point_plotter()` works", {
 
 ::::
 
+
+::: {.notes}
+- Reiterate the core mantra: 'Snapshot for humans, not machines.'
+- Walk through `point_plotter()`: the good practice is using `expect_doppelganger()` to snapshot the visual plot, which a human reviewer can evaluate; the bad practice is snapshotting the internal `ggplot_build(p)$data` data frame, which is impenetrable and brittle.
+:::
+
 ## Don't **blindly accept** snapshot changes {.smaller}
 
 Resist formation of such a habit.
@@ -1569,11 +1944,23 @@ Resist formation of such a habit.
 `{testthat}` provides tools to make it very easy to review changes, so no excuses! 
 
 
+::: {.notes}
+- Issue a firm warning against developing the reflex to run `snapshot_accept()` without careful scrutiny.
+- Remind attendees that accepting changes without understanding why they occurred completely undermines the protection snapshot testing provides.
+- Emphasise taking advantage of the rich interactive inspection tools provided by `{testthat}`, `{vdiffr}`, and `{shinytest2}`.
+:::
+
 # Self-study 
 
 In this presentation, you deliberately kept the examples and the tests simple. 
 
 To see a more realistic usage of snapshot tests, you can study open-source test suites.
+
+
+::: {.notes}
+- Introduce the self-study module.
+- Encourage attendees to examine production-grade, mature open-source repositories to observe how snapshot testing is structured and maintained in large packages.
+:::
 
 ## Suggested repositories {.smaller}
 
@@ -1616,6 +2003,14 @@ To see a more realistic usage of snapshot tests, you can study open-source test 
 
 :::
 
+
+::: {.notes}
+- Walk through the three columns of curated open-source repositories.
+- For text and CLI printing: `{cli}` for command line formatting, `{pkgdown}` for generated HTML documentation, `{dbplyr}` for SQL translation, and `{gt}` for table layouts.
+- For visualisations: `{ggplot2}` and `{ggstatsplot}`.
+- For Shiny applications: `{shinytest2}` and `{designer}`.
+:::
+
 # Thank You
 
 And Happy Snapshotting! 😊
@@ -1633,10 +2028,17 @@ Check out my other [slide decks](https://www.indrapatil.com/presentations/) on s
 
 <a class="deck-icon-link" href="https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/" aria-label="LinkedIn"><span class="deck-icon deck-icon-brands-linkedin" aria-hidden="true"></span></a>
 &nbsp;&nbsp;
-<a class="deck-icon-link" href="http://github.com/IndrajeetPatil" aria-label="GitHub"><span class="deck-icon deck-icon-brands-github" aria-hidden="true"></span></a>
+<a class="deck-icon-link" href="https://github.com/IndrajeetPatil" aria-label="GitHub"><span class="deck-icon deck-icon-brands-github" aria-hidden="true"></span></a>
 &nbsp;&nbsp;
 <a class="deck-icon-link" href="mailto:patilindrajeet.science@gmail.com" aria-label="Email"><span class="deck-icon deck-icon-solid-envelope" aria-hidden="true"></span></a>
 
+:::
+
+
+::: {.notes}
+- Conclude the presentation and thank the attendees for their time and participation.
+- Encourage attendees to check out additional slide decks on software engineering best practices via the portfolio link.
+- Point to the contact icons for connecting on LinkedIn, GitHub, or via email.
 :::
 
 ## Session information {.smaller}
@@ -1644,3 +2046,9 @@ Check out my other [slide decks](https://www.indrapatil.com/presentations/) on s
 ```{r}
 sessioninfo::session_info(include_base = TRUE)
 ```
+
+
+::: {.notes}
+- Present the session information output from `sessioninfo::session_info(include_base = TRUE)`.
+- Highlight the importance of recording package versions, OS specifications, and R build details to ensure full computational reproducibility of the presentation deck and all embedded examples.
+:::
