@@ -634,6 +634,10 @@ Variants are most useful when you *know* the output will differ and you want to 
 
 :::
 
+::: {style="text-align: center; font-size: 0.7em;"}
+Source: [{testthat} Snapshot variants](https://testthat.r-lib.org/reference/expect_snapshot.html)
+:::
+
 
 ::: {.notes}
 - Introduce snapshot variants via the `variant` argument in `expect_snapshot()` for legitimate cross-platform or cross-R-version disparities (e.g. Windows versus macOS path delimiters or error messages).
@@ -914,10 +918,14 @@ snapper$end_file()
 snapper$start_file("slides.qmd", "test")
 ```
 
+::: {style="text-align: center; font-size: 0.7em;"}
+Source: [{vdiffr} documentation](https://vdiffr.r-lib.org/)
+:::
+
 
 ::: {.notes}
-- Show that subsequent runs of `expect_doppelganger()` pass silently when the generated SVG matches the stored reference file character-for-character.
-- Note that behind the scenes, `{vdiffr}` compares the XML document structure and attributes of the newly rendered SVG against the reference file.
+- Show that subsequent runs of `expect_doppelganger()` pass silently when the generated plot matches the stored SVG reference file.
+- Explain that `{vdiffr}` verifies that the newly rendered figure matches the reference file saved in the `_snaps/` directory.
 :::
 
 ## What test failure looks like {.smaller aria-label="Graphical snapshots: What test failure looks like"}
@@ -1712,6 +1720,10 @@ Always run your tests locally first and commit the generated snapshot files befo
 :::
 
 But where can you find the new snapshots?
+
+::: {style="text-align: center; font-size: 0.7em;"}
+Source: [{testthat} Snapshotting in CI](https://testthat.r-lib.org/articles/snapshotting.html#snapshotting-in-ci)
+:::
 
 
 ::: {.notes}
