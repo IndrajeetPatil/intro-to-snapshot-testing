@@ -707,7 +707,7 @@ You can now rest assured that the users are getting informed the way you want! ð
 ::: {.notes}
 - Demonstrate that `expect_snapshot()` captures signalling conditions, including `message()` and `warning()`.
 - Walk through the side-by-side code blocks showing function `f()` raising an informational message and function `g()` raising a warning.
-- Highlight the callout tip: snapshots capture both the condition class and the exact message string, ensuring that user-facing diagnostics remain consistent and well-formatted over time.
+- Highlight the callout tip: snapshots capture both the condition signal and the corresponding message text, noting that recording specific condition classes requires explicitly opting in via `cnd_class = TRUE`.
 :::
 
 ## Capturing errors {.smaller}
