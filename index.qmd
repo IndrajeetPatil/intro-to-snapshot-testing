@@ -1650,7 +1650,7 @@ Always run your tests locally first and commit the generated snapshot files befo
 But where can you find the new snapshots?
 
 ::: {style="text-align: center; font-size: 0.7em;"}
-Source: [{testthat} Snapshotting in CI](https://testthat.r-lib.org/articles/snapshotting.html#snapshotting-in-ci)
+Source: [{testthat} 3.3.0 release notes](https://testthat.r-lib.org/news/index.html#testthat-330)
 :::
 
 
